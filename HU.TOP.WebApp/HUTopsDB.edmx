@@ -1,0 +1,670 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="HU_TOPSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Documents">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="HUTopId" Type="varchar" MaxLength="50" />
+          <Property Name="Photograph" Type="varchar" MaxLength="100" />
+          <Property Name="SSCMarkSheet" Type="varchar" MaxLength="100" />
+          <Property Name="HSSCMarkSheet" Type="varchar" MaxLength="100" />
+          <Property Name="CNIC" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="EducationalInformation">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="HUTopId" Type="varchar" MaxLength="50" />
+          <Property Name="CurrentLevelOfEdu" Type="varchar" MaxLength="50" />
+          <Property Name="CurrentCollege" Type="varchar" MaxLength="50" />
+          <Property Name="CollegeAddress" Type="varchar" MaxLength="100" />
+          <Property Name="BoardOfEdu" Type="varchar" MaxLength="50" />
+          <Property Name="GroupOfStudy" Type="varchar" MaxLength="50" />
+          <Property Name="OptionalSubjects" Type="varchar" MaxLength="100" />
+          <Property Name="SchoolName" Type="varchar" MaxLength="50" />
+          <Property Name="SchoolAddress" Type="varchar" MaxLength="100" />
+          <Property Name="SSCPercentage" Type="decimal" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="PersonalInformation">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="HUTopId" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="AppId" Type="int" />
+          <Property Name="FirstName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="MiddleName" Type="varchar" MaxLength="50" />
+          <Property Name="LastName" Type="varchar" MaxLength="50" />
+          <Property Name="FatherFirstName" Type="varchar" MaxLength="50" />
+          <Property Name="FatherMiddleName" Type="varchar" MaxLength="50" />
+          <Property Name="FatherLastName" Type="nchar" MaxLength="10" />
+          <Property Name="Gender" Type="int" />
+          <Property Name="HusbandName" Type="varchar" MaxLength="50" />
+          <Property Name="DateOfBirth" Type="datetime2" Precision="7" />
+          <Property Name="CountyAdd" Type="varchar" MaxLength="50" />
+          <Property Name="CellPhoneNumber" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="AlternateCellPhoneNumber" Type="varchar" MaxLength="15" />
+          <Property Name="TellUs" Type="varchar" MaxLength="50" />
+          <Property Name="ResidentialAddress" Type="varchar" MaxLength="100" />
+          <Property Name="ResidentialCity" Type="varchar" MaxLength="50" />
+          <Property Name="ResidentialCityOther" Type="varchar" MaxLength="50" />
+          <Property Name="ResidentialProvience" Type="varchar" MaxLength="50" />
+          <Property Name="ResidentialCountry" Type="varchar" MaxLength="50" />
+          <Property Name="ResidentialPostalCode" Type="int" />
+          <Property Name="PostalAddress" Type="varchar" MaxLength="100" />
+          <Property Name="PostalCity" Type="varchar" MaxLength="50" />
+          <Property Name="PostalCityOther" Type="varchar" MaxLength="50" />
+          <Property Name="PostalProvience" Type="varchar" MaxLength="50" />
+          <Property Name="PostalCountry" Type="varchar" MaxLength="50" />
+          <Property Name="PostalPostalCode" Type="int" />
+          <Property Name="CNIC" Type="varchar" MaxLength="13" Nullable="false" />
+          <Property Name="PermanentAddress" Type="varchar" MaxLength="100" />
+          <Property Name="PermanentCity" Type="varchar" MaxLength="50" />
+          <Property Name="PermanentCityOther" Type="varchar" MaxLength="50" />
+          <Property Name="PermanentProvience" Type="varchar" MaxLength="50" />
+          <Property Name="PermanentCountry" Type="varchar" MaxLength="50" />
+          <Property Name="PermanentPostalCode" Type="int" />
+          <Property Name="EmailAddress" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="AlterEmailAddress" Type="varchar" MaxLength="30" />
+          <Property Name="Password" Type="varbinary" MaxLength="50" Nullable="false" />
+          <Property Name="SaveDate" Type="datetime2" Precision="7" />
+          <Property Name="UpdateDate" Type="datetime2" Precision="7" />
+          <Property Name="AppStatus" Type="int" />
+          <Property Name="StudentStatus" Type="int" />
+          <Property Name="TempId" Type="int" />
+          <Property Name="School" Type="varchar" MaxLength="2" />
+          <Property Name="SchoolCode" Type="int" />
+          <Property Name="SchoolName" Type="varchar" MaxLength="50" />
+          <Property Name="SchoolNameOther" Type="varchar" MaxLength="50" />
+          <Property Name="CurrentQualification" Type="varchar" MaxLength="50" />
+          <Property Name="CurrentQualificationOther" Type="varchar" MaxLength="50" />
+          <Property Name="AlternateLandline" Type="varchar" MaxLength="15" />
+          <Property Name="UserId" Type="int" />
+          <Property Name="ModeOfStudy" Type="varchar" MaxLength="50" />
+          <Property Name="BoardOfEducation" Type="varchar" MaxLength="100" />
+          <Property Name="IntendedProgram" Type="varchar" MaxLength="100" />
+          <Property Name="TestDate" Type="datetime2" Precision="7" />
+          <Property Name="SubmissionDate" Type="datetime2" Precision="7" />
+          <Property Name="Retake" Type="int" />
+          <Property Name="IsAppliedBefore" Type="int" />
+          <Property Name="AppliedBeforeMonth" Type="int" />
+          <Property Name="AppliedBeforeYear" Type="int" />
+          <Property Name="HomePhoneNumber" Type="varchar" MaxLength="12" />
+          <Property Name="WhatsAppNumber" Type="varchar" MaxLength="15" />
+          <Property Name="GuardianCellPhoneNumber" Type="varchar" MaxLength="12" />
+          <Property Name="GuardianEmailAddress" Type="varchar" MaxLength="50" />
+          <Property Name="HearAboutHU" Type="varchar" MaxLength="50" />
+          <Property Name="HearAboutHUOther" Type="varchar" MaxLength="50" />
+          <Property Name="CreatedDatetime" Type="datetime2" Precision="7" />
+          <Property Name="Declaration" Type="int" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+        <Function Name="GenerateHUTopId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="varchar" />
+        <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="WEB_CreateUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="FirstName" Type="varchar" Mode="In" />
+          <Parameter Name="MiddleName" Type="varchar" Mode="In" />
+          <Parameter Name="LastName" Type="varchar" Mode="In" />
+          <Parameter Name="CNIC" Type="varchar" Mode="In" />
+          <Parameter Name="CellPhoneNumber" Type="varchar" Mode="In" />
+          <Parameter Name="EmailAddress" Type="varchar" Mode="In" />
+          <Parameter Name="Password" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="WEB_GetAll" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="WEB_UserLogin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Email" Type="varchar" Mode="In" />
+          <Parameter Name="Password" Type="varchar" Mode="In" />
+        </Function>
+        <EntityContainer Name="HU_TOPSModelStoreContainer">
+          <EntitySet Name="Documents" EntityType="Self.Documents" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EducationalInformation" EntityType="Self.EducationalInformation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PersonalInformation" EntityType="Self.PersonalInformation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="HU_TOPSModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Document">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="HUTopId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Photograph" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="SSCMarkSheet" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="HSSCMarkSheet" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CNIC" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="EducationalInformation">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="HUTopId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CurrentLevelOfEdu" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CurrentCollege" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CollegeAddress" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="BoardOfEdu" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="GroupOfStudy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="OptionalSubjects" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="SchoolName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SchoolAddress" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="SSCPercentage" Type="Decimal" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="PersonalInformation">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="HUTopId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="AppId" Type="Int32" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="MiddleName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FatherFirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FatherMiddleName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FatherLastName" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Gender" Type="Int32" />
+          <Property Name="HusbandName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DateOfBirth" Type="DateTime" Precision="7" />
+          <Property Name="CountyAdd" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CellPhoneNumber" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="AlternateCellPhoneNumber" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="TellUs" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ResidentialAddress" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ResidentialCity" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ResidentialCityOther" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ResidentialProvience" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ResidentialCountry" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ResidentialPostalCode" Type="Int32" />
+          <Property Name="PostalAddress" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="PostalCity" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PostalCityOther" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PostalProvience" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PostalCountry" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PostalPostalCode" Type="Int32" />
+          <Property Name="CNIC" Type="String" MaxLength="13" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PermanentAddress" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="PermanentCity" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PermanentCityOther" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PermanentProvience" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PermanentCountry" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PermanentPostalCode" Type="Int32" />
+          <Property Name="EmailAddress" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="AlterEmailAddress" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="Binary" MaxLength="50" FixedLength="false" Nullable="false" />
+          <Property Name="SaveDate" Type="DateTime" Precision="7" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="7" />
+          <Property Name="AppStatus" Type="Int32" />
+          <Property Name="StudentStatus" Type="Int32" />
+          <Property Name="TempId" Type="Int32" />
+          <Property Name="School" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="SchoolCode" Type="Int32" />
+          <Property Name="SchoolName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SchoolNameOther" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CurrentQualification" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CurrentQualificationOther" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="AlternateLandline" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="ModeOfStudy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="BoardOfEducation" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="IntendedProgram" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="TestDate" Type="DateTime" Precision="7" />
+          <Property Name="SubmissionDate" Type="DateTime" Precision="7" />
+          <Property Name="Retake" Type="Int32" />
+          <Property Name="IsAppliedBefore" Type="Int32" />
+          <Property Name="AppliedBeforeMonth" Type="Int32" />
+          <Property Name="AppliedBeforeYear" Type="Int32" />
+          <Property Name="HomePhoneNumber" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="WhatsAppNumber" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="GuardianCellPhoneNumber" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="GuardianEmailAddress" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="HearAboutHU" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="HearAboutHUOther" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDatetime" Type="DateTime" Precision="7" />
+          <Property Name="Declaration" Type="Int32" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityContainer Name="HU_TOPSEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Documents" EntityType="Self.Document" />
+          <EntitySet Name="EducationalInformations" EntityType="Self.EducationalInformation" />
+          <EntitySet Name="PersonalInformations" EntityType="Self.PersonalInformation" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <FunctionImport Name="sp_alterdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_creatediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_dropdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(HU_TOPSModel.sp_helpdiagramdefinition_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(HU_TOPSModel.sp_helpdiagrams_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_renamediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="new_diagramname" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_upgraddiagrams" />
+          <FunctionImport Name="WEB_CreateUser" ReturnType="Collection(Int32)">
+            <Parameter Name="FirstName" Mode="In" Type="String" />
+            <Parameter Name="MiddleName" Mode="In" Type="String" />
+            <Parameter Name="LastName" Mode="In" Type="String" />
+            <Parameter Name="CNIC" Mode="In" Type="String" />
+            <Parameter Name="CellPhoneNumber" Mode="In" Type="String" />
+            <Parameter Name="EmailAddress" Mode="In" Type="String" />
+            <Parameter Name="Password" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="WEB_GetAll" ReturnType="Collection(HU_TOPSModel.WEB_GetAll_Result)" />
+          <FunctionImport Name="WEB_UserLogin" ReturnType="Collection(HU_TOPSModel.WEB_UserLogin_Result)">
+            <Parameter Name="Email" Mode="In" Type="String" />
+            <Parameter Name="Password" Mode="In" Type="String" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="sp_helpdiagramdefinition_Result">
+          <Property Type="Int32" Name="version" Nullable="true" />
+          <Property Type="Binary" Name="definition" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_helpdiagrams_Result">
+          <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+          <Property Type="Int32" Name="OwnerID" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="WEB_GetAll_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="HUTopId" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="AppId" Nullable="true" />
+          <Property Type="String" Name="FirstName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="MiddleName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="LastName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="FatherFirstName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="FatherMiddleName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="FatherLastName" Nullable="true" MaxLength="10" />
+          <Property Type="Int32" Name="Gender" Nullable="true" />
+          <Property Type="String" Name="HusbandName" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="DateOfBirth" Nullable="true" />
+          <Property Type="String" Name="CountyAdd" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="CellPhoneNumber" Nullable="false" MaxLength="15" />
+          <Property Type="String" Name="AlternateCellPhoneNumber" Nullable="true" MaxLength="15" />
+          <Property Type="String" Name="TellUs" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="ResidentialAddress" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="ResidentialCity" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="ResidentialCityOther" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="ResidentialProvience" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="ResidentialCountry" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="ResidentialPostalCode" Nullable="true" />
+          <Property Type="String" Name="PostalAddress" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="PostalCity" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="PostalCityOther" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="PostalProvience" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="PostalCountry" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="PostalPostalCode" Nullable="true" />
+          <Property Type="String" Name="CNIC" Nullable="false" MaxLength="13" />
+          <Property Type="String" Name="PermanentAddress" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="PermanentCity" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="PermanentCityOther" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="PermanentProvience" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="PermanentCountry" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="PermanentPostalCode" Nullable="true" />
+          <Property Type="String" Name="EmailAddress" Nullable="false" MaxLength="30" />
+          <Property Type="String" Name="AlterEmailAddress" Nullable="true" MaxLength="30" />
+          <Property Type="Binary" Name="Password" Nullable="false" MaxLength="50" />
+          <Property Type="DateTime" Name="SaveDate" Nullable="true" />
+          <Property Type="DateTime" Name="UpdateDate" Nullable="true" />
+          <Property Type="Int32" Name="AppStatus" Nullable="true" />
+          <Property Type="Int32" Name="StudentStatus" Nullable="true" />
+          <Property Type="Int32" Name="TempId" Nullable="true" />
+          <Property Type="String" Name="School" Nullable="true" MaxLength="2" />
+          <Property Type="Int32" Name="SchoolCode" Nullable="true" />
+          <Property Type="String" Name="SchoolName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="SchoolNameOther" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="CurrentQualification" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="CurrentQualificationOther" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="AlternateLandline" Nullable="true" MaxLength="15" />
+          <Property Type="Int32" Name="UserId" Nullable="true" />
+          <Property Type="String" Name="ModeOfStudy" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="BoardOfEducation" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="IntendedProgram" Nullable="true" MaxLength="100" />
+          <Property Type="DateTime" Name="TestDate" Nullable="true" />
+          <Property Type="DateTime" Name="SubmissionDate" Nullable="true" />
+          <Property Type="Int32" Name="Retake" Nullable="true" />
+          <Property Type="Int32" Name="IsAppliedBefore" Nullable="true" />
+          <Property Type="Int32" Name="AppliedBeforeMonth" Nullable="true" />
+          <Property Type="Int32" Name="AppliedBeforeYear" Nullable="true" />
+          <Property Type="String" Name="HomePhoneNumber" Nullable="true" MaxLength="12" />
+          <Property Type="String" Name="WhatsAppNumber" Nullable="true" MaxLength="15" />
+          <Property Type="String" Name="GuardianCellPhoneNumber" Nullable="true" MaxLength="12" />
+          <Property Type="String" Name="GuardianEmailAddress" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="HearAboutHU" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="HearAboutHUOther" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="CreatedDatetime" Nullable="true" />
+          <Property Type="Int32" Name="Declaration" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="WEB_UserLogin_Result">
+          <Property Type="Int32" Name="Response" Nullable="false" />
+          <Property Type="String" Name="Reason" Nullable="false" MaxLength="25" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="HU_TOPSModelStoreContainer" CdmEntityContainer="HU_TOPSEntities">
+          <EntitySetMapping Name="Documents">
+            <EntityTypeMapping TypeName="HU_TOPSModel.Document">
+              <MappingFragment StoreEntitySet="Documents">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="HUTopId" ColumnName="HUTopId" />
+                <ScalarProperty Name="Photograph" ColumnName="Photograph" />
+                <ScalarProperty Name="SSCMarkSheet" ColumnName="SSCMarkSheet" />
+                <ScalarProperty Name="HSSCMarkSheet" ColumnName="HSSCMarkSheet" />
+                <ScalarProperty Name="CNIC" ColumnName="CNIC" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EducationalInformations">
+            <EntityTypeMapping TypeName="HU_TOPSModel.EducationalInformation">
+              <MappingFragment StoreEntitySet="EducationalInformation">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="HUTopId" ColumnName="HUTopId" />
+                <ScalarProperty Name="CurrentLevelOfEdu" ColumnName="CurrentLevelOfEdu" />
+                <ScalarProperty Name="CurrentCollege" ColumnName="CurrentCollege" />
+                <ScalarProperty Name="CollegeAddress" ColumnName="CollegeAddress" />
+                <ScalarProperty Name="BoardOfEdu" ColumnName="BoardOfEdu" />
+                <ScalarProperty Name="GroupOfStudy" ColumnName="GroupOfStudy" />
+                <ScalarProperty Name="OptionalSubjects" ColumnName="OptionalSubjects" />
+                <ScalarProperty Name="SchoolName" ColumnName="SchoolName" />
+                <ScalarProperty Name="SchoolAddress" ColumnName="SchoolAddress" />
+                <ScalarProperty Name="SSCPercentage" ColumnName="SSCPercentage" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PersonalInformations">
+            <EntityTypeMapping TypeName="HU_TOPSModel.PersonalInformation">
+              <MappingFragment StoreEntitySet="PersonalInformation">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="HUTopId" ColumnName="HUTopId" />
+                <ScalarProperty Name="AppId" ColumnName="AppId" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FatherFirstName" ColumnName="FatherFirstName" />
+                <ScalarProperty Name="FatherMiddleName" ColumnName="FatherMiddleName" />
+                <ScalarProperty Name="FatherLastName" ColumnName="FatherLastName" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="HusbandName" ColumnName="HusbandName" />
+                <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+                <ScalarProperty Name="CountyAdd" ColumnName="CountyAdd" />
+                <ScalarProperty Name="CellPhoneNumber" ColumnName="CellPhoneNumber" />
+                <ScalarProperty Name="AlternateCellPhoneNumber" ColumnName="AlternateCellPhoneNumber" />
+                <ScalarProperty Name="TellUs" ColumnName="TellUs" />
+                <ScalarProperty Name="ResidentialAddress" ColumnName="ResidentialAddress" />
+                <ScalarProperty Name="ResidentialCity" ColumnName="ResidentialCity" />
+                <ScalarProperty Name="ResidentialCityOther" ColumnName="ResidentialCityOther" />
+                <ScalarProperty Name="ResidentialProvience" ColumnName="ResidentialProvience" />
+                <ScalarProperty Name="ResidentialCountry" ColumnName="ResidentialCountry" />
+                <ScalarProperty Name="ResidentialPostalCode" ColumnName="ResidentialPostalCode" />
+                <ScalarProperty Name="PostalAddress" ColumnName="PostalAddress" />
+                <ScalarProperty Name="PostalCity" ColumnName="PostalCity" />
+                <ScalarProperty Name="PostalCityOther" ColumnName="PostalCityOther" />
+                <ScalarProperty Name="PostalProvience" ColumnName="PostalProvience" />
+                <ScalarProperty Name="PostalCountry" ColumnName="PostalCountry" />
+                <ScalarProperty Name="PostalPostalCode" ColumnName="PostalPostalCode" />
+                <ScalarProperty Name="CNIC" ColumnName="CNIC" />
+                <ScalarProperty Name="PermanentAddress" ColumnName="PermanentAddress" />
+                <ScalarProperty Name="PermanentCity" ColumnName="PermanentCity" />
+                <ScalarProperty Name="PermanentCityOther" ColumnName="PermanentCityOther" />
+                <ScalarProperty Name="PermanentProvience" ColumnName="PermanentProvience" />
+                <ScalarProperty Name="PermanentCountry" ColumnName="PermanentCountry" />
+                <ScalarProperty Name="PermanentPostalCode" ColumnName="PermanentPostalCode" />
+                <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
+                <ScalarProperty Name="AlterEmailAddress" ColumnName="AlterEmailAddress" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="SaveDate" ColumnName="SaveDate" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="AppStatus" ColumnName="AppStatus" />
+                <ScalarProperty Name="StudentStatus" ColumnName="StudentStatus" />
+                <ScalarProperty Name="TempId" ColumnName="TempId" />
+                <ScalarProperty Name="School" ColumnName="School" />
+                <ScalarProperty Name="SchoolCode" ColumnName="SchoolCode" />
+                <ScalarProperty Name="SchoolName" ColumnName="SchoolName" />
+                <ScalarProperty Name="SchoolNameOther" ColumnName="SchoolNameOther" />
+                <ScalarProperty Name="CurrentQualification" ColumnName="CurrentQualification" />
+                <ScalarProperty Name="CurrentQualificationOther" ColumnName="CurrentQualificationOther" />
+                <ScalarProperty Name="AlternateLandline" ColumnName="AlternateLandline" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ModeOfStudy" ColumnName="ModeOfStudy" />
+                <ScalarProperty Name="BoardOfEducation" ColumnName="BoardOfEducation" />
+                <ScalarProperty Name="IntendedProgram" ColumnName="IntendedProgram" />
+                <ScalarProperty Name="TestDate" ColumnName="TestDate" />
+                <ScalarProperty Name="SubmissionDate" ColumnName="SubmissionDate" />
+                <ScalarProperty Name="Retake" ColumnName="Retake" />
+                <ScalarProperty Name="IsAppliedBefore" ColumnName="IsAppliedBefore" />
+                <ScalarProperty Name="AppliedBeforeMonth" ColumnName="AppliedBeforeMonth" />
+                <ScalarProperty Name="AppliedBeforeYear" ColumnName="AppliedBeforeYear" />
+                <ScalarProperty Name="HomePhoneNumber" ColumnName="HomePhoneNumber" />
+                <ScalarProperty Name="WhatsAppNumber" ColumnName="WhatsAppNumber" />
+                <ScalarProperty Name="GuardianCellPhoneNumber" ColumnName="GuardianCellPhoneNumber" />
+                <ScalarProperty Name="GuardianEmailAddress" ColumnName="GuardianEmailAddress" />
+                <ScalarProperty Name="HearAboutHU" ColumnName="HearAboutHU" />
+                <ScalarProperty Name="HearAboutHUOther" ColumnName="HearAboutHUOther" />
+                <ScalarProperty Name="CreatedDatetime" ColumnName="CreatedDatetime" />
+                <ScalarProperty Name="Declaration" ColumnName="Declaration" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="HU_TOPSModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="HU_TOPSModel.Store.sp_alterdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="HU_TOPSModel.Store.sp_creatediagram" />
+          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="HU_TOPSModel.Store.sp_dropdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="HU_TOPSModel.Store.sp_helpdiagramdefinition">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="HU_TOPSModel.sp_helpdiagramdefinition_Result">
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="HU_TOPSModel.Store.sp_helpdiagrams">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="HU_TOPSModel.sp_helpdiagrams_Result">
+                <ScalarProperty Name="Database" ColumnName="Database" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Owner" ColumnName="Owner" />
+                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="HU_TOPSModel.Store.sp_renamediagram" />
+          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="HU_TOPSModel.Store.sp_upgraddiagrams" />
+          <FunctionImportMapping FunctionImportName="WEB_CreateUser" FunctionName="HU_TOPSModel.Store.WEB_CreateUser" />
+          <FunctionImportMapping FunctionImportName="WEB_GetAll" FunctionName="HU_TOPSModel.Store.WEB_GetAll">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="HU_TOPSModel.WEB_GetAll_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="HUTopId" ColumnName="HUTopId" />
+                <ScalarProperty Name="AppId" ColumnName="AppId" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FatherFirstName" ColumnName="FatherFirstName" />
+                <ScalarProperty Name="FatherMiddleName" ColumnName="FatherMiddleName" />
+                <ScalarProperty Name="FatherLastName" ColumnName="FatherLastName" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="HusbandName" ColumnName="HusbandName" />
+                <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+                <ScalarProperty Name="CountyAdd" ColumnName="CountyAdd" />
+                <ScalarProperty Name="CellPhoneNumber" ColumnName="CellPhoneNumber" />
+                <ScalarProperty Name="AlternateCellPhoneNumber" ColumnName="AlternateCellPhoneNumber" />
+                <ScalarProperty Name="TellUs" ColumnName="TellUs" />
+                <ScalarProperty Name="ResidentialAddress" ColumnName="ResidentialAddress" />
+                <ScalarProperty Name="ResidentialCity" ColumnName="ResidentialCity" />
+                <ScalarProperty Name="ResidentialCityOther" ColumnName="ResidentialCityOther" />
+                <ScalarProperty Name="ResidentialProvience" ColumnName="ResidentialProvience" />
+                <ScalarProperty Name="ResidentialCountry" ColumnName="ResidentialCountry" />
+                <ScalarProperty Name="ResidentialPostalCode" ColumnName="ResidentialPostalCode" />
+                <ScalarProperty Name="PostalAddress" ColumnName="PostalAddress" />
+                <ScalarProperty Name="PostalCity" ColumnName="PostalCity" />
+                <ScalarProperty Name="PostalCityOther" ColumnName="PostalCityOther" />
+                <ScalarProperty Name="PostalProvience" ColumnName="PostalProvience" />
+                <ScalarProperty Name="PostalCountry" ColumnName="PostalCountry" />
+                <ScalarProperty Name="PostalPostalCode" ColumnName="PostalPostalCode" />
+                <ScalarProperty Name="CNIC" ColumnName="CNIC" />
+                <ScalarProperty Name="PermanentAddress" ColumnName="PermanentAddress" />
+                <ScalarProperty Name="PermanentCity" ColumnName="PermanentCity" />
+                <ScalarProperty Name="PermanentCityOther" ColumnName="PermanentCityOther" />
+                <ScalarProperty Name="PermanentProvience" ColumnName="PermanentProvience" />
+                <ScalarProperty Name="PermanentCountry" ColumnName="PermanentCountry" />
+                <ScalarProperty Name="PermanentPostalCode" ColumnName="PermanentPostalCode" />
+                <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
+                <ScalarProperty Name="AlterEmailAddress" ColumnName="AlterEmailAddress" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="SaveDate" ColumnName="SaveDate" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="AppStatus" ColumnName="AppStatus" />
+                <ScalarProperty Name="StudentStatus" ColumnName="StudentStatus" />
+                <ScalarProperty Name="TempId" ColumnName="TempId" />
+                <ScalarProperty Name="School" ColumnName="School" />
+                <ScalarProperty Name="SchoolCode" ColumnName="SchoolCode" />
+                <ScalarProperty Name="SchoolName" ColumnName="SchoolName" />
+                <ScalarProperty Name="SchoolNameOther" ColumnName="SchoolNameOther" />
+                <ScalarProperty Name="CurrentQualification" ColumnName="CurrentQualification" />
+                <ScalarProperty Name="CurrentQualificationOther" ColumnName="CurrentQualificationOther" />
+                <ScalarProperty Name="AlternateLandline" ColumnName="AlternateLandline" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ModeOfStudy" ColumnName="ModeOfStudy" />
+                <ScalarProperty Name="BoardOfEducation" ColumnName="BoardOfEducation" />
+                <ScalarProperty Name="IntendedProgram" ColumnName="IntendedProgram" />
+                <ScalarProperty Name="TestDate" ColumnName="TestDate" />
+                <ScalarProperty Name="SubmissionDate" ColumnName="SubmissionDate" />
+                <ScalarProperty Name="Retake" ColumnName="Retake" />
+                <ScalarProperty Name="IsAppliedBefore" ColumnName="IsAppliedBefore" />
+                <ScalarProperty Name="AppliedBeforeMonth" ColumnName="AppliedBeforeMonth" />
+                <ScalarProperty Name="AppliedBeforeYear" ColumnName="AppliedBeforeYear" />
+                <ScalarProperty Name="HomePhoneNumber" ColumnName="HomePhoneNumber" />
+                <ScalarProperty Name="WhatsAppNumber" ColumnName="WhatsAppNumber" />
+                <ScalarProperty Name="GuardianCellPhoneNumber" ColumnName="GuardianCellPhoneNumber" />
+                <ScalarProperty Name="GuardianEmailAddress" ColumnName="GuardianEmailAddress" />
+                <ScalarProperty Name="HearAboutHU" ColumnName="HearAboutHU" />
+                <ScalarProperty Name="HearAboutHUOther" ColumnName="HearAboutHUOther" />
+                <ScalarProperty Name="CreatedDatetime" ColumnName="CreatedDatetime" />
+                <ScalarProperty Name="Declaration" ColumnName="Declaration" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="WEB_UserLogin" FunctionName="HU_TOPSModel.Store.WEB_UserLogin">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="HU_TOPSModel.WEB_UserLogin_Result">
+                <ScalarProperty Name="Response" ColumnName="Response" />
+                <ScalarProperty Name="Reason" ColumnName="Reason" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

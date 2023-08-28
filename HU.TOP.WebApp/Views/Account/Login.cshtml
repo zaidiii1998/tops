@@ -1,0 +1,48 @@
+﻿@{ 
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="~/Content/Custom/LoginCustom.css" rel="stylesheet" />
+</head>
+<body>
+
+    <div id="model" class="modal">
+
+        <form class="modal-content animate" method="post">
+            <div class="imgcontainer">
+                <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
+                <img src="~/Content/Images/img_avatar2.png" alt="Avatar" class="avatar">
+            </div>
+
+            <div class="container">
+                <label for="email"><b>Email</b></label>
+                <input type="email" placeholder="Enter Email" name="email"maxlength="25" required>
+
+                <label for="psw"><b>Password</b></label>
+                <input type="password" placeholder="Enter Password" maxlength="25" name="psw" required>
+                @if(@ViewBag.Result+"" != "") { 
+                <div class="container signin">
+                    <p style="color:red;">@ViewBag.Result</p>
+                </div>
+                }
+                <button type="submit">Login</button>
+            </div>
+            <div class="container signin">
+                <p>Create new account <a href="@Url.Action("Register","Account")">Sign Up</a>.</p>
+            </div>
+
+        </form>
+    </div>
+
+    <script>
+// Get the modal
+        document.getElementById('model').style.display = 'block';
+
+    </script>
+
+</body>
+</html>

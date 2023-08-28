@@ -1,0 +1,80 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="~/Content/Custom/LoginCustom.css" rel="stylesheet" />
+</head>
+<body>
+
+    <div id="model" class="modal">
+
+        <form class="modal-content animate" method="post">
+            <div class="imgcontainer">
+                <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
+                <img src="~/Content/Images/img_avatar2.png" alt="Avatar" class="avatar">
+            </div>
+
+            <div class="container">
+
+                <label for="fname"><b>First Name</b></label>
+                <input type="text" placeholder="Enter FirstName" maxlength="25" name="fname" required>
+
+                <label for="mname"><b>Middle Name</b></label>
+                <input type="text" placeholder="Enter Middle Name" name="mname" maxlength="25">
+
+                <label for="lname"><b>Last Name</b></label>
+                <input type="text" placeholder="Enter Last Name" name="lname" maxlength="25" required>
+
+                <label for="cnic"><b>CNIC</b></label>
+                <input type="number" placeholder="Enter CNIC" name="cnic" maxlength="13" required>
+
+                <label for="number"><b>Phone Number</b></label>
+                <input type="number" placeholder="Enter Phone Number" name="number" maxlength="12" required>
+
+                <label for="email"><b>Emain</b></label>
+                <input type="email" placeholder="Enter Email" name="email" required>
+
+                <label for="password"><b>Password</b></label>
+                <input type="password" placeholder="**************" name="password" id="password" maxlength="25" oninput="validate()" required>
+
+                <label for="cpassword"><b> Confirm Password</b></label>
+                <input type="password" placeholder="**************" name="cpassword" id="cpassword" maxlength="25" oninput="validate()" required>
+                @if (@ViewBag.Result + "" != "")
+                {
+                    <div class="container signin">
+                        <p style="color:red;">@ViewBag.Result</p>
+                    </div>
+                }
+                <button type="submit">Register</button>
+            </div>
+            <div class="container signin">
+                <p>Already have an account? <a href="@Url.Action("Login","Account")">Sign In</a>.</p>
+            </div>
+
+        </form>
+    </div>
+
+    <script>
+// Get the modal
+        document.getElementById('model').style.display = 'block';
+
+        function validate() {
+            var pass = document.getElementById("password");
+            var cpass = document.getElementById("cpassword");
+            if (pass.value != cpass.value) {
+                pass.style.borderBlockColor = "red";
+                cpass.style.borderBlockColor = "red";
+
+            } else {
+                pass.style.borderBlockColor = "green";
+                cpass.style.borderBlockColor = "green";
+            }
+        }
+    </script>
+
+</body>
+</html>
