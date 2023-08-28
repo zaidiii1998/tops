@@ -1,7 +1,7 @@
 ﻿using System.Web;
 using System.Web.Optimization;
 
-namespace HU.TOP.WebApp
+namespace HUTOPS
 {
     public class BundleConfig
     {

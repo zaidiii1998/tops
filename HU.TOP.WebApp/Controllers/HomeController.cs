@@ -1,8 +1,8 @@
-﻿using HU.TOP.WebApp.Helper;
+﻿using HUTOPS.Helper;
 using System.Linq;
 using System.Web.Mvc;
 
-namespace HU.TOP.WebApp.Controllers
+namespace HUTOPS.Controllers
 {
     [SessionValidatorActionFilter]
     public class HomeController : Controller
@@ -22,6 +22,11 @@ namespace HU.TOP.WebApp.Controllers
                 return View();
             }
             
+        }
+
+        public ActionResult UpdatePersonalInfo(PersonalInformation model)
+        {
+            return Json(new {result = 1, msg = "Success"});
         }
     }
 }

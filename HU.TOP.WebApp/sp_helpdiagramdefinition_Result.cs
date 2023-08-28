@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace HU.TOP.WebApp
+namespace HUTOPS
 {
     using System;
     

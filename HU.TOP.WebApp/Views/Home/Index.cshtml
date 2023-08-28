@@ -19,46 +19,102 @@
         <fieldset>
             <legend>Personal Info</legend>
             <form action="#" method="post">
+
                 <label for="firstName">First Name:</label>
-                <input type="text" id="firstName" name="firstName" value="@Model.FirstName" required><br><br>
+                <input type="text" id="firstName" name="firstName" value="@Model.FirstName" required>
 
                 <label for="middleName">Middle Name:</label>
-                <input type="text" id="middleName" name="middleName" value="@Model.MiddleName"><br><br>
+                <input type="text" id="middleName" name="middleName" value="@Model.MiddleName">
 
                 <label for="lastName">Last Name:</label>
                 <input type="text" id="lastName" name="lastName" value="@Model.LastName" required><br><br>
 
-                <label for="cnic">CNIC:</label>
-                <input type="text" id="cnic" name="cnic" pattern="[0-9]{5}-[0-9]{7}-[0-9]{1}" placeholder="12345-1234567-1" maxlength="13" value="@Model.CNIC" disabled><br><br>
-
-                <label for="email">Email Address:</label>
-                <input type="email" id="email" name="email"value="@Model.EmailAddress" disabled><br><br>
-
-                <label for="altEmail">Alternate Email Address:</label>
-                <input type="email" id="altEmail" name="altEmail"><br><br>
-
                 <label for="fatherFirstName">Father's First Name:</label>
-                <input type="text" id="fatherFirstName" name="fatherFirstName" required><br><br>
+                <input type="text" id="fatherFirstName" name="fatherFirstName" value="@Model.FatherFirstName" required><br><br>
 
                 <label for="fatherMiddleName">Father's Middle Name:</label>
-                <input type="text" id="fatherMiddleName" name="fatherMiddleName"><br><br>
+                <input type="text" id="fatherMiddleName" name="fatherMiddleName" value="@Model.FatherMiddleName"><br><br>
 
                 <label for="fatherLastName">Father's Last Name:</label>
-                <input type="text" id="fatherLastName" name="fatherLastName" required><br><br>
+                <input type="text" id="fatherLastName" name="fatherLastName" value="@Model.FatherLastName" required><br><br>
+
+                <label for="cnic">CNIC:</label>
+                <input type="text" id="cnic" name="cnic" pattern="[0-9]{5}-[0-9]{7}-[0-9]{1}" placeholder="12345-1234567-1" value="@Model.CellPhoneNumber" maxlength="13" value="@Model.CNIC" disabled><br><br>
+
+                <label for="email">Email Address:</label>
+                <input type="email" id="email" name="email" value="@Model.EmailAddress" disabled><br><br>
+
+                <label for="altEmail">Alternate Email Address:</label>
+                <input type="email" id="altEmail" name="altEmail" value="@Model.AlterEmailAddress"><br><br>
 
                 <label>Gender:</label>
-                <input type="radio" id="male" name="gender" value="male" required>
-                <label for="male">Male</label>
-                <input type="radio" id="female" name="gender" value="female">
-                <label for="female">Female</label>
-                <input type="radio" id="other" name="gender" value="other">
-                <label for="other">Other</label><br><br>
+                <select id="city">
+                    <option>Select Gender</option>
+                    <option value="M">Male</option>
+                    <option value="F">Female</option>
+                    <option value="T">Prefer not to self-identify</option>
+                </select><br><br>
 
                 <label for="husbandName">Husband's Name:</label>
                 <input type="text" id="husbandName" name="husbandName"><br><br>
 
                 <label for="dob">Date of Birth:</label>
-                <input type="date" id="dob" name="dob" required><br><br>
+                <select id="dobDay" name="dobDay">
+                    <option>Day</option>
+                    <option value="01">01</option>
+                    <option value="02">02</option>
+                    <option value="03">03</option>
+                    <option value="04">04</option>
+                    <option value="05">05</option>
+                    <option value="06">06</option>
+                    <option value="07">07</option>
+                    <option value="08">08</option>
+                    <option value="09">09</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                    <option value="13">13</option>
+                    <option value="14">14</option>
+                    <option value="15">15</option>
+                    <option value="16">16</option>
+                    <option value="17">17</option>
+                    <option value="18">18</option>
+                    <option value="19">19</option>
+                    <option value="20">20</option>
+                    <option value="21">21</option>
+                    <option value="22">22</option>
+                    <option value="23">23</option>
+                    <option value="24">24</option>
+                    <option value="25">25</option>
+                    <option value="26">26</option>
+                    <option value="27">27</option>
+                    <option value="28">28</option>
+                    <option value="29">29</option>
+                    <option value="30">30</option>
+                    <option value="31">31</option>
+                </select>
+
+                <select id="dobMonth" name="dobMonth">
+                    <option>Select Month</option>
+                    <option value="01">January</option>
+                    <option value="02">February</option>
+                    <option value="03">March</option>
+                    <option value="04">April</option>
+                    <option value="05">May</option>
+                    <option value="06">June</option>
+                    <option value="07">July</option>
+                    <option value="08">Augest</option>
+                    <option value="09">September</option>
+                    <option value="10">Octuber</option>
+                    <option value="11">November</option>
+                    <option value="12">December</option>
+                </select>
+
+                <select id="dobYear" name="dobYear">
+                    <!-- Add options for years as needed -->
+                    <option>Select Year</option>
+                </select>
+                <br><br>
 
                 <input type="button" id="editPersonalInfo" value="Submit">
             </form>
@@ -206,6 +262,7 @@
 
 
     <script>
+        LoadYear();
         function toggleOtherCityInput() {
             var select = document.getElementById("residentialCity");
             var otherInput = document.getElementById("residentialCityOther");
@@ -223,6 +280,16 @@
             var checkbox = document.getElementById(checkboxId);
 
             section.style.display = checkbox.checked ? "block" : "none";
+        }
+
+        function LoadYear() {
+            var comboYear = document.getElementById("dobYear");
+            for (var j = 2023; j > 1950; j--) {
+                var option = document.createElement("option");
+                option.value = j;
+                option.text = j;
+                comboYear.appendChild(option);
+            }
         }
 
         function updateCities() {
@@ -281,26 +348,15 @@
             e.preventDefault();
 
             var param = {
-                id: $('#txtEditId').val(),
-                name: $('#txtEditName').val(),
-                username: $('#txtEditUsername').val(),
-                msisdn: $('#txtEditMSISDN').val(),
-                email: $('#txtEditEmail').val(),
-                record_type: $('#comboEditRecordType').val(),
-                gender: $('#comboEditGender').val(),
-                residence_type: $('#comboEditResidence').val(),
-                country_id: $('#comboEditCountry').val(),
-                city_id: $('#comboEditCity').val(),
-                state_id: $('#comboEditState').val(),
-                address: $('#txtEditAddress').val(),
-                postal_code: $('#txtEditPostalCode').val(),
-                official_msisdn: $('#txtEditOfficialMSISDN').val(),
-                official_email: $('#txtEditOfficialEmail').val(),
-                department_id: $('#comboEditDepartment').val(),
-                workplace_type: $('#comboEditWorkPlaceType').val(),
-                workplace_id: $('#comboEditWorkPlaceId').val(),
-                residence: $('#comboEditResidence').val(),
-                status: $("input[name='radioEditStatus']:checked").val()
+                id: $('#firstName').val(),
+                name: $('#middleName').val(),
+                username: $('#lastName').val(),
+                msisdn: $('#fatherFirstName').val(),
+                email: $('#fatherMiddleName').val(),
+                record_type: $('#fatherLastName').val(),
+                gender: $('#cnic').val(),
+                residence_type: $('#email').val(),
+                country_id: $('#altEmail').val()
 
             };
 

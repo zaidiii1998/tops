@@ -1,7 +1,7 @@
 ﻿using System.Web.Mvc;
 using System.Web.Routing;
 
-namespace HU.TOP.WebApp.Helper
+namespace HUTOPS.Helper
 {
     public static class UrlHelperExtensions
     {

@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using System.Web.Mvc;
 
-namespace HU.TOP.WebApp.Controllers
+namespace HUTOPS.Controllers
 {
     public class AccountController : Controller
     {
