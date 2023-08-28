@@ -1,8 +1,7 @@
-﻿
-@{
+﻿@{
     Layout = null;
 }
-
+@model PersonalInformation
 
 <!DOCTYPE html>
 <html lang="en">
@@ -10,6 +9,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="~/Content/Custom/HomeForm.css" rel="stylesheet" />
+    <script src="~/Content/Custom/Custom.js"></script>
     <title>Dashboard</title>
 </head>
 <body>
@@ -20,19 +20,19 @@
             <legend>Personal Info</legend>
             <form action="#" method="post">
                 <label for="firstName">First Name:</label>
-                <input type="text" id="firstName" name="firstName" required><br><br>
+                <input type="text" id="firstName" name="firstName" value="@Model.FirstName" required><br><br>
 
                 <label for="middleName">Middle Name:</label>
-                <input type="text" id="middleName" name="middleName"><br><br>
+                <input type="text" id="middleName" name="middleName" value="@Model.MiddleName"><br><br>
 
                 <label for="lastName">Last Name:</label>
-                <input type="text" id="lastName" name="lastName" required><br><br>
+                <input type="text" id="lastName" name="lastName" value="@Model.LastName" required><br><br>
 
                 <label for="cnic">CNIC:</label>
-                <input type="text" id="cnic" name="cnic" pattern="[0-9]{5}-[0-9]{7}-[0-9]{1}" placeholder="12345-1234567-1" maxlength="13" required><br><br>
+                <input type="text" id="cnic" name="cnic" pattern="[0-9]{5}-[0-9]{7}-[0-9]{1}" placeholder="12345-1234567-1" maxlength="13" value="@Model.CNIC" disabled><br><br>
 
                 <label for="email">Email Address:</label>
-                <input type="email" id="email" name="email" required><br><br>
+                <input type="email" id="email" name="email"value="@Model.EmailAddress" disabled><br><br>
 
                 <label for="altEmail">Alternate Email Address:</label>
                 <input type="email" id="altEmail" name="altEmail"><br><br>
@@ -60,7 +60,7 @@
                 <label for="dob">Date of Birth:</label>
                 <input type="date" id="dob" name="dob" required><br><br>
 
-                <input type="submit" value="Submit">
+                <input type="button" id="editPersonalInfo" value="Submit">
             </form>
         </fieldset>
 
@@ -69,10 +69,10 @@
             <legend>Contact Details</legend>
             <form action="#" method="post">
                 <label for="cellPhone">Cell Phone Number:</label>
-                <input type="tel" id="cellPhone" name="cellPhone" pattern="[0-9]{10}" placeholder="1234567890" required><br><br>
+                <input type="tel" id="cellPhone" name="cellPhone" pattern="[0-9]{10}" placeholder="1234567890" maxlength="12" value="@Model.CellPhoneNumber" required><br><br>
 
                 <label for="altCellPhone">Alternate Cell Phone Number:</label>
-                <input type="tel" id="altCellPhone" name="altCellPhone" pattern="[0-9]{10}" placeholder="1234567890"><br><br>
+                <input type="tel" id="altCellPhone" name="altCellPhone" pattern="[0-9]{10}" maxlength="12" placeholder="1234567890"><br><br>
 
                 <label for="homePhone">Home Phone Number:</label>
                 <input type="tel" id="homePhone" name="homePhone" pattern="[0-9]{10}" placeholder="1234567890"><br><br>
@@ -110,12 +110,12 @@
 
                     <label for="province">Select Province/State:</label>
                     <select id="province" onchange="updateCities();">
-                        <option >Select Provience</option>
+                        <option>Select Provience</option>
                     </select><br><br>
 
                     <label for="city">City:</label>
                     <select id="city">
-                        <option >Select City</option>
+                        <option>Select City</option>
                     </select><br><br>
 
                     <label for="residentialCityOther">Other City:</label>
@@ -261,7 +261,7 @@
 
             // Simulated data (you can replace this with actual data)
             var provincesByCountry = {
-                "pakistan" :["Punjab", "Sindh", "Khyber Pakhtunkhwa", "Balochistan", "Gilgit-Baltistan", "Azad Kashmir"]
+                "pakistan": ["Punjab", "Sindh", "Khyber Pakhtunkhwa", "Balochistan", "Gilgit-Baltistan", "Azad Kashmir"]
             };
 
 
@@ -276,6 +276,50 @@
             }
 
         }
+
+        $('#editPersonalInfo').click(function (e) {
+            e.preventDefault();
+
+            var param = {
+                id: $('#txtEditId').val(),
+                name: $('#txtEditName').val(),
+                username: $('#txtEditUsername').val(),
+                msisdn: $('#txtEditMSISDN').val(),
+                email: $('#txtEditEmail').val(),
+                record_type: $('#comboEditRecordType').val(),
+                gender: $('#comboEditGender').val(),
+                residence_type: $('#comboEditResidence').val(),
+                country_id: $('#comboEditCountry').val(),
+                city_id: $('#comboEditCity').val(),
+                state_id: $('#comboEditState').val(),
+                address: $('#txtEditAddress').val(),
+                postal_code: $('#txtEditPostalCode').val(),
+                official_msisdn: $('#txtEditOfficialMSISDN').val(),
+                official_email: $('#txtEditOfficialEmail').val(),
+                department_id: $('#comboEditDepartment').val(),
+                workplace_type: $('#comboEditWorkPlaceType').val(),
+                workplace_id: $('#comboEditWorkPlaceId').val(),
+                residence: $('#comboEditResidence').val(),
+                status: $("input[name='radioEditStatus']:checked").val()
+
+            };
+
+            CallAsyncService('/Employee/Update', JSON.stringify(param), editUserCallback);
+
+            function editUserCallback(response) {
+                $('#edit_modal').modal('hide');
+                if (response.status) {
+                    mainTable.ajax.reload();
+                    ShowDivSuccess(response.message)
+                }
+                else {
+                    ShowDivError(response.message)
+                }
+                setTimeout(function () { location.reload(); }, 3000);
+            }
+
+        });
+
     </script>
 </body>
 </html>

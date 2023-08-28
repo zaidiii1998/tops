@@ -185,5 +185,62 @@ namespace HU.TOP.WebApp
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<WEB_UserLogin_Result>("WEB_UserLogin", emailParameter, passwordParameter);
         }
+    
+        public virtual int WEB_UpdatePersonalInfo(Nullable<int> id, string fName, string mName, string lName, string fatherFName, string fatherMName, string fatherLName, string gender, string husbandName, string dOB, string cNIC, string email, string alterEmail)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("Id", id) :
+                new ObjectParameter("Id", typeof(int));
+    
+            var fNameParameter = fName != null ?
+                new ObjectParameter("FName", fName) :
+                new ObjectParameter("FName", typeof(string));
+    
+            var mNameParameter = mName != null ?
+                new ObjectParameter("MName", mName) :
+                new ObjectParameter("MName", typeof(string));
+    
+            var lNameParameter = lName != null ?
+                new ObjectParameter("LName", lName) :
+                new ObjectParameter("LName", typeof(string));
+    
+            var fatherFNameParameter = fatherFName != null ?
+                new ObjectParameter("FatherFName", fatherFName) :
+                new ObjectParameter("FatherFName", typeof(string));
+    
+            var fatherMNameParameter = fatherMName != null ?
+                new ObjectParameter("FatherMName", fatherMName) :
+                new ObjectParameter("FatherMName", typeof(string));
+    
+            var fatherLNameParameter = fatherLName != null ?
+                new ObjectParameter("FatherLName", fatherLName) :
+                new ObjectParameter("FatherLName", typeof(string));
+    
+            var genderParameter = gender != null ?
+                new ObjectParameter("Gender", gender) :
+                new ObjectParameter("Gender", typeof(string));
+    
+            var husbandNameParameter = husbandName != null ?
+                new ObjectParameter("HusbandName", husbandName) :
+                new ObjectParameter("HusbandName", typeof(string));
+    
+            var dOBParameter = dOB != null ?
+                new ObjectParameter("DOB", dOB) :
+                new ObjectParameter("DOB", typeof(string));
+    
+            var cNICParameter = cNIC != null ?
+                new ObjectParameter("CNIC", cNIC) :
+                new ObjectParameter("CNIC", typeof(string));
+    
+            var emailParameter = email != null ?
+                new ObjectParameter("Email", email) :
+                new ObjectParameter("Email", typeof(string));
+    
+            var alterEmailParameter = alterEmail != null ?
+                new ObjectParameter("AlterEmail", alterEmail) :
+                new ObjectParameter("AlterEmail", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("WEB_UpdatePersonalInfo", idParameter, fNameParameter, mNameParameter, lNameParameter, fatherFNameParameter, fatherMNameParameter, fatherLNameParameter, genderParameter, husbandNameParameter, dOBParameter, cNICParameter, emailParameter, alterEmailParameter);
+        }
     }
 }

@@ -17,7 +17,7 @@ namespace HU.TOP.WebApp.Controllers
             try
             {
                 var result = DB.WEB_UserLogin(form["email"], form["psw"]).ToList().FirstOrDefault();
-                if (result.Response == 1)
+                if (result.Response != -1)
                 {
                     Session["UserId"] = result.Response.ToString();
                     return RedirectToAction("Index", "Home");
@@ -48,8 +48,9 @@ namespace HU.TOP.WebApp.Controllers
                 if (form["password"] == form["cpassword"])
                 {
                     var result = DB.WEB_CreateUser(form["fname"], form["mname"], form["lname"], form["cnic"], form["number"], form["email"], form["password"]).ToList().FirstOrDefault();
-                    if (result == 1)
+                    if (result != -1)
                     {
+                        Session["UserId"] = result.ToString();
                         return RedirectToAction("Login", "Account");
                     }
                     else

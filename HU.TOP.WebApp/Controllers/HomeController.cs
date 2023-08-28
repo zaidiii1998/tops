@@ -10,7 +10,18 @@ namespace HU.TOP.WebApp.Controllers
         HU_TOPSEntities DB = new HU_TOPSEntities();
         public ActionResult Index()
         {
-            return View(DB.PersonalInformations.ToList());
+            try
+            {
+                int userId = int.Parse(Session["UserId"].ToString());
+                var user = DB.PersonalInformations.ToList();
+                var LoginUser = user.Where(x => x.Id == userId).FirstOrDefault();
+                return View(LoginUser);
+            }
+            catch (System.Exception)
+            {
+                return View();
+            }
+            
         }
     }
 }

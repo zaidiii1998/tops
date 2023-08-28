@@ -192,6 +192,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
+    <Content Include="Content\Custom\Custom.js" />
     <Content Include="Content\Custom\HomeForm.css" />
     <Content Include="Content\Custom\LoginCustom.css" />
     <Content Include="Content\Images\img_avatar2.png" />
