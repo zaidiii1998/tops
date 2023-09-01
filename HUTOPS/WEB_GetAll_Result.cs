@@ -22,7 +22,7 @@ namespace HUTOPS
         public string FatherFirstName { get; set; }
         public string FatherMiddleName { get; set; }
         public string FatherLastName { get; set; }
-        public Nullable<int> Gender { get; set; }
+        public string Gender { get; set; }
         public string HusbandName { get; set; }
         public Nullable<System.DateTime> DateOfBirth { get; set; }
         public string CountyAdd { get; set; }
@@ -32,22 +32,16 @@ namespace HUTOPS
         public string ResidentialAddress { get; set; }
         public string ResidentialCity { get; set; }
         public string ResidentialCityOther { get; set; }
-        public string ResidentialProvience { get; set; }
+        public string ResidentialProvince { get; set; }
         public string ResidentialCountry { get; set; }
         public Nullable<int> ResidentialPostalCode { get; set; }
-        public string PostalAddress { get; set; }
-        public string PostalCity { get; set; }
-        public string PostalCityOther { get; set; }
-        public string PostalProvience { get; set; }
-        public string PostalCountry { get; set; }
-        public Nullable<int> PostalPostalCode { get; set; }
-        public string CNIC { get; set; }
         public string PermanentAddress { get; set; }
         public string PermanentCity { get; set; }
         public string PermanentCityOther { get; set; }
-        public string PermanentProvience { get; set; }
+        public string PermanentProvince { get; set; }
         public string PermanentCountry { get; set; }
         public Nullable<int> PermanentPostalCode { get; set; }
+        public string CNIC { get; set; }
         public string EmailAddress { get; set; }
         public string AlterEmailAddress { get; set; }
         public byte[] Password { get; set; }

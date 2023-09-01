@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="32" height="32" viewBox="0 0 32 32">
+  <defs>
+    <clipPath id="clip-Access_permission">
+      <rect width="32" height="32"/>
+    </clipPath>
+  </defs>
+  <g id="Access_permission" data-name="Access permission" clip-path="url(#clip-Access_permission)">
+    <rect id="Rectangle_235" data-name="Rectangle 235" width="32" height="32" rx="4" fill="#f8f1f9"/>
+    <path id="Icon_awesome-lock" data-name="Icon awesome-lock" d="M12.5,7h-.75V4.75a4.75,4.75,0,0,0-9.5,0V7H1.5A1.5,1.5,0,0,0,0,8.5v6A1.5,1.5,0,0,0,1.5,16h11A1.5,1.5,0,0,0,14,14.5v-6A1.5,1.5,0,0,0,12.5,7ZM9.25,7H4.75V4.75a2.25,2.25,0,0,1,4.5,0Z" transform="translate(9 8)" fill="#5c2868"/>
+  </g>
+</svg>

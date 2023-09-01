@@ -1,48 +1,58 @@
-﻿@{ 
-    Layout = null;
+﻿@{
+    Layout = "~/Views/Shared/_loginLayout.cshtml";
 }
 
-<!DOCTYPE html>
-<html>
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="~/Content/Custom/LoginCustom.css" rel="stylesheet" />
-</head>
-<body>
-
-    <div id="model" class="modal">
-
-        <form class="modal-content animate" method="post">
-            <div class="imgcontainer">
-                <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
-                <img src="~/Content/Images/img_avatar2.png" alt="Avatar" class="avatar">
-            </div>
-
-            <div class="container">
-                <label for="email"><b>Email</b></label>
-                <input type="email" placeholder="Enter Email" name="email"maxlength="25" required>
-
-                <label for="psw"><b>Password</b></label>
-                <input type="password" placeholder="Enter Password" maxlength="25" name="psw" required>
-                @if(@ViewBag.Result+"" != "") { 
-                <div class="container signin">
-                    <p style="color:red;">@ViewBag.Result</p>
+<section class="signInWrap">
+    <div class="container-fluid p-0">
+        <div class="row m-0">
+            <div class="col-lg-6 p-0 none991">
+                <div class="imgWrap">
+                    <img src="~/Content/img/image-content.jpg" alt="Alternate Text" />
                 </div>
-                }
-                <button type="submit">Login</button>
             </div>
-            <div class="container signin">
-                <p>Create new account <a href="@Url.Action("Register","Account")">Sign Up</a>.</p>
+            <div class="col-lg-6 p-0">
+                <div class="contentWrap">
+                    <br /><br /><br /><br />
+                    <img src="~/Content/img/mct-logo.svg" alt="Alternate Text" />
+                    <h1>Testimony for student diverse interest, talent and skills !</h1>
+                    <p>A purpose-built digital platform to collect, verify and report student meta-curricular experience during their tenure at Habib University.</p>
+                    <form method="post">
+                        @Html.AntiForgeryToken()
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="email"><b>Email</b></label>
+                                    <input class="form-control" type="email" placeholder="Enter Email" name="email" maxlength="25" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="psw"><b>Password</b></label>
+                                    <input class="form-control" type="password" placeholder="Enter Password" maxlength="25" name="psw" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            @if (@ViewBag.Result + "" != "")
+                            {
+                                <p class="alert-danger">@ViewBag.Result</p>
+                            }
+                            <button class="savebtn global-btn-purple  float-right" type="submit">Login</button>
+                        </div>
+                        <div class="row">
+                            <p>Create new account <a href="@Url.Action("Register","Account")">Sign Up</a>.</p>
+                        </div>
+                    </form>
+                </div>
             </div>
-
-        </form>
+        </div>
+        <div class="row m-0 justify-content-end">
+            <div class="col-lg-6 p-0 justify-content-flex-end">
+                <p class="loginFooter">© Habib University <span>|</span> Powered by <a href="#" class="hoverUnderLine">HUIT</a> (ISO 27001 Certified)</p>
+            </div>
+        </div>
     </div>
+</section>
 
-    <script>
-// Get the modal
-        document.getElementById('model').style.display = 'block';
-
-    </script>
-
-</body>
-</html>

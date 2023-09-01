@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="32" height="32" viewBox="0 0 32 32">
+  <defs>
+    <clipPath id="clip-Manage_transcript">
+      <rect width="32" height="32"/>
+    </clipPath>
+  </defs>
+  <g id="Manage_transcript" data-name="Manage transcript" clip-path="url(#clip-Manage_transcript)">
+    <g id="Group_262" data-name="Group 262" transform="translate(394 -2265)">
+      <rect id="Rectangle_232" data-name="Rectangle 232" width="32" height="32" rx="4" transform="translate(-394 2265)" fill="#f8f1f9"/>
+      <g id="Group_63" data-name="Group 63" transform="translate(-390 2269)">
+        <path id="Path_364" data-name="Path 364" d="M4,20a2,2,0,0,0,2,2h8a2,2,0,0,0,2-2H8a2,2,0,0,1-2-2V6A2,2,0,0,0,4,8Z" fill="#5c2868"/>
+        <path id="Path_365" data-name="Path 365" d="M18,18H9a1,1,0,0,1-1-1V4a2,2,0,0,1,2-2h5.172a2,2,0,0,1,1.414.586l2.828,2.828A2,2,0,0,1,20,6.828V16A2,2,0,0,1,18,18ZM14,4.414V7a1,1,0,0,0,1,1h2.586a1,1,0,0,0,.707-1.707L15.707,3.707A1,1,0,0,0,14,4.414Z" fill="#5c2868" fill-rule="evenodd"/>
+      </g>
+    </g>
+  </g>
+</svg>

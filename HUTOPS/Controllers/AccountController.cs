@@ -11,7 +11,7 @@ namespace HUTOPS.Controllers
         {
             return View();
         }
-        [HttpPost]
+        [HttpPost, ValidateAntiForgeryToken]
         public ActionResult Login(FormCollection form)
         {
             try
@@ -19,7 +19,9 @@ namespace HUTOPS.Controllers
                 var result = DB.WEB_UserLogin(form["email"], form["psw"]).ToList().FirstOrDefault();
                 if (result.Response != -1)
                 {
+                    var user = DB.PersonalInformations.ToList().Where(x => x.Id == result.Response).FirstOrDefault();
                     Session["UserId"] = result.Response.ToString();
+                    Session["Name"] = user.FirstName + " " + user.LastName;
                     return RedirectToAction("Index", "Home");
                 }
                 else
@@ -40,7 +42,7 @@ namespace HUTOPS.Controllers
         {
             return View();
         }
-        [HttpPost]
+        [HttpPost, ValidateAntiForgeryToken]
         public ActionResult Register(FormCollection form)
         {
             try
@@ -48,16 +50,18 @@ namespace HUTOPS.Controllers
                 if (form["password"] == form["cpassword"])
                 {
                     var result = DB.WEB_CreateUser(form["fname"], form["mname"], form["lname"], form["cnic"], form["number"], form["email"], form["password"]).ToList().FirstOrDefault();
-                    if (result != -1)
+                    if (result != 0)
                     {
+                        var user = DB.PersonalInformations.ToList().Where(x => x.Id ==  result).FirstOrDefault();
                         Session["UserId"] = result.ToString();
-                        return RedirectToAction("Login", "Account");
+                        Session["Name"] = user.FirstName + " " + user.LastName;
+                        return RedirectToAction("Index", "Home");
                     }
                     else
                     {
                         ViewBag.Result = "Registration Failed, Please try again later";
-                        return View();
                     }
+                    return View();
                 }
                 else
                 {
@@ -70,6 +74,11 @@ namespace HUTOPS.Controllers
                 ViewBag.Result = "Registration Failed, Please try again later";
                 return View();
             }
+        }
+        public ActionResult LogOut()
+        {
+            Session.Remove("UserId");
+            return View("Login");
         }
     }
 }

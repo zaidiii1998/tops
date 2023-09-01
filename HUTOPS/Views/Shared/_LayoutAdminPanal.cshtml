@@ -1,0 +1,214 @@
+﻿
+@using HUTOPS.Helper
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>@Page.Title - HUTOPS</title>
+    @RenderSection("head", required: false)
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        html, body {
+            height: 100%;
+        }
+
+        body {
+            display: flex;
+            flex-flow: column;
+        }
+
+        header {
+            flex: 0 1 auto;
+        }
+
+        .dashboardWrapper {
+            flex: 1 1 auto;
+        }
+    </style>
+    <script src="~/Scripts/jquery-3.5.1.js"></script>
+
+    <script src="~/Scripts/notify.js"></script>
+    <script src="~/Scripts/notify.min.js"></script>
+
+    <script src="~/Scripts/Custom.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.6/jquery.inputmask.min.js"></script>
+</head>
+<body class="adminDashboard">
+
+    <div class="overlay" style="display:none;">
+        <div class="preloader">
+            <svg viewBox="0 0 102 102" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path class="big-circle" d="M101 51C101 78.6142 78.6142 101 51 101C23.3858 101 1 78.6142 1 51" stroke="#252525" stroke-width="2" />
+                <path class="small-circle" d="M91 51C91 28.9086 73.0914 11 51 11C28.9086 11 11 28.9086 11 51" stroke="#252525" stroke-width="2" />
+            </svg>
+        </div>
+    </div>
+    <header class="dashboardHeader">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <div class="col-xl-2 col-lg-3 col-md-3">
+                    <div class="LogoWraper">
+                        <img src="~/Content/img/mct-logo.svg" alt="Alternate Text" />
+                    </div>
+                </div>
+                <div class="col-xl-10 col-lg-9 col-md-9">
+                    <div class="rightMenu">
+                        <ul>
+                            @*<li class="none767"><a class="hoverUnderLine" href="/admin/AdminManual">Help?</a></li>*@
+                            <li class="logoutDropWrap">
+                                <div class="nameWrapper">
+                                    @{
+                                        //var userClaims = User.Identity as System.Security.Claims.ClaimsIdentity;
+                                        //string email = userClaims?.FindFirst("preferred_username")?.Value;
+
+                                        //var role = Session["EmployeeRole"]?.ToString();
+                                        //if (!string.IsNullOrWhiteSpace(role) && role.Equals("Admin"))
+                                        //{
+                                        //    role = "Admin";
+                                        //}
+                                        //else
+                                        //{
+                                        //    role = "Supervisor";
+                                        //}
+                                    }
+                                    @*<h4 class="designation">Role: @role</h4>*@
+                                    <h5 class="userName"><i class="fa-solid fa-user" style="font-size: 15px;margin-right: 10px;"></i>  @Session["Name"]</h5>
+                                </div>
+
+                                <ul class="logoutDrop">
+                                    <li>
+                                        @Html.ActionLink("Logout", "LogOut", "Account", new { area = "" }, new { @class = "global-btn-purple" })
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="dashboardWrapper">
+
+        @*@if (!string.IsNullOrWhiteSpace(role) && role.Equals("Admin"))
+            {*@
+        <div id="sidebarDashboard">
+            <span id="expandSideBarBtn"><i class="fas fa-angle-right"></i></span>
+            <ul id="accordionmenu" class="accordionmenu">
+                <li><a href="/Home/Index" class="linkNavSideBar @Url.IsLinkActive("Index","Home")"><i class="fa-solid fa-home" style="font-size: 15px;margin-right: 10px;"></i> Personal Information</a></li>
+                <li><a href="/Education/Index" class="linkNavSideBar @Url.IsLinkActive("Index","Education")"><i class="fa-solid fa-school" style="font-size: 15px;margin-right: 10px;"></i> Educational Information</a></li>
+                <li><a href="/Documents/Index" class="linkNavSideBar @Url.IsLinkActive("Index","Documents")"><i class="fa-solid fa-file" style="font-size: 15px;margin-right: 10px;"></i>Documents</a></li>
+                <li><a href="/Declaration/Index" class="linkNavSideBar @Url.IsLinkActive("Index","Declaration")"><i class="fa-solid fa-book" style="font-size: 15px;margin-right: 10px;"></i>Declaration</a></li>
+                <!--<li class="parentlinav">
+                <div class="link linkNavSideBar"><img src="~/Content/img/dashboard-icons/access-permission.svg" alt="Alternate Text" />Access Permissions <i class="fa fa-chevron-down"></i></div>
+                <ul class="sidebar_submenu" style="display: none;">
+                    <li><a class="submenulinkNav" href="/Admin/AccessPermissionList">Student Access</a></li>-->
+                @*<li><a href="#">Bulk Update Delete Access</a></li>*@
+                <!--<li><a class="submenulinkNav" href="/Admin/AddUser">User Permission</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <div class="link linkNavSideBar"><img src="~/Content/img/dashboard-icons/categories.svg" alt="Alternate Text" />Settings <i class="fa fa-chevron-down"></i></div>
+                    <ul class="sidebar_submenu" style="display: none;">
+                        <li><a class="submenulinkNav" href="/Category/Index">Categories</a></li>
+                        <li><a class="submenulinkNav" href="/Position/Index">Positions</a></li>
+                        <li><a class="submenulinkNav" href="/Activity/Index">Activities</a></li>
+                    </ul>
+                </li>
+                <li><a href="/User/Index" class="linkNavSideBar"><img src="~/Content/img/dashboard-icons/all-users.svg" alt="Alternate Text" />All Users</a></li>
+                <li class="block767"><a class="linkNavSideBar" href="/admin/AdminManual"><img src="~/Content/img/dashboard-icons/help.svg" alt="help-icon" /> Help</a></li>-->
+
+            </ul>
+        </div>
+        @*}*@
+        <div id="contentWrapperDashboard">
+            @RenderBody()
+        </div>
+    </div>
+
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+    <script>
+        window.addEventListener('DOMContentLoaded', function () {
+            function Accordion(el, multiple) {
+                this.el = el || {};
+                this.multiple = multiple || false;
+                var links = this.el.getElementsByClassName('link');
+                for (var i = 0; i < links.length; i++) {
+                    links[i].addEventListener('click', this.dropdown.bind(this));
+                }
+            }
+
+            Accordion.prototype.dropdown = function (e) {
+                var el = e.target;
+                var next = el.nextElementSibling;
+                next.style.display = (next.style.display === 'block') ? 'none' : 'block';
+
+                var parent = el.parentElement;
+                parent.classList.toggle('open');
+
+                if (!this.multiple) {
+                    var siblings = parent.parentElement.getElementsByClassName('sidebar_submenu');
+                    for (var i = 0; i < siblings.length; i++) {
+                        if (siblings[i] !== next) {
+                            siblings[i].style.display = 'none';
+                            siblings[i].parentElement.classList.remove('open');
+                        }
+                    }
+                }
+            };
+
+            var accordionmenu = new Accordion(document.getElementById('accordionmenu'), false);
+        });
+
+    </script>
+    <script>
+        // Get a reference to the sidebar element
+        const sidebar = document.getElementById('sidebarDashboard');
+
+        // Variable to track the previous scroll position
+        let previousScrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+
+        // Function to handle scroll event
+        function handleScroll() {
+            // Get the current scroll position
+            const currentScrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+
+            // Get the screen width
+            const screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+
+            if (screenWidth < 767) {
+                // Screen width is less than 767px
+                if (currentScrollPosition >= 90) {
+                    // Add the class to the sidebar
+                    sidebar.classList.add('scrolled');
+                } else {
+                    // Remove the class from the sidebar
+                    sidebar.classList.remove('scrolled');
+                }
+            } else {
+                // Screen width is 767px or greater
+                if (currentScrollPosition >= 100) {
+                    // Add the class to the sidebar
+                    sidebar.classList.add('scrolled');
+                } else {
+                    // Remove the class from the sidebar
+                    sidebar.classList.remove('scrolled');
+                }
+            }
+
+            // Update the previous scroll position
+            previousScrollPosition = currentScrollPosition;
+        }
+
+        // Attach the scroll event listener
+        window.addEventListener('scroll', handleScroll);
+
+    </script>
+
+</body>
+</html>

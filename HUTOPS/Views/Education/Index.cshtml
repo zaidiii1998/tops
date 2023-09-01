@@ -1,0 +1,401 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_LayoutAdminPanal.cshtml";
+    Page.Title = "Index";
+}
+
+<div class="container-fluid">
+    <div class="boxWraper infoBox">
+        <div class="headBox">
+            <h2>Education</h2>
+        </div>
+        <form>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label for="currentLevel">Your Current Level of Study:</label>
+                        <select class="form-control" id="currentLevel" name="currentLevel" onchange="ShowHideField('divUniName','currentLevel','Already enrolled in a University')">
+                            <option value="">Select Value </option>
+                            <option value="HSSC II in progress">HSSC II in progress</option>
+                            <option value="HSSC II Completed">HSSC II Completed</option>
+                            <option value="Already enrolled in a University">Already enrolled in a University</option>
+                        </select><br><br>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group" id="divUniName">
+                        <label for="universityName">University Name:</label>
+                        <input class="form-control" type="text" id="universityName" name="universityName"><br><br>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        <label for="startingYear">Starting Year:</label>
+                        <select class="form-control" id="startingYear" name="startingYear">
+                            <!-- Options for years, you can generate these dynamically with JavaScript -->
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        <label for="completionYear">Completion Year:</label>
+                        <select class="form-control" id="completionYear" name="completionYear">
+                            <!-- Options for years, you can generate these dynamically with JavaScript -->
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        <label for="collegeName">Current College/Last College Name:</label>
+                        <input class="form-control" type="text" id="collegeName" name="collegeName">
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        <label for="collegeAddress">College Address with City Name:</label>
+                        <textarea class="form-control" id="collegeAddress" name="collegeAddress" rows="2"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label for="boardOfEducation">Board Of Education:</label>
+                        <select class="form-control" id="boardOfEducation" name="boardOfEducation" onchange="GetGroupList(this.id)">
+                            <!-- Add more options as needed -->
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label for="groupOfStudy">Group Of Studies</label>
+                        <select class="form-control" id="groupOfStudy" name="groupOfStudy" onchange="GetSubjectList(this.id)">
+                            <option value="">Select Group</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label for="hsscPercentage">Overall HSSC Percentage:</label>
+                        <input class="form-control" type="text" id="hsscPercentage" name="hsscPercentage"><br><br>
+                    </div>
+                </div>
+            </div>
+            <!-- Secondary Education Section -->
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label for="secondarySchoolName">Secondary Education School Name:</label>
+                        <input class="form-control" type="text" id="secondarySchoolName" name="secondarySchoolName"><br><br>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label for="secondarySchoolAddress">Secondary Education School Address with City Name:</label>
+                        <textarea class="form-control" type="text" id="secondarySchoolAddress" name="secondarySchoolAddress" rows="2"></textarea>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label for="sscPercentage">Overall SSC Percentage:</label>
+                        <input class="form-control" type="text" id="sscPercentage" name="sscPercentage"><br><br>
+                    </div>
+                </div>
+            </div>
+            <!-- Habib University Section -->
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label>Which HU School are you planning to apply to at Habib University?</label><br>
+                        <input type="radio" id="dhananiSchool" name="huSchool" value="dhanani" onclick="loadPrograms(this.value)">
+                        <label for="dhananiSchool">Dhanani School of Science and Engineering</label><br>
+                        <input type="radio" id="artsSchool" name="huSchool" value="arts" onclick="loadPrograms(this.value)">
+                        <label for="artsSchool">School of Arts, Humanities and Social Sciences</label><br><br>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label>Which Degree Program you are planning to pursue at Habib University?</label><br>
+                        <!-- This section will be updated based on the selection in the previous question -->
+                        <!-- You can use JavaScript to update the options based on the selection -->
+                        <select class="form-control" id="degreeProgram" name="degreeProgram">
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+        </form>
+        <h2>Subject Details</h2>
+
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="form-group">
+                    <label>Subject</label>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="form-group">
+                    <label>Obtain Marks</label>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="form-group">
+                    <label>Max Marks</label>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="form-group">
+                    <label>Grade</label>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <form method="post" id="formSubjects">
+                    <div id="divSubjects">
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <button type="button" class="global-btn-purple float-right" onclick="AddRow();"><i class="fa fa-plus"></i></button>
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-lg-12">
+                <input class="savebtn global-btn-purple  float-right" type="button" id="editEducation" value="Submit">
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $('#divUniName').hide();
+
+    $('#hsscPercentage').inputmask("99.99%");
+    $('#sscPercentage').inputmask("99.99%");
+
+    LoadYear('startingYear');
+    LoadYear('completionYear');
+    GetBoardList();
+
+    function ShowHideField(divId, selectId, value) {
+        var select = document.getElementById(selectId);
+        if (select.value === value) {
+            $('#' + divId).show();
+        } else {
+            $('#' + divId).hide();
+        }
+    }
+
+    function LoadYear(selectId) {
+        var comboYear = document.getElementById(selectId);
+        var option = document.createElement("option");
+        option.value = "";
+        option.text = "Select Year";
+        comboYear.appendChild(option);
+        for (var j = 2023; j > 1950; j--) {
+            var option = document.createElement("option");
+            option.value = j;
+            option.text = j;
+            comboYear.appendChild(option);
+        }
+    }
+
+    function GetBoardList() {
+        CallAsyncService('/Common/GetBoardList', null, GetBoardListCallback);
+    }
+    function GetBoardListCallback(response) {
+        $('#boardOfEducation').html('');
+        $('#boardOfEducation').append(new Option("Select Board", "", false, false));
+        $.each(response, function (key, value) {
+            $('#boardOfEducation').append(new Option(value.Name, value.Id, false, false));
+
+        })
+    }
+
+    function GetGroupList(BoardId) {
+        CallAsyncService('/Common/GetGroupList?BoardId=' + $('#' + BoardId).val(), null, GetGroupListCallback);
+    }
+    function GetGroupListCallback(response) {
+        $('#groupOfStudy').html('');
+        $('#groupOfStudy').append(new Option("Select Group", "", false, false));
+        $.each(response, function (key, value) {
+            $('#groupOfStudy').append(new Option(value.Name, value.Id, false, false));
+
+        })
+    }
+
+    function GetSubjectList(GroupId) {
+
+        CallAsyncService('/Common/GetSubjectList?GroupId=' + $('#' + GroupId).val(), null, GetSubjectListCallback);
+    }
+    function GetSubjectListCallback(response) {
+        $('#divSubjects').html('');
+        var rowIndex = 0;
+        $.each(response, function (key, value) {
+            rowIndex++;
+            var newRow = document.createElement("div");
+            newRow.className = "row";
+
+            for (let i = 1; i <= 4; i++) {
+                var newCol = document.createElement("div");
+                newCol.className = "col-lg-3";
+                var newcontrol = document.createElement("div");
+                newcontrol.className = "form-group";
+
+                var input = document.createElement("input");
+                input.type = "text";
+                input.className = "form-control";
+                if (i === 1) {
+                    input.classList.add("SubjectName");
+                    input.value = value.Name;
+                } else if (i === 2) {
+                    input.classList.add("SubjectObtain");
+                } else if (i === 3) {
+                    input.classList.add("SubjectTotal");
+                } else {
+                    input.classList.add("SubjectGrade");
+                }
+                newcontrol.appendChild(input);
+                newCol.appendChild(newcontrol);
+                newRow.appendChild(newCol);
+            }
+
+            $('#divSubjects').append(newRow);
+        })
+        $('.marks').inputmask("999");
+
+    }
+
+    function AddRow() {
+        var newRow = document.createElement("div");
+        newRow.className = "row";
+
+        for (let i = 1; i <= 4; i++) {
+            var newCol = document.createElement("div");
+            newCol.className = "col-lg-3";
+            var newcontrol = document.createElement("div");
+            newcontrol.className = "form-group";
+
+            var input = document.createElement("input");
+            input.type = "text";
+            input.className = "form-control";
+            if (i === 1) {
+                input.classList.add("SubjectName");
+            } else if (i === 2) {
+                input.classList.add("SubjectObtain");
+            } else if (i === 3) {
+                input.classList.add("SubjectTotal");
+            } else {
+                input.classList.add("SubjectGrade");
+            }
+            newcontrol.appendChild(input);
+            newCol.appendChild(newcontrol);
+            newRow.appendChild(newCol);
+        }
+
+        $('#divSubjects').append(newRow);
+    }
+    function loadPrograms(radioValue) {
+        const selectBox = document.getElementById('degreeProgram');
+        selectBox.innerHTML = ''; // Clear previous options
+
+        if (radioValue === 'dhanani') {
+            const programs = ['BS Electrical Engineering', 'BS Computer Science', 'BS Computer Engineering'];
+            const defaultOption = document.createElement('option');
+            defaultOption.text = 'Select Program';
+            selectBox.add(defaultOption);
+            programs.forEach(programs => {
+                const option = document.createElement('option');
+                option.value = programs;
+                option.text = programs;
+                selectBox.add(option);
+            });
+        } else if (radioValue === 'arts') {
+            const programs = ['BA (Honours) Communication and Design', 'BSc (Honours) Social Development and Policy', 'BA (Honors) Comparative Humanities'];
+            const defaultOption = document.createElement('option');
+            defaultOption.text = 'Select Program';
+            selectBox.add(defaultOption);
+            programs.forEach(programs => {
+                const option = document.createElement('option');
+                option.value = programs;
+                option.text = programs;
+                selectBox.add(option);
+            });
+        } else {
+            const defaultOption = document.createElement('option');
+            defaultOption.text = 'Select Program';
+            selectBox.add(defaultOption);
+        }
+    }
+
+    $('#editEducation').click(function (e) {
+        e.preventDefault();
+        var SubjectName = [];
+        var SubjectObtain = [];
+        var SubjectTotal = [];
+        var SubjectGrade = [];
+
+        // Iterate over input elements with the class "my-input"
+        $(".SubjectName").each(function () {
+            SubjectName.push($(this).val());
+        });
+        $(".SubjectObtain").each(function () {
+            SubjectObtain.push($(this).val());
+        });
+        $(".SubjectTotal").each(function () {
+            SubjectTotal.push($(this).val());
+        });
+        $(".SubjectGrade").each(function () {
+            SubjectGrade.push($(this).val());
+        });
+
+
+
+        var param = {
+            CurrentLevelOfEdu: $('#currentLevel').val(),
+            CurrentCollege: $('#collegeName').val(),
+            CollegeAddress: $('#collegeAddress').val(),
+            HSSCPercentage: $('#hsscPercentage').val(),
+            CollegeStartDate: $('#startingYear').val(),
+            CollegeCompletionDate: $('#completionYear').val(),
+            BoardOfEdu: $('#boardOfEducation').val(),
+
+            GroupOfStudy: $('#groupOfStudy').val(),
+            SchoolName: $('#secondarySchoolName').val(),
+            SchoolAddress: $('#secondarySchoolAddress').val(),
+            SSCPercentage: $('#sscPercentage').val(),
+            UniversityName: $('#universityName').val(),
+            IntendedProgram: $('#degreeProgram').val(),
+
+            SubjectName: SubjectName,
+            SubjectObtain: SubjectObtain,
+            SubjectTotal: SubjectTotal,
+            SubjectGrade: SubjectGrade
+        };
+
+        CallAsyncService('/Education/Save', JSON.stringify(param), editEducationCallback);
+
+        function editEducationCallback(response) {
+            debugger
+            if (response.status) {
+                ShowDivSuccess(response.message)
+            }
+            else {
+                ShowDivError(response.message)
+            }
+        }
+
+    });
+
+</script>
+
+    

@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="32" height="32" viewBox="0 0 32 32">
+  <defs>
+    <clipPath id="clip-dashboard_home">
+      <rect width="32" height="32"/>
+    </clipPath>
+  </defs>
+  <g id="dashboard_home" data-name="dashboard home" clip-path="url(#clip-dashboard_home)">
+    <g id="Group_260" data-name="Group 260" transform="translate(394 -2203)">
+      <rect id="Rectangle_231" data-name="Rectangle 231" width="32" height="32" rx="4" transform="translate(-394 2203)" fill="#f8f1f9"/>
+      <path id="Path_363" data-name="Path 363" d="M.347,6.56,9.167.247a1.528,1.528,0,0,1,1.666,0L19.653,6.56c.742.531.217,1.44-.833,1.44H18v9a1,1,0,0,1-1,1H13a1,1,0,0,1-1-1V13a1,1,0,0,0-1-1H9a1,1,0,0,0-1,1v4a1,1,0,0,1-1,1H3a1,1,0,0,1-1-1V8H1.181C.131,8-.395,7.092.347,6.56Z" transform="translate(-388 2210)" fill="#5c2868"/>
+    </g>
+  </g>
+</svg>

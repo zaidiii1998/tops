@@ -1,271 +1,489 @@
 ﻿@{
-    Layout = null;
+    Layout = "~/Views/Shared/_LayoutAdminPanal.cshtml";
+    Page.Title = "Personal Information";
 }
+
 @model PersonalInformation
+<style>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="~/Content/Custom/HomeForm.css" rel="stylesheet" />
-    <script src="~/Content/Custom/Custom.js"></script>
-    <title>Dashboard</title>
-</head>
-<body>
-    <h1>Personal Information</h1>
-    <!-- Contact Details Section -->
-    <div class="mainformDiv">
-        <fieldset>
-            <legend>Personal Info</legend>
-            <form action="#" method="post">
+    .styled-checkbox {
+        display: none;
+    }
 
-                <label for="firstName">First Name:</label>
-                <input type="text" id="firstName" name="firstName" value="@Model.FirstName" required>
+        .styled-checkbox + .checkbox-label:before {
+            content: '\2713'; /* Checkmark symbol */
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 5px;
+            font-size: 18px;
+            color: #333;
+            border: 1px solid #333;
+            width: 20px;
+            height: 20px;
+            text-align: center;
+            line-height: 18px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
 
-                <label for="middleName">Middle Name:</label>
-                <input type="text" id="middleName" name="middleName" value="@Model.MiddleName">
+        /* Style the custom checkbox when checked */
+        .styled-checkbox:checked + .checkbox-label:before {
+            background-color: #333;
+            color: white;
+        }
 
-                <label for="lastName">Last Name:</label>
-                <input type="text" id="lastName" name="lastName" value="@Model.LastName" required><br><br>
+        /* Hover effect for the custom checkbox */
+        .styled-checkbox + .checkbox-label:hover:before {
+            background-color: #f0f0f0;
+            color: #333;
+        }
 
-                <label for="fatherFirstName">Father's First Name:</label>
-                <input type="text" id="fatherFirstName" name="fatherFirstName" value="@Model.FatherFirstName" required><br><br>
+        /* Focus effect for the custom checkbox */
+        .styled-checkbox:focus + .checkbox-label:before {
+            box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.5);
+        }
+</style>
+<div class="container-fluid">
+    <div class="boxWraper infoBox">
+        <div class="headBox">
+            <h2>Personal Information</h2>
+        </div>
+        <form action="#" method="post">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label for="firstName">First Name:</label>
+                        <input class="form-control" type="text" id="firstName" name="firstName" value="@Model.FirstName" required>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label for="middleName">Middle Name:</label>
+                        <input class="form-control" type="text" id="middleName" name="middleName" value="@Model.MiddleName">
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label for="lastName">Last Name:</label>
+                        <input class="form-control" type="text" id="lastName" name="lastName" value="@Model.LastName" required><br><br>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label for="fatherFirstName">Father's First Name:</label>
+                        <input class="form-control" type="text" id="fatherFirstName" name="fatherFirstName" value="@Model.FatherFirstName" required><br><br>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label for="fatherMiddleName">Father's Middle Name:</label>
+                        <input class="form-control" type="text" id="fatherMiddleName" name="fatherMiddleName" value="@Model.FatherMiddleName"><br><br>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label for="fatherLastName">Father's Last Name:</label>
+                        <input class="form-control" type="text" id="fatherLastName" name="fatherLastName" value="@Model.FatherLastName" required><br><br>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label for="cnic">CNIC:</label>
+                        <input class="form-control" type="text" id="cnic" name="cnic" pattern="[0-9]{5}-[0-9]{7}-[0-9]{1}" placeholder="12345-1234567-1" value="@Model.CNIC" maxlength="13" value="@Model.CNIC" disabled><br><br>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label for="email">Email Address:</label>
+                        <input class="form-control" type="email" id="email" name="email" value="@Model.EmailAddress" disabled><br><br>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label for="altEmail">Alternate Email Address:</label>
+                        <input class="form-control" type="email" id="altEmail" name="altEmail" value="@Model.AlterEmailAddress"><br><br>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label>Gender:</label>
+                        <select id="gender" class="custom-select">
+                            <option value="">Select Gender</option>
+                            <option value="M">Male</option>
+                            <option value="F">Female</option>
+                            <option value="T">Prefer not to self-identify</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label for="husbandName">Husband's Name:</label>
+                        <input class="form-control" type="text" id="husbandName" name="husbandName">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label for="dob">Date of Birth:</label>
+                    </div>
+                </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <select class="form-control" id="dobDay" style="max-width: 100px;" name="dobDay">
+                                <option value="">Day</option>
+                                <option value="01">01</option>
+                                <option value="02">02</option>
+                                <option value="03">03</option>
+                                <option value="04">04</option>
+                                <option value="05">05</option>
+                                <option value="06">06</option>
+                                <option value="07">07</option>
+                                <option value="08">08</option>
+                                <option value="09">09</option>
+                                <option value="10">10</option>
+                                <option value="11">11</option>
+                                <option value="12">12</option>
+                                <option value="13">13</option>
+                                <option value="14">14</option>
+                                <option value="15">15</option>
+                                <option value="16">16</option>
+                                <option value="17">17</option>
+                                <option value="18">18</option>
+                                <option value="19">19</option>
+                                <option value="20">20</option>
+                                <option value="21">21</option>
+                                <option value="22">22</option>
+                                <option value="23">23</option>
+                                <option value="24">24</option>
+                                <option value="25">25</option>
+                                <option value="26">26</option>
+                                <option value="27">27</option>
+                                <option value="28">28</option>
+                                <option value="29">29</option>
+                                <option value="30">30</option>
+                                <option value="31">31</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <select class="form-control" id="dobMonth" class="custom-select" style="max-width: 100px;" name="dobMonth">
+                                <option value="">Select Month</option>
+                                <option value="01">January</option>
+                                <option value="02">February</option>
+                                <option value="03">March</option>
+                                <option value="04">April</option>
+                                <option value="05">May</option>
+                                <option value="06">June</option>
+                                <option value="07">July</option>
+                                <option value="08">Augest</option>
+                                <option value="09">September</option>
+                                <option value="10">Octuber</option>
+                                <option value="11">November</option>
+                                <option value="12">December</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <select class="form-control" id="dobYear" style="max-width: 100px;" name="dobYear">
+                                <!-- Add options for years as needed -->
+                                <option value="">Select Year</option>
+                            </select>
+                        </div>
+                    </div>
 
-                <label for="fatherMiddleName">Father's Middle Name:</label>
-                <input type="text" id="fatherMiddleName" name="fatherMiddleName" value="@Model.FatherMiddleName"><br><br>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <input class="savebtn global-btn-purple  float-right" type="button" id="editPersonalInfo" value="Submit">
+                    </div>
+                </div>
+</form>
 
-                <label for="fatherLastName">Father's Last Name:</label>
-                <input type="text" id="fatherLastName" name="fatherLastName" value="@Model.FatherLastName" required><br><br>
+        <!-- Contact Details Section -->
+        <div class="headBox">
+            <h2>Contact Details</h2>
+        </div>
+        <form action="#" method="post">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="form-group">
+                        <label for="cellPhone">Cell Phone Number:</label>
+                        <input class="form-control" type="tel" id="cellPhone" name="cellPhone" pattern="[0-9]{10}" placeholder="1234567890" maxlength="12" value="@Model.CellPhoneNumber" disabled><br><br>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <input type="checkbox" id="differentNumbers" class="styled-checkbox" name="differentNumbers">
+                    <label for="differentNumbers" class="checkbox-label" style="width: 75%;">Check if WhatsApp number is different from primary mobile number</label>
+                    <br /><br />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4">
+                    <div id="textWhatsApp">
+                        <div class="form-group">
+                            <label for="whatsappNumber">WhatsApp Number:</label>
+                            <input class="form-control" type="tel" id="whatsappNumber" name="whatsappNumber" pattern="[0-9]{10}" value="@Model.WhatsAppNumber" placeholder="1234567890"><br><br>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label for="altCellPhone">Alternate Cell Phone Number:</label>
+                        <input class="form-control" type="tel" id="altCellPhone" name="altCellPhone" pattern="[0-9]{10}" maxlength="12" value="@Model.AlternateCellPhoneNumber" placeholder="1234567890"><br><br>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label for="homePhone">Home Phone Number:</label>
+                        <input class="form-control" type="tel" id="homePhone" name="homePhone" pattern="[0-9]{10}" value="@Model.HomePhoneNumber" placeholder="1234567890"><br><br>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label for="altLandline">Alternate Landline Number:</label>
+                        <input class="form-control" type="tel" id="altLandline" name="altLandline" pattern="[0-9]{10}" value="@Model.AlternateLandline" placeholder="1234567890"><br><br>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label for="guardianCellPhone">Guardian Cell Phone Number:</label>
+                        <input class="form-control" type="tel" id="guardianCellPhone" name="guardianCellPhone" pattern="[0-9]{10}" value="@Model.GuardianCellPhoneNumber" placeholder="1234567890"><br><br>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label for="guardianEmail">Guardian Email Address:</label>
+                        <input class="form-control" type="email" id="guardianEmail" name="guardianEmail" value="@Model.GuardianEmailAddress"><br><br>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <input type="button" class="savebtn global-btn-purple  float-right" id="editContactDetails" value="Submit">
+                </div>
+            </div>
+        </form>
+        <br />
+        <br />
 
-                <label for="cnic">CNIC:</label>
-                <input type="text" id="cnic" name="cnic" pattern="[0-9]{5}-[0-9]{7}-[0-9]{1}" placeholder="12345-1234567-1" value="@Model.CellPhoneNumber" maxlength="13" value="@Model.CNIC" disabled><br><br>
-
-                <label for="email">Email Address:</label>
-                <input type="email" id="email" name="email" value="@Model.EmailAddress" disabled><br><br>
-
-                <label for="altEmail">Alternate Email Address:</label>
-                <input type="email" id="altEmail" name="altEmail" value="@Model.AlterEmailAddress"><br><br>
-
-                <label>Gender:</label>
-                <select id="city">
-                    <option>Select Gender</option>
-                    <option value="M">Male</option>
-                    <option value="F">Female</option>
-                    <option value="T">Prefer not to self-identify</option>
-                </select><br><br>
-
-                <label for="husbandName">Husband's Name:</label>
-                <input type="text" id="husbandName" name="husbandName"><br><br>
-
-                <label for="dob">Date of Birth:</label>
-                <select id="dobDay" name="dobDay">
-                    <option>Day</option>
-                    <option value="01">01</option>
-                    <option value="02">02</option>
-                    <option value="03">03</option>
-                    <option value="04">04</option>
-                    <option value="05">05</option>
-                    <option value="06">06</option>
-                    <option value="07">07</option>
-                    <option value="08">08</option>
-                    <option value="09">09</option>
-                    <option value="10">10</option>
-                    <option value="11">11</option>
-                    <option value="12">12</option>
-                    <option value="13">13</option>
-                    <option value="14">14</option>
-                    <option value="15">15</option>
-                    <option value="16">16</option>
-                    <option value="17">17</option>
-                    <option value="18">18</option>
-                    <option value="19">19</option>
-                    <option value="20">20</option>
-                    <option value="21">21</option>
-                    <option value="22">22</option>
-                    <option value="23">23</option>
-                    <option value="24">24</option>
-                    <option value="25">25</option>
-                    <option value="26">26</option>
-                    <option value="27">27</option>
-                    <option value="28">28</option>
-                    <option value="29">29</option>
-                    <option value="30">30</option>
-                    <option value="31">31</option>
-                </select>
-
-                <select id="dobMonth" name="dobMonth">
-                    <option>Select Month</option>
-                    <option value="01">January</option>
-                    <option value="02">February</option>
-                    <option value="03">March</option>
-                    <option value="04">April</option>
-                    <option value="05">May</option>
-                    <option value="06">June</option>
-                    <option value="07">July</option>
-                    <option value="08">Augest</option>
-                    <option value="09">September</option>
-                    <option value="10">Octuber</option>
-                    <option value="11">November</option>
-                    <option value="12">December</option>
-                </select>
-
-                <select id="dobYear" name="dobYear">
-                    <!-- Add options for years as needed -->
-                    <option>Select Year</option>
-                </select>
-                <br><br>
-
-                <input type="button" id="editPersonalInfo" value="Submit">
-            </form>
-        </fieldset>
-
-        <!-- Personal Information Section -->
-        <fieldset>
-            <legend>Contact Details</legend>
-            <form action="#" method="post">
-                <label for="cellPhone">Cell Phone Number:</label>
-                <input type="tel" id="cellPhone" name="cellPhone" pattern="[0-9]{10}" placeholder="1234567890" maxlength="12" value="@Model.CellPhoneNumber" required><br><br>
-
-                <label for="altCellPhone">Alternate Cell Phone Number:</label>
-                <input type="tel" id="altCellPhone" name="altCellPhone" pattern="[0-9]{10}" maxlength="12" placeholder="1234567890"><br><br>
-
-                <label for="homePhone">Home Phone Number:</label>
-                <input type="tel" id="homePhone" name="homePhone" pattern="[0-9]{10}" placeholder="1234567890"><br><br>
-
-                <label for="altLandline">Alternate Landline Number:</label>
-                <input type="tel" id="altLandline" name="altLandline" pattern="[0-9]{10}" placeholder="1234567890"><br><br>
-
-                <label for="whatsappNumber">WhatsApp Number:</label>
-                <input type="tel" id="whatsappNumber" name="whatsappNumber" pattern="[0-9]{10}" placeholder="1234567890"><br><br>
-
-                <label for="guardianCellPhone">Guardian Cell Phone Number:</label>
-                <input type="tel" id="guardianCellPhone" name="guardianCellPhone" pattern="[0-9]{10}" placeholder="1234567890"><br><br>
-
-                <label for="guardianEmail">Guardian Email Address:</label>
-                <input type="email" id="guardianEmail" name="guardianEmail"><br><br>
-
-                <input type="submit" value="Submit">
-            </form>
-
-        </fieldset>
 
         <!-- Address Information Section -->
-        <fieldset>
-            <legend>Address Details</legend>
+            <div class="headBox">
+                <h2>Address Details</h2>
+            </div>
             <form action="#" method="post">
-                <fieldset>
-                    <legend>Residential Address</legend>
-                    <label for="residentialAddress">Residential Address:</label>
-                    <textarea id="residentialAddress" name="residentialAddress" rows="2" cols="100" required></textarea><br><br>
-                    <label for="country">Select Country:</label>
-                    <select id="country" onchange="updateProvince();">
-                        <option>Select Country</option>
-                        <option value="pakistan">Pakistan</option>
-                    </select><br><br>
-
-                    <label for="province">Select Province/State:</label>
-                    <select id="province" onchange="updateCities();">
-                        <option>Select Provience</option>
-                    </select><br><br>
-
-                    <label for="city">City:</label>
-                    <select id="city">
-                        <option>Select City</option>
-                    </select><br><br>
-
-                    <label for="residentialCityOther">Other City:</label>
-                    <input type="text" id="residentialCityOther" name="residentialCityOther" style="display: none;"><br><br>
-
-                    <label for="residentialPostalCode">Residential Postal Code:</label>
-                    <input type="text" id="residentialPostalCode" name="residentialPostalCode" required><br><br>
-
-                    <label for="permanentDifferent">Check the box if your permanent residential address is different from your Residential address:</label>
-                    <input type="checkbox" id="permanentDifferent" onclick="toggleFormSection('permanentForm', 'permanentDifferent');">
-
-                    <div id="permanentForm" style="display: none;">
-                        <fieldset>
-                            <legend>Permanent Address</legend>
-                            <label for="permanentAddress">Permanent Address:</label>
-                            <textarea id="permanentAddress" name="permanentAddress" rows="4" cols="50" required></textarea><br><br>
-
-                            <label for="country">Select Country:</label>
-                            <select id="country" onchange="updateProvince();">
-                                <option>Select Country</option>
-                                <option value="pakistan">Pakistan</option>
-                            </select><br><br>
-
-                            <label for="province">Select Province/State:</label>
-                            <select id="province" onchange="updateCities();">
-                                <option>Select Provience</option>
-                            </select><br><br>
-
-                            <label for="city">City:</label>
-                            <select id="city">
-                                <option>Select City</option>
-                            </select><br><br>
-
-                            <label for="permanentPostalCode">Permanent Postal Code:</label>
-                            <input type="text" id="permanentPostalCode" name="permanentPostalCode" required><br><br>
-                        </fieldset>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <label for="residentialAddress">Residential Address:</label>
+                                <textarea class="form-control" id="residentialAddress" name="residentialAddress" rows="2" cols="100" required></textarea><br><br>
+                        </div>
                     </div>
-
-                    <label for="postalDifferent">Check the box if your Postal Address is different from your Residential address:</label>
-                    <input type="checkbox" id="postalDifferent" onclick="toggleFormSection('postalForm', 'postalDifferent');">
-
-                    <div id="postalForm" style="display: none;">
-                        <fieldset>
-                            <legend>Postal Address</legend>
-                            <label for="postalAddress">Postal Address:</label>
-                            <textarea id="postalAddress" name="postalAddress" rows="4" cols="50" required></textarea><br><br>
-
-                            <label for="country">Select Country:</label>
-                            <select id="country" onchange="updateProvince();">
-                                <option>Select Country</option>
-                                <option value="pakistan">Pakistan</option>
-                            </select><br><br>
-
-                            <label for="province">Select Province/State:</label>
-                            <select id="province" onchange="updateCities();">
-                                <option>Select Provience</option>
-                            </select><br><br>
-
-                            <label for="city">City:</label>
-                            <select id="city">
-                                <option>Select City</option>
-                            </select><br><br>
-
-                            <label for="postalPostalCode">Postal Code:</label>
-                            <input type="text" id="postalPostalCode" name="postalPostalCode" required><br><br>
-                        </fieldset>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label  for="residentialCountry">Select Country:</label>
+                                <select class="form-control" id="residentialCountry" onchange="updateProvince(this.id,'residentialProvince');">
+                                    <option value="">Select Country</option>
+                                    <option value="pakistan">Pakistan</option>
+                                </select>
+                        </div>
                     </div>
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label for="residentialProvince">Select Province/State:</label>
+                                <select class="form-control" id="residentialProvince" onchange="updateCities(this.id,'residentialCity');">
+                                    <option value="">Select Provience</option>
+                                </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label for="residentialCity">City:</label>
+                                <select class="form-control" id="residentialCity" onchange="toggleOtherCityInput(this.id,'residentialCityOther')">
+                                    <option value="">Select City</option>
+                                </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label for="residentialCityOther">Other City:</label>
+                                <input class="form-control" type="text" id="residentialCityOther" name="residentialCityOther" style="display: none;"><br><br>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label for="residentialPostalCode">Residential Postal Code:</label>
+                                <input class="form-control" type="text" id="residentialPostalCode" name="residentialPostalCode" required><br><br>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <input type="checkbox" class="styled-checkbox" id="permanentDifferent" onclick="toggleFormSection('permanentForm', 'permanentDifferent');">
+                        <label class="checkbox-label" for="permanentDifferent" style="width:75%;">Check the box if your permanent residential address is different from your Residential address:</label>
+                    </div>
+                </div>
 
-                </fieldset>
+                <div id="permanentForm" style="display: none;">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label for="permanentAddress">Permanent Address:</label>
+                                <textarea class="form-control" id="permanentAddress" name="permanentAddress" rows="2" cols="50" required></textarea><br><br>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label for="permanentCountry">Select Country:</label>
+                                <select class="form-control" id="permanentCountry" onchange="updateProvince(this.id,'permanentProvince');">
+                                    <option>Select Country</option>
+                                    <option value="pakistan">Pakistan</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
 
-                <input type="submit" value="Submit">
+                            <div class="form-group">
+                                <label for="permanentProvince">Select Province/State:</label>
+                                <select class="form-control" id="permanentProvince" onchange="updateCities(this.id,'permanentCity');">
+                                    <option value="">Select Provience</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label for="permanentCity">City:</label>
+                                <select class="form-control" id="permanentCity" onchange="toggleOtherCityInput(this.id,'permanentCityOther')">
+                                    <option value="">Select City</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label for="permanentCityOther">Other City:</label>
+                                <input class="form-control" type="text" id="permanentCityOther" name="residentialCityOther" style="display: none;"><br><br>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label for="permanentPostalCode">Permanent Postal Code:</label>
+                                <input class="form-control" type="text" id="permanentPostalCode" name="permanentPostalCode" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <input class="savebtn global-btn-purple  float-right" type="button" id="editAddressDetails" value="Submit">
+                    </div>
+                </div>
+                
             </form>
 
-        </fieldset>
 
         <!-- Academic Details Section -->
-        <fieldset>
+        <!--<fieldset>
             <legend>Academic Details </legend>
             <label for="fathername">Father's Name:</label>
             <input type="text" id="fathername" name="fathername" required><br>
 
             <label for="mothername">Mother's Name:</label>
             <input type="text" id="mothername" name="mothername" required><br>
-        </fieldset>
+        </fieldset>-->
     </div>
+</div>
 
 
 
 
-    <script>
-        LoadYear();
-        function toggleOtherCityInput() {
-            var select = document.getElementById("residentialCity");
-            var otherInput = document.getElementById("residentialCityOther");
+
+
+
+
+<script>
+    $('#textWhatsApp').hide();
+    LoadYear();
+    LoadPersonalData_Combo()
+
+
+    function LoadPersonalData_Combo() {
+        debugger
+        $('#gender').val('@Model.Gender');
+        $('#gender').trigger('change');
+
+        var date = new Date('@Model.DateOfBirth');
+        var day = date.getDate().toString().padStart(2, '0');
+        var month = (date.getMonth() + 1).toString().padStart(2, '0');
+        var year = date.getFullYear();
+        console.log(day + "-" + month + "-" + year + "");
+        $('#dobDay').val(day.toString());
+        $('#dobDay').trigger('change');
+        $('#dobMonth').val(month.toString());
+        $('#dobMonth').trigger('change');
+        $('#dobYear').val(year.toString());
+        $('#dobYear').trigger('change');
+
+
+
+        $('#residentialAddress').val('@Model.ResidentialAddress');
+        $('#residentialCountry').val('@Model.ResidentialCountry');
+        $('#residentialCountry').trigger('change');
+        $('#residentialProvince').val('@Model.ResidentialProvince');
+        $('#residentialProvince').trigger('change');
+        $('#residentialCity').val('@Model.ResidentialCity');
+        $('#residentialCity').trigger('change');
+        $('#residentialCityOther').val('@Model.ResidentialCityOther');
+        $('#residentialPostalCode').val('@Model.ResidentialPostalCode');
+
+        $('#permanentAddress').val('@Model.PermanentAddress');
+        $('#permanentCountry').val('@Model.PermanentCountry');
+        $('#permanentCountry').trigger('change');
+        $('#permanentProvince').val('@Model.PermanentProvince');
+        $('#permanentProvince').trigger('change');
+        $('#permanentCity').val('@Model.PermanentCity');
+        $('#permanentCity').trigger('change');
+        $('#permanentCityOther').val('@Model.PermanentCityOther');
+        $('#permanentPostalCode').val('@Model.PermanentPostalCode');
+    }
+
+
+
+
+    $('#differentNumbers').on('change', function () {
+        if ($(this).is(':checked')) {
+            $('#textWhatsApp').show();
+        } else {
+            $('#textWhatsApp').hide();
+        }
+    });
+
+
+
+
+    function toggleOtherCityInput(cityId, otherCityId) {
+        var select = document.getElementById(cityId.toString(), otherCityId.toString());
+        var otherInput = document.getElementById(otherCityId.toString());
 
             if (select.value === "other") {
                 otherInput.style.display = "block";
@@ -274,16 +492,19 @@
             }
         }
 
-
-        function toggleFormSection(sectionId, checkboxId) {
+    function toggleFormSection(sectionId, checkboxId) {
             var section = document.getElementById(sectionId);
             var checkbox = document.getElementById(checkboxId);
 
             section.style.display = checkbox.checked ? "block" : "none";
         }
 
-        function LoadYear() {
+    function LoadYear() {
             var comboYear = document.getElementById("dobYear");
+            var option = document.createElement("option");
+            option.value = "";
+            option.text = "Select Year";
+            comboYear.appendChild(option);
             for (var j = 2023; j > 1950; j--) {
                 var option = document.createElement("option");
                 option.value = j;
@@ -292,9 +513,9 @@
             }
         }
 
-        function updateCities() {
-            var provinceSelect = document.getElementById("province");
-            var citySelect = document.getElementById("city");
+    function updateCities(provienceId, cityId) {
+        var provinceSelect = document.getElementById(provienceId.toString());
+        var citySelect = document.getElementById(cityId.toString());
 
             var selectedProvince = provinceSelect.value;
 
@@ -312,17 +533,25 @@
             // Update city select box options based on selected province
             citySelect.innerHTML = "";
             var cities = citiesByProvince[selectedProvince];
+            var option = document.createElement("option");
+            option.value = "";
+            option.text = "Select City";
+            citySelect.appendChild(option);
             for (var j = 0; j < cities.length; j++) {
                 var option = document.createElement("option");
                 option.value = cities[j];
                 option.text = cities[j];
                 citySelect.appendChild(option);
-            }
+        }
+        var option = document.createElement("option");
+        option.value = "other";
+        option.text = "Other";
+        citySelect.appendChild(option);
         }
 
-        function updateProvince() {
-            var countrySelect = document.getElementById("country");
-            var provinceSelect = document.getElementById("province");
+    function updateProvince(countryId, provienceId) {
+        var countrySelect = document.getElementById(countryId.toString());
+        var provinceSelect = document.getElementById(provienceId.toString());
 
             var selectedCountry = countrySelect.value;
 
@@ -335,6 +564,10 @@
             // Update province select box options based on selected country
             provinceSelect.innerHTML = "";
             var provinces = provincesByCountry[selectedCountry];
+            var option = document.createElement("option");
+            option.value = "";
+            option.text = "Select Provience/State";
+            provinceSelect.appendChild(option);
             for (var i = 0; i < provinces.length; i++) {
                 var option = document.createElement("option");
                 option.value = provinces[i];
@@ -342,30 +575,38 @@
                 provinceSelect.appendChild(option);
             }
 
-        }
+    }
+
 
         $('#editPersonalInfo').click(function (e) {
             e.preventDefault();
+            const day = document.getElementById("dobDay").value;
+            const month = document.getElementById("dobMonth").value;
+            const year = document.getElementById("dobYear").value;
 
+            // Create a new Date object using the selected values
+            var dob = new Date(`${year}-${month}-${day}`);
             var param = {
-                id: $('#firstName').val(),
-                name: $('#middleName').val(),
-                username: $('#lastName').val(),
-                msisdn: $('#fatherFirstName').val(),
-                email: $('#fatherMiddleName').val(),
-                record_type: $('#fatherLastName').val(),
-                gender: $('#cnic').val(),
-                residence_type: $('#email').val(),
-                country_id: $('#altEmail').val()
+                firstName: $('#firstName').val(),
+                middleName: $('#middleName').val(),
+                lastName: $('#lastName').val(),
+                fatherFirstName: $('#fatherFirstName').val(),
+                fatherMiddleName: $('#fatherMiddleName').val(),
+                fatherLastName: $('#fatherLastName').val(),
+                cnic: $('#cnic').val(),
+                emailAddress: $('#email').val(),
+                alterEmailAddress: $('#altEmail').val(),
+                gender: document.getElementById("gender").value,
+                husbandName: $('#husbandName').val(),
+                dateofBirth: dob
+
 
             };
 
-            CallAsyncService('/Employee/Update', JSON.stringify(param), editUserCallback);
+            CallAsyncService('/Home/UpdatePersonalInfo', JSON.stringify(param), editUserCallback);
 
             function editUserCallback(response) {
-                $('#edit_modal').modal('hide');
                 if (response.status) {
-                    mainTable.ajax.reload();
                     ShowDivSuccess(response.message)
                 }
                 else {
@@ -376,6 +617,73 @@
 
         });
 
-    </script>
-</body>
-</html>
+        $('#editContactDetails').click(function (e) {
+            e.preventDefault();
+            if ($('#whatsappNumber').val() === '') {
+                $('#whatsappNumber').val($('#cellPhone').val())
+            }
+            var param = {
+                cellPhoneNumber: $('#cellPhone').val(),
+                whatsAppNumber: $('#whatsappNumber').val(),
+                alternateCellPhoneNumber: $('#altCellPhone').val(),
+                homePhoneNumber: $('#homePhone').val(),
+                alternateLandline: $('#altLandline').val(),
+                guardianCellPhoneNumber: $('#guardianCellPhone').val(),
+                guardianEmailAddress: $('#guardianEmail').val()
+            };
+
+            CallAsyncService('/Home/UpdateContactDetails', JSON.stringify(param), editUserCallback);
+
+            function editUserCallback(response) {
+                if (response.status) {
+                    ShowDivSuccess(response.message)
+                }
+                else {
+                    ShowDivError(response.message)
+                }
+                setTimeout(function () { location.reload(); }, 3000);
+            }
+
+        });
+
+
+        $('#editAddressDetails').click(function (e) {
+            e.preventDefault();
+            var param = {
+                residentialAddress: $('#residentialAddress').val(),
+                residentialCountry: $('#residentialCountry').val(),
+                residentialProvince: $('#residentialProvince').val(),
+                residentialCity: $('#residentialCity').val(),
+                residentialCityOther: $('#residentialCityOther').val(),
+                residentialPostalCode: $('#residentialPostalCode').val(),
+
+                permanentAddress: $('#permanentAddress').val(),
+                permanentCountry: $('#permanentCountry').val(),
+                permanentProvince: $('#permanentProvince').val(),
+                permanentCity: $('#permanentCity').val(),
+                permanentCityOther: $('#permanentCityOther').val(),
+                permanentPostalCode: $('#permanentPostalCode').val(),
+            };
+
+            CallAsyncService('/Home/UpdateAddressDetails', JSON.stringify(param), editAddressDetailsCB);
+
+            function editAddressDetailsCB(response) {
+                if (response.status) {
+                    ShowDivSuccess(response.message)
+                }
+                else {
+                    ShowDivError(response.message)
+                }
+            }
+
+        });
+
+
+
+    // Add Masking
+    $('#cellPhone').inputmask("9999-9999999");
+    $('#whatsappNumber').inputmask("9999-9999999");
+    $('#altCellPhone').inputmask("9999-9999999");
+    $('#homePhone').inputmask("9999-9999999");
+    $('#guardianCellPhone').inputmask("9999-9999999");
+</script>

@@ -63,3 +63,77 @@ input[type="button"] {
 input:invalid {
     border-color: #dc3545;
 }
+
+/* Reset default styles */
+.custom-select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background: white;
+    border: 1px solid #ccc;
+    padding: 8px;
+    border-radius: 4px;
+    width: 100%;
+    max-width: 300px; /* Set a reasonable width */
+    cursor: pointer;
+}
+
+/* Add custom arrow icon */
+.custom-select::after {
+    content: '\25BC'; /* Downward pointing triangle */
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+}
+
+/* Style the options */
+.custom-select option {
+    background-color: white;
+    color: black;
+}
+
+/* Style when the select box is open */
+.custom-select:focus {
+    outline: none;
+    border-color: #007bff; /* Change the border color on focus */
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); /* Add a subtle box shadow on focus */
+}
+
+
+.styled-checkbox {
+    display: none;
+}
+
+.styled-checkbox + .checkbox-label:before {
+    content: '\2713'; /* Checkmark symbol */
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 5px;
+    font-size: 18px;
+    color: #333;
+    border: 1px solid #333;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    line-height: 18px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+/* Style the custom checkbox when checked */
+.styled-checkbox:checked + .checkbox-label:before {
+    background-color: #333;
+    color: white;
+}
+
+/* Hover effect for the custom checkbox */
+.styled-checkbox + .checkbox-label:hover:before {
+    background-color: #f0f0f0;
+    color: #333;
+}
+
+/* Focus effect for the custom checkbox */
+.styled-checkbox:focus + .checkbox-label:before {
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.5);
+}

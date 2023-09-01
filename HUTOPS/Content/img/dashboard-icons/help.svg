@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+  <g id="help" transform="translate(-2032 -2560)">
+    <rect id="Rectangle_240" data-name="Rectangle 240" width="32" height="32" rx="4" transform="translate(2032 2560)" fill="#f8f1f9"/>
+    <path id="Icon_material-help" data-name="Icon material-help" d="M10.863,3a7.863,7.863,0,1,0,7.863,7.863A7.866,7.866,0,0,0,10.863,3Zm.786,13.367H10.077V14.794h1.573Zm1.628-6.094L12.569,11a2.677,2.677,0,0,0-.92,2.225H10.077v-.393A3.165,3.165,0,0,1,11,10.6l.975-.991A1.537,1.537,0,0,0,12.435,8.5a1.573,1.573,0,1,0-3.145,0H7.718a3.145,3.145,0,0,1,6.29,0A2.5,2.5,0,0,1,13.277,10.273Z" transform="translate(2037 2565.137)" fill="#5c2868"/>
+  </g>
+</svg>

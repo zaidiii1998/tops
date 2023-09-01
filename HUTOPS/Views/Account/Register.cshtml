@@ -1,80 +1,208 @@
 ﻿@{
-    Layout = null;
+    Layout = "~/Views/Shared/_loginLayout.cshtml";
 }
 
-<!DOCTYPE html>
-<html>
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="~/Content/Custom/LoginCustom.css" rel="stylesheet" />
-</head>
-<body>
-
-    <div id="model" class="modal">
-
-        <form class="modal-content animate" method="post">
-            <div class="imgcontainer">
-                <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
-                <img src="~/Content/Images/img_avatar2.png" alt="Avatar" class="avatar">
+<section class="signInWrap">
+    <div class="container-fluid p-0">
+        <div class="row m-0">
+            <div class="col-lg-6 p-0 none991">
+                <div class="imgWrap">
+                    <img src="~/Content/img/image-content.jpg" alt="Alternate Text" />
+                </div>
             </div>
+            <div class="col-lg-6 p-0">
+                <div class="contentWrap">
+                    <img src="~/Content/img/mct-logo.svg" alt="Alternate Text" />
+                    <h1>Testimony for student diverse interest, talent and skills !</h1>
+                    <p>A purpose-built digital platform to collect, verify and report student meta-curricular experience during their tenure at Habib University.</p>
+                    <form method="post" id="registerForm">
+                        @Html.AntiForgeryToken()
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="fname"><b>First Name</b></label>
+                                    <input class="form-control" type="text" placeholder="Enter FirstName" maxlength="25" id="fname" name="fname" required>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="mname"><b>Middle Name</b></label>
+                                    <input class="form-control" type="text" placeholder="Enter Middle Name" id="mname" name="mname" maxlength="25">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="lname"><b>Last Name</b></label>
+                                    <input class="form-control" type="text" placeholder="Enter Last Name" name="lname" id="lname" maxlength="25" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="cnic"><b>CNIC</b></label>
+                                    <input class="form-control" type="tel" placeholder="Enter CNIC" id="cnic" name="cnic" pattern="[0-9]{10}" onchange="checkCNIC();" maxlength="15" required>
+                                    <p id="cnicError" style="color:red;"></p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="number"><b>Phone Number</b></label>
+                                    <input class="form-control" type="tel" placeholder="Enter Phone Number" pattern="[0-9]{10}" id="number" onchange="checkPhoneNumber();" name="number" maxlength="12" required>
+                                    <p id="numberError" style="color:red;"></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="email"><b>Email</b></label>
+                                    <input class="form-control" type="email" placeholder="Enter Email" name="email" id="email" onchange="checkEmail();" required>
+                                </div>
+                                <p id="emailError" style="color:red;"></p>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="password"><b>Password</b></label>
+                                    <input class="form-control" type="password" placeholder="**************" name="password" id="password" maxlength="25" minlength="6" oninput="validate()" required>
+                                </div>
+                                <p></p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="cpassword"><b> Confirm Password</b></label>
+                                    <input class="form-control" type="password" placeholder="**************" name="cpassword" id="cpassword" maxlength="25" minlength="6" oninput="validate()" required>
+                                    @if (@ViewBag.Result + "" != "")
+                                    {
+                                        <p class="alert-danger">@ViewBag.Result</p>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <div id="divError">
+                            <p style="color:red;" id="error"></p>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <button class="savebtn global-btn-purple  float-right" type="button" id="btnSubmit">Register</button>
+                                </div>
+                            </div>
+                        </div>
+                        <p>Already have an account? <a href="@Url.Action("Login","Account")">Sign In</a>.</p>
 
-            <div class="container">
-
-                <label for="fname"><b>First Name</b></label>
-                <input type="text" placeholder="Enter FirstName" maxlength="25" name="fname" required>
-
-                <label for="mname"><b>Middle Name</b></label>
-                <input type="text" placeholder="Enter Middle Name" name="mname" maxlength="25">
-
-                <label for="lname"><b>Last Name</b></label>
-                <input type="text" placeholder="Enter Last Name" name="lname" maxlength="25" required>
-
-                <label for="cnic"><b>CNIC</b></label>
-                <input type="number" placeholder="Enter CNIC" name="cnic" maxlength="13" required>
-
-                <label for="number"><b>Phone Number</b></label>
-                <input type="number" placeholder="Enter Phone Number" name="number" maxlength="12" required>
-
-                <label for="email"><b>Emain</b></label>
-                <input type="email" placeholder="Enter Email" name="email" required>
-
-                <label for="password"><b>Password</b></label>
-                <input type="password" placeholder="**************" name="password" id="password" maxlength="25" oninput="validate()" required>
-
-                <label for="cpassword"><b> Confirm Password</b></label>
-                <input type="password" placeholder="**************" name="cpassword" id="cpassword" maxlength="25" oninput="validate()" required>
-                @if (@ViewBag.Result + "" != "")
-                {
-                    <div class="container signin">
-                        <p style="color:red;">@ViewBag.Result</p>
-                    </div>
-                }
-                <button type="submit">Register</button>
+                    </form>
+                </div>
             </div>
-            <div class="container signin">
-                <p>Already have an account? <a href="@Url.Action("Login","Account")">Sign In</a>.</p>
+        </div>
+        <div class="row m-0 justify-content-end">
+            <div class="col-lg-6 p-0 justify-content-flex-end">
+                <p class="loginFooter">© Habib University <span>|</span> Powered by <a href="#" class="hoverUnderLine">HUIT</a> (ISO 27001 Certified)</p>
             </div>
-
-        </form>
+        </div>
     </div>
+</section>
 
-    <script>
-// Get the modal
-        document.getElementById('model').style.display = 'block';
+<script>
+    // Get the modal
+    
 
-        function validate() {
-            var pass = document.getElementById("password");
-            var cpass = document.getElementById("cpassword");
-            if (pass.value != cpass.value) {
-                pass.style.borderBlockColor = "red";
-                cpass.style.borderBlockColor = "red";
+    $('#number').inputmask("9999-9999999");
+    $('#cnic').inputmask("99999-9999999-9");
 
+
+    function validate() {
+        var pass = document.getElementById("password");
+        var cpass = document.getElementById("cpassword");
+        if (pass.value != cpass.value || pass.value.length < 6) {
+            pass.style.borderBlockColor = "red";
+            cpass.style.borderBlockColor = "red";
+            return false;
+
+        } else {
+            pass.style.borderBlockColor = "green";
+            cpass.style.borderBlockColor = "green";
+            return true;
+        }
+    }
+    function checkPhoneNumber() {
+        // Check Phone Number
+        CallAsyncService('/Common/CheckPhoneNumber?number=' + $('#number').val(), null, checkPhoneNumberCB);
+
+        function checkPhoneNumberCB(response) {
+            if (!response.status) {
+                msg = response.message;
+                $('#numberError').html(msg);
+                return false;
             } else {
-                pass.style.borderBlockColor = "green";
-                cpass.style.borderBlockColor = "green";
+                $('#numberError').html('');
+                return true;
             }
         }
-    </script>
+    }
 
-</body>
-</html>
+    function checkEmail() {
+        // Check Email
+
+        CallAsyncService('/Common/CheckEmail?email=' + $('#email').val(), null, checkEmail);
+
+        function checkEmail(response) {
+            if (!response.status) {
+                msg = response.message;
+                $('#emailError').html(msg);
+                return false;
+            } else {
+                $('#emailError').html('');
+                return true;
+            }
+        }
+    }
+
+    function checkCNIC() {
+        // Check CNIC
+
+        CallAsyncService('/Common/CheckCNIC?cnic=' + $('#cnic').val(), null, checkCNICCB);
+
+        function checkCNICCB(response) {
+            if (!response.status) {
+                msg = response.message;
+                $('#cnicError').html(msg);
+                return false;
+            } else {
+                $('#cnicError').html('');
+                return true;
+            }
+        }
+    }
+
+    $('#btnSubmit').click(function () {
+        let isValid = true;
+        var msg;
+        // Loop through each input field with the "required" attribute
+
+        $('input[required]').each(function () {
+            
+            if ($(this).val().trim() === '') {
+                isValid = false;
+                msg = 'Please fill in all required fields.';
+                $('#error').html(msg);
+                return false;
+            } else {
+                isValid = true;
+                $('#error').html('');
+            }
+        });
+
+
+
+
+        if (!isValid) {
+            $('#error').html(msg);
+            return false; // Prevent form submission
+        } else {
+            $('#registerForm').submit();
+        }
+    });
+</script>
