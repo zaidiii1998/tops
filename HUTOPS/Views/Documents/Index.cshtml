@@ -6,51 +6,28 @@
 <div class="container-fluid">
     <div class="boxWraper infoBox">
         <div class="headBox">
-            <form id="fileUploadForm" enctype="multipart/form-data">
-                <label for="bFormCnic">Scanned copy of B-Form/CNIC:</label>
-                <input type="file" id="bFormCnic" size="2" name="bFormCnic" accept=".jpeg, .jpg" required><br><br>
-
-                <!-- Other file input fields -->
-
-                <button type="submit">Upload</button>
-            </form>
+            <h1>Documents</h1>
         </div>
+        <form id="fileUploadForm" enctype="multipart/form-data">
+            <label for="bFormCnic">Scanned copy of B-Form/CNIC:</label>
+            <input type="file" id="bFormCnic" size="2" name="bFormCnic" accept=".jpeg, .jpg" required><br><br>
+            <p id="fileSizeMessage" class="bg-danger badge-danger"></p>
+            <!-- Other file input fields -->
+
+            <button type="submit">Upload</button>
+        </form>
     </div>
 </div>
 
 <script>
     $(document).ready(function () {
-        $('#fileUploadForm').validate({
-            rules: {
-                bFormCnic: {
-                    required: true,
-                    extension: "jpeg|jpg",
-                    filesize: 2097152  // 2MB in bytes
-                },
-                // Add similar rules for other file input fields
-            },
-            messages: {
-                bFormCnic: {
-                    required: "Please select a file",
-                    extension: "Only JPEG files are allowed",
-                    filesize: "File size must be less than 2MB"
-                },
-                // Add similar messages for other file input fields
-            }
-        });
-
-        $.validator.addMethod('filesize', function (value, element, param) {
-            return this.optional(element) || (element.files[0].size <= param);
-        }, 'File size must be less than 2MB');
-
-        $('#fileUploadForm').validate();
+        
         $('#fileUploadForm').submit(function (e) {
             e.preventDefault();
 
-            if ($(this).valid()) {
                 var formData = new FormData(this);
                 $.ajax({
-                    url: '/Declaration/UploadFiles', // Change the URL to your MVC controller's action
+                    url: '/Documents/UploadFiles', // Change the URL to your MVC controller's action
                     type: 'POST',
                     data: formData,
                     processData: false,
@@ -62,6 +39,20 @@
                         // Handle error
                     }
                 });
+        });
+
+        var maxFileSize = 2097152; // 2 MB
+
+        // Attach a change event handler to the file input element
+        $("#bFormCnic").change(function () {
+            var fileSize = this.files[0].size; // Get the file size in bytes
+
+            // Check if the file size exceeds the maximum limit
+            if (fileSize > maxFileSize) {
+                $("#fileSizeMessage").text("File size exceeds the maximum allowed size.");
+                this.value = ""; // Clear the file input to prevent submission
+            } else {
+                $("#fileSizeMessage").text(""); // Clear any previous error message
             }
         });
     });

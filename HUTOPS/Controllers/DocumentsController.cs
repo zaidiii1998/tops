@@ -26,6 +26,11 @@ namespace HUTOPS.Controllers
                 if (bFormCnicFile != null && bFormCnicFile.ContentLength > 0)
                 {
                     // Save the file to a server directory
+                    string uploadDirectory = Server.MapPath("~/UploadedFiles");
+                    if (!Directory.Exists(uploadDirectory))
+                    {
+                        Directory.CreateDirectory(uploadDirectory);
+                    }
                     string bFormCnicPath = Path.Combine(Server.MapPath("~/UploadedFiles"), Path.GetFileName(bFormCnicFile.FileName));
                     bFormCnicFile.SaveAs(bFormCnicPath);
 

@@ -1,0 +1,115 @@
+﻿@model HUTOPS.PersonalInformation
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_loginLayout.cshtml";
+}
+
+<h2>Create</h2>
+<section class="signInWrap">
+    <div class="container-fluid p-0">
+        <div class="row m-0">
+            <div class="col-lg-6 p-0 none991">
+                <div class="imgWrap">
+                    <img src="~/Content/img/image-content.jpg" alt="Alternate Text" />
+                </div>
+            </div>
+            <div class="col-lg-6 p-0">
+                <div class="contentWrap">
+                    <img src="~/Content/img/mct-logo.svg" alt="Alternate Text" />
+                    <h1>Testimony for student diverse interest, talent and skills !</h1>
+                    <p>A purpose-built digital platform to collect, verify and report student meta-curricular experience during their tenure at Habib University.</p>
+
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "" })
+
+                                @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.MiddleName, htmlAttributes: new { @class = "" })
+
+                                @Html.EditorFor(model => model.MiddleName, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.MiddleName, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "" })
+
+                                @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.CellPhoneNumber, htmlAttributes: new { @class = "" })
+
+                                @Html.EditorFor(model => model.CellPhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.CellPhoneNumber, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.CNIC, htmlAttributes: new { @class = "" })
+
+                                @Html.EditorFor(model => model.CNIC, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.CNIC, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.EmailAddress, htmlAttributes: new { @class = "" })
+
+                                @Html.EditorFor(model => model.EmailAddress, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.EmailAddress, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="password"><b>Password</b></label>
+                                <input class="form-control" type="password" placeholder="**************" name="password" id="password" maxlength="25" minlength="6" oninput="validate()" required>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="cpassword"><b> Confirm Password</b></label>
+                                <input class="form-control" type="password" placeholder="**************" name="cpassword" id="cpassword" maxlength="25" minlength="6" oninput="validate()" required>
+                            </div>
+                        </div>
+                    </div>
+                        <div class="row">
+                            <div class="form-group">
+                                <div class="col-md-offset-2 col-md-10">
+                                    <input type="submit" value="Register" class="btn btn-default" />
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="row m-0 justify-content-end">
+            <div class="col-lg-6 p-0 justify-content-flex-end">
+                <p class="loginFooter">© Habib University <span>|</span> Powered by <a href="#" class="hoverUnderLine">HUIT</a> (ISO 27001 Certified)</p>
+            </div>
+        </div>
+    </div>
+</section>

@@ -35,10 +35,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            @if (@ViewBag.Result + "" != "")
-                            {
-                                <p class="alert-danger">@ViewBag.Result</p>
-                            }
+                            
                             <button class="savebtn global-btn-purple  float-right" type="submit">Login</button>
                         </div>
                         <div class="row">
@@ -56,3 +53,10 @@
     </div>
 </section>
 
+<script>
+    
+    if ('@ViewBag.Result' !== "")
+    {
+        ShowDivError('@ViewBag.Result');
+    }
+</script>

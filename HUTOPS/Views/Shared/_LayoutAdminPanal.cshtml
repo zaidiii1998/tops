@@ -32,10 +32,8 @@
 
     <script src="~/Scripts/notify.js"></script>
     <script src="~/Scripts/notify.min.js"></script>
-
-    <script src="~/Scripts/Custom.js"></script>
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.6/jquery.inputmask.min.js"></script>
+    <script src="~/Scripts/Custom.js"></script>
 </head>
 <body class="adminDashboard">
 
@@ -76,7 +74,7 @@
                                         //}
                                     }
                                     @*<h4 class="designation">Role: @role</h4>*@
-                                    <h5 class="userName"><i class="fa-solid fa-user" style="font-size: 15px;margin-right: 10px;"></i>  @Session["Name"]</h5>
+                                    <h5 class="userName"><i class="fa-solid fa-user" style="font-size: 15px;margin-right: 10px;"></i>  @Helper.GetSession(Constants.Session.UserName)</h5>
                                 </div>
 
                                 <ul class="logoutDrop">

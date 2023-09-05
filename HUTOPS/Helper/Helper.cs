@@ -1,5 +1,9 @@
 ﻿using Microsoft.Ajax.Utilities;
+using System;
+using System.Data;
 using System.Globalization;
+using System.Text.RegularExpressions;
+using System.Web;
 
 namespace HUTOPS.Helper
 {
@@ -21,6 +25,36 @@ namespace HUTOPS.Helper
 
             // Use string.Join to concatenate the array elements with commas
             return string.Join(",", array);
+        }
+        public static string GetSession(string SessionName)
+        {
+            return HttpContext.Current.Session[SessionName].ToString();
+        }
+        public static void SetSession(string SessionName, string SessionValue)
+        {
+            HttpContext.Current.Session[SessionName] = SessionValue;
+        }
+        public static void AddLog(string LogType, string Description)
+        {
+            HU_TOPSEntities DB = new HU_TOPSEntities();
+            DB.Logs.Add(new Log
+            {
+                Type = LogType,
+                Description = Description,
+                CreatedDatetime = DateTime.Now
+            });
+            DB.SaveChanges();
+        }
+        public static bool isValidEmail(string inputEmail)
+        {
+            string strRegex = @"^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}" +
+                  @"\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\" +
+                  @".)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$";
+            Regex re = new Regex(strRegex);
+            if (re.IsMatch(inputEmail))
+                return (true);
+            else
+                return (false);
         }
     }
 }

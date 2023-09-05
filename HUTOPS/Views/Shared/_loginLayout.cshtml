@@ -13,15 +13,19 @@
 
 
     <script src="~/Scripts/jquery-3.5.1.js"></script>
+    <script src="~/Scripts/notify.js"></script>
+    <script src="~/Scripts/notify.min.js"></script>
+
+
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.6/jquery.inputmask.min.js"></script>
     <script src="~/Scripts/customLogin.js"></script>
 
 </head>
-    <body>
-        @RenderBody()
-
-        @*@Scripts.Render("~/bundles/jquery")*@
-        @Scripts.Render("~/bundles/bootstrap")
-        @RenderSection("scripts", required: false)
-    </body>
+<body>
+    @RenderBody()
+    @*@Scripts.Render("~/bundles/jquery")*@
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
 </html>

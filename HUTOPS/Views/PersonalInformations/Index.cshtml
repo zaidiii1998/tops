@@ -1,0 +1,382 @@
+﻿@model IEnumerable<HUTOPS.PersonalInformation>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_loginLayout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.HUTopId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AppId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MiddleName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LastName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FatherFirstName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FatherMiddleName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FatherLastName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Gender)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HusbandName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DateOfBirth)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CountyAdd)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CellPhoneNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AlternateCellPhoneNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TellUs)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ResidentialAddress)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ResidentialCity)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ResidentialCityOther)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ResidentialProvince)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ResidentialCountry)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ResidentialPostalCode)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PermanentAddress)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PermanentCity)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PermanentCityOther)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PermanentProvince)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PermanentCountry)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PermanentPostalCode)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CNIC)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EmailAddress)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AlterEmailAddress)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Password)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SaveDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UpdateDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AppStatus)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StudentStatus)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TempId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.School)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SchoolCode)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SchoolName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SchoolNameOther)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CurrentQualification)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CurrentQualificationOther)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AlternateLandline)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UserId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TestDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SubmissionDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Retake)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsAppliedBefore)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AppliedBeforeMonth)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AppliedBeforeYear)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HomePhoneNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.WhatsAppNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.GuardianCellPhoneNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.GuardianEmailAddress)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HearAboutHU)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HearAboutHUOther)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreatedDatetime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Declaration)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsCompleted)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.HUTopId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AppId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FirstName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MiddleName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LastName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FatherFirstName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FatherMiddleName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FatherLastName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Gender)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HusbandName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DateOfBirth)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CountyAdd)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CellPhoneNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AlternateCellPhoneNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TellUs)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ResidentialAddress)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ResidentialCity)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ResidentialCityOther)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ResidentialProvince)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ResidentialCountry)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ResidentialPostalCode)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PermanentAddress)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PermanentCity)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PermanentCityOther)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PermanentProvince)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PermanentCountry)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PermanentPostalCode)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CNIC)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EmailAddress)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AlterEmailAddress)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Password)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SaveDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UpdateDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AppStatus)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StudentStatus)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TempId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.School)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SchoolCode)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SchoolName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SchoolNameOther)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CurrentQualification)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CurrentQualificationOther)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AlternateLandline)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UserId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TestDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SubmissionDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Retake)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsAppliedBefore)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AppliedBeforeMonth)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AppliedBeforeYear)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HomePhoneNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.WhatsAppNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.GuardianCellPhoneNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.GuardianEmailAddress)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HearAboutHU)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HearAboutHUOther)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreatedDatetime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Declaration)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsCompleted)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>

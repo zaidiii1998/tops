@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System.Web;
+using System.Web.Mvc;
 using System.Web.Routing;
 
 namespace HUTOPS.Helper
@@ -22,10 +23,11 @@ namespace HUTOPS.Helper
         {
             if (!filterContext.HttpContext.Request.IsAjaxRequest())
             {
-                if (filterContext.HttpContext.Session["UserId"] == null
+                if (HttpContext.Current.Session[Constants.Session.UserId] == null
                     //|| filterContext.HttpContext.Session["Email"] == null
                     )
                 {
+                    
                     filterContext.Result = new RedirectToRouteResult(
                         new RouteValueDictionary { { "Controller", "Account" }, { "Action", "Login" } });
                 }

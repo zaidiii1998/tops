@@ -1,5 +1,7 @@
 ﻿using HUTOPS.Helper;
+using HUTOPS.Models;
 using System;
+using System.Dynamic;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -12,7 +14,20 @@ namespace HUTOPS.Controllers
         // GET: Education
         public ActionResult Index()
         {
-            return View();
+            int userId = int.Parse(Helper.Helper.GetSession(Constants.Session.UserId));
+            ViewModel mymodel = new ViewModel();
+            var edu = DB.Educationals.ToList();
+            var sub = DB.EducationalSubjects.ToList();
+            mymodel.Education = edu.Where(x => x.UserId == userId).ToList();
+            if (mymodel.Education != null)
+            {
+                mymodel.Subjects = sub.FindAll(x => x.EducationalId == mymodel.Education.FirstOrDefault().Id).ToList();
+            }
+            if (TempData["Result"] != null)
+            {
+                ViewBag.Result = TempData["Result"].ToString();
+            }
+            return View(mymodel);
         }
         [HttpPost]
         public ActionResult Save(Educational educational, string[] SubjectName, string[] SubjectObtain, string[] SubjectTotal, string[] SubjectGrade)

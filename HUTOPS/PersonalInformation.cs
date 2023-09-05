@@ -59,9 +59,6 @@ namespace HUTOPS
         public string CurrentQualificationOther { get; set; }
         public string AlternateLandline { get; set; }
         public Nullable<int> UserId { get; set; }
-        public string ModeOfStudy { get; set; }
-        public string BoardOfEducation { get; set; }
-        public string IntendedProgram { get; set; }
         public Nullable<System.DateTime> TestDate { get; set; }
         public Nullable<System.DateTime> SubmissionDate { get; set; }
         public Nullable<int> Retake { get; set; }
@@ -76,5 +73,6 @@ namespace HUTOPS
         public string HearAboutHUOther { get; set; }
         public Nullable<System.DateTime> CreatedDatetime { get; set; }
         public Nullable<int> Declaration { get; set; }
+        public Nullable<int> IsCompleted { get; set; }
     }
 }

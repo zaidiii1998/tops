@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="3ec6848cb03a4170915e86c4b92c19c8" Name="Diagram1">
+      <Diagram DiagramId="3ec6848cb03a4170915e86c4b92c19c8" Name="Diagram1" ZoomLevel="57">
         <EntityTypeShape EntityType="HU_TOPSModel.Board" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="HU_TOPSModel.BoardGroup" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="HU_TOPSModel.Document" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
@@ -13,6 +13,7 @@
         <EntityTypeShape EntityType="HU_TOPSModel.PersonalInformation" Width="1.5" PointX="4.75" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="HU_TOPSModel.sysdiagram" Width="1.5" PointX="6.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="HU_TOPSModel.EducationalSubject" Width="1.5" PointX="6.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HU_TOPSModel.Log" Width="1.5" PointX="7.375" PointY="6.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

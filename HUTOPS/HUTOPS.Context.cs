@@ -35,6 +35,7 @@ namespace HUTOPS
         public virtual DbSet<PersonalInformation> PersonalInformations { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<EducationalSubject> EducationalSubjects { get; set; }
+        public virtual DbSet<Log> Logs { get; set; }
     
         public virtual int InsertBoardGroups(string groupNames, Nullable<int> boardId)
         {
@@ -165,7 +166,7 @@ namespace HUTOPS
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_upgraddiagrams");
         }
     
-        public virtual ObjectResult<Nullable<int>> WEB_CreateUser(string firstName, string middleName, string lastName, string cNIC, string cellPhoneNumber, string emailAddress, string password)
+        public virtual ObjectResult<WEB_UserLogin_Result> WEB_CreateUser(string firstName, string middleName, string lastName, string cNIC, string cellPhoneNumber, string emailAddress, string password)
         {
             var firstNameParameter = firstName != null ?
                 new ObjectParameter("FirstName", firstName) :
@@ -195,7 +196,7 @@ namespace HUTOPS
                 new ObjectParameter("Password", password) :
                 new ObjectParameter("Password", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("WEB_CreateUser", firstNameParameter, middleNameParameter, lastNameParameter, cNICParameter, cellPhoneNumberParameter, emailAddressParameter, passwordParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<WEB_UserLogin_Result>("WEB_CreateUser", firstNameParameter, middleNameParameter, lastNameParameter, cNICParameter, cellPhoneNumberParameter, emailAddressParameter, passwordParameter);
         }
     
         public virtual ObjectResult<WEB_GetAll_Result> WEB_GetAll()
@@ -490,6 +491,148 @@ namespace HUTOPS
                 new ObjectParameter("Password", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<WEB_UserLogin_Result>("WEB_UserLogin", emailParameter, passwordParameter);
+        }
+    
+        public virtual ObjectResult<WEB_UserLogin_Result> WEB_CheckPersonalInfo(Nullable<int> id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("Id", id) :
+                new ObjectParameter("Id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<WEB_UserLogin_Result>("WEB_CheckPersonalInfo", idParameter);
+        }
+    
+        public virtual int WEB_UpdatePersonal(Nullable<int> id, string fName, string mName, string lName, string fatherFName, string fatherMName, string fatherLName, string gender, string husbandName, string dOB, string cNIC, string email, string alterEmail, string cellPhone, string whatsApp, string altCellPhone, string homeCellPhone, string altLandline, string guardianCellPhone, string guardianEmail, string residentialAddress, string residentialCountry, string residentialProvince, string residentialCity, string residentialCityOther, string residentialPostalCode, string permanentAddress, string permanentCountry, string permanentProvince, string permanentCity, string permanentCityOther, string permanentPostalCode)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("Id", id) :
+                new ObjectParameter("Id", typeof(int));
+    
+            var fNameParameter = fName != null ?
+                new ObjectParameter("FName", fName) :
+                new ObjectParameter("FName", typeof(string));
+    
+            var mNameParameter = mName != null ?
+                new ObjectParameter("MName", mName) :
+                new ObjectParameter("MName", typeof(string));
+    
+            var lNameParameter = lName != null ?
+                new ObjectParameter("LName", lName) :
+                new ObjectParameter("LName", typeof(string));
+    
+            var fatherFNameParameter = fatherFName != null ?
+                new ObjectParameter("FatherFName", fatherFName) :
+                new ObjectParameter("FatherFName", typeof(string));
+    
+            var fatherMNameParameter = fatherMName != null ?
+                new ObjectParameter("FatherMName", fatherMName) :
+                new ObjectParameter("FatherMName", typeof(string));
+    
+            var fatherLNameParameter = fatherLName != null ?
+                new ObjectParameter("FatherLName", fatherLName) :
+                new ObjectParameter("FatherLName", typeof(string));
+    
+            var genderParameter = gender != null ?
+                new ObjectParameter("Gender", gender) :
+                new ObjectParameter("Gender", typeof(string));
+    
+            var husbandNameParameter = husbandName != null ?
+                new ObjectParameter("HusbandName", husbandName) :
+                new ObjectParameter("HusbandName", typeof(string));
+    
+            var dOBParameter = dOB != null ?
+                new ObjectParameter("DOB", dOB) :
+                new ObjectParameter("DOB", typeof(string));
+    
+            var cNICParameter = cNIC != null ?
+                new ObjectParameter("CNIC", cNIC) :
+                new ObjectParameter("CNIC", typeof(string));
+    
+            var emailParameter = email != null ?
+                new ObjectParameter("Email", email) :
+                new ObjectParameter("Email", typeof(string));
+    
+            var alterEmailParameter = alterEmail != null ?
+                new ObjectParameter("AlterEmail", alterEmail) :
+                new ObjectParameter("AlterEmail", typeof(string));
+    
+            var cellPhoneParameter = cellPhone != null ?
+                new ObjectParameter("CellPhone", cellPhone) :
+                new ObjectParameter("CellPhone", typeof(string));
+    
+            var whatsAppParameter = whatsApp != null ?
+                new ObjectParameter("WhatsApp", whatsApp) :
+                new ObjectParameter("WhatsApp", typeof(string));
+    
+            var altCellPhoneParameter = altCellPhone != null ?
+                new ObjectParameter("AltCellPhone", altCellPhone) :
+                new ObjectParameter("AltCellPhone", typeof(string));
+    
+            var homeCellPhoneParameter = homeCellPhone != null ?
+                new ObjectParameter("HomeCellPhone", homeCellPhone) :
+                new ObjectParameter("HomeCellPhone", typeof(string));
+    
+            var altLandlineParameter = altLandline != null ?
+                new ObjectParameter("AltLandline", altLandline) :
+                new ObjectParameter("AltLandline", typeof(string));
+    
+            var guardianCellPhoneParameter = guardianCellPhone != null ?
+                new ObjectParameter("GuardianCellPhone", guardianCellPhone) :
+                new ObjectParameter("GuardianCellPhone", typeof(string));
+    
+            var guardianEmailParameter = guardianEmail != null ?
+                new ObjectParameter("GuardianEmail", guardianEmail) :
+                new ObjectParameter("GuardianEmail", typeof(string));
+    
+            var residentialAddressParameter = residentialAddress != null ?
+                new ObjectParameter("ResidentialAddress", residentialAddress) :
+                new ObjectParameter("ResidentialAddress", typeof(string));
+    
+            var residentialCountryParameter = residentialCountry != null ?
+                new ObjectParameter("ResidentialCountry", residentialCountry) :
+                new ObjectParameter("ResidentialCountry", typeof(string));
+    
+            var residentialProvinceParameter = residentialProvince != null ?
+                new ObjectParameter("ResidentialProvince", residentialProvince) :
+                new ObjectParameter("ResidentialProvince", typeof(string));
+    
+            var residentialCityParameter = residentialCity != null ?
+                new ObjectParameter("ResidentialCity", residentialCity) :
+                new ObjectParameter("ResidentialCity", typeof(string));
+    
+            var residentialCityOtherParameter = residentialCityOther != null ?
+                new ObjectParameter("ResidentialCityOther", residentialCityOther) :
+                new ObjectParameter("ResidentialCityOther", typeof(string));
+    
+            var residentialPostalCodeParameter = residentialPostalCode != null ?
+                new ObjectParameter("ResidentialPostalCode", residentialPostalCode) :
+                new ObjectParameter("ResidentialPostalCode", typeof(string));
+    
+            var permanentAddressParameter = permanentAddress != null ?
+                new ObjectParameter("PermanentAddress", permanentAddress) :
+                new ObjectParameter("PermanentAddress", typeof(string));
+    
+            var permanentCountryParameter = permanentCountry != null ?
+                new ObjectParameter("PermanentCountry", permanentCountry) :
+                new ObjectParameter("PermanentCountry", typeof(string));
+    
+            var permanentProvinceParameter = permanentProvince != null ?
+                new ObjectParameter("PermanentProvince", permanentProvince) :
+                new ObjectParameter("PermanentProvince", typeof(string));
+    
+            var permanentCityParameter = permanentCity != null ?
+                new ObjectParameter("PermanentCity", permanentCity) :
+                new ObjectParameter("PermanentCity", typeof(string));
+    
+            var permanentCityOtherParameter = permanentCityOther != null ?
+                new ObjectParameter("PermanentCityOther", permanentCityOther) :
+                new ObjectParameter("PermanentCityOther", typeof(string));
+    
+            var permanentPostalCodeParameter = permanentPostalCode != null ?
+                new ObjectParameter("PermanentPostalCode", permanentPostalCode) :
+                new ObjectParameter("PermanentPostalCode", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("WEB_UpdatePersonal", idParameter, fNameParameter, mNameParameter, lNameParameter, fatherFNameParameter, fatherMNameParameter, fatherLNameParameter, genderParameter, husbandNameParameter, dOBParameter, cNICParameter, emailParameter, alterEmailParameter, cellPhoneParameter, whatsAppParameter, altCellPhoneParameter, homeCellPhoneParameter, altLandlineParameter, guardianCellPhoneParameter, guardianEmailParameter, residentialAddressParameter, residentialCountryParameter, residentialProvinceParameter, residentialCityParameter, residentialCityOtherParameter, residentialPostalCodeParameter, permanentAddressParameter, permanentCountryParameter, permanentProvinceParameter, permanentCityParameter, permanentCityOtherParameter, permanentPostalCodeParameter);
         }
     }
 }

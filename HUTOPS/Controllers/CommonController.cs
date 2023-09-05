@@ -1,4 +1,5 @@
-﻿using Microsoft.Ajax.Utilities;
+﻿using HUTOPS.Helper;
+using Microsoft.Ajax.Utilities;
 using System.Linq;
 using System.Web.Mvc;
 using System.Web.Services.Description;
@@ -81,6 +82,27 @@ namespace HUTOPS.Controllers
         public ActionResult GetSubjectList(int GroupId)
         {
             return Json(DB.GroupSubjects.ToList().Where(x => x.GroupId == GroupId).ToList());
+        }
+        
+        public ActionResult CheckPersonalInfo()
+        {
+            try
+            {
+                var result = DB.WEB_CheckPersonalInfo(int.Parse(Helper.Helper.GetSession(Constants.Session.UserId))).ToList().FirstOrDefault();
+                if (result.Response == 1)
+                {
+                    return Json(new { status = true, message = result.Reason });
+                }
+                else
+                {
+                    return Json(new { status = false, message = result.Reason });
+                }
+            }
+            catch (System.Exception)
+            {
+
+                throw;
+            }
         }
     }
 }

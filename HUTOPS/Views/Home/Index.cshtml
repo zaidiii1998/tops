@@ -48,24 +48,27 @@
         <div class="headBox">
             <h2>Personal Information</h2>
         </div>
-        <form action="#" method="post">
+        <form id="mainForm" method="post">
+            @Html.AntiForgeryToken()
             <div class="row">
                 <div class="col-lg-4">
                     <div class="form-group">
                         <label for="firstName">First Name:</label>
-                        <input class="form-control" type="text" id="firstName" name="firstName" value="@Model.FirstName" required>
+                        <input class="form-control" type="text" id="firstName" name="FirstName" value="@Model.FirstName" required>
+                        @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="col-lg-4">
                     <div class="form-group">
                         <label for="middleName">Middle Name:</label>
-                        <input class="form-control" type="text" id="middleName" name="middleName" value="@Model.MiddleName">
+                        <input class="form-control" type="text" id="middleName" name="MiddleName" value="@Model.MiddleName">
                     </div>
                 </div>
                 <div class="col-lg-4">
                     <div class="form-group">
                         <label for="lastName">Last Name:</label>
-                        <input class="form-control" type="text" id="lastName" name="lastName" value="@Model.LastName" required><br><br>
+                        <input class="form-control" type="text" id="lastName" name="LastName" value="@Model.LastName" required>
+                        @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
                     </div>
                 </div>
             </div>
@@ -73,19 +76,21 @@
                 <div class="col-lg-4">
                     <div class="form-group">
                         <label for="fatherFirstName">Father's First Name:</label>
-                        <input class="form-control" type="text" id="fatherFirstName" name="fatherFirstName" value="@Model.FatherFirstName" required><br><br>
+                        <input class="form-control" type="text" id="fatherFirstName" name="FatherFirstName" value="@Model.FatherFirstName" required>
+                        @Html.ValidationMessageFor(model => model.FatherFirstName, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="col-lg-4">
                     <div class="form-group">
                         <label for="fatherMiddleName">Father's Middle Name:</label>
-                        <input class="form-control" type="text" id="fatherMiddleName" name="fatherMiddleName" value="@Model.FatherMiddleName"><br><br>
+                        <input class="form-control" type="text" id="fatherMiddleName" name="FatherMiddleName" value="@Model.FatherMiddleName">
                     </div>
                 </div>
                 <div class="col-lg-4">
                     <div class="form-group">
                         <label for="fatherLastName">Father's Last Name:</label>
-                        <input class="form-control" type="text" id="fatherLastName" name="fatherLastName" value="@Model.FatherLastName" required><br><br>
+                        <input class="form-control" type="text" id="fatherLastName" name="FatherLastName" value="@Model.FatherLastName" required>
+                        @Html.ValidationMessageFor(model => model.FatherLastName, "", new { @class = "text-danger" })
                     </div>
                 </div>
             </div>
@@ -93,19 +98,19 @@
                 <div class="col-lg-4">
                     <div class="form-group">
                         <label for="cnic">CNIC:</label>
-                        <input class="form-control" type="text" id="cnic" name="cnic" pattern="[0-9]{5}-[0-9]{7}-[0-9]{1}" placeholder="12345-1234567-1" value="@Model.CNIC" maxlength="13" value="@Model.CNIC" disabled><br><br>
+                        <input class="form-control cnic" type="text" id="cnic" name="CNIC" placeholder="12345-1234567-1" maxlength="15" value="@Model.CNIC" readonly><br><br>
                     </div>
                 </div>
                 <div class="col-lg-4">
                     <div class="form-group">
                         <label for="email">Email Address:</label>
-                        <input class="form-control" type="email" id="email" name="email" value="@Model.EmailAddress" disabled><br><br>
+                        <input class="form-control" type="email" id="email" name="EmailAddress" value="@Model.EmailAddress" readonly><br><br>
                     </div>
                 </div>
                 <div class="col-lg-4">
                     <div class="form-group">
                         <label for="altEmail">Alternate Email Address:</label>
-                        <input class="form-control" type="email" id="altEmail" name="altEmail" value="@Model.AlterEmailAddress"><br><br>
+                        <input class="form-control" type="email" id="altEmail" name="AlterEmailAddress" value="@Model.AlterEmailAddress"><br><br>
                     </div>
                 </div>
             </div>
@@ -113,7 +118,7 @@
                 <div class="col-lg-6">
                     <div class="form-group">
                         <label>Gender:</label>
-                        <select id="gender" class="custom-select">
+                        <select id="gender" name="Gender" class="custom-select" required>
                             <option value="">Select Gender</option>
                             <option value="M">Male</option>
                             <option value="F">Female</option>
@@ -124,7 +129,7 @@
                 <div class="col-lg-6">
                     <div class="form-group">
                         <label for="husbandName">Husband's Name:</label>
-                        <input class="form-control" type="text" id="husbandName" name="husbandName">
+                        <input class="form-control" type="text" id="husbandName" name="HusbandName">
                     </div>
                 </div>
             </div>
@@ -136,7 +141,7 @@
                 </div>
                     <div class="col-md-2">
                         <div class="form-group">
-                            <select class="form-control" id="dobDay" style="max-width: 100px;" name="dobDay">
+                            <select class="form-control" id="dobDay" style="max-width: 100px;" name="dobDay" onchange="UpdateDate()" required>
                                 <option value="">Day</option>
                                 <option value="01">01</option>
                                 <option value="02">02</option>
@@ -174,7 +179,7 @@
                     </div>
                     <div class="col-md-2">
                         <div class="form-group">
-                            <select class="form-control" id="dobMonth" class="custom-select" style="max-width: 100px;" name="dobMonth">
+                            <select class="form-control" id="dobMonth" style="max-width: 100px;" name="dobMonth" onchange="UpdateDate()" required>
                                 <option value="">Select Month</option>
                                 <option value="01">January</option>
                                 <option value="02">February</option>
@@ -193,7 +198,7 @@
                     </div>
                     <div class="col-md-2">
                         <div class="form-group">
-                            <select class="form-control" id="dobYear" style="max-width: 100px;" name="dobYear">
+                            <select class="form-control" id="dobYear" style="max-width: 100px;" name="dobYear" onchange="UpdateDate()" required>
                                 <!-- Add options for years as needed -->
                                 <option value="">Select Year</option>
                             </select>
@@ -201,52 +206,52 @@
                     </div>
 
                 </div>
-                <div class="row">
+                @*<div class="row">
                     <div class="col-lg-12">
                         <input class="savebtn global-btn-purple  float-right" type="button" id="editPersonalInfo" value="Submit">
                     </div>
-                </div>
-</form>
+                </div>*@
+@*</form>*@
 
         <!-- Contact Details Section -->
         <div class="headBox">
             <h2>Contact Details</h2>
         </div>
-        <form action="#" method="post">
+        @*<form action="#" method="post">*@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="form-group">
                         <label for="cellPhone">Cell Phone Number:</label>
-                        <input class="form-control" type="tel" id="cellPhone" name="cellPhone" pattern="[0-9]{10}" placeholder="1234567890" maxlength="12" value="@Model.CellPhoneNumber" disabled><br><br>
+                        <input class="form-control number" type="tel" id="cellPhone" name="CellPhoneNumber" placeholder="1234567890" maxlength="12" value="@Model.CellPhoneNumber" readonly><br><br>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-lg-12">
-                    <input type="checkbox" id="differentNumbers" class="styled-checkbox" name="differentNumbers">
+                    <input type="checkbox" id="differentNumbers" class="styled-checkbox" name="differentNumbers" onclick="toggleFormSection('WhatsAppSection','differentNumbers')">
                     <label for="differentNumbers" class="checkbox-label" style="width: 75%;">Check if WhatsApp number is different from primary mobile number</label>
                     <br /><br />
                 </div>
             </div>
             <div class="row">
-                <div class="col-lg-4">
-                    <div id="textWhatsApp">
-                        <div class="form-group">
-                            <label for="whatsappNumber">WhatsApp Number:</label>
-                            <input class="form-control" type="tel" id="whatsappNumber" name="whatsappNumber" pattern="[0-9]{10}" value="@Model.WhatsAppNumber" placeholder="1234567890"><br><br>
+                <div class="col-lg-4" >
+                    <div id="WhatsAppSection" style="display: none;">
+                        <div class="form-group" >
+                            <label for="whatsappNumber ">WhatsApp Number:</label>
+                            <input class="form-control number" type="tel" id="whatsappNumber" name="WhatsAppNumber" value="@Model.WhatsAppNumber" placeholder="1234567890"><br><br>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-4">
                     <div class="form-group">
                         <label for="altCellPhone">Alternate Cell Phone Number:</label>
-                        <input class="form-control" type="tel" id="altCellPhone" name="altCellPhone" pattern="[0-9]{10}" maxlength="12" value="@Model.AlternateCellPhoneNumber" placeholder="1234567890"><br><br>
+                        <input class="form-control number" type="tel" id="altCellPhone" name="AlternateCellPhoneNumber" maxlength="12" value="@Model.AlternateCellPhoneNumber" placeholder="1234567890"><br><br>
                     </div>
                 </div>
                 <div class="col-lg-4">
                     <div class="form-group">
                         <label for="homePhone">Home Phone Number:</label>
-                        <input class="form-control" type="tel" id="homePhone" name="homePhone" pattern="[0-9]{10}" value="@Model.HomePhoneNumber" placeholder="1234567890"><br><br>
+                        <input class="form-control" type="tel" id="homePhone" name="HomePhoneNumber" value="@Model.HomePhoneNumber" placeholder="1234567890" required><br><br>
                     </div>
                 </div>
             </div>
@@ -254,42 +259,42 @@
                 <div class="col-lg-4">
                     <div class="form-group">
                         <label for="altLandline">Alternate Landline Number:</label>
-                        <input class="form-control" type="tel" id="altLandline" name="altLandline" pattern="[0-9]{10}" value="@Model.AlternateLandline" placeholder="1234567890"><br><br>
+                        <input class="form-control" type="tel" id="altLandline" name="AlternateLandline" pattern="[0-9]{10}" value="@Model.AlternateLandline" placeholder="1234567890"><br><br>
                     </div>
                 </div>
                 <div class="col-lg-4">
                     <div class="form-group">
                         <label for="guardianCellPhone">Guardian Cell Phone Number:</label>
-                        <input class="form-control" type="tel" id="guardianCellPhone" name="guardianCellPhone" pattern="[0-9]{10}" value="@Model.GuardianCellPhoneNumber" placeholder="1234567890"><br><br>
+                        <input class="form-control number" type="tel" id="guardianCellPhone" name="GuardianCellPhoneNumber" value="@Model.GuardianCellPhoneNumber" placeholder="1234567890" required><br><br>
                     </div>
                 </div>
                 <div class="col-lg-4">
                     <div class="form-group">
                         <label for="guardianEmail">Guardian Email Address:</label>
-                        <input class="form-control" type="email" id="guardianEmail" name="guardianEmail" value="@Model.GuardianEmailAddress"><br><br>
+                        <input class="form-control" type="email" id="guardianEmail" name="GuardianEmailAddress" value="@Model.GuardianEmailAddress" required><br><br>
                     </div>
                 </div>
             </div>
-            <div class="row">
+            @*<div class="row">
                 <div class="col-lg-12">
                     <input type="button" class="savebtn global-btn-purple  float-right" id="editContactDetails" value="Submit">
                 </div>
-            </div>
-        </form>
-        <br />
+            </div>*@
+        @*</form>*@
+        <!--<br />
         <br />
 
 
         <!-- Address Information Section -->
-            <div class="headBox">
+            <!--<div class="headBox">
                 <h2>Address Details</h2>
-            </div>
-            <form action="#" method="post">
+            </div>-->
+            @*<form action="#" method="post">*@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="form-group">
                             <label for="residentialAddress">Residential Address:</label>
-                                <textarea class="form-control" id="residentialAddress" name="residentialAddress" rows="2" cols="100" required></textarea><br><br>
+                                <textarea class="form-control" id="residentialAddress" name="ResidentialAddress" rows="2" cols="100" required></textarea><br><br>
                         </div>
                     </div>
                 </div>
@@ -297,7 +302,7 @@
                     <div class="col-lg-4">
                         <div class="form-group">
                             <label  for="residentialCountry">Select Country:</label>
-                                <select class="form-control" id="residentialCountry" onchange="updateProvince(this.id,'residentialProvince');">
+                                <select class="form-control" id="residentialCountry" name="ResidentialCountry" onchange="updateProvince(this.id,'residentialProvince');" required>
                                     <option value="">Select Country</option>
                                     <option value="pakistan">Pakistan</option>
                                 </select>
@@ -306,7 +311,7 @@
                     <div class="col-lg-4">
                         <div class="form-group">
                             <label for="residentialProvince">Select Province/State:</label>
-                                <select class="form-control" id="residentialProvince" onchange="updateCities(this.id,'residentialCity');">
+                                <select class="form-control" id="residentialProvince" name="ResidentialProvince" onchange="updateCities(this.id,'residentialCity');" required>
                                     <option value="">Select Provience</option>
                                 </select>
                         </div>
@@ -314,7 +319,7 @@
                     <div class="col-lg-4">
                         <div class="form-group">
                             <label for="residentialCity">City:</label>
-                                <select class="form-control" id="residentialCity" onchange="toggleOtherCityInput(this.id,'residentialCityOther')">
+                                <select class="form-control" id="residentialCity" name="ResidentialCity" onchange="toggleOtherCityInput(this.id,'residentialCityOther')"required>
                                     <option value="">Select City</option>
                                 </select>
                         </div>
@@ -324,13 +329,13 @@
                     <div class="col-lg-4">
                         <div class="form-group">
                             <label for="residentialCityOther">Other City:</label>
-                                <input class="form-control" type="text" id="residentialCityOther" name="residentialCityOther" style="display: none;"><br><br>
+                                <input class="form-control" type="text" id="residentialCityOther" name="ResidentialCityOther" style="display: none;"><br><br>
                         </div>
                     </div>
                     <div class="col-lg-4">
                         <div class="form-group">
                             <label for="residentialPostalCode">Residential Postal Code:</label>
-                                <input class="form-control" type="text" id="residentialPostalCode" name="residentialPostalCode" required><br><br>
+                                <input class="form-control" type="text" id="residentialPostalCode" name="ResidentialPostalCode" required><br><br>
                         </div>
                     </div>
                 </div>
@@ -346,7 +351,7 @@
                         <div class="col-lg-12">
                             <div class="form-group">
                                 <label for="permanentAddress">Permanent Address:</label>
-                                <textarea class="form-control" id="permanentAddress" name="permanentAddress" rows="2" cols="50" required></textarea><br><br>
+                                <textarea class="form-control" id="permanentAddress" name="PermanentAddress" rows="2" cols="50"></textarea><br><br>
                             </div>
                         </div>
                     </div>
@@ -354,8 +359,8 @@
                         <div class="col-lg-4">
                             <div class="form-group">
                                 <label for="permanentCountry">Select Country:</label>
-                                <select class="form-control" id="permanentCountry" onchange="updateProvince(this.id,'permanentProvince');">
-                                    <option>Select Country</option>
+                                <select class="form-control" id="permanentCountry" name="PermanentCountry" onchange="updateProvince(this.id,'permanentProvince');">
+                                    <option value="">Select Country</option>
                                     <option value="pakistan">Pakistan</option>
                                 </select>
                             </div>
@@ -364,7 +369,7 @@
 
                             <div class="form-group">
                                 <label for="permanentProvince">Select Province/State:</label>
-                                <select class="form-control" id="permanentProvince" onchange="updateCities(this.id,'permanentCity');">
+                                <select class="form-control" id="permanentProvince" name="PermanentProvince" onchange="updateCities(this.id,'permanentCity');">
                                     <option value="">Select Provience</option>
                                 </select>
                             </div>
@@ -372,7 +377,7 @@
                         <div class="col-lg-4">
                             <div class="form-group">
                                 <label for="permanentCity">City:</label>
-                                <select class="form-control" id="permanentCity" onchange="toggleOtherCityInput(this.id,'permanentCityOther')">
+                                <select class="form-control" id="permanentCity"name="PermanentCity" onchange="toggleOtherCityInput(this.id,'permanentCityOther')">
                                     <option value="">Select City</option>
                                 </select>
                             </div>
@@ -382,35 +387,28 @@
                         <div class="col-lg-4">
                             <div class="form-group">
                                 <label for="permanentCityOther">Other City:</label>
-                                <input class="form-control" type="text" id="permanentCityOther" name="residentialCityOther" style="display: none;"><br><br>
+                                <input class="form-control" type="text" id="permanentCityOther" name="PermanentCityOther" style="display: none;"><br><br>
                             </div>
                         </div>
                         <div class="col-lg-4">
                             <div class="form-group">
                                 <label for="permanentPostalCode">Permanent Postal Code:</label>
-                                <input class="form-control" type="text" id="permanentPostalCode" name="permanentPostalCode" required>
+                                <input class="form-control" type="text" id="permanentPostalCode" name="PermanentPostalCode">
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-lg-12">
-                        <input class="savebtn global-btn-purple  float-right" type="button" id="editAddressDetails" value="Submit">
+
+                        <input class="savebtn global-btn-purple  float-right" type="submit" value="Submit">
+                        <input class="savebtn global-btn-purple  float-right" type="button" onclick="Save()" value="Save">
                     </div>
                 </div>
-                
+                <input type="text" name="DateOfBirth" id="DateOfBirth" style="display:none" />
             </form>
 
 
-        <!-- Academic Details Section -->
-        <!--<fieldset>
-            <legend>Academic Details </legend>
-            <label for="fathername">Father's Name:</label>
-            <input type="text" id="fathername" name="fathername" required><br>
-
-            <label for="mothername">Mother's Name:</label>
-            <input type="text" id="mothername" name="mothername" required><br>
-        </fieldset>-->
     </div>
 </div>
 
@@ -422,28 +420,28 @@
 
 
 <script>
-    $('#textWhatsApp').hide();
-    LoadYear();
-    LoadPersonalData_Combo()
-
-
-    function LoadPersonalData_Combo() {
-        debugger
+        if ('@ViewBag.Result' !== "")
+        {
+            ShowDivError('@ViewBag.Result');
+        }
+        LoadYear("dobYear");
+        LoadPersonalData_Combo()
+        function LoadPersonalData_Combo() {
         $('#gender').val('@Model.Gender');
         $('#gender').trigger('change');
 
-        var date = new Date('@Model.DateOfBirth');
-        var day = date.getDate().toString().padStart(2, '0');
-        var month = (date.getMonth() + 1).toString().padStart(2, '0');
-        var year = date.getFullYear();
-        console.log(day + "-" + month + "-" + year + "");
-        $('#dobDay').val(day.toString());
-        $('#dobDay').trigger('change');
-        $('#dobMonth').val(month.toString());
-        $('#dobMonth').trigger('change');
-        $('#dobYear').val(year.toString());
-        $('#dobYear').trigger('change');
-
+        if ('@Model.DateOfBirth' != '' || '@Model.DateOfBirth' != null) {
+            var date = new Date('@Model.DateOfBirth');
+            var day = date.getDate().toString().padStart(2, '0');
+            var month = (date.getMonth() + 1).toString().padStart(2, '0');
+            var year = date.getFullYear();
+            $('#dobDay').val(day.toString());
+            $('#dobDay').trigger('change');
+            $('#dobMonth').val(month.toString());
+            $('#dobMonth').trigger('change');
+            $('#dobYear').val(year.toString());
+            $('#dobYear').trigger('change');
+        }
 
 
         $('#residentialAddress').val('@Model.ResidentialAddress');
@@ -468,222 +466,68 @@
     }
 
 
+    function UpdateDate() {
+        $('#DateOfBirth').val($('#dobYear').val() + "-" + $('#dobMonth').val() + "-" + $('#dobDay').val());
+    }
+        function Save() {
+
+        const day = document.getElementById("dobDay").value;
+        const month = document.getElementById("dobMonth").value;
+        const year = document.getElementById("dobYear").value;
+
+        // Create a new Date object using the selected values
+        var dob = new Date(`${year}-${month}-${day}`);
+        var param = {
+            firstName: $('#firstName').val(),
+            middleName: $('#middleName').val(),
+            lastName: $('#lastName').val(),
+            fatherFirstName: $('#fatherFirstName').val(),
+            fatherMiddleName: $('#fatherMiddleName').val(),
+            fatherLastName: $('#fatherLastName').val(),
+            cnic: $('#cnic').val(),
+            emailAddress: $('#email').val(),
+            alterEmailAddress: $('#altEmail').val(),
+            gender: document.getElementById("gender").value,
+            husbandName: $('#husbandName').val(),
+            dateofBirth: dob,
+            // Contact Info
+            cellPhoneNumber: $('#cellPhone').val(),
+            whatsAppNumber: $('#whatsappNumber').val(),
+            alternateCellPhoneNumber: $('#altCellPhone').val(),
+            homePhoneNumber: $('#homePhone').val(),
+            alternateLandline: $('#altLandline').val(),
+            guardianCellPhoneNumber: $('#guardianCellPhone').val(),
+            guardianEmailAddress: $('#guardianEmail').val(),
+            // Address info
+            residentialAddress: $('#residentialAddress').val(),
+            residentialCountry: $('#residentialCountry').val(),
+            residentialProvince: $('#residentialProvince').val(),
+            residentialCity: $('#residentialCity').val(),
+            residentialCityOther: $('#residentialCityOther').val(),
+            residentialPostalCode: $('#residentialPostalCode').val(),
+
+            permanentAddress: $('#permanentAddress').val(),
+            permanentCountry: $('#permanentCountry').val(),
+            permanentProvince: $('#permanentProvince').val(),
+            permanentCity: $('#permanentCity').val(),
+            permanentCityOther: $('#permanentCityOther').val(),
+            permanentPostalCode: $('#permanentPostalCode').val(),
 
 
-    $('#differentNumbers').on('change', function () {
-        if ($(this).is(':checked')) {
-            $('#textWhatsApp').show();
-        } else {
-            $('#textWhatsApp').hide();
-        }
-    });
+        };
 
+        CallAsyncService('/Home/Save', JSON.stringify(param), editSaveCallback);
 
-
-
-    function toggleOtherCityInput(cityId, otherCityId) {
-        var select = document.getElementById(cityId.toString(), otherCityId.toString());
-        var otherInput = document.getElementById(otherCityId.toString());
-
-            if (select.value === "other") {
-                otherInput.style.display = "block";
-            } else {
-                otherInput.style.display = "none";
+        function editSaveCallback(response) {
+            if (response.status) {
+                ShowDivSuccess(response.message)
+            }
+            else {
+                ShowDivError(response.message)
             }
         }
-
-    function toggleFormSection(sectionId, checkboxId) {
-            var section = document.getElementById(sectionId);
-            var checkbox = document.getElementById(checkboxId);
-
-            section.style.display = checkbox.checked ? "block" : "none";
-        }
-
-    function LoadYear() {
-            var comboYear = document.getElementById("dobYear");
-            var option = document.createElement("option");
-            option.value = "";
-            option.text = "Select Year";
-            comboYear.appendChild(option);
-            for (var j = 2023; j > 1950; j--) {
-                var option = document.createElement("option");
-                option.value = j;
-                option.text = j;
-                comboYear.appendChild(option);
-            }
-        }
-
-    function updateCities(provienceId, cityId) {
-        var provinceSelect = document.getElementById(provienceId.toString());
-        var citySelect = document.getElementById(cityId.toString());
-
-            var selectedProvince = provinceSelect.value;
-
-
-            var citiesByProvince = {
-                "Punjab": ["Lahore", "Faisalabad", "Rawalpindi", "Multan", "Gujranwala"],
-                "Sindh": ["Karachi", "Hyderabad", "Sukkur", "Larkana"],
-                "Khyber Pakhtunkhwa": ["Peshawar", "Abbottabad", "Swat", "Mardan"],
-                "Balochistan": ["Quetta", "Gwadar", "Khuzdar", "Turbat"],
-                "Gilgit-Baltistan": ["Gilgit", "Skardu", "Hunza", "Ghizer"],
-                "Azad Kashmir": ["Muzaffarabad", "Mirpur", "Kotli", "Rawalakot"]
-                // ... and so on
-            };
-
-            // Update city select box options based on selected province
-            citySelect.innerHTML = "";
-            var cities = citiesByProvince[selectedProvince];
-            var option = document.createElement("option");
-            option.value = "";
-            option.text = "Select City";
-            citySelect.appendChild(option);
-            for (var j = 0; j < cities.length; j++) {
-                var option = document.createElement("option");
-                option.value = cities[j];
-                option.text = cities[j];
-                citySelect.appendChild(option);
-        }
-        var option = document.createElement("option");
-        option.value = "other";
-        option.text = "Other";
-        citySelect.appendChild(option);
-        }
-
-    function updateProvince(countryId, provienceId) {
-        var countrySelect = document.getElementById(countryId.toString());
-        var provinceSelect = document.getElementById(provienceId.toString());
-
-            var selectedCountry = countrySelect.value;
-
-            // Simulated data (you can replace this with actual data)
-            var provincesByCountry = {
-                "pakistan": ["Punjab", "Sindh", "Khyber Pakhtunkhwa", "Balochistan", "Gilgit-Baltistan", "Azad Kashmir"]
-            };
-
-
-            // Update province select box options based on selected country
-            provinceSelect.innerHTML = "";
-            var provinces = provincesByCountry[selectedCountry];
-            var option = document.createElement("option");
-            option.value = "";
-            option.text = "Select Provience/State";
-            provinceSelect.appendChild(option);
-            for (var i = 0; i < provinces.length; i++) {
-                var option = document.createElement("option");
-                option.value = provinces[i];
-                option.text = provinces[i];
-                provinceSelect.appendChild(option);
-            }
 
     }
 
 
-        $('#editPersonalInfo').click(function (e) {
-            e.preventDefault();
-            const day = document.getElementById("dobDay").value;
-            const month = document.getElementById("dobMonth").value;
-            const year = document.getElementById("dobYear").value;
-
-            // Create a new Date object using the selected values
-            var dob = new Date(`${year}-${month}-${day}`);
-            var param = {
-                firstName: $('#firstName').val(),
-                middleName: $('#middleName').val(),
-                lastName: $('#lastName').val(),
-                fatherFirstName: $('#fatherFirstName').val(),
-                fatherMiddleName: $('#fatherMiddleName').val(),
-                fatherLastName: $('#fatherLastName').val(),
-                cnic: $('#cnic').val(),
-                emailAddress: $('#email').val(),
-                alterEmailAddress: $('#altEmail').val(),
-                gender: document.getElementById("gender").value,
-                husbandName: $('#husbandName').val(),
-                dateofBirth: dob
-
-
-            };
-
-            CallAsyncService('/Home/UpdatePersonalInfo', JSON.stringify(param), editUserCallback);
-
-            function editUserCallback(response) {
-                if (response.status) {
-                    ShowDivSuccess(response.message)
-                }
-                else {
-                    ShowDivError(response.message)
-                }
-                setTimeout(function () { location.reload(); }, 3000);
-            }
-
-        });
-
-        $('#editContactDetails').click(function (e) {
-            e.preventDefault();
-            if ($('#whatsappNumber').val() === '') {
-                $('#whatsappNumber').val($('#cellPhone').val())
-            }
-            var param = {
-                cellPhoneNumber: $('#cellPhone').val(),
-                whatsAppNumber: $('#whatsappNumber').val(),
-                alternateCellPhoneNumber: $('#altCellPhone').val(),
-                homePhoneNumber: $('#homePhone').val(),
-                alternateLandline: $('#altLandline').val(),
-                guardianCellPhoneNumber: $('#guardianCellPhone').val(),
-                guardianEmailAddress: $('#guardianEmail').val()
-            };
-
-            CallAsyncService('/Home/UpdateContactDetails', JSON.stringify(param), editUserCallback);
-
-            function editUserCallback(response) {
-                if (response.status) {
-                    ShowDivSuccess(response.message)
-                }
-                else {
-                    ShowDivError(response.message)
-                }
-                setTimeout(function () { location.reload(); }, 3000);
-            }
-
-        });
-
-
-        $('#editAddressDetails').click(function (e) {
-            e.preventDefault();
-            var param = {
-                residentialAddress: $('#residentialAddress').val(),
-                residentialCountry: $('#residentialCountry').val(),
-                residentialProvince: $('#residentialProvince').val(),
-                residentialCity: $('#residentialCity').val(),
-                residentialCityOther: $('#residentialCityOther').val(),
-                residentialPostalCode: $('#residentialPostalCode').val(),
-
-                permanentAddress: $('#permanentAddress').val(),
-                permanentCountry: $('#permanentCountry').val(),
-                permanentProvince: $('#permanentProvince').val(),
-                permanentCity: $('#permanentCity').val(),
-                permanentCityOther: $('#permanentCityOther').val(),
-                permanentPostalCode: $('#permanentPostalCode').val(),
-            };
-
-            CallAsyncService('/Home/UpdateAddressDetails', JSON.stringify(param), editAddressDetailsCB);
-
-            function editAddressDetailsCB(response) {
-                if (response.status) {
-                    ShowDivSuccess(response.message)
-                }
-                else {
-                    ShowDivError(response.message)
-                }
-            }
-
-        });
-
-
-
-    // Add Masking
-    $('#cellPhone').inputmask("9999-9999999");
-    $('#whatsappNumber').inputmask("9999-9999999");
-    $('#altCellPhone').inputmask("9999-9999999");
-    $('#homePhone').inputmask("9999-9999999");
-    $('#guardianCellPhone').inputmask("9999-9999999");
 </script>
