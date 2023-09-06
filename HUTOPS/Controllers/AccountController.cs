@@ -38,6 +38,7 @@ namespace HUTOPS.Controllers
             catch (System.Exception ex)
             {
                 Helper.Helper.AddLog(Constants.LogType.ActivityLog, "Exception Occur While Login" + "Ex: " + ex.InnerException.Message);
+                ViewBag.Result = "Invalid User";
                 return View();
             }
             
@@ -141,6 +142,11 @@ namespace HUTOPS.Controllers
                     {
                         IsValid = false;
                         ModelState.AddModelError("CellPhoneNumber", "Phone Number is required");
+                    }
+                    if (!string.IsNullOrEmpty(model["CellPhoneNumber"]) && !Helper.Helper.IsValidPhoneNumber(model["CellPhoneNumber"]))
+                    {
+                        IsValid = false;
+                        ModelState.AddModelError("CellPhoneNumber", "Phone Number is Invalid");
                     }
                     if (!string.IsNullOrEmpty(model["CellPhoneNumber"].ToString()) && userCNIC.Count == 1)
                     {

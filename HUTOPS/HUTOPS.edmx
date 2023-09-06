@@ -20,6 +20,23 @@
           <Property Name="Name" Type="varchar" MaxLength="50" />
           <Property Name="BoardId" Type="int" />
         </EntityType>
+        <EntityType Name="City">
+          <Key>
+            <PropertyRef Name="Name" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="Status" Type="tinyint" Nullable="false" />
+          <Property Name="StateId" Type="tinyint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Country">
+          <Key>
+            <PropertyRef Name="Name" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Status" Type="tinyint" />
+        </EntityType>
         <EntityType Name="Documents">
           <Key>
             <PropertyRef Name="Id" />
@@ -94,7 +111,7 @@ warning 6002: The table/view 'HU_TOPS.dbo.EducationalSubjects' does not have a p
           <Property Name="LastName" Type="varchar" MaxLength="50" />
           <Property Name="FatherFirstName" Type="varchar" MaxLength="50" />
           <Property Name="FatherMiddleName" Type="varchar" MaxLength="50" />
-          <Property Name="FatherLastName" Type="nchar" MaxLength="10" />
+          <Property Name="FatherLastName" Type="varchar" MaxLength="50" />
           <Property Name="Gender" Type="varchar" MaxLength="10" />
           <Property Name="HusbandName" Type="varchar" MaxLength="50" />
           <Property Name="DateOfBirth" Type="datetime2" Precision="7" />
@@ -137,7 +154,7 @@ warning 6002: The table/view 'HU_TOPS.dbo.EducationalSubjects' does not have a p
           <Property Name="IsAppliedBefore" Type="int" />
           <Property Name="AppliedBeforeMonth" Type="int" />
           <Property Name="AppliedBeforeYear" Type="int" />
-          <Property Name="HomePhoneNumber" Type="varchar" MaxLength="12" />
+          <Property Name="HomePhoneNumber" Type="varchar" MaxLength="15" />
           <Property Name="WhatsAppNumber" Type="varchar" MaxLength="15" />
           <Property Name="GuardianCellPhoneNumber" Type="varchar" MaxLength="12" />
           <Property Name="GuardianEmailAddress" Type="varchar" MaxLength="50" />
@@ -146,6 +163,15 @@ warning 6002: The table/view 'HU_TOPS.dbo.EducationalSubjects' does not have a p
           <Property Name="CreatedDatetime" Type="datetime2" Precision="7" />
           <Property Name="Declaration" Type="int" />
           <Property Name="IsCompleted" Type="int" />
+        </EntityType>
+        <EntityType Name="State">
+          <Key>
+            <PropertyRef Name="Name" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="CountryId" Type="tinyint" />
+          <Property Name="Status" Type="tinyint" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -251,13 +277,13 @@ warning 6002: The table/view 'HU_TOPS.dbo.EducationalSubjects' does not have a p
           <Parameter Name="ResidentialProvince" Type="varchar" Mode="In" />
           <Parameter Name="ResidentialCity" Type="varchar" Mode="In" />
           <Parameter Name="ResidentialCityOther" Type="varchar" Mode="In" />
-          <Parameter Name="ResidentialPostalCode" Type="varchar" Mode="In" />
+          <Parameter Name="ResidentialPostalCode" Type="int" Mode="In" />
           <Parameter Name="PermanentAddress" Type="varchar" Mode="In" />
           <Parameter Name="PermanentCountry" Type="varchar" Mode="In" />
           <Parameter Name="PermanentProvince" Type="varchar" Mode="In" />
           <Parameter Name="PermanentCity" Type="varchar" Mode="In" />
           <Parameter Name="PermanentCityOther" Type="varchar" Mode="In" />
-          <Parameter Name="PermanentPostalCode" Type="varchar" Mode="In" />
+          <Parameter Name="PermanentPostalCode" Type="int" Mode="In" />
         </Function>
         <Function Name="WEB_UpdateContactDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Id" Type="int" Mode="In" />
@@ -295,13 +321,13 @@ warning 6002: The table/view 'HU_TOPS.dbo.EducationalSubjects' does not have a p
           <Parameter Name="ResidentialProvince" Type="varchar" Mode="In" />
           <Parameter Name="ResidentialCity" Type="varchar" Mode="In" />
           <Parameter Name="ResidentialCityOther" Type="varchar" Mode="In" />
-          <Parameter Name="ResidentialPostalCode" Type="varchar" Mode="In" />
+          <Parameter Name="ResidentialPostalCode" Type="int" Mode="In" />
           <Parameter Name="PermanentAddress" Type="varchar" Mode="In" />
           <Parameter Name="PermanentCountry" Type="varchar" Mode="In" />
           <Parameter Name="PermanentProvince" Type="varchar" Mode="In" />
           <Parameter Name="PermanentCity" Type="varchar" Mode="In" />
           <Parameter Name="PermanentCityOther" Type="varchar" Mode="In" />
-          <Parameter Name="PermanentPostalCode" Type="varchar" Mode="In" />
+          <Parameter Name="PermanentPostalCode" Type="int" Mode="In" />
         </Function>
         <Function Name="WEB_UpdatePersonalInfo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Id" Type="int" Mode="In" />
@@ -325,11 +351,14 @@ warning 6002: The table/view 'HU_TOPS.dbo.EducationalSubjects' does not have a p
         <EntityContainer Name="HU_TOPSModelStoreContainer">
           <EntitySet Name="Board" EntityType="Self.Board" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BoardGroups" EntityType="Self.BoardGroups" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="City" EntityType="Self.City" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Country" EntityType="Self.Country" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Documents" EntityType="Self.Documents" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Educational" EntityType="Self.Educational" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="GroupSubjects" EntityType="Self.GroupSubjects" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Log" EntityType="Self.Log" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PersonalInformation" EntityType="Self.PersonalInformation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="State" EntityType="Self.State" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EducationalSubjects" EntityType="Self.EducationalSubjects" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -412,7 +441,7 @@ warning 6002: The table/view 'HU_TOPS.dbo.EducationalSubjects' does not have a p
           <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="FatherFirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="FatherMiddleName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="FatherLastName" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="FatherLastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Gender" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="HusbandName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="DateOfBirth" Type="DateTime" Precision="7" />
@@ -455,7 +484,7 @@ warning 6002: The table/view 'HU_TOPS.dbo.EducationalSubjects' does not have a p
           <Property Name="IsAppliedBefore" Type="Int32" />
           <Property Name="AppliedBeforeMonth" Type="Int32" />
           <Property Name="AppliedBeforeYear" Type="Int32" />
-          <Property Name="HomePhoneNumber" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="HomePhoneNumber" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
           <Property Name="WhatsAppNumber" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
           <Property Name="GuardianCellPhoneNumber" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
           <Property Name="GuardianEmailAddress" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
@@ -585,13 +614,13 @@ warning 6002: The table/view 'HU_TOPS.dbo.EducationalSubjects' does not have a p
             <Parameter Name="ResidentialProvince" Mode="In" Type="String" />
             <Parameter Name="ResidentialCity" Mode="In" Type="String" />
             <Parameter Name="ResidentialCityOther" Mode="In" Type="String" />
-            <Parameter Name="ResidentialPostalCode" Mode="In" Type="String" />
+            <Parameter Name="ResidentialPostalCode" Mode="In" Type="Int32" />
             <Parameter Name="PermanentAddress" Mode="In" Type="String" />
             <Parameter Name="PermanentCountry" Mode="In" Type="String" />
             <Parameter Name="PermanentProvince" Mode="In" Type="String" />
             <Parameter Name="PermanentCity" Mode="In" Type="String" />
             <Parameter Name="PermanentCityOther" Mode="In" Type="String" />
-            <Parameter Name="PermanentPostalCode" Mode="In" Type="String" />
+            <Parameter Name="PermanentPostalCode" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="WEB_UpdateContactDetails">
             <Parameter Name="Id" Mode="In" Type="Int32" />
@@ -652,14 +681,17 @@ warning 6002: The table/view 'HU_TOPS.dbo.EducationalSubjects' does not have a p
             <Parameter Name="ResidentialProvince" Mode="In" Type="String" />
             <Parameter Name="ResidentialCity" Mode="In" Type="String" />
             <Parameter Name="ResidentialCityOther" Mode="In" Type="String" />
-            <Parameter Name="ResidentialPostalCode" Mode="In" Type="String" />
+            <Parameter Name="ResidentialPostalCode" Mode="In" Type="Int32" />
             <Parameter Name="PermanentAddress" Mode="In" Type="String" />
             <Parameter Name="PermanentCountry" Mode="In" Type="String" />
             <Parameter Name="PermanentProvince" Mode="In" Type="String" />
             <Parameter Name="PermanentCity" Mode="In" Type="String" />
             <Parameter Name="PermanentCityOther" Mode="In" Type="String" />
-            <Parameter Name="PermanentPostalCode" Mode="In" Type="String" />
+            <Parameter Name="PermanentPostalCode" Mode="In" Type="Int32" />
           </FunctionImport>
+          <EntitySet Name="Cities" EntityType="HU_TOPSModel.City" />
+          <EntitySet Name="Countries" EntityType="HU_TOPSModel.Country" />
+          <EntitySet Name="States" EntityType="HU_TOPSModel.State" />
         </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -766,6 +798,32 @@ warning 6002: The table/view 'HU_TOPS.dbo.EducationalSubjects' does not have a p
           <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="CreatedDatetime" Type="DateTime" Precision="7" />
+        </EntityType>
+        <EntityType Name="City">
+          <Key>
+            <PropertyRef Name="Name" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="Status" Type="Byte" Nullable="false" />
+          <Property Name="StateId" Type="Byte" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Country">
+          <Key>
+            <PropertyRef Name="Name" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Status" Type="Byte" />
+        </EntityType>
+        <EntityType Name="State">
+          <Key>
+            <PropertyRef Name="Name" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="CountryId" Type="Byte" />
+          <Property Name="Status" Type="Byte" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1088,6 +1146,35 @@ warning 6002: The table/view 'HU_TOPS.dbo.EducationalSubjects' does not have a p
             </EntityTypeMapping>
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="WEB_UpdatePersonal" FunctionName="HU_TOPSModel.Store.WEB_UpdatePersonal" />
+          <EntitySetMapping Name="Cities">
+            <EntityTypeMapping TypeName="HU_TOPSModel.City">
+              <MappingFragment StoreEntitySet="City">
+                <ScalarProperty Name="StateId" ColumnName="StateId" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Countries">
+            <EntityTypeMapping TypeName="HU_TOPSModel.Country">
+              <MappingFragment StoreEntitySet="Country">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="States">
+            <EntityTypeMapping TypeName="HU_TOPSModel.State">
+              <MappingFragment StoreEntitySet="State">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="CountryId" ColumnName="CountryId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

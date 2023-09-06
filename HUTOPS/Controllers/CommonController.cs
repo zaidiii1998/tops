@@ -104,5 +104,21 @@ namespace HUTOPS.Controllers
                 throw;
             }
         }
+
+        public ActionResult GetCountry()
+        {
+            var result = DB.Countries.ToList();
+            return Json(result);
+        }
+        public ActionResult GetProvince(string CountryId)
+        {
+            var result = DB.States.ToList().FindAll(x => x.CountryId == int.Parse(CountryId));
+            return Json(result);
+        }
+        public ActionResult GetCities(string ProvinceId)
+        {
+            var result = DB.Cities.ToList().FindAll(x => x.StateId == int.Parse(ProvinceId));
+            return Json(result);
+        }
     }
 }

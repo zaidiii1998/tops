@@ -36,6 +36,9 @@ namespace HUTOPS
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<EducationalSubject> EducationalSubjects { get; set; }
         public virtual DbSet<Log> Logs { get; set; }
+        public virtual DbSet<City> Cities { get; set; }
+        public virtual DbSet<Country> Countries { get; set; }
+        public virtual DbSet<State> States { get; set; }
     
         public virtual int InsertBoardGroups(string groupNames, Nullable<int> boardId)
         {
@@ -329,7 +332,7 @@ namespace HUTOPS
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("WEB_InsertEducationalSubjects", educationalIdParameter, subjectNameParameter, subjectObtainParameter, subjectTotalParameter, subjectGradeParameter);
         }
     
-        public virtual int WEB_UpdateAddressDetails(Nullable<int> id, string residentialAddress, string residentialCountry, string residentialProvince, string residentialCity, string residentialCityOther, string residentialPostalCode, string permanentAddress, string permanentCountry, string permanentProvince, string permanentCity, string permanentCityOther, string permanentPostalCode)
+        public virtual int WEB_UpdateAddressDetails(Nullable<int> id, string residentialAddress, string residentialCountry, string residentialProvince, string residentialCity, string residentialCityOther, Nullable<int> residentialPostalCode, string permanentAddress, string permanentCountry, string permanentProvince, string permanentCity, string permanentCityOther, Nullable<int> permanentPostalCode)
         {
             var idParameter = id.HasValue ?
                 new ObjectParameter("Id", id) :
@@ -355,9 +358,9 @@ namespace HUTOPS
                 new ObjectParameter("ResidentialCityOther", residentialCityOther) :
                 new ObjectParameter("ResidentialCityOther", typeof(string));
     
-            var residentialPostalCodeParameter = residentialPostalCode != null ?
+            var residentialPostalCodeParameter = residentialPostalCode.HasValue ?
                 new ObjectParameter("ResidentialPostalCode", residentialPostalCode) :
-                new ObjectParameter("ResidentialPostalCode", typeof(string));
+                new ObjectParameter("ResidentialPostalCode", typeof(int));
     
             var permanentAddressParameter = permanentAddress != null ?
                 new ObjectParameter("PermanentAddress", permanentAddress) :
@@ -379,9 +382,9 @@ namespace HUTOPS
                 new ObjectParameter("PermanentCityOther", permanentCityOther) :
                 new ObjectParameter("PermanentCityOther", typeof(string));
     
-            var permanentPostalCodeParameter = permanentPostalCode != null ?
+            var permanentPostalCodeParameter = permanentPostalCode.HasValue ?
                 new ObjectParameter("PermanentPostalCode", permanentPostalCode) :
-                new ObjectParameter("PermanentPostalCode", typeof(string));
+                new ObjectParameter("PermanentPostalCode", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("WEB_UpdateAddressDetails", idParameter, residentialAddressParameter, residentialCountryParameter, residentialProvinceParameter, residentialCityParameter, residentialCityOtherParameter, residentialPostalCodeParameter, permanentAddressParameter, permanentCountryParameter, permanentProvinceParameter, permanentCityParameter, permanentCityOtherParameter, permanentPostalCodeParameter);
         }
@@ -502,7 +505,7 @@ namespace HUTOPS
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<WEB_UserLogin_Result>("WEB_CheckPersonalInfo", idParameter);
         }
     
-        public virtual int WEB_UpdatePersonal(Nullable<int> id, string fName, string mName, string lName, string fatherFName, string fatherMName, string fatherLName, string gender, string husbandName, string dOB, string cNIC, string email, string alterEmail, string cellPhone, string whatsApp, string altCellPhone, string homeCellPhone, string altLandline, string guardianCellPhone, string guardianEmail, string residentialAddress, string residentialCountry, string residentialProvince, string residentialCity, string residentialCityOther, string residentialPostalCode, string permanentAddress, string permanentCountry, string permanentProvince, string permanentCity, string permanentCityOther, string permanentPostalCode)
+        public virtual int WEB_UpdatePersonal(Nullable<int> id, string fName, string mName, string lName, string fatherFName, string fatherMName, string fatherLName, string gender, string husbandName, string dOB, string cNIC, string email, string alterEmail, string cellPhone, string whatsApp, string altCellPhone, string homeCellPhone, string altLandline, string guardianCellPhone, string guardianEmail, string residentialAddress, string residentialCountry, string residentialProvince, string residentialCity, string residentialCityOther, Nullable<int> residentialPostalCode, string permanentAddress, string permanentCountry, string permanentProvince, string permanentCity, string permanentCityOther, Nullable<int> permanentPostalCode)
         {
             var idParameter = id.HasValue ?
                 new ObjectParameter("Id", id) :
@@ -604,9 +607,9 @@ namespace HUTOPS
                 new ObjectParameter("ResidentialCityOther", residentialCityOther) :
                 new ObjectParameter("ResidentialCityOther", typeof(string));
     
-            var residentialPostalCodeParameter = residentialPostalCode != null ?
+            var residentialPostalCodeParameter = residentialPostalCode.HasValue ?
                 new ObjectParameter("ResidentialPostalCode", residentialPostalCode) :
-                new ObjectParameter("ResidentialPostalCode", typeof(string));
+                new ObjectParameter("ResidentialPostalCode", typeof(int));
     
             var permanentAddressParameter = permanentAddress != null ?
                 new ObjectParameter("PermanentAddress", permanentAddress) :
@@ -628,9 +631,9 @@ namespace HUTOPS
                 new ObjectParameter("PermanentCityOther", permanentCityOther) :
                 new ObjectParameter("PermanentCityOther", typeof(string));
     
-            var permanentPostalCodeParameter = permanentPostalCode != null ?
+            var permanentPostalCodeParameter = permanentPostalCode.HasValue ?
                 new ObjectParameter("PermanentPostalCode", permanentPostalCode) :
-                new ObjectParameter("PermanentPostalCode", typeof(string));
+                new ObjectParameter("PermanentPostalCode", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("WEB_UpdatePersonal", idParameter, fNameParameter, mNameParameter, lNameParameter, fatherFNameParameter, fatherMNameParameter, fatherLNameParameter, genderParameter, husbandNameParameter, dOBParameter, cNICParameter, emailParameter, alterEmailParameter, cellPhoneParameter, whatsAppParameter, altCellPhoneParameter, homeCellPhoneParameter, altLandlineParameter, guardianCellPhoneParameter, guardianEmailParameter, residentialAddressParameter, residentialCountryParameter, residentialProvinceParameter, residentialCityParameter, residentialCityOtherParameter, residentialPostalCodeParameter, permanentAddressParameter, permanentCountryParameter, permanentProvinceParameter, permanentCityParameter, permanentCityOtherParameter, permanentPostalCodeParameter);
         }

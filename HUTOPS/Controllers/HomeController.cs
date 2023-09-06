@@ -1,6 +1,7 @@
 ﻿using HUTOPS.Helper;
 using System.Linq;
 using System.Web.Mvc;
+using HUTOPS.Models;
 
 namespace HUTOPS.Controllers
 {
@@ -15,11 +16,25 @@ namespace HUTOPS.Controllers
                 int userId = int.Parse(Helper.Helper.GetSession(Constants.Session.UserId));
                 var user = DB.PersonalInformations.ToList();
                 var LoginUser = user.Where(x => x.Id == userId).FirstOrDefault();
-                if (TempData["Result"] != null )
+                var country = DB.Countries.ToList();
+                var province = DB.States.ToList();
+                var city = DB.Cities.ToList();
+                var pageModel = new PersonalInfoPageModel()
+                {
+                    Main = LoginUser,
+                    Country = country,
+                    Province = province,
+                    City = city
+                };
+                if (TempData["Result"] != null)
                 {
                     ViewBag.Result = TempData["Result"].ToString();
                 }
-                return View(LoginUser);
+                //ViewBag.Country = Helper.Extensions.ConvertToSelect(country, item => item.Id, item => item.Name);
+                //ViewBag.Province = Helper.Extensions.ConvertToSelect(province, item => item.Id, item => item.Name);
+                //ViewBag.City = Helper.Extensions.ConvertToSelect(city, item => item.Id, item => item.Name);
+
+                return View(pageModel);
             }
             catch (System.Exception)
             {
@@ -93,13 +108,13 @@ namespace HUTOPS.Controllers
                     model.ResidentialProvince,
                     model.ResidentialCity,
                     model.ResidentialCityOther,
-                    model.ResidentialPostalCode.ToString(),
+                   model.ResidentialPostalCode,
                     model.PermanentAddress,
                     model.PermanentCountry,
                     model.PermanentProvince,
                     model.PermanentCity,
                     model.PermanentCityOther,
-                    model.PermanentPostalCode.ToString()
+                    model.PermanentPostalCode
 
                     );
 
@@ -145,17 +160,17 @@ namespace HUTOPS.Controllers
                 DB.WEB_UpdateAddressDetails(
                     model.Id,
                     model.ResidentialAddress,
-                    model.ResidentialCountry,
-                    model.ResidentialProvince,
-                    model.ResidentialCity,
+                    model.ResidentialCountry == null? null : DB.Countries.ToList().Where(x => x.Id == int.Parse(model.ResidentialCountry)).ToList().FirstOrDefault().Name,
+                    model.ResidentialProvince == null? null : DB.States.ToList().Where(x => x.Id == int.Parse(model.ResidentialProvince)).ToList().FirstOrDefault().Name,
+                    model.ResidentialCity == null? null : DB.Cities.ToList().Where(x => x.Id == int.Parse(model.ResidentialCity)).ToList().FirstOrDefault().Name,
                     model.ResidentialCityOther,
-                    model.ResidentialPostalCode.ToString(),
+                    model.ResidentialPostalCode,
                     model.PermanentAddress,
-                    model.PermanentCountry,
-                    model.PermanentProvince,
-                    model.PermanentCity,
+                    model.PermanentCountry == null? null :DB.Countries.ToList().Where(x => x.Id == int.Parse(model.PermanentCountry)).ToList().FirstOrDefault().Name,
+                    model.PermanentProvince == null? null : DB.States.ToList().Where(x => x.Id == int.Parse(model.PermanentProvince)).ToList().FirstOrDefault().Name,
+                    model.PermanentCity == null ? null:DB.Cities.ToList().Where(x => x.Id == int.Parse(model.PermanentCity)).ToList().FirstOrDefault().Name,
                     model.PermanentCityOther,
-                    model.PermanentPostalCode.ToString()
+                    model.PermanentPostalCode
 
                     );
 
@@ -173,7 +188,6 @@ namespace HUTOPS.Controllers
             try
             {
                 var IsValid = true;
-                var errorMsg = "";
                 if (string.IsNullOrEmpty(model.FirstName))
                 {
                     IsValid = false;
@@ -216,47 +230,92 @@ namespace HUTOPS.Controllers
                 {
                     IsValid = false;
                     ModelState.AddModelError("FatherLastName", "Father Last Name length must be greater than 3 and less than 25 characters");
-
                 }
-                if (IsValid) { 
-                model.Id = int.Parse(Helper.Helper.GetSession(Constants.Session.UserId));
-                DB.WEB_UpdatePersonal(
-                    model.Id,
-                    Helper.Helper.ToCamelCase(model.FirstName),
-                    Helper.Helper.ToCamelCase(model.MiddleName),
-                    Helper.Helper.ToCamelCase(model.LastName),
-                    Helper.Helper.ToCamelCase(model.FatherFirstName),
-                    Helper.Helper.ToCamelCase(model.FatherMiddleName),
-                    Helper.Helper.ToCamelCase(model.FatherLastName),
-                    model.Gender.ToString(),
-                    Helper.Helper.ToCamelCase(model.HusbandName),
-                    model.DateOfBirth.ToString(),
-                    model.CNIC,
-                    model.EmailAddress,
-                    model.AlterEmailAddress,
-                    // Contact
-                    model.CellPhoneNumber,
-                    model.WhatsAppNumber,
-                    model.AlternateCellPhoneNumber,
-                    model.HomePhoneNumber,
-                    model.AlternateLandline,
-                    model.GuardianCellPhoneNumber,
-                    model.GuardianEmailAddress,
-                    // Address
-                    model.ResidentialAddress,
-                    model.ResidentialCountry,
-                    model.ResidentialProvince,
-                    model.ResidentialCity,
-                    model.ResidentialCityOther,
-                    model.ResidentialPostalCode.ToString(),
-                    model.PermanentAddress,
-                    model.PermanentCountry,
-                    model.PermanentProvince,
-                    model.PermanentCity,
-                    model.PermanentCityOther,
-                    model.PermanentPostalCode.ToString()
-                    );
-                
+                if (!string.IsNullOrEmpty(model.AlterEmailAddress) && !Helper.Helper.isValidEmail(model.AlterEmailAddress))
+                {
+                    IsValid = false;
+                    ModelState.AddModelError("AlterEmailAddress", "Provided Email Address is Invalid");
+                }
+                if (string.IsNullOrEmpty(model.GuardianEmailAddress))
+                {
+                    IsValid = false;
+                    ModelState.AddModelError("GuardianEmailAddress", "Guardian Email Address is Required");
+                }
+                if (!string.IsNullOrEmpty(model.GuardianEmailAddress) && !Helper.Helper.isValidEmail(model.GuardianEmailAddress))
+                {
+                    IsValid = false;
+                    ModelState.AddModelError("GuardianEmailAddress", "Provided Email Address is Invalid");
+                }
+                if (!string.IsNullOrEmpty(model.CellPhoneNumber) && !Helper.Helper.IsValidPhoneNumber(model.CellPhoneNumber))
+                {
+                    IsValid = false;
+                    ModelState.AddModelError("CellPhoneNumber", "Cell Phone Number is Invalid");
+                }
+                if (!string.IsNullOrEmpty(model.WhatsAppNumber) && !Helper.Helper.IsValidPhoneNumber(model.WhatsAppNumber))
+                {
+                    IsValid = false;
+                    ModelState.AddModelError("WhatsAppNumber", "WhatsApp Number Number is Invalid");
+                }
+                if (!string.IsNullOrEmpty(model.AlternateCellPhoneNumber) && !Helper.Helper.IsValidPhoneNumber(model.AlternateCellPhoneNumber))
+                {
+                    IsValid = false;
+                    ModelState.AddModelError("AlternateCellPhoneNumber", "Alternate Cell Phone Number is Invalid");
+                }
+                if (!string.IsNullOrEmpty(model.GuardianCellPhoneNumber) && !Helper.Helper.IsValidPhoneNumber(model.GuardianCellPhoneNumber))
+                {
+                    IsValid = false;
+                    ModelState.AddModelError("GuardianCellPhoneNumber", "Guardian Cell Phone Number is Invalid");
+                }
+                if (string.IsNullOrEmpty(model.GuardianCellPhoneNumber))
+                {
+                    IsValid = false;
+                    ModelState.AddModelError("GuardianCellPhoneNumber", "Phone Number is Required");
+                }
+                if (string.IsNullOrEmpty(model.HomePhoneNumber))
+                {
+                    IsValid = false;
+                    ModelState.AddModelError("HomePhoneNumber", "Phone Number is Required");
+                }
+                if (IsValid)
+                {
+                    model.Id = int.Parse(Helper.Helper.GetSession(Constants.Session.UserId));
+                    DB.WEB_UpdatePersonal(
+                        model.Id,
+                        Helper.Helper.ToCamelCase(model.FirstName),
+                        Helper.Helper.ToCamelCase(model.MiddleName),
+                        Helper.Helper.ToCamelCase(model.LastName),
+                        Helper.Helper.ToCamelCase(model.FatherFirstName),
+                        Helper.Helper.ToCamelCase(model.FatherMiddleName),
+                        Helper.Helper.ToCamelCase(model.FatherLastName),
+                        model.Gender.ToString(),
+                        Helper.Helper.ToCamelCase(model.HusbandName),
+                        model.DateOfBirth.ToString(),
+                        model.CNIC,
+                        model.EmailAddress,
+                        model.AlterEmailAddress,
+                        // Contact
+                        model.CellPhoneNumber,
+                        model.WhatsAppNumber,
+                        model.AlternateCellPhoneNumber,
+                        model.HomePhoneNumber,
+                        model.AlternateLandline,
+                        model.GuardianCellPhoneNumber,
+                        model.GuardianEmailAddress,
+                        // Address
+                        model.ResidentialAddress,
+                        model.ResidentialCountry == null ? null : DB.Countries.ToList().Where(x => x.Id == int.Parse(model.ResidentialCountry)).ToList().FirstOrDefault().Name,
+                        model.ResidentialProvince == null ? null : DB.States.ToList().Where(x => x.Id == int.Parse(model.ResidentialProvince)).ToList().FirstOrDefault().Name,
+                        model.ResidentialCity == null ? null : DB.Cities.ToList().Where(x => x.Id == int.Parse(model.ResidentialCity)).ToList().FirstOrDefault().Name,
+                        model.ResidentialCityOther,
+                        model.ResidentialPostalCode,
+                        model.PermanentAddress,
+                        model.PermanentCountry == null ? null : DB.Countries.ToList().Where(x => x.Id == int.Parse(model.PermanentCountry)).ToList().FirstOrDefault().Name,
+                        model.PermanentProvince == null ? null : DB.States.ToList().Where(x => x.Id == int.Parse(model.PermanentProvince)).ToList().FirstOrDefault().Name,
+                        model.PermanentCity == null ? null : DB.Cities.ToList().Where(x => x.Id == int.Parse(model.PermanentCity)).ToList().FirstOrDefault().Name,
+                        model.PermanentCityOther,
+                        model.PermanentPostalCode
+                        );
+
                     TempData["Result"] = "Personal Inofmation Submited Successfully";
                     return RedirectToAction("Index", "Education");
                 }

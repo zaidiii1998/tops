@@ -1,6 +1,11 @@
-﻿using System.Web;
+﻿using Newtonsoft.Json.Linq;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace HUTOPS.Helper
 {
@@ -32,6 +37,24 @@ namespace HUTOPS.Helper
                         new RouteValueDictionary { { "Controller", "Account" }, { "Action", "Login" } });
                 }
             }
+        }
+    }
+    public static class Extensions
+    {
+        public static List<SelectListItem> ConvertToSelect<T>(List<T> sourceList, Func<T, int> valueSelector, Func<T, string> textSelector)
+        {
+            var select = new List<SelectListItem>();
+           
+            foreach (var item in sourceList)
+            {
+                select.Add(new SelectListItem
+                {
+                    Value = valueSelector(item).ToString(),
+                    Text = textSelector(item).ToString()
+                });
+            }
+            
+            return select.ToList();
         }
     }
 }

@@ -1,5 +1,5 @@
 ﻿$(document).ready(function () {
-    $('.number').inputmask("92399-9999999");
+    $('.number').inputmask("0399-9999999");
     $('.cnic').inputmask("99999-9999999-9");
     $('.Percentage').inputmask("99.99%");
 });
@@ -173,7 +173,36 @@ function validatePassword(passId, cpassId) {
     }
 }
 
+function validateName(inputId, errSpanId) {
+    var name = document.getElementById(inputId);
+    if (name.value.length < 3) {
+        $('#' + errSpanId).html('Name should contain minimum 3 characters');
 
+    } else {
+        $('#' + errSpanId).html('');
+    }
+}
+
+function validateEmail(inputId, errSpanId) {
+
+    const email = $('#' + inputId).val();
+    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+    if (!emailRegex.test(email)) {
+        debugger
+        $('#' + errSpanId).html("Please Enter a valid Email Address");
+        return false;
+    }
+}
+
+
+function validateText(input) {
+    // Remove non-numeric characters using a regular expression
+    input.value = input.value.replace(/[^A-Za-z]/g, '');
+    //input.value = input.value.replace(/[^!@#$%^&*()_+{}\[\]:;<>,.?~\\\-]/g, '');
+}
+function validateNumber(input) {
+    input.value = input.value.replace(/[^0-9.]/g, '');
+}
 // Personal Information Page Functions
 function toggleOtherCityInput(cityId, otherCityId) {
     var select = document.getElementById(cityId.toString(), otherCityId.toString());
@@ -185,6 +214,17 @@ function toggleOtherCityInput(cityId, otherCityId) {
         otherInput.style.display = "none";
     }
 }
+function toggleFieldInput(comboId,OnValue, fieldToShow) {
+    var select = document.getElementById(comboId.toString());
+    var otherInput = document.getElementById(fieldToShow.toString());
+
+    if (select.value === OnValue) {
+        otherInput.style.display = "block";
+    } else {
+        otherInput.style.display = "none";
+    }
+}
+
 
 function toggleFormSection(sectionId, checkboxId) {
     var section = document.getElementById(sectionId);
@@ -192,66 +232,32 @@ function toggleFormSection(sectionId, checkboxId) {
 
     section.style.display = checkbox.checked ? "block" : "none";
 }
-function updateCities(provienceId, cityId) {
-    var provinceSelect = document.getElementById(provienceId.toString());
-    var citySelect = document.getElementById(cityId.toString());
+function updateCities(comboProvinceId, ComboCityId) {
+    var provinceId = $('#' + comboProvinceId).val();
+    
+    CallAsyncService("Common/GetCities?ProvinceId=" + provinceId, param, updateCitiesCB)
+    function updateCitiesCB(response) {
+        $('#' + ComboCityId).html('');
+        $.each(response, function (key, value) {
+            $('#' + ComboCityId).append(new Option(value.name, value.id, false, false));
+        })
+        $('#' + ComboCityId).append(new Option("Other", "other", false, false));
 
-    var selectedProvince = provinceSelect.value;
-
-
-    var citiesByProvince = {
-        "Punjab": ["Lahore", "Faisalabad", "Rawalpindi", "Multan", "Gujranwala"],
-        "Sindh": ["Karachi", "Hyderabad", "Sukkur", "Larkana"],
-        "Khyber Pakhtunkhwa": ["Peshawar", "Abbottabad", "Swat", "Mardan"],
-        "Balochistan": ["Quetta", "Gwadar", "Khuzdar", "Turbat"],
-        "Gilgit-Baltistan": ["Gilgit", "Skardu", "Hunza", "Ghizer"],
-        "Azad Kashmir": ["Muzaffarabad", "Mirpur", "Kotli", "Rawalakot"]
-        // ... and so on
-    };
-
-    // Update city select box options based on selected province
-    citySelect.innerHTML = "";
-    var cities = citiesByProvince[selectedProvince];
-    var option = document.createElement("option");
-    option.value = "";
-    option.text = "Select City";
-    citySelect.appendChild(option);
-    for (var j = 0; j < cities.length; j++) {
-        var option = document.createElement("option");
-        option.value = cities[j];
-        option.text = cities[j];
-        citySelect.appendChild(option);
     }
-    var option = document.createElement("option");
-    option.value = "other";
-    option.text = "Other";
-    citySelect.appendChild(option);
 }
 
-function updateProvince(countryId, provienceId) {
-    var countrySelect = document.getElementById(countryId.toString());
-    var provinceSelect = document.getElementById(provienceId.toString());
-
-    var selectedCountry = countrySelect.value;
-
-    // Simulated data (you can replace this with actual data)
-    var provincesByCountry = {
-        "pakistan": ["Punjab", "Sindh", "Khyber Pakhtunkhwa", "Balochistan", "Gilgit-Baltistan", "Azad Kashmir"]
-    };
-
-
-    // Update province select box options based on selected country
-    provinceSelect.innerHTML = "";
-    var provinces = provincesByCountry[selectedCountry];
-    var option = document.createElement("option");
-    option.value = "";
-    option.text = "Select Provience/State";
-    provinceSelect.appendChild(option);
-    for (var i = 0; i < provinces.length; i++) {
-        var option = document.createElement("option");
-        option.value = provinces[i];
-        option.text = provinces[i];
-        provinceSelect.appendChild(option);
+function updateProvince(comboCountryId, comboProvienceId) {
+    debugger
+    var countryId = $('#' + comboCountryId).val();
+    var param = {
+        CountryId: countryId
+    }
+    CallAsyncService("Common/GetProvince?CountryId=" + countryId, null, updateCitiesCB)
+    function updateCitiesCB(response) {
+        $('#' + ComboCityId).val('');
+        $.each(response, function (key, value) {
+            $('#' + comboProvienceId).append(new Option(value.name, value.id, false, false));
+        })
     }
 
 }

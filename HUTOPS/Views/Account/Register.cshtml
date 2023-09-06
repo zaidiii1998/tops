@@ -48,14 +48,14 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="cnic"><b>CNIC</b></label>
-                                            <input class="form-control cnic" type="tel" placeholder="Enter CNIC" id="cnic" name="cnic" onchange="checkCNIC(this.id);" pattern="\d{5}\-\d{7}\-\d{1}" value="@Model.CNIC" maxlength="15" required>
+                                            <input class="form-control cnic" type="tel" placeholder="Enter CNIC" id="cnic" name="cnic" onchange="checkCNIC(this.id);" value="@Model.CNIC" maxlength="15" required>
                                             @Html.ValidationMessageFor(model => model.CNIC, "", new { @class = "text-danger", id = "cnicError" })
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="number"><b>Phone Number</b></label>
-                                            <input class="form-control number" type="tel" placeholder="Enter Phone Number" id="number" onchange="checkPhoneNumber(this.id);" pattern="\d{4}\-\d{7}\" value="@Model.CellPhoneNumber" name="CellPhoneNumber" maxlength="12" required>
+                                            <input class="form-control number" type="tel" placeholder="Enter Phone Number" id="number" onchange="checkPhoneNumber(this.id);" value="@Model.CellPhoneNumber" name="CellPhoneNumber" maxlength="12" required>
                                             @Html.ValidationMessageFor(model => model.CellPhoneNumber, "", new { @class = "text-danger", id = "numberError" })
                                         </div>
                                     </div>

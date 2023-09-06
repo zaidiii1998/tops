@@ -14,6 +14,9 @@
         <EntityTypeShape EntityType="HU_TOPSModel.sysdiagram" Width="1.5" PointX="6.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="HU_TOPSModel.EducationalSubject" Width="1.5" PointX="6.75" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="HU_TOPSModel.Log" Width="1.5" PointX="7.375" PointY="6.75" />
+        <EntityTypeShape EntityType="HU_TOPSModel.City" Width="1.5" PointX="0.75" PointY="8.75" />
+        <EntityTypeShape EntityType="HU_TOPSModel.Country" Width="1.5" PointX="9.75" PointY="0.75" />
+        <EntityTypeShape EntityType="HU_TOPSModel.State" Width="1.5" PointX="9.75" PointY="3.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

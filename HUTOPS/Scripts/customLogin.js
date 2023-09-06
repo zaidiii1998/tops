@@ -94,9 +94,9 @@ function checkPhoneNumber(Id) {
 function checkEmail(Id) {
     // Check Email
 
-    CallAsyncService('/Common/CheckEmail?email=' + $('#' + Id).val(), null, checkEmail);
+    CallAsyncService('/Common/CheckEmail?email=' + $('#' + Id).val(), null, checkEmailCB);
 
-    function checkEmail(response) {
+    function checkEmailCB(response) {
         const email = $('#email').val();
         const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
 
@@ -176,13 +176,20 @@ function validateRegisterForm() {
 
     var pass = document.getElementById("password");
     var cpass = document.getElementById("cpassword");
+
+
+    const email = $('#email').val();
+    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+
     if (pass.value != cpass.value || pass.value.length < 6) {
         pass.style.borderBlockColor = "red";
         cpass.style.borderBlockColor = "red";
 
         return false;
 
-    } else if (!checkEmail()) {
+    } else if (!emailRegex.test(email)) {
+        debugger
+        $('#emailError').html("Please Enter a valid Email Address");
         return false;
     } else {
         pass.style.borderBlockColor = "green";

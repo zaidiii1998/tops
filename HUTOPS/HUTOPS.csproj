@@ -135,6 +135,9 @@
     <Compile Include="BoardGroup.cs">
       <DependentUpon>HUTOPS.tt</DependentUpon>
     </Compile>
+    <Compile Include="City.cs">
+      <DependentUpon>HUTOPS.tt</DependentUpon>
+    </Compile>
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CommonController.cs" />
     <Compile Include="Controllers\DeclarationController.cs" />
@@ -142,6 +145,9 @@
     <Compile Include="Controllers\EducationController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PersonalInformationsController.cs" />
+    <Compile Include="Country.cs">
+      <DependentUpon>HUTOPS.tt</DependentUpon>
+    </Compile>
     <Compile Include="Document.cs">
       <DependentUpon>HUTOPS.tt</DependentUpon>
     </Compile>
@@ -183,6 +189,7 @@
     <Compile Include="Log.cs">
       <DependentUpon>HUTOPS.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\PersonalInfoPageModel.cs" />
     <Compile Include="Models\ViewModel.cs" />
     <Compile Include="PersonalInformation.cs">
       <DependentUpon>HUTOPS.tt</DependentUpon>
@@ -192,6 +199,9 @@
       <DependentUpon>HUTOPS.tt</DependentUpon>
     </Compile>
     <Compile Include="sp_helpdiagrams_Result.cs">
+      <DependentUpon>HUTOPS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="State.cs">
       <DependentUpon>HUTOPS.tt</DependentUpon>
     </Compile>
     <Compile Include="sysdiagram.cs">

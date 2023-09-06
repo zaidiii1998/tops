@@ -56,5 +56,13 @@ namespace HUTOPS.Helper
             else
                 return (false);
         }
+        public static bool IsValidPhoneNumber(string phoneNumber)
+        {
+            // Define a regular expression pattern for a US phone number (10 digits)
+            string pattern = @"^\d{4}-\d{7}$";
+
+            // Use Regex.IsMatch to check if the input matches the pattern
+            return Regex.IsMatch(phoneNumber, pattern);
+        }
     }
 }
