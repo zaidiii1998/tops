@@ -18,14 +18,14 @@
                             <img src="~/Content/img/mct-logo.svg" alt="Alternate Text" />
                             <h1>Testimony for student diverse interest, talent and skills !</h1>
                             <p>A purpose-built digital platform to collect, verify and report student meta-curricular experience during their tenure at Habib University.</p>
-                            <form method="post" id="registerForm" onsubmit=" return validateForm()">
+                            <form method="post" id="registerForm" onsubmit=" return validateRegisterForm()">
                                 @Html.AntiForgeryToken()
                                 <div class="row">
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="fname"><b>First Name</b></label>
-                                            <input class="form-control" type="text" placeholder="Enter FirstName" maxlength="25" id="fname" name="FirstName" value="@Model.FirstName" oninput="validateText(this)" required>
-                                            @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+                                            <input class="form-control" type="text" placeholder="Enter First Name" maxlength="25" id="fname" name="FirstName" value="@Model.FirstName" oninput="validateText(this); validateName(this.id,'errFirstName')" required>
+                                            @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger", id="errFirstName" })
                                         </div>
                                     </div>
                                     <div class="col-md-4">
@@ -38,8 +38,8 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="lname"><b>Last Name</b></label>
-                                            <input class="form-control" type="text" placeholder="Enter Last Name" name="LastName" id="lname" oninput="validateText(this)" value="@Model.LastName" maxlength="25" required>
-                                            @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+                                            <input class="form-control" type="text" placeholder="Enter Last Name" name="LastName" id="lname" oninput="validateText(this); validateName(this.id,'errLastName')" value="@Model.LastName" maxlength="25" required>
+                                            @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger", id = "errLastName" })
 
                                         </div>
                                     </div>
@@ -48,14 +48,14 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="cnic"><b>CNIC</b></label>
-                                            <input class="form-control cnic" type="tel" placeholder="Enter CNIC" id="cnic" name="cnic" onchange="checkCNIC(this.id);" value="@Model.CNIC" maxlength="15" required>
+                                            <input class="form-control cnic" type="tel" placeholder="Enter CNIC" id="cnic" name="cnic" onchange="checkCNIC(this.id);" pattern="\d{5}\-\d{7}\-\d{1}" value="@Model.CNIC" maxlength="15" required>
                                             @Html.ValidationMessageFor(model => model.CNIC, "", new { @class = "text-danger", id = "cnicError" })
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="number"><b>Phone Number</b></label>
-                                            <input class="form-control number" type="tel" placeholder="Enter Phone Number" id="number" onchange="checkPhoneNumber(this.id);" value="@Model.CellPhoneNumber" name="CellPhoneNumber" maxlength="12" required>
+                                            <input class="form-control number" type="tel" placeholder="Enter Phone Number" id="number" onchange="checkPhoneNumber(this.id);" pattern="\d{4}\-\d{7}\" value="@Model.CellPhoneNumber" name="CellPhoneNumber" maxlength="12" required>
                                             @Html.ValidationMessageFor(model => model.CellPhoneNumber, "", new { @class = "text-danger", id = "numberError" })
                                         </div>
                                     </div>
@@ -64,7 +64,7 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="email"><b>Email</b></label>
-                                            <input class="form-control" type="email" placeholder="Enter Email" name="EmailAddress" id="email" onchange="checkEmail(this.id); validateEmail(this,'emailError');" value="@Model.EmailAddress" required>
+                                            <input class="form-control" type="email" placeholder="Enter Email" name="EmailAddress" id="email" onchange="checkEmail(this.id);" value="@Model.EmailAddress" required>
                                             @Html.ValidationMessageFor(model => model.EmailAddress, "", new { @class = "text-danger", id = "emailError" })
 
                                         </div>
@@ -73,7 +73,7 @@
                                         <div class="form-group">
                                             <label for="password"><b>Password</b></label>
                                             <input class="form-control" type="password" placeholder="**************" name="Password" id="password" maxlength="25" minlength="6" oninput="validatePassword('password','cpassword')" required>
-                                            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                                            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger", id = "passwordError" })
                                         </div>
 
                                     </div>
@@ -116,22 +116,5 @@
 {
     ShowDivError('@ViewBag.Result');
     }
-    function validateForm() {
-
-            // Get form elements
-
-            // Regular expressions for validation
-
-            // Perform validation
-        debugger
-        //var inputEmail = $('#email');
-        //if (!(checkCNIC("cnic")) || !(checkPhoneNumber("number")) || !(validateEmail(inputEmail, 'emailError'))) {
-
-        //    return false; // Prevent form submission
-        //}
-
-
-            // If all validation passes, you can proceed with form submission
-            return true;
-        }
+    
         </script>

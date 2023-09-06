@@ -97,9 +97,16 @@ function checkEmail(Id) {
     CallAsyncService('/Common/CheckEmail?email=' + $('#' + Id).val(), null, checkEmail);
 
     function checkEmail(response) {
+        const email = $('#email').val();
+        const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+
+        if (!emailRegex.test(email)) {
+            debugger
+            $('#emailError').html("Please Enter a valid Email Address");
+            return false;
+        }
         if (!response.status) {
             msg = response.message;
-            $('#emailError').html(msg);
             return false;
         } else {
             $('#emailError').html('');
@@ -131,14 +138,30 @@ function validatePassword(passId, cpassId) {
     if (pass.value != cpass.value || pass.value.length < 6) {
         pass.style.borderBlockColor = "red";
         cpass.style.borderBlockColor = "red";
+        $('#passwordError').html('Confrim Password not match or length less then 6')
+        $('#cpasswordError').html('Confrim Password not match or length less then 6')
         return false;
 
     } else {
         pass.style.borderBlockColor = "green";
         cpass.style.borderBlockColor = "green";
+        $('#passwordError').html('')
+        $('#cpasswordError').html('')
+
         return true;
     }
 }
+function validateName(inputId, errSpanId) {
+    var name = document.getElementById(inputId);
+    if (name.value.length < 3) {
+        $('#' + errSpanId).html('Name should contain minimum 3 characters');
+
+    } else {
+        $('#' + errSpanId).html('');
+    }
+}
+
+
 
 function validateText(input) {
     // Remove non-numeric characters using a regular expression
@@ -148,13 +171,24 @@ function validateText(input) {
 function validateNumber(input) {
         input.value = input.value.replace(/[^0-9.]/g, '');
 }
-function validateEmail(input, errorSpanId) {
-    const email = input.value;
-    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+function validateRegisterForm() {
 
-    if (!emailRegex.test(email)) {
-        debugger
-        $('#' + errorSpanId).html("Please Enter a valid Email Address");
+
+    var pass = document.getElementById("password");
+    var cpass = document.getElementById("cpassword");
+    if (pass.value != cpass.value || pass.value.length < 6) {
+        pass.style.borderBlockColor = "red";
+        cpass.style.borderBlockColor = "red";
+
+        return false;
+
+    } else if (!checkEmail()) {
+        return false;
+    } else {
+        pass.style.borderBlockColor = "green";
+        cpass.style.borderBlockColor = "green";
+        return true;
     }
+
 }
 
