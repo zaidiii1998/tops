@@ -48,14 +48,15 @@
         <div class="headBox">
             <h2>Personal Information</h2>
         </div>
-        <form id="mainForm" method="post">
+        <form id="mainForm" method="post" onsubmit="return validatePersonalInfoForm();">
             @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             <div class="row">
                 <div class="col-lg-4">
                     <div class="form-group">
                         <label for="firstName">First Name:</label>
                         <input class="form-control" type="text" id="firstName" name="FirstName" maxlength="25" value="@Model.Main.FirstName" oninput="validateText(this); validateName(this.id,'errFirstName')" required>
-                        @Html.ValidationMessageFor(model => model.Main.FirstName, "", new { @class = "text-danger" , id = "errFirstName"})
+                        @Html.ValidationMessageFor(model => model.Main.FirstName, "", new { @class = "text-danger", id = "errFirstName" })
                     </div>
                 </div>
                 <div class="col-lg-4">
@@ -77,7 +78,7 @@
                     <div class="form-group">
                         <label for="fatherFirstName">Father's First Name:</label>
                         <input class="form-control" type="text" id="fatherFirstName" maxlength="25" name="FatherFirstName" oninput="validateText(this); validateName(this.id,'errFatherFName')" value="@Model.Main.FatherFirstName" required>
-                        @Html.ValidationMessageFor(model => model.Main.FatherFirstName, "", new { @class = "text-danger", id="errFatherFName" })
+                        @Html.ValidationMessageFor(model => model.Main.FatherFirstName, "", new { @class = "text-danger", id = "errFatherFName" })
                     </div>
                 </div>
                 <div class="col-lg-4">
@@ -117,38 +118,57 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-lg-6">
+                <div class="col-lg-4">
                     <div class="form-group">
                         <label>Gender:</label>
                         <select id="gender" name="Gender" class="custom-select" onchange="toggleFieldInput(this.id,'F','divHusband');" required>
                             <option value="">Select Gender</option>
-                            <option value="M">Male</option>
-                            <option value="F">Female</option>
-                            <option value="T">Prefer not to self-identify</option>
+                            @if (Model.Main.Gender == "M")
+                            {
+                                <option value="M" selected>Male</option>
+                            }
+                            else
+                            {
+                                <option value="M">Male</option>
+                            }
+                            @if (Model.Main.Gender == "F")
+                            {
+                                <option value="F" selected>Female</option>
+                            }
+                            else
+                            {
+                                <option value="F">Female</option>
+                            }
+                            @if (Model.Main.Gender == "T")
+                            {
+                                <option value="T" selected>Prefer not to self-identify</option>
+                            }
+                            else
+                            {
+                                <option value="T">Prefer not to self-identify</option>
+                            }
                         </select>
                     </div>
                 </div>
-                <div class="col-lg-6">
+                <div class="col-lg-4">
                     <div class="form-group" id="divHusband" style="display:none;">
                         <label for="husbandName">Husband's Name:</label>
                         <input class="form-control" type="text" id="husbandName" maxlength="25" name="HusbandName">
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-md-2">
+                <div class="col-md-4">
                     <div class="form-group">
                         <label for="dob">Date of Birth:</label>
-                        <input type="date" class="form-control" id="dob" name="DateOfBirth" />
+                        <input type="date" class="form-control" id="dob" name="DateOfBirth" onloadstart="LoadDate('@Model.Main.DateOfBirth','dob');" />
                     </div>
                 </div>
             </div>
-                
-        <!-- Contact Details Section -->
-        <div class="headBox">
-            <h2>Contact Details</h2>
-        </div>
-        @*<form action="#" method="post">*@
+
+            <!-- Contact Details Section -->
+            <div class="headBox">
+                <h2>Contact Details</h2>
+            </div>
+            @*<form action="#" method="post">*@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="form-group">
@@ -166,7 +186,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-lg-4" >
+                <div class="col-lg-4">
                     <div id="WhatsAppSection" style="display: none;">
                         <div class="form-group">
                             <label for="whatsappNumber ">WhatsApp Number:</label>
@@ -178,7 +198,7 @@
                 <div class="col-lg-4">
                     <div class="form-group">
                         <label for="altCellPhone">Alternate Cell Phone Number:</label>
-                        <input class="form-control number" type="tel" id="altCellPhone" name="AlternateCellPhoneNumber" maxlength="15"  value="@Model.Main.AlternateCellPhoneNumber" placeholder="0333-3333333">
+                        <input class="form-control number" type="tel" id="altCellPhone" name="AlternateCellPhoneNumber" maxlength="15" value="@Model.Main.AlternateCellPhoneNumber" placeholder="0333-3333333">
                         @Html.ValidationMessageFor(model => model.Main.AlternateCellPhoneNumber, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -194,13 +214,13 @@
                 <div class="col-lg-4">
                     <div class="form-group">
                         <label for="altLandline">Alternate Landline Number:</label>
-                        <input class="form-control" type="tel" id="altLandline" name="AlternateLandline"  value="@Model.Main.AlternateLandline" oninput="validateNumber(this)" maxlength="15" placeholder="1234567890">
+                        <input class="form-control" type="tel" id="altLandline" name="AlternateLandline" value="@Model.Main.AlternateLandline" oninput="validateNumber(this)" maxlength="15" placeholder="1234567890">
                     </div>
                 </div>
                 <div class="col-lg-4">
                     <div class="form-group">
                         <label for="guardianCellPhone">Guardian Cell Phone Number:</label>
-                        <input class="form-control number" type="tel" id="guardianCellPhone" name="GuardianCellPhoneNumber"  maxlength="15" value="@Model.Main.GuardianCellPhoneNumber" placeholder="1234567890" required>
+                        <input class="form-control number" type="tel" id="guardianCellPhone" name="GuardianCellPhoneNumber" maxlength="15" value="@Model.Main.GuardianCellPhoneNumber" placeholder="1234567890" required>
                         @Html.ValidationMessageFor(model => model.Main.GuardianCellPhoneNumber, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -212,20 +232,20 @@
                     </div>
                 </div>
             </div>
-            
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="form-group">
-                            <label for="residentialAddress">Residential Address:</label>
-                                <textarea class="form-control" id="residentialAddress" name="ResidentialAddress" rows="2" cols="100" maxlength="100"required></textarea><br><br>
-                        </div>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="form-group">
+                        <label for="residentialAddress">Residential Address:</label>
+                        <textarea class="form-control" id="residentialAddress" name="ResidentialAddress" rows="2" cols="100" maxlength="100" required> @Model.Main.ResidentialAddress</textarea><br><br>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-lg-4">
-                        <div class="form-group">
-                            <label for="residentialCountry">Select Country:</label>
-                            @*@Html.DropDownList("ResidentialCountry",(IEnumerable<SelectListItem>)ViewBag.Country, "--Please Select--", new { @class = "form-control", @id = "residentialCountry" })*@
+            </div>
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label for="residentialCountry">Select Country:</label>
+                        @*@Html.DropDownList("ResidentialCountry",(IEnumerable<SelectListItem>)ViewBag.Country, "--Please Select--", new { @class = "form-control", @id = "residentialCountry" })*@
                         <select class="form-control" id="residentialCountry" name="ResidentialCountry" onchange="updateProvince(this.id,'residentialProvince');" required>
                             <option value="">Select Country</option>
                             @foreach (var item in Model.Country)
@@ -236,16 +256,16 @@
                                 }
                                 else
                                 {
-                                <option value="@item.Id">@item.Name</option>
+                                    <option value="@item.Id">@item.Name</option>
                                 }
                             }
                         </select>
-                        </div>
                     </div>
-                    <div class="col-lg-4">
-                        <div class="form-group">
-                            <label for="residentialProvince">Select Province/State:</label>
-                            @*@Html.DropDownList("ResidentialProvince", (IEnumerable<SelectListItem>)ViewBag.Province, "--Please Select--", new { @class = "form-control", @id = "residentialProvince" })*@
+                </div>
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label for="residentialProvince">Select Province/State:</label>
+                        @*@Html.DropDownList("ResidentialProvince", (IEnumerable<SelectListItem>)ViewBag.Province, "--Please Select--", new { @class = "form-control", @id = "residentialProvince" })*@
                         <select class="form-control" id="residentialProvince" name="ResidentialProvince" onchange="updateCities(this.id,'residentialCity');" required>
                             <option value="">Select Provience</option>
                             @foreach (var item in Model.Province)
@@ -256,16 +276,16 @@
                                 }
                                 else
                                 {
-                                <option value="@item.Id">@item.Name</option>
+                                    <option value="@item.Id">@item.Name</option>
                                 }
                             }
                         </select>
-                        </div>
                     </div>
-                    <div class="col-lg-4">
-                        <div class="form-group">
-                            <label for="residentialCity">City:</label>
-                            @*@Html.DropDownList("ResidentialCity", (IEnumerable<SelectListItem>)ViewBag.City, "--Please Select--", new { @class = "form-control", @id = "residentialCity" })*@
+                </div>
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label for="residentialCity">City:</label>
+                        @*@Html.DropDownList("ResidentialCity", (IEnumerable<SelectListItem>)ViewBag.City, "--Please Select--", new { @class = "form-control", @id = "residentialCity" })*@
 
                         <select class="form-control" id="residentialCity" name="ResidentialCity" onchange="toggleOtherCityInput(this.id,'divResidentialCityOther')" required>
                             <option value="">Select City</option>
@@ -283,44 +303,44 @@
                             }
                             <option value="other">Other</option>
                         </select>
-                        </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-lg-4">
-                        <div class="form-group" id="divResidentialCityOther" style="display: none;">
-                            <label for="residentialCityOther">Other City:</label>
-                                <input class="form-control" type="text" id="residentialCityOther" name="ResidentialCityOther" ><br><br>
-                        </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="form-group">
-                            <label for="residentialPostalCode">Residential Postal Code:</label>
-                                <input class="form-control" type="text" id="residentialPostalCode" oninput="validateNumber(this)" name="ResidentialPostalCode" required><br><br>
-                        </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="form-group" id="divResidentialCityOther" style="display: none;">
+                        <label for="residentialCityOther">Other City:</label>
+                        <input class="form-control" type="text" id="residentialCityOther" name="ResidentialCityOther" value="value=" @Model.Main.ResidentialCityOther ""><br><br>
                     </div>
                 </div>
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label for="residentialPostalCode">Residential Postal Code:</label>
+                        <input class="form-control" type="text" id="residentialPostalCode" oninput="validateNumber(this)" name="ResidentialPostalCode" value="@Model.Main.ResidentialPostalCode" maxlength="6" required><br><br>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <input type="checkbox" class="styled-checkbox" id="permanentDifferent" onclick="toggleFormSection('permanentForm', 'permanentDifferent');">
+                    <label class="checkbox-label" for="permanentDifferent" style="width:75%;">Check the box if your permanent residential address is different from your Residential address:</label>
+                </div>
+            </div>
+
+            <div id="permanentForm" style="display: none;">
                 <div class="row">
                     <div class="col-lg-12">
-                        <input type="checkbox" class="styled-checkbox" id="permanentDifferent" onclick="toggleFormSection('permanentForm', 'permanentDifferent');">
-                        <label class="checkbox-label" for="permanentDifferent" style="width:75%;">Check the box if your permanent residential address is different from your Residential address:</label>
-                    </div>
-                </div>
-
-                <div id="permanentForm" style="display: none;">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="form-group">
-                                <label for="permanentAddress">Permanent Address:</label>
-                                <textarea class="form-control" id="permanentAddress" name="PermanentAddress" rows="2" cols="50" maxlength="100"></textarea><br><br>
-                            </div>
+                        <div class="form-group">
+                            <label for="permanentAddress">Permanent Address:</label>
+                            <textarea class="form-control" id="permanentAddress" name="PermanentAddress" rows="2" cols="50" maxlength="100">@Model.Main.PermanentAddress</textarea><br><br>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label for="permanentCountry">Select Country:</label>
-                                @*@Html.DropDownList("PermanentCountry", (IEnumerable<SelectListItem>)ViewBag.Country, "--Please Select--", new { @class = "form-control", @id = "permanentCountry" })*@
+                </div>
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label for="permanentCountry">Select Country:</label>
+                            @*@Html.DropDownList("PermanentCountry", (IEnumerable<SelectListItem>)ViewBag.Country, "--Please Select--", new { @class = "form-control", @id = "permanentCountry" })*@
 
                             <select class="form-control" id="permanentCountry" name="PermanentCountry" onchange="updateProvince(this.id,'permanentProvince');">
                                 <option value="">Select Country</option>
@@ -332,20 +352,20 @@
                                     }
                                     else
                                     {
-                                    <option value="@item.Id">@item.Name</option>
+                                        <option value="@item.Id">@item.Name</option>
                                     }
                                 }
                             </select>
-                            </div>
                         </div>
-                        <div class="col-lg-4">
+                    </div>
+                    <div class="col-lg-4">
 
-                            <div class="form-group">
-                                <label for="permanentProvince">Select Province/State:</label>
-                                @*@Html.DropDownList("PermanentProvince", (IEnumerable<SelectListItem>)ViewBag.Province, "--Please Select--", new { @class = "form-control", @id = "permanentProvince" })*@
+                        <div class="form-group">
+                            <label for="permanentProvince">Select Province/State:</label>
+                            @*@Html.DropDownList("PermanentProvince", (IEnumerable<SelectListItem>)ViewBag.Province, "--Please Select--", new { @class = "form-control", @id = "permanentProvince" })*@
                             <select class="form-control" id="permanentProvince" name="PermanentProvince" onchange="updateCities(this.id,'permanentCity');">
                                 <option value="">Select Provience</option>
-                                @foreach(var item in Model.Province)
+                                @foreach (var item in Model.Province)
                                 {
                                     if (item.Name == Model.Main.PermanentProvince)
                                     {
@@ -353,16 +373,16 @@
                                     }
                                     else
                                     {
-                                    <option value="@item.Id">@item.Name</option>
+                                        <option value="@item.Id">@item.Name</option>
                                     }
                                 }
                             </select>
-                            </div>
                         </div>
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label for="permanentCity">City:</label>
-                                @*@Html.DropDownList("PermanentCity", (IEnumerable<SelectListItem>)ViewBag.City, "--Please Select--", new { @class = "form-control", @id = "permanentCity" })*@
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label for="permanentCity">City:</label>
+                            @*@Html.DropDownList("PermanentCity", (IEnumerable<SelectListItem>)ViewBag.City, "--Please Select--", new { @class = "form-control", @id = "permanentCity" })*@
                             <select class="form-control" id="permanentCity" name="PermanentCity" onchange="toggleOtherCityInput(this.id,'divPermanentCityOther')">
                                 <option value="">Select City</option>
                                 @foreach (var item in Model.City)
@@ -378,32 +398,32 @@
                                 }
                                 <option value="other">Other</option>
                             </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-4">
-                            <div class="form-group" id="divPermanentCityOther">
-                                <label for="permanentCityOther">Other City:</label>
-                                <input class="form-control" type="text" id="permanentCityOther" name="PermanentCityOther" style="display: none;"><br><br>
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label for="permanentPostalCode">Permanent Postal Code:</label>
-                                <input class="form-control" type="text" id="permanentPostalCode" oninput="validateNumber(this)" name="PermanentPostalCode">
-                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-lg-12">
-
-                        <input class="savebtn global-btn-purple  float-right" type="submit" value="Submit">
-                        <input class="savebtn global-btn-purple  float-right" type="button" onclick="Save()" value="Save">
+                    <div class="col-lg-4">
+                        <div class="form-group" id="divPermanentCityOther">
+                            <label for="permanentCityOther">Other City:</label>
+                            <input class="form-control" type="text" id="permanentCityOther" name="PermanentCityOther" value="@Model.Main.PermanentCityOther" style="display: none;"><br><br>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label for="permanentPostalCode">Permanent Postal Code:</label>
+                            <input class="form-control" type="text" id="permanentPostalCode" oninput="validateNumber(this)" maxlength="6" value="@Model.Main.PermanentPostalCode" name="PermanentPostalCode">
+                        </div>
                     </div>
                 </div>
-            </form>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+
+                    <input class="savebtn global-btn-purple  float-right" type="submit" value="Submit">
+                    <input class="savebtn global-btn-purple  float-right" type="button" onclick="Save()" value="Save">
+                </div>
+            </div>
+        </form>
 
 
     </div>
@@ -415,89 +435,12 @@
 
 
 
-
+qs
 <script>
-        if ('@ViewBag.Result' !== "")
-        {
-            ShowDivError('@ViewBag.Result');
-        }
-        LoadPersonalData_Combo()
-        function LoadPersonalData_Combo() {
-        $('#gender').val('@Model.Main.Gender');
-        $('#gender').trigger('change');
-
-        var date = new Date('@Model.Main.DateOfBirth');
-        var day = date.getDate().toString().padStart(2, '0');
-        var month = (date.getMonth() + 1).toString().padStart(2, '0');
-        var year = date.getFullYear();
-        var dob = year + '-' + month + '-' + day;
-        $('#dob').val(dob);
-        $('#residentialAddress').val('@Model.Main.ResidentialAddress');
-        $('#residentialPostalCode').val('@Model.Main.ResidentialPostalCode');
-
-        $('#permanentAddress').val('@Model.Main.PermanentAddress');
-       
-        $('#permanentCityOther').val('@Model.Main.PermanentCityOther');
-        $('#permanentPostalCode').val('@Model.Main.PermanentPostalCode');
+    LoadDate('@Model.Main.DateOfBirth','dob');
+    if ('@ViewBag.Result' !== "")
+    {
+        ShowDivError('@ViewBag.Result');
     }
-
-
-    function UpdateDate() {
-        $('#DateOfBirth').val($('#dobYear').val() + "-" + $('#dobMonth').val() + "-" + $('#dobDay').val());
-    }
-    function Save() {
-        // Create a new Date object using the selected values
-        var param = {
-            firstName: $('#firstName').val(),
-            middleName: $('#middleName').val(),
-            lastName: $('#lastName').val(),
-            fatherFirstName: $('#fatherFirstName').val(),
-            fatherMiddleName: $('#fatherMiddleName').val(),
-            fatherLastName: $('#fatherLastName').val(),
-            cnic: $('#cnic').val(),
-            emailAddress: $('#email').val(),
-            alterEmailAddress: $('#altEmail').val(),
-            gender: document.getElementById("gender").value,
-            husbandName: $('#husbandName').val(),
-            dateofBirth: $('#dob').val(),
-            // Contact Info
-            cellPhoneNumber: $('#cellPhone').val(),
-            whatsAppNumber: $('#whatsappNumber').val(),
-            alternateCellPhoneNumber: $('#altCellPhone').val(),
-            homePhoneNumber: $('#homePhone').val(),
-            alternateLandline: $('#altLandline').val(),
-            guardianCellPhoneNumber: $('#guardianCellPhone').val(),
-            guardianEmailAddress: $('#guardianEmail').val(),
-            // Address info
-            residentialAddress: $('#residentialAddress').val(),
-            residentialCountry: $('#residentialCountry').val(),
-            residentialProvince: $('#residentialProvince').val(),
-            residentialCity: $('#residentialCity').val(),
-            residentialCityOther: $('#residentialCityOther').val(),
-            residentialPostalCode: $('#residentialPostalCode').val(),
-
-            permanentAddress: $('#permanentAddress').val(),
-            permanentCountry: $('#permanentCountry').val(),
-            permanentProvince: $('#permanentProvince').val(),
-            permanentCity: $('#permanentCity').val(),
-            permanentCityOther: $('#permanentCityOther').val(),
-            permanentPostalCode: $('#permanentPostalCode').val(),
-
-
-        };
-
-        CallAsyncService('/Home/Save', JSON.stringify(param), editSaveCallback);
-
-        function editSaveCallback(response) {
-            if (response.status) {
-                ShowDivSuccess(response.message)
-            }
-            else {
-                ShowDivError(response.message)
-            }
-        }
-
-    }
-
 
 </script>

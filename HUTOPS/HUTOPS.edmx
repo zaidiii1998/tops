@@ -61,7 +61,9 @@
           <Property Name="CollegeCompletionDate" Type="int" />
           <Property Name="HSSCPercentage" Type="varchar" MaxLength="50" />
           <Property Name="BoardOfEdu" Type="varchar" MaxLength="50" />
+          <Property Name="BoardName" Type="varchar" MaxLength="50" />
           <Property Name="GroupOfStudy" Type="varchar" MaxLength="50" />
+          <Property Name="GroupName" Type="varchar" MaxLength="50" />
           <Property Name="SchoolName" Type="varchar" MaxLength="50" />
           <Property Name="SchoolAddress" Type="varchar" MaxLength="100" />
           <Property Name="SSCPercentage" Type="varchar" MaxLength="50" />
@@ -252,7 +254,9 @@ warning 6002: The table/view 'HU_TOPS.dbo.EducationalSubjects' does not have a p
           <Parameter Name="CollegeCD" Type="varchar" Mode="In" />
           <Parameter Name="HSSCPercentage" Type="varchar" Mode="In" />
           <Parameter Name="BoardOfEdu" Type="varchar" Mode="In" />
+          <Parameter Name="BoardName" Type="varchar" Mode="In" />
           <Parameter Name="Group" Type="varchar" Mode="In" />
+          <Parameter Name="GroupName" Type="varchar" Mode="In" />
           <Parameter Name="SchoolName" Type="varchar" Mode="In" />
           <Parameter Name="SchoolAddress" Type="varchar" Mode="In" />
           <Parameter Name="SSCPercentage" Type="varchar" Mode="In" />
@@ -420,6 +424,8 @@ warning 6002: The table/view 'HU_TOPS.dbo.EducationalSubjects' does not have a p
           <Property Name="SSCPercentage" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="UniversityName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="IntendedProgram" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="BoardName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="GroupName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="GroupSubject">
           <Key>
@@ -589,7 +595,9 @@ warning 6002: The table/view 'HU_TOPS.dbo.EducationalSubjects' does not have a p
             <Parameter Name="CollegeCD" Mode="In" Type="String" />
             <Parameter Name="HSSCPercentage" Mode="In" Type="String" />
             <Parameter Name="BoardOfEdu" Mode="In" Type="String" />
+            <Parameter Name="BoardName" Mode="In" Type="String" />
             <Parameter Name="Group" Mode="In" Type="String" />
+            <Parameter Name="GroupName" Mode="In" Type="String" />
             <Parameter Name="SchoolName" Mode="In" Type="String" />
             <Parameter Name="SchoolAddress" Mode="In" Type="String" />
             <Parameter Name="SSCPercentage" Mode="In" Type="String" />
@@ -863,6 +871,8 @@ warning 6002: The table/view 'HU_TOPS.dbo.EducationalSubjects' does not have a p
           <EntitySetMapping Name="Educationals">
             <EntityTypeMapping TypeName="HU_TOPSModel.Educational">
               <MappingFragment StoreEntitySet="Educational">
+                <ScalarProperty Name="GroupName" ColumnName="GroupName" />
+                <ScalarProperty Name="BoardName" ColumnName="BoardName" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="CurrentLevelOfEdu" ColumnName="CurrentLevelOfEdu" />

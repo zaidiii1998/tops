@@ -51,6 +51,7 @@ function CallAsyncService(url, Param, CallbackFunction) {
                     var err = xhr.responseText;
                     if (err) {
                         ShowDivError(err);
+
                     }
                     else {
                         ShowDivError('Error');
@@ -104,9 +105,6 @@ function ShowDivError(msg) {
     $.notify(msg, "error");
 }
 
-
-$('.number').inputmask("9999-9999999");
-$('.cnic').inputmask("99999-9999999-9");
 
 function checkPhoneNumber(Id) {
     // Check Phone Number
@@ -177,9 +175,11 @@ function validateName(inputId, errSpanId) {
     var name = document.getElementById(inputId);
     if (name.value.length < 3) {
         $('#' + errSpanId).html('Name should contain minimum 3 characters');
+        return false;
 
     } else {
         $('#' + errSpanId).html('');
+        return true;
     }
 }
 
@@ -191,7 +191,7 @@ function validateEmail(inputId, errSpanId) {
         debugger
         $('#' + errSpanId).html("Please Enter a valid Email Address");
         return false;
-    }
+    } else { return true }
 }
 
 
@@ -203,6 +203,7 @@ function validateText(input) {
 function validateNumber(input) {
     input.value = input.value.replace(/[^0-9.]/g, '');
 }
+
 // Personal Information Page Functions
 function toggleOtherCityInput(cityId, otherCityId) {
     var select = document.getElementById(cityId.toString(), otherCityId.toString());
@@ -235,38 +236,156 @@ function toggleFormSection(sectionId, checkboxId) {
 function updateCities(comboProvinceId, ComboCityId) {
     var provinceId = $('#' + comboProvinceId).val();
     
-    CallAsyncService("Common/GetCities?ProvinceId=" + provinceId, param, updateCitiesCB)
+    CallAsyncService("/Common/GetCities?ProvinceId=" + provinceId, null, updateCitiesCB)
     function updateCitiesCB(response) {
         $('#' + ComboCityId).html('');
+        $('#' + ComboCityId).append(new Option("Select City", "", false, false));
         $.each(response, function (key, value) {
-            $('#' + ComboCityId).append(new Option(value.name, value.id, false, false));
+            $('#' + ComboCityId).append(new Option(value.Name, value.Id, false, false));
         })
         $('#' + ComboCityId).append(new Option("Other", "other", false, false));
 
     }
 }
 
-function updateProvince(comboCountryId, comboProvienceId) {
+function updateProvince(comboCountryId, comboProvinceId) {
     debugger
     var countryId = $('#' + comboCountryId).val();
     var param = {
         CountryId: countryId
     }
-    CallAsyncService("Common/GetProvince?CountryId=" + countryId, null, updateCitiesCB)
+    CallAsyncService("/Common/GetProvince?CountryId=" + countryId, null, updateCitiesCB)
     function updateCitiesCB(response) {
-        $('#' + ComboCityId).val('');
+        $('#' + comboProvinceId).html('');
+        $('#' + comboProvinceId).append(new Option("Select Province", "", false, false));
         $.each(response, function (key, value) {
-            $('#' + comboProvienceId).append(new Option(value.name, value.id, false, false));
+            $('#' + comboProvinceId).append(new Option(value.Name, value.Id, false, false));
         })
     }
 
 }
 
+function Save() {
+    // Create a new Date object using the selected values
+    var param = {
+        firstName: $('#firstName').val(),
+        middleName: $('#middleName').val(),
+        lastName: $('#lastName').val(),
+        fatherFirstName: $('#fatherFirstName').val(),
+        fatherMiddleName: $('#fatherMiddleName').val(),
+        fatherLastName: $('#fatherLastName').val(),
+        cnic: $('#cnic').val(),
+        emailAddress: $('#email').val(),
+        alterEmailAddress: $('#altEmail').val(),
+        gender: document.getElementById("gender").value,
+        husbandName: $('#husbandName').val(),
+        dateofBirth: $('#dob').val(),
+        // Contact Info
+        cellPhoneNumber: $('#cellPhone').val(),
+        whatsAppNumber: $('#whatsappNumber').val(),
+        alternateCellPhoneNumber: $('#altCellPhone').val(),
+        homePhoneNumber: $('#homePhone').val(),
+        alternateLandline: $('#altLandline').val(),
+        guardianCellPhoneNumber: $('#guardianCellPhone').val(),
+        guardianEmailAddress: $('#guardianEmail').val(),
+        // Address info
+        residentialAddress: $('#residentialAddress').val(),
+        residentialCountry: $('#residentialCountry').val(),
+        residentialProvince: $('#residentialProvince').val(),
+        residentialCity: $('#residentialCity').val(),
+        residentialCityOther: $('#residentialCityOther').val(),
+        residentialPostalCode: $('#residentialPostalCode').val(),
+
+        permanentAddress: $('#permanentAddress').val(),
+        permanentCountry: $('#permanentCountry').val(),
+        permanentProvince: $('#permanentProvince').val(),
+        permanentCity: $('#permanentCity').val(),
+        permanentCityOther: $('#permanentCityOther').val(),
+        permanentPostalCode: $('#permanentPostalCode').val(),
 
 
-function LoadYear(comboId) {
-    var comboYear = document.getElementById(comboId);
-    comboYear.innerHTML = "";
+    };
+
+    CallAsyncService('/Home/Save', JSON.stringify(param), editSaveCallback);
+
+    function editSaveCallback(response) {
+        if (response.status) {
+            ShowDivSuccess(response.message)
+        }
+        else {
+            ShowDivError(response.message)
+        }
+    }
+
+}
+
+function LoadDate(stringDate, DateId) {
+    var date = new Date(stringDate);
+    var newDate = date.getFullYear() + '-' + (date.getMonth() + 1).toString().padStart(2, '0') + '-' + date.getDate().toString().padStart(2, '0');
+    $('#' + DateId).val(newDate);
+}
+
+function validatePersonalInfoForm() {
+
+    debugger
+    if (
+        !validateName('firstName', 'errFirstName') ||
+        !validateName('lirstName', 'errLastName') ||
+        !validateName('fatherFirstName', 'errFatherFName') ||
+        !validateName('fatherLastName', 'errFatherLName') ||
+        ($('#cnic').val() == '')  ||
+        !validateEmail('email', 'errEmail') ||
+        ($('#gender').val() == '') ||
+        ($('#dob').val() == '') ||
+        !($('#cellPhone').val() == '') ||
+        ($('#guardianCellPhone').val() == '') ||
+        !validateEmail('guardianEmail', 'errGuardianEmail') ||
+        ($('#residentialAddress').val() == '') ||
+        ($('#residentialCountry').val() == '') ||
+        ($('#residentialProvince').val() == '') ||
+        ($('#residentialCity').val() == '')
+    ) {
+        return false;
+    } else {
+        return true;
+    }
+
+}
+
+// Educational Info Functions
+
+
+function LoadEducationalData(Model) {
+    $('#currentLevel').val(Model.Education.CurrentLevelOfEdu == null ? '' : Model.Education.CurrentLevelOfEdu.toString());
+    $('#currentLevel').trigger('change');
+    $('#startingYear').val(Model.Education.CollegeStartDate == null ? '' : Model.Education.CollegeStartDate.toString());
+    $('#startingYear').trigger('change');
+    $('#completionYear').val(Model.Education.CollegeCompletionDate == null ? '' : Model.Education.CollegeCompletionDate.toString());
+    $('#completionYear').trigger('change');
+
+    var program = Model.Education.IntendedProgram.toString();
+    if (program.substring(0, 2) == 'BS' && program.substring(0, 2) != 'BSc') {
+        $('#dhananiSchool').click();
+    } else {
+        $('#artsSchool').click();
+    }
+    $('#degreeProgram').val(Model.Education.IntendedProgram.toString());
+    $('#degreeProgram').trigger('change');
+
+}
+
+
+function ShowHideField(divId, selectId, value) {
+    var select = document.getElementById(selectId);
+    if (select.value === value) {
+        $('#' + divId).show();
+    } else {
+        $('#' + divId).hide();
+    }
+}
+
+function LoadYear(selectId) {
+    var comboYear = document.getElementById(selectId);
     var option = document.createElement("option");
     option.value = "";
     option.text = "Select Year";
@@ -278,3 +397,302 @@ function LoadYear(comboId) {
         comboYear.appendChild(option);
     }
 }
+
+function GetBoardList() {
+    CallAsyncService('/Common/GetBoardList', null, GetBoardListCallback);
+}
+function GetBoardListCallback(response) {
+    $('#boardOfEducation').html('');
+    $('#boardOfEducation').append(new Option("Select Board", "", false, false));
+    $.each(response, function (key, value) {
+        $('#boardOfEducation').append(new Option(value.Name, value.Id, false, false));
+
+    })
+}
+
+function GetGroupList(BoardId) {
+    CallAsyncService('/Common/GetGroupList?BoardId=' + BoardId, null, GetGroupListCallback);
+}
+function GetGroupListCallback(response) {
+    $('#groupOfStudy').html('');
+    $('#groupOfStudy').append(new Option("Select Group", "", false, false));
+    $.each(response, function (key, value) {
+        $('#groupOfStudy').append(new Option(value.Name, value.Id, false, false));
+
+    })
+}
+
+function GetSubjectList(GroupId) {
+
+    CallAsyncService('/Common/GetSubjectList?GroupId=' + $('#' + GroupId).val(), null, GetSubjectListCallback);
+}
+function GetSubjectListCallback(response) {
+    $('#divSubjects').html('');
+    var rowIndex = 0;
+    $.each(response, function (key, value) {
+        rowIndex++;
+        var newRow = document.createElement("div");
+        newRow.className = "row";
+
+        for (let i = 1; i <= 4; i++) {
+            var newCol = document.createElement("div");
+            newCol.className = "col-lg-3";
+            var newcontrol = document.createElement("div");
+            newcontrol.className = "form-group";
+
+            var input = document.createElement("input");
+            input.type = "text";
+            input.className = "form-control";
+            if (i === 1) {
+                input.classList.add("SubjectName");
+                input.value = value.Name;
+            } else if (i === 2) {
+                input.classList.add("SubjectObtain");
+                input.required = true;
+            } else if (i === 3) {
+                input.classList.add("SubjectTotal");
+                input.required = true;
+            } else {
+                input.classList.add("SubjectGrade");
+                input.required = true;
+            }
+            newcontrol.appendChild(input);
+            newCol.appendChild(newcontrol);
+            newRow.appendChild(newCol);
+        }
+
+        $('#divSubjects').append(newRow);
+    })
+}
+
+function AddRow() {
+    var newRow = document.createElement("div");
+    newRow.className = "row";
+
+    for (let i = 1; i <= 4; i++) {
+        var newCol = document.createElement("div");
+        newCol.className = "col-lg-3";
+        var newcontrol = document.createElement("div");
+        newcontrol.className = "form-group";
+
+        var input = document.createElement("input");
+        input.type = "text";
+        input.className = "form-control";
+        if (i === 1) {
+            input.classList.add("SubjectName");
+        } else if (i === 2) {
+            input.classList.add("SubjectObtain");
+        } else if (i === 3) {
+            input.classList.add("SubjectTotal");
+        } else {
+            input.classList.add("SubjectGrade");
+        }
+        newcontrol.appendChild(input);
+        newCol.appendChild(newcontrol);
+        newRow.appendChild(newCol);
+    }
+
+    $('#divSubjects').append(newRow);
+}
+function loadPrograms(radioValue) {
+    const selectBox = document.getElementById('degreeProgram');
+    selectBox.innerHTML = ''; // Clear previous options
+
+    if (radioValue === 'dhanani') {
+        const programs = ['BS Electrical Engineering', 'BS Computer Science', 'BS Computer Engineering'];
+        const defaultOption = document.createElement('option');
+        defaultOption.text = 'Select Program';
+        selectBox.add(defaultOption);
+        programs.forEach(programs => {
+            const option = document.createElement('option');
+            option.value = programs;
+            option.text = programs;
+            selectBox.add(option);
+        });
+    } else if (radioValue === 'arts') {
+        const programs = ['BA (Honours) Communication and Design', 'BSc (Honours) Social Development and Policy', 'BA (Honors) Comparative Humanities'];
+        const defaultOption = document.createElement('option');
+        defaultOption.text = 'Select Program';
+        selectBox.add(defaultOption);
+        programs.forEach(programs => {
+            const option = document.createElement('option');
+            option.value = programs;
+            option.text = programs;
+            selectBox.add(option);
+        });
+    } else {
+        const defaultOption = document.createElement('option');
+        defaultOption.text = 'Select Program';
+        selectBox.add(defaultOption);
+    }
+}
+
+function SaveEducation() {
+    var SubjectName = [];
+    var SubjectObtain = [];
+    var SubjectTotal = [];
+    var SubjectGrade = [];
+
+    // Iterate over input elements with the class "my-input"
+    $(".SubjectName").each(function () {
+        SubjectName.push($(this).val());
+    });
+    $(".SubjectObtain").each(function () {
+        SubjectObtain.push($(this).val());
+    });
+    $(".SubjectTotal").each(function () {
+        SubjectTotal.push($(this).val());
+    });
+    $(".SubjectGrade").each(function () {
+        SubjectGrade.push($(this).val());
+    });
+
+
+
+    var param = {
+        CurrentLevelOfEdu: $('#currentLevel').val(),
+        CurrentCollege: $('#collegeName').val(),
+        CollegeAddress: $('#collegeAddress').val(),
+        HSSCPercentage: $('#hsscPercentage').val(),
+        CollegeStartDate: $('#startingYear').val(),
+        CollegeCompletionDate: $('#completionYear').val(),
+        BoardOfEdu: $('#boardOfEducation').val(),
+
+        GroupOfStudy: $('#groupOfStudy').val(),
+        SchoolName: $('#secondarySchoolName').val(),
+        SchoolAddress: $('#secondarySchoolAddress').val(),
+        SSCPercentage: $('#sscPercentage').val(),
+        UniversityName: $('#universityName').val(),
+        IntendedProgram: $('#degreeProgram').val(),
+
+        SubjectName: SubjectName,
+        SubjectObtain: SubjectObtain,
+        SubjectTotal: SubjectTotal,
+        SubjectGrade: SubjectGrade
+    };
+
+    CallAsyncService('/Education/Save', JSON.stringify(param), editEducationCallback);
+
+    function editEducationCallback(response) {
+        debugger
+        if (response.status) {
+            ShowDivSuccess(response.message)
+        }
+        else {
+            ShowDivError(response.message)
+        }
+    }
+
+};
+function SubmitEducation() {
+
+    var isValid = true;
+    debugger
+    $('input[required]').each(function () {
+
+        if ($(this).val().trim() === '') {
+            isValid = false;
+            $(this).addClass("error");
+            
+        } else {
+            $(this).removeClass("error");
+        }
+    });
+    $('select[required]').each(function () {
+
+        if (($(this).val().trim() === '') || ($(this).val() === null)) {
+            isValid = false;
+            $(this).addClass("error");
+
+        } else {
+            $(this).removeClass("error");
+        }
+    });
+    $('textarea[required]').each(function () {
+
+        if (($(this).val().trim() === '') || ($(this).val() === null)) {
+            isValid = false;
+            $(this).addClass("error");
+
+        } else {
+            $(this).removeClass("error");
+        }
+    });
+    $('input[type=radio][required]').each(function () {
+
+        if (($(this).val().trim() === '') || ($(this).val() === null)) {
+            isValid = false;
+            $(this).addClass("error");
+
+        } else {
+            $(this).removeClass("error");
+        }
+    });
+
+    if (isValid)
+        {
+        var SubjectName = [];
+        var SubjectObtain = [];
+        var SubjectTotal = [];
+        var SubjectGrade = [];
+
+        // Iterate over input elements with the class "my-input"
+        $(".SubjectName").each(function () {
+            SubjectName.push($(this).val());
+        });
+        $(".SubjectObtain").each(function () {
+            SubjectObtain.push($(this).val());
+        });
+        $(".SubjectTotal").each(function () {
+            SubjectTotal.push($(this).val());
+        });
+        $(".SubjectGrade").each(function () {
+            SubjectGrade.push($(this).val());
+        });
+
+
+
+        var param = {
+            CurrentLevelOfEdu: $('#currentLevel').val(),
+            CurrentCollege: $('#collegeName').val(),
+            CollegeAddress: $('#collegeAddress').val(),
+            HSSCPercentage: $('#hsscPercentage').val(),
+            CollegeStartDate: $('#startingYear').val(),
+            CollegeCompletionDate: $('#completionYear').val(),
+            BoardOfEdu: $('#boardOfEducation').val(),
+
+            GroupOfStudy: $('#groupOfStudy').val(),
+            SchoolName: $('#secondarySchoolName').val(),
+            SchoolAddress: $('#secondarySchoolAddress').val(),
+            SSCPercentage: $('#sscPercentage').val(),
+            UniversityName: $('#universityName').val(),
+            IntendedProgram: $('#degreeProgram').val(),
+
+            SubjectName: SubjectName,
+            SubjectObtain: SubjectObtain,
+            SubjectTotal: SubjectTotal,
+            SubjectGrade: SubjectGrade
+        };
+
+        CallAsyncService('/Education/Submit', JSON.stringify(param), editEducationCallback);
+    
+        function editEducationCallback(response) {
+            debugger
+            if (response.status) {
+                ShowDivSuccess(response.message)
+            }
+            else {
+                debugger
+                ShowDivError(response.message)
+                console.log(response.error);
+                var errstring = response.error.toString();
+                var stringList = errstring.split(",");
+                $.each(stringList, function (key, value) {
+                    $("#Error ul").append('<li class="text-danger">'+ value +'</li>');
+                })
+                
+
+            }
+        }
+    }
+};

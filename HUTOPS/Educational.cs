@@ -29,5 +29,7 @@ namespace HUTOPS
         public string SSCPercentage { get; set; }
         public string UniversityName { get; set; }
         public string IntendedProgram { get; set; }
+        public string BoardName { get; set; }
+        public string GroupName { get; set; }
     }
 }

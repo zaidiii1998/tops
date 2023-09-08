@@ -190,7 +190,7 @@
       <DependentUpon>HUTOPS.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\PersonalInfoPageModel.cs" />
-    <Compile Include="Models\ViewModel.cs" />
+    <Compile Include="Models\EducationPageModel.cs" />
     <Compile Include="PersonalInformation.cs">
       <DependentUpon>HUTOPS.tt</DependentUpon>
     </Compile>

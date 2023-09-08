@@ -64,7 +64,6 @@ namespace HUTOPS.Controllers
             try
             {
                 
-                Helper.Helper.AddLog(Constants.LogType.ActivityLog, $"User Request to Register New Application Details: Firstname: {model["FirstName"]}, LastName: {model["LastName"]}, Email: {model["EmailAddress"]}, CNIC: {model["CNIC"]}, PhoneNumber: {model["CellPhoneNumber"]} " );
                 var IsValid = true;
                 var user = DB.PersonalInformations.ToList();
                 var userEmail = user.Where(x => x.EmailAddress == model["EmailAddress"]).ToList();
@@ -174,14 +173,14 @@ namespace HUTOPS.Controllers
                     }
                     else
                     {
-                        Helper.Helper.AddLog(Constants.LogType.ActivityLog, "User-provided data is Invalid");
+                        Helper.Helper.AddLog(Constants.LogType.ActivityLog, $"User-provided data is Invalid. Details: Firstname: {model["FirstName"]}, LastName: {model["LastName"]}, Email: {model["EmailAddress"]}, CNIC: {model["CNIC"]}, PhoneNumber: {model["CellPhoneNumber"]} ");
                         return View(GivenModel);
                     }
                     return View(GivenModel);
                 }
                 else
                 {
-                    Helper.Helper.AddLog(Constants.LogType.ActivityLog, "User-provided data is Invalid");
+                    Helper.Helper.AddLog(Constants.LogType.ActivityLog, $"User-provided data is Invalid. Details: Firstname: {model["FirstName"]}, LastName: {model["LastName"]}, Email: {model["EmailAddress"]}, CNIC: {model["CNIC"]}, PhoneNumber: {model["CellPhoneNumber"]} ");
                     ViewBag.Result = "Invalid Model";
                     return View(GivenModel);
                 }

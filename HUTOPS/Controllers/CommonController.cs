@@ -75,13 +75,13 @@ namespace HUTOPS.Controllers
         {
             return Json(DB.Boards.ToList());
         }
-        public ActionResult GetGroupList(int BoardId)
+        public ActionResult GetGroupList(string BoardId)
         {
-            return Json(DB.BoardGroups.ToList().Where(x => x.BoardId == BoardId).ToList());
+            return Json(DB.BoardGroups.ToList().Where(x => x.BoardId == (BoardId == ""? 0 : int.Parse(BoardId))).ToList());
         }
-        public ActionResult GetSubjectList(int GroupId)
+        public ActionResult GetSubjectList(string GroupId)
         {
-            return Json(DB.GroupSubjects.ToList().Where(x => x.GroupId == GroupId).ToList());
+            return Json(DB.GroupSubjects.ToList().Where(x => x.GroupId == (GroupId == ""? 0 : int.Parse(GroupId))).ToList());
         }
         
         public ActionResult CheckPersonalInfo()
@@ -112,12 +112,12 @@ namespace HUTOPS.Controllers
         }
         public ActionResult GetProvince(string CountryId)
         {
-            var result = DB.States.ToList().FindAll(x => x.CountryId == int.Parse(CountryId));
+            var result = DB.States.ToList().FindAll(x => x.CountryId == (CountryId == ""? 0 : int.Parse(CountryId)));
             return Json(result);
         }
         public ActionResult GetCities(string ProvinceId)
         {
-            var result = DB.Cities.ToList().FindAll(x => x.StateId == int.Parse(ProvinceId));
+            var result = DB.Cities.ToList().FindAll(x => x.StateId == (ProvinceId == "" ? 0 : int.Parse(ProvinceId)));
             return Json(result);
         }
     }

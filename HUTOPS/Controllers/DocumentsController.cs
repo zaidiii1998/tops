@@ -12,7 +12,12 @@ namespace HUTOPS.Controllers
         // GET: Documents
         public ActionResult Index()
         {
+            if (TempData["Result"] != null)
+            {
+                ViewBag.Result = TempData["Result"].ToString();
+            }
             return View();
+
         }
         [HttpPost]
         public ActionResult UploadFiles()

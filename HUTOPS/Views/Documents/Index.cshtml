@@ -20,8 +20,12 @@
 </div>
 
 <script>
+        if ('@ViewBag.Result' !== "")
+        {
+            ShowDivSuccess('@ViewBag.Result');
+        }
     $(document).ready(function () {
-        
+
         $('#fileUploadForm').submit(function (e) {
             e.preventDefault();
 

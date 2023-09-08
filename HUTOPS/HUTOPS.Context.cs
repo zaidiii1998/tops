@@ -230,7 +230,7 @@ namespace HUTOPS
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<WEB_GetSubjects_Result>("WEB_GetSubjects", groupIdParameter);
         }
     
-        public virtual ObjectResult<WEB_InsertEducation_Result> WEB_InsertEducation(Nullable<int> userId, string currentLevel, string currentCollege, string collegeAddress, string collegeST, string collegeCD, string hSSCPercentage, string boardOfEdu, string group, string schoolName, string schoolAddress, string sSCPercentage, string universityName, string intendedProgram, string subjectName, string subjectObtain, string subjectTotal, string subjectGrade)
+        public virtual ObjectResult<WEB_InsertEducation_Result> WEB_InsertEducation(Nullable<int> userId, string currentLevel, string currentCollege, string collegeAddress, string collegeST, string collegeCD, string hSSCPercentage, string boardOfEdu, string boardName, string group, string groupName, string schoolName, string schoolAddress, string sSCPercentage, string universityName, string intendedProgram, string subjectName, string subjectObtain, string subjectTotal, string subjectGrade)
         {
             var userIdParameter = userId.HasValue ?
                 new ObjectParameter("UserId", userId) :
@@ -264,9 +264,17 @@ namespace HUTOPS
                 new ObjectParameter("BoardOfEdu", boardOfEdu) :
                 new ObjectParameter("BoardOfEdu", typeof(string));
     
+            var boardNameParameter = boardName != null ?
+                new ObjectParameter("BoardName", boardName) :
+                new ObjectParameter("BoardName", typeof(string));
+    
             var groupParameter = group != null ?
                 new ObjectParameter("Group", group) :
                 new ObjectParameter("Group", typeof(string));
+    
+            var groupNameParameter = groupName != null ?
+                new ObjectParameter("GroupName", groupName) :
+                new ObjectParameter("GroupName", typeof(string));
     
             var schoolNameParameter = schoolName != null ?
                 new ObjectParameter("SchoolName", schoolName) :
@@ -304,7 +312,7 @@ namespace HUTOPS
                 new ObjectParameter("SubjectGrade", subjectGrade) :
                 new ObjectParameter("SubjectGrade", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<WEB_InsertEducation_Result>("WEB_InsertEducation", userIdParameter, currentLevelParameter, currentCollegeParameter, collegeAddressParameter, collegeSTParameter, collegeCDParameter, hSSCPercentageParameter, boardOfEduParameter, groupParameter, schoolNameParameter, schoolAddressParameter, sSCPercentageParameter, universityNameParameter, intendedProgramParameter, subjectNameParameter, subjectObtainParameter, subjectTotalParameter, subjectGradeParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<WEB_InsertEducation_Result>("WEB_InsertEducation", userIdParameter, currentLevelParameter, currentCollegeParameter, collegeAddressParameter, collegeSTParameter, collegeCDParameter, hSSCPercentageParameter, boardOfEduParameter, boardNameParameter, groupParameter, groupNameParameter, schoolNameParameter, schoolAddressParameter, sSCPercentageParameter, universityNameParameter, intendedProgramParameter, subjectNameParameter, subjectObtainParameter, subjectTotalParameter, subjectGradeParameter);
         }
     
         public virtual int WEB_InsertEducationalSubjects(Nullable<int> educationalId, string subjectName, string subjectObtain, string subjectTotal, string subjectGrade)
