@@ -42,11 +42,12 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="HUTopId" Type="varchar" MaxLength="50" />
+          <Property Name="UserId" Type="int" />
           <Property Name="Photograph" Type="varchar" MaxLength="100" />
           <Property Name="SSCMarkSheet" Type="varchar" MaxLength="100" />
           <Property Name="HSSCMarkSheet" Type="varchar" MaxLength="100" />
           <Property Name="CNIC" Type="varchar" MaxLength="100" />
+          <Property Name="IsCompleted" Type="int" />
         </EntityType>
         <EntityType Name="Educational">
           <Key>
@@ -69,6 +70,7 @@
           <Property Name="SSCPercentage" Type="varchar" MaxLength="50" />
           <Property Name="UniversityName" Type="varchar" MaxLength="50" />
           <Property Name="IntendedProgram" Type="varchar" MaxLength="50" />
+          <Property Name="IsCompleted" Type="int" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'HU_TOPS.dbo.EducationalSubjects' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -262,6 +264,7 @@ warning 6002: The table/view 'HU_TOPS.dbo.EducationalSubjects' does not have a p
           <Parameter Name="SSCPercentage" Type="varchar" Mode="In" />
           <Parameter Name="UniversityName" Type="varchar" Mode="In" />
           <Parameter Name="IntendedProgram" Type="varchar" Mode="In" />
+          <Parameter Name="IsCompleted" Type="int" Mode="In" />
           <Parameter Name="SubjectName" Type="varchar(max)" Mode="In" />
           <Parameter Name="SubjectObtain" Type="varchar(max)" Mode="In" />
           <Parameter Name="SubjectTotal" Type="varchar(max)" Mode="In" />
@@ -399,11 +402,12 @@ warning 6002: The table/view 'HU_TOPS.dbo.EducationalSubjects' does not have a p
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="HUTopId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Photograph" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="SSCMarkSheet" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="HSSCMarkSheet" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="CNIC" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="IsCompleted" Type="Int32" />
         </EntityType>
         <EntityType Name="Educational">
           <Key>
@@ -426,6 +430,7 @@ warning 6002: The table/view 'HU_TOPS.dbo.EducationalSubjects' does not have a p
           <Property Name="IntendedProgram" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="BoardName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="GroupName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IsCompleted" Type="Int32" />
         </EntityType>
         <EntityType Name="GroupSubject">
           <Key>
@@ -603,6 +608,7 @@ warning 6002: The table/view 'HU_TOPS.dbo.EducationalSubjects' does not have a p
             <Parameter Name="SSCPercentage" Mode="In" Type="String" />
             <Parameter Name="UniversityName" Mode="In" Type="String" />
             <Parameter Name="IntendedProgram" Mode="In" Type="String" />
+            <Parameter Name="IsCompleted" Mode="In" Type="Int32" />
             <Parameter Name="SubjectName" Mode="In" Type="String" />
             <Parameter Name="SubjectObtain" Mode="In" Type="String" />
             <Parameter Name="SubjectTotal" Mode="In" Type="String" />
@@ -859,8 +865,9 @@ warning 6002: The table/view 'HU_TOPS.dbo.EducationalSubjects' does not have a p
           <EntitySetMapping Name="Documents">
             <EntityTypeMapping TypeName="HU_TOPSModel.Document">
               <MappingFragment StoreEntitySet="Documents">
+                <ScalarProperty Name="IsCompleted" ColumnName="IsCompleted" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="HUTopId" ColumnName="HUTopId" />
                 <ScalarProperty Name="Photograph" ColumnName="Photograph" />
                 <ScalarProperty Name="SSCMarkSheet" ColumnName="SSCMarkSheet" />
                 <ScalarProperty Name="HSSCMarkSheet" ColumnName="HSSCMarkSheet" />
@@ -871,6 +878,7 @@ warning 6002: The table/view 'HU_TOPS.dbo.EducationalSubjects' does not have a p
           <EntitySetMapping Name="Educationals">
             <EntityTypeMapping TypeName="HU_TOPSModel.Educational">
               <MappingFragment StoreEntitySet="Educational">
+                <ScalarProperty Name="IsCompleted" ColumnName="IsCompleted" />
                 <ScalarProperty Name="GroupName" ColumnName="GroupName" />
                 <ScalarProperty Name="BoardName" ColumnName="BoardName" />
                 <ScalarProperty Name="Id" ColumnName="Id" />

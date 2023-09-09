@@ -163,6 +163,9 @@
     <Compile Include="GroupSubject.cs">
       <DependentUpon>HUTOPS.tt</DependentUpon>
     </Compile>
+    <Compile Include="Handler1.ashx.cs">
+      <DependentUpon>Handler1.ashx</DependentUpon>
+    </Compile>
     <Compile Include="Helper\Constants.cs" />
     <Compile Include="Helper\Extension.cs" />
     <Compile Include="Helper\Helper.cs" />
@@ -403,6 +406,7 @@
     <Content Include="HUTOPS.edmx.diagram">
       <DependentUpon>HUTOPS.edmx</DependentUpon>
     </Content>
+    <Content Include="Handler1.ashx" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\esm\popper-utils.js" />
     <Content Include="Scripts\esm\popper-utils.min.js" />

@@ -230,7 +230,7 @@ namespace HUTOPS
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<WEB_GetSubjects_Result>("WEB_GetSubjects", groupIdParameter);
         }
     
-        public virtual ObjectResult<WEB_InsertEducation_Result> WEB_InsertEducation(Nullable<int> userId, string currentLevel, string currentCollege, string collegeAddress, string collegeST, string collegeCD, string hSSCPercentage, string boardOfEdu, string boardName, string group, string groupName, string schoolName, string schoolAddress, string sSCPercentage, string universityName, string intendedProgram, string subjectName, string subjectObtain, string subjectTotal, string subjectGrade)
+        public virtual ObjectResult<WEB_InsertEducation_Result> WEB_InsertEducation(Nullable<int> userId, string currentLevel, string currentCollege, string collegeAddress, string collegeST, string collegeCD, string hSSCPercentage, string boardOfEdu, string boardName, string group, string groupName, string schoolName, string schoolAddress, string sSCPercentage, string universityName, string intendedProgram, Nullable<int> isCompleted, string subjectName, string subjectObtain, string subjectTotal, string subjectGrade)
         {
             var userIdParameter = userId.HasValue ?
                 new ObjectParameter("UserId", userId) :
@@ -296,6 +296,10 @@ namespace HUTOPS
                 new ObjectParameter("IntendedProgram", intendedProgram) :
                 new ObjectParameter("IntendedProgram", typeof(string));
     
+            var isCompletedParameter = isCompleted.HasValue ?
+                new ObjectParameter("IsCompleted", isCompleted) :
+                new ObjectParameter("IsCompleted", typeof(int));
+    
             var subjectNameParameter = subjectName != null ?
                 new ObjectParameter("SubjectName", subjectName) :
                 new ObjectParameter("SubjectName", typeof(string));
@@ -312,7 +316,7 @@ namespace HUTOPS
                 new ObjectParameter("SubjectGrade", subjectGrade) :
                 new ObjectParameter("SubjectGrade", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<WEB_InsertEducation_Result>("WEB_InsertEducation", userIdParameter, currentLevelParameter, currentCollegeParameter, collegeAddressParameter, collegeSTParameter, collegeCDParameter, hSSCPercentageParameter, boardOfEduParameter, boardNameParameter, groupParameter, groupNameParameter, schoolNameParameter, schoolAddressParameter, sSCPercentageParameter, universityNameParameter, intendedProgramParameter, subjectNameParameter, subjectObtainParameter, subjectTotalParameter, subjectGradeParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<WEB_InsertEducation_Result>("WEB_InsertEducation", userIdParameter, currentLevelParameter, currentCollegeParameter, collegeAddressParameter, collegeSTParameter, collegeCDParameter, hSSCPercentageParameter, boardOfEduParameter, boardNameParameter, groupParameter, groupNameParameter, schoolNameParameter, schoolAddressParameter, sSCPercentageParameter, universityNameParameter, intendedProgramParameter, isCompletedParameter, subjectNameParameter, subjectObtainParameter, subjectTotalParameter, subjectGradeParameter);
         }
     
         public virtual int WEB_InsertEducationalSubjects(Nullable<int> educationalId, string subjectName, string subjectObtain, string subjectTotal, string subjectGrade)

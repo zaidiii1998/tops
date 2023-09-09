@@ -8,6 +8,85 @@
         <div class="headBox">
             <h2>Declarations</h2>
         </div>
+
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="headBox">
+                    <h2>Personal Information</h2>
+                    @if (ViewBag.Personal == "0")
+                    {
+                        <label class="text-danger"> Section not Completed Or not Submited</label>
+                    }
+                    else
+                    {
+                        <label class="text-success"> Section Completed</label>
+                    }
+                </div>
+            </div>
+                <div class="col-lg-6">
+                    
+                    @if (ViewBag.Personal == "0")
+                    {
+                        <i class="fa-regular fa-circle-xmark" style="font-size: 38px;color: red;"></i>
+                    }
+                    else
+                    {
+                        <i class="fa-solid fa-check" style="font-size: 38px;color: green;"></i>
+                    }
+                </div>
+            </div>
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="headBox">
+                    <h2>Educational Information</h2>
+                    @if (ViewBag.Edu == "0")
+                    {
+                        <label class="text-danger"> Section not Completed Or not Submited</label>
+                    }
+                    else
+                    {
+                        <label class="text-success"> Section Completed</label>
+                    }
+                </div>
+            </div>
+                <div class="col-lg-6">
+                    @if (ViewBag.Edu == "0")
+                    {
+                        <i class="fa-regular fa-circle-xmark" style="font-size: 38px;color: red;"></i>
+                    }
+                    else
+                    {
+                        <i class="fa-solid fa-check" style="font-size: 38px;color: green;"></i>
+                    }
+                </div>
+            </div>
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="headBox">
+                    <h2>Documents</h2>
+                    @if (ViewBag.Docs == "0")
+                    {
+                        <label class="text-danger"> Section not Completed Or not Submited</label>
+                    }
+                    else
+                    {
+                        <label class="text-success"> Section Completed</label>
+                    }
+                </div>
+            </div>
+            <div class="col-lg-6">
+                @if (ViewBag.Docs == "0")
+                {
+                    <i class="fa-regular fa-circle-xmark" style="font-size: 38px;color: red;"></i>
+                }
+                else
+                {
+                    <i class="fa-solid fa-check" style="font-size: 38px;color: green;"></i>
+                }
+            </div>
+        </div>
+
+
     </div>
 </div>
 

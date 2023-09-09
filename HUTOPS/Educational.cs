@@ -31,5 +31,6 @@ namespace HUTOPS
         public string IntendedProgram { get; set; }
         public string BoardName { get; set; }
         public string GroupName { get; set; }
+        public Nullable<int> IsCompleted { get; set; }
     }
 }

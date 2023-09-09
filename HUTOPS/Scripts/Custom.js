@@ -679,7 +679,9 @@ function SubmitEducation() {
         function editEducationCallback(response) {
             debugger
             if (response.status) {
-                ShowDivSuccess(response.message)
+                document.getElementById("redirectLnk").click();
+                ShowDivSuccess(response.message);
+                
             }
             else {
                 debugger
@@ -696,3 +698,68 @@ function SubmitEducation() {
         }
     }
 };
+
+// Document Section
+
+function checkFileSize(fileId, ErrSpanId){
+    debugger
+    
+    var file = $('#' + fileId);
+    var fileSize = file[0].files[0].size; // Get the file size in bytes
+    var maxFileSize = 2097152; // 2 MB
+    // Check if the file size exceeds the maximum limit
+    if (fileSize > maxFileSize) {
+        
+        $("#" + ErrSpanId).html(" Select the file Maximum size 2MB"); // Clear any previous error message
+    } else {
+        $("#" + ErrSpanId).html(""); // Clear any previous error message
+    }
+}
+function submitDocuments(sessionUserId) {
+    debugger
+    isValid = true;
+    $('input[type="file"][required]').each(function () {
+
+        if ($(this).val().trim() === '') {
+            isValid = false;
+            $(this).addClass("error");
+
+        } else {
+            $(this).removeClass("error");
+        }
+    });
+    if (isValid) {
+        var form = $('#fileUploadForm');
+        var formData = new FormData(form[0]);
+        formData.append("UserId", sessionUserId)
+        $.ajax({
+            url: '/Handler1.ashx', // Change the URL to your MVC controller's action
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (response) {
+                debugger
+                if (response.status) {
+                    ShowDivError(response.message);
+                    document.getElementById("redirectLnktoDeclaration").click();
+                }
+                else {
+                    ShowDivError(response.message)
+                    console.log(response.error);
+                    var errstring = response.error.toString();
+                    var stringList = errstring.split(",");
+                    $.each(stringList, function (key, value) {
+                        $("#Error ul").append('<li class="text-danger">' + value + '</li>');
+                    })
+                }
+
+            },
+            error: function (xhr, status, error) {
+                debugger
+                ShowDivError(response.message);
+
+            }
+        });
+    } else {return false }
+}

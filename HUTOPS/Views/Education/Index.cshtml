@@ -6,11 +6,6 @@
 }
 @model HUTOPS.Models.EducationPageModel
 
-<style>
-    .error {
-        border: 2px solid red !important;
-    }
-</style>
 
 
 <div class="container-fluid">
@@ -19,6 +14,9 @@
             <h2>Education</h2>
         </div>
         <form method="post">
+            <div class="headBox">
+                <h2>HSSC/College Information</h2>
+            </div>
             <div class="row">
                 <div class="col-lg-3">
                     <div class="form-group">
@@ -33,43 +31,10 @@
 
                     </div>
                 </div>
-                <div class="col-lg-3">
-                    <div class="form-group" id="divUniName">
+                <div class="col-lg-3" id="divUniName">
+                    <div class="form-group">
                         <label for="universityName">University Name:</label>
                         <input class="form-control" type="text" id="universityName" name="universityName" value="@Model.Education.UniversityName"><br><br>
-                    </div>
-                </div>
-                <div class="col-lg-3">
-                    <div class="form-group">
-                        <label for="startingYear">Starting Year:</label>
-                        <select class="form-control" id="startingYear" name="startingYear" required>
-
-                            <!-- Options for years, you can generate these dynamically with JavaScript -->
-                        </select>
-                    </div>
-                </div>
-                <div class="col-lg-3">
-                    <div class="form-group">
-                        <label for="completionYear">Completion Year:</label>
-                        <select class="form-control" id="completionYear" name="completionYear" required>
-                            <!-- Options for years, you can generate these dynamically with JavaScript -->
-                        </select>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-
-                <div class="col-lg-3">
-                    <div class="form-group">
-                        <label for="collegeName">Current College/Last College Name:</label>
-                        <input class="form-control" type="text" id="collegeName" name="collegeName" value="@Model.Education.CurrentCollege" required>
-                    </div>
-                </div>
-                <div class="col-lg-3">
-                    <div class="form-group">
-                        <label for="collegeAddress">College Address with City Name:</label>
-                        <textarea class="form-control" id="collegeAddress" name="collegeAddress" rows="2" required>@Model.Education.CollegeAddress</textarea>
                     </div>
                 </div>
                 <div class="col-lg-3">
@@ -111,6 +76,38 @@
                     </div>
                 </div>
             </div>
+
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        <label for="collegeName">Current College/Last College Name:</label>
+                        <input class="form-control" type="text" id="collegeName" name="collegeName" value="@Model.Education.CurrentCollege" required>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        <label for="collegeAddress">College Address with City Name:</label>
+                        <textarea class="form-control" id="collegeAddress" name="collegeAddress" rows="2" required>@Model.Education.CollegeAddress</textarea>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        <label for="startingYear">Starting Year:</label>
+                        <select class="form-control" id="startingYear" name="startingYear" required>
+
+                            <!-- Options for years, you can generate these dynamically with JavaScript -->
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        <label for="completionYear">Completion Year:</label>
+                        <select class="form-control" id="completionYear" name="completionYear" required>
+                            <!-- Options for years, you can generate these dynamically with JavaScript -->
+                        </select>
+                    </div>
+                </div>
+            </div>
             <div class="row">
                 <div class="col-lg-3">
                     <div class="form-group">
@@ -118,6 +115,11 @@
                         <input class="form-control Percentage" type="text" id="hsscPercentage" name="hsscPercentage" value="@Model.Education.HSSCPercentage" required>
                     </div>
                 </div>
+            </div>
+            <div class="headBox">
+                <h2>SSC/School Information</h2>
+            </div>
+            <div class="row">
                 <div class="col-lg-3">
                     <div class="form-group">
                         <label for="secondarySchoolName">Secondary Education School Name:</label>
@@ -137,11 +139,10 @@
                     </div>
                 </div>
             </div>
-            <!-- Secondary Education Section -->
-            <div class="row">
-
-            </div>
             <!-- Habib University Section -->
+            <div class="headBox">
+                <h2>Intended Program</h2>
+            </div>
             <div class="row">
                 <div class="col-lg-6">
                     <div class="form-group">
@@ -166,10 +167,9 @@
 
 
 
-
-
-            <h2>Subject Details</h2>
-
+            <div class="headBox">
+                <h2>Subjects Information</h2>
+            </div>
             <div class="row">
                 <div class="col-lg-3">
                     <div class="form-group">
@@ -205,16 +205,16 @@
                                 </div>
                                 <div class="col-lg-3">
                                     <div class="form-group">
-                                        <input type="text" class="form-control SubjectObtain"value="@item.ObtainMarks" required="">
+                                        <input type="text" class="form-control SubjectObtain" value="@item.ObtainMarks" required="">
                                     </div>
                                 </div><div class="col-lg-3">
                                     <div class="form-group">
-                                        <input type="text" class="form-control SubjectTotal"value="@item.TotalMarks" required="">
+                                        <input type="text" class="form-control SubjectTotal" value="@item.TotalMarks" required="">
                                     </div>
                                 </div>
                                 <div class="col-lg-3">
                                     <div class="form-group">
-                                        <input type="text" class="form-control SubjectGrade"value="@item.Grade" required="">
+                                        <input type="text" class="form-control SubjectGrade" value="@item.Grade" required="">
                                     </div>
                                 </div>
                             </div>
@@ -241,21 +241,16 @@
         </div>
     </div>
 </div>
-
+<a href="@Url.Action("Index", "Documents")" id="redirectLnk" hidden></a>
 <script>
     if ('@ViewBag.Result' !== "")
         {
             ShowDivSuccess('@ViewBag.Result');
         }
     $('#divUniName').hide();
-
-
     LoadYear('startingYear');
     LoadYear('completionYear');
     //GetBoardList();
     LoadEducationalData(@Html.Raw(Json.Encode(Model)));
-
-    
-
 </script>
 
