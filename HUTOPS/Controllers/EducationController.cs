@@ -36,6 +36,7 @@ namespace HUTOPS.Controllers
             {
                 ViewBag.Result = TempData["Result"].ToString();
             }
+            ViewBag.Declaration = DB.PersonalInformations.ToList().Where(x => x.Id == userId).ToList().FirstOrDefault().Declaration;
             return View(mymodel);
         }
         [HttpPost]

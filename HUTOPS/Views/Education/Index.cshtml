@@ -231,8 +231,16 @@
             <hr />
             <div class="row">
                 <div class="col-lg-12">
-                    <input class="savebtn global-btn-purple  float-right" type="button" onclick="SubmitEducation();" value="Submit">
-                    <input class="savebtn global-btn-purple  float-right" type="button" id="editEducation" onclick="SaveEducation();" value="Save">
+                    @if (ViewBag.Declaration != 1)
+                    {
+                        <input class="savebtn global-btn-purple  float-right m-1" type="button" onclick="SubmitEducation();" value="Submit">
+
+
+                        <input class="savebtn global-btn-purple  float-right m-1" type="button" id="editEducation" onclick="SaveEducation();" value="Save">
+                    }
+                    else
+                    { <span class="text-danger float-right">You have already Submited your Application</span>
+                    }
                 </div>
             </div>
         </form>

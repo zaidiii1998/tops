@@ -1,0 +1,41 @@
+﻿@model PersonalInformation
+@{
+    Page.Title = "TestDate";
+    Layout = "~/Views/Shared/_LayoutAdminPanal.cshtml";
+}
+<div class="container-fluid">
+    <div class="boxWraper infoBox">
+        <div class="headBox">
+            <h2>Test Date</h2>
+        </div>
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="form-group">
+                    <label for="currentLevel">To appear for HU TOPS Qualifying Round Test (Core Skills Test). Please choose a test date:<span class="text-danger">*:</span></label>
+                    <select class="form-control" id="TestDate" name="currentLevel" onchange="ShowHideField('divUniName','currentLevel','Already enrolled in a University')" required>
+                        <option value="">Select Date </option>
+                        <option value="23rd/24th/25th February 2023 [For Karachi/Sindh/Baluchistan Applicants]">23rd/24th/25th February 2023 [For Karachi/Sindh/Baluchistan Applicants]</option>
+                        <option value="3rd/4th/5th March 2023 [For Islamabad/Punjab/GB/KPK/AJK Applicants]">3rd/4th/5th March 2023 [For Islamabad/Punjab/GB/KPK/AJK Applicants]</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                @if (Model.Declaration != 1)
+                {
+                    <input class="savebtn global-btn-purple  float-right" type="button" onclick="SubmitTestDate();" value="Submit">
+                }
+                else
+                { <span class="text-danger float-right">You have already Submited your Application</span>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<a href="@Url.Action("Index","Declaration")" id="redirectToDeclaration"></a>
+
+<script>
+    LoadTestDate('@Model.TestDate');
+    
+</script>

@@ -4,45 +4,7 @@
 }
 @using HUTOPS.Models
 @model PersonalInfoPageModel
-<style>
 
-    .styled-checkbox {
-        display: none;
-    }
-
-        .styled-checkbox + .checkbox-label:before {
-            content: '\2713'; /* Checkmark symbol */
-            display: inline-block;
-            vertical-align: middle;
-            margin-right: 5px;
-            font-size: 18px;
-            color: #333;
-            border: 1px solid #333;
-            width: 20px;
-            height: 20px;
-            text-align: center;
-            line-height: 18px;
-            cursor: pointer;
-            border-radius: 4px;
-        }
-
-        /* Style the custom checkbox when checked */
-        .styled-checkbox:checked + .checkbox-label:before {
-            background-color: #333;
-            color: white;
-        }
-
-        /* Hover effect for the custom checkbox */
-        .styled-checkbox {
-            background-color: #f0f0f0;
-            color: #333;
-        }
-
-        /* Focus effect for the custom checkbox */
-        .styled-checkbox:focus + .checkbox-label:before {
-            box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.5);
-        }
-</style>
 <div class="container-fluid">
     <div class="boxWraper infoBox">
         <div class="headBox">
@@ -418,9 +380,15 @@
             </div>
             <div class="row">
                 <div class="col-lg-12">
-
-                    <input class="savebtn global-btn-purple  float-right" type="submit" value="Submit">
-                    <input class="savebtn global-btn-purple  float-right" type="button" onclick="Save()" value="Save">
+                    @if (Model.Main.Declaration != 1)
+                    {
+                        <input class="savebtn global-btn-purple  float-right m-1" type="submit" value="Submit">
+                        <input class="savebtn global-btn-purple  float-right m-1" type="button" onclick="Save()" value="Save">
+                    }
+                    else
+                    {
+                        <span class="text-danger float-right">You have already Submited your Application</span>
+                    }
                 </div>
             </div>
         </form>

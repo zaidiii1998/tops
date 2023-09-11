@@ -59,7 +59,7 @@ namespace HUTOPS
         public string CurrentQualificationOther { get; set; }
         public string AlternateLandline { get; set; }
         public Nullable<int> UserId { get; set; }
-        public Nullable<System.DateTime> TestDate { get; set; }
+        public string TestDate { get; set; }
         public Nullable<System.DateTime> SubmissionDate { get; set; }
         public Nullable<int> Retake { get; set; }
         public Nullable<int> IsAppliedBefore { get; set; }

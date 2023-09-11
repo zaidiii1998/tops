@@ -742,7 +742,7 @@ function submitDocuments(sessionUserId) {
                 debugger
                 if (response.status) {
                     ShowDivError(response.message);
-                    document.getElementById("redirectLnktoDeclaration").click();
+                    document.getElementById("redirectToActivity").click();
                 }
                 else {
                     ShowDivError(response.message)
@@ -762,4 +762,108 @@ function submitDocuments(sessionUserId) {
             }
         });
     } else {return false }
+}
+
+// Activity Section
+
+function AddActivityRow() {
+    var newRow = document.createElement("div");
+    newRow.className = "row";
+
+    for (let i = 1; i <= 2; i++) {
+        var newCol = document.createElement("div");
+        newCol.className = "col-lg-3";
+        var newcontrol = document.createElement("div");
+        newcontrol.className = "form-group";
+
+        var input = document.createElement("input");
+        input.type = "text";
+        input.className = "form-control";
+        if (i === 1) {
+            input.classList.add("ActivityName");
+        } else {
+            input.classList.add("ActivityDuration");
+        }
+
+
+        newcontrol.appendChild(input);
+        newCol.appendChild(newcontrol);
+        newRow.appendChild(newCol);
+    }
+
+    $('#divActivity').append(newRow);
+}
+
+function SubmitActivity() {
+    var ActivityName = [];
+    var ActivityDuration = [];
+
+    // Iterate over input elements with the class "my-input"
+    $(".ActivityName").each(function () {
+        ActivityName.push($(this).val());
+    });
+    $(".ActivityDuration").each(function () {
+        ActivityDuration.push($(this).val());
+    });
+
+    debugger
+    CallAsyncService("/Home/SubmitActivity?ActivityName=" + ActivityName + "&ActivityDuration=" + ActivityDuration, null, SubmitActivityCB)
+    function SubmitActivityCB(response) {
+        if (response.status) {
+            ShowDivSuccess(response.message);
+            document.getElementById("redirectToTestDate").click();
+        }
+        else {
+            ShowDivError(response.message)
+        }
+    }
+
+}
+// Declaration Section
+function submitDeclaration() {
+    var check1 = $('#validateLaw').is(':checked');
+    var check2 = $('#invalidInfo').is(':checked');
+    var check3 = $('#validInfo').is(':checked');
+
+    if (check1 == true && check2 == true && check3 == true) {
+
+        CallAsyncService("/Declaration/Submit?check1=true&check2=true&check3=true", null, submitDeclarationCB)
+        function submitDeclarationCB(response) {
+            if (response.status) {
+                ShowDivSuccess(response.message)
+            }
+            else {
+                ShowDivError(response.message)
+            }
+        }
+
+    } else {
+        ShowDivError("All checkboxes are required");
+    }
+
+}
+
+// Test Date Section
+function LoadTestDate(date) {
+    $('#TestDate').val(date == null ? '' : date);
+    $('#TestDate').trigger('change');
+}
+function SubmitTestDate() {
+    date = $('#TestDate').val();
+
+    if (date != null || date != "") {
+
+        CallAsyncService("/Home/SubmitTestDate?Date=" + date, null, SubmitActivityCB)
+        function SubmitActivityCB(response) {
+            if (response.status) {
+                ShowDivSuccess(response.message)
+                document.getElementById("redirectToDeclaration").click();
+            }
+            else {
+                ShowDivError(response.message)
+            }
+        }
+    } else {
+        ShowDivError("Please Select Test Date")
+    }
 }

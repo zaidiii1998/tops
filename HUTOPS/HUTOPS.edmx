@@ -5,6 +5,16 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="HU_TOPSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Activity">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" />
+          <Property Name="Name" Type="varchar" MaxLength="50" />
+          <Property Name="Duration" Type="varchar" MaxLength="50" />
+          <Property Name="CreatedDatetime" Type="datetime2" Precision="7" />
+        </EntityType>
         <EntityType Name="Board">
           <Key>
             <PropertyRef Name="Id" />
@@ -152,7 +162,7 @@ warning 6002: The table/view 'HU_TOPS.dbo.EducationalSubjects' does not have a p
           <Property Name="CurrentQualificationOther" Type="varchar" MaxLength="50" />
           <Property Name="AlternateLandline" Type="varchar" MaxLength="15" />
           <Property Name="UserId" Type="int" />
-          <Property Name="TestDate" Type="datetime2" Precision="7" />
+          <Property Name="TestDate" Type="varchar" MaxLength="50" />
           <Property Name="SubmissionDate" Type="datetime2" Precision="7" />
           <Property Name="Retake" Type="int" />
           <Property Name="IsAppliedBefore" Type="int" />
@@ -335,6 +345,7 @@ warning 6002: The table/view 'HU_TOPS.dbo.EducationalSubjects' does not have a p
           <Parameter Name="PermanentCity" Type="varchar" Mode="In" />
           <Parameter Name="PermanentCityOther" Type="varchar" Mode="In" />
           <Parameter Name="PermanentPostalCode" Type="int" Mode="In" />
+          <Parameter Name="IsCompleted" Type="int" Mode="In" />
         </Function>
         <Function Name="WEB_UpdatePersonalInfo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Id" Type="int" Mode="In" />
@@ -356,6 +367,7 @@ warning 6002: The table/view 'HU_TOPS.dbo.EducationalSubjects' does not have a p
           <Parameter Name="Password" Type="varchar" Mode="In" />
         </Function>
         <EntityContainer Name="HU_TOPSModelStoreContainer">
+          <EntitySet Name="Activity" EntityType="Self.Activity" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Board" EntityType="Self.Board" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BoardGroups" EntityType="Self.BoardGroups" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="City" EntityType="Self.City" Schema="dbo" store:Type="Tables" />
@@ -489,7 +501,7 @@ warning 6002: The table/view 'HU_TOPS.dbo.EducationalSubjects' does not have a p
           <Property Name="CurrentQualificationOther" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="AlternateLandline" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
           <Property Name="UserId" Type="Int32" />
-          <Property Name="TestDate" Type="DateTime" Precision="7" />
+          <Property Name="TestDate" Type="String" />
           <Property Name="SubmissionDate" Type="DateTime" Precision="7" />
           <Property Name="Retake" Type="Int32" />
           <Property Name="IsAppliedBefore" Type="Int32" />
@@ -702,10 +714,12 @@ warning 6002: The table/view 'HU_TOPS.dbo.EducationalSubjects' does not have a p
             <Parameter Name="PermanentCity" Mode="In" Type="String" />
             <Parameter Name="PermanentCityOther" Mode="In" Type="String" />
             <Parameter Name="PermanentPostalCode" Mode="In" Type="Int32" />
+            <Parameter Name="IsCompleted" Mode="In" Type="Int32" />
           </FunctionImport>
           <EntitySet Name="Cities" EntityType="HU_TOPSModel.City" />
           <EntitySet Name="Countries" EntityType="HU_TOPSModel.Country" />
           <EntitySet Name="States" EntityType="HU_TOPSModel.State" />
+          <EntitySet Name="Activities" EntityType="HU_TOPSModel.Activity" />
         </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -838,6 +852,16 @@ warning 6002: The table/view 'HU_TOPS.dbo.EducationalSubjects' does not have a p
           <Property Name="Name" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
           <Property Name="CountryId" Type="Byte" />
           <Property Name="Status" Type="Byte" />
+        </EntityType>
+        <EntityType Name="Activity">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Duration" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDatetime" Type="DateTime" Precision="7" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1189,6 +1213,17 @@ warning 6002: The table/view 'HU_TOPS.dbo.EducationalSubjects' does not have a p
                 <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="CountryId" ColumnName="CountryId" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Activities">
+            <EntityTypeMapping TypeName="HU_TOPSModel.Activity">
+              <MappingFragment StoreEntitySet="Activity">
+                <ScalarProperty Name="CreatedDatetime" ColumnName="CreatedDatetime" />
+                <ScalarProperty Name="Duration" ColumnName="Duration" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

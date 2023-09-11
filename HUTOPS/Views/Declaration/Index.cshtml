@@ -8,85 +8,91 @@
         <div class="headBox">
             <h2>Declarations</h2>
         </div>
-
-        <div class="row">
-            <div class="col-lg-6">
-                <div class="headBox">
-                    <h2>Personal Information</h2>
-                    @if (ViewBag.Personal == "0")
-                    {
-                        <label class="text-danger"> Section not Completed Or not Submited</label>
-                    }
-                    else
-                    {
-                        <label class="text-success"> Section Completed</label>
-                    }
-                </div>
-            </div>
+        <form method="post">
+            <div class="row">
                 <div class="col-lg-6">
-                    
-                    @if (ViewBag.Personal == "0")
-                    {
-                        <i class="fa-regular fa-circle-xmark" style="font-size: 38px;color: red;"></i>
-                    }
-                    else
-                    {
-                        <i class="fa-solid fa-check" style="font-size: 38px;color: green;"></i>
-                    }
+                    <div class="headBox">
+                        <h5 class="text-info">Personal Information</h5>
+                        @if (ViewBag.Personal == "0")
+                        {
+                            <label class="text-danger"> Pending</label>
+                        }
+                        else
+                        {
+                            <label class="text-success"> Completed</label>
+                        }
+                    </div>
                 </div>
             </div>
-        <div class="row">
-            <div class="col-lg-6">
-                <div class="headBox">
-                    <h2>Educational Information</h2>
-                    @if (ViewBag.Edu == "0")
-                    {
-                        <label class="text-danger"> Section not Completed Or not Submited</label>
-                    }
-                    else
-                    {
-                        <label class="text-success"> Section Completed</label>
-                    }
-                </div>
-            </div>
+            <div class="row">
                 <div class="col-lg-6">
-                    @if (ViewBag.Edu == "0")
+                    <div class="headBox">
+                        <h5 class="text-info">Educational Information</h5>
+                        @if (ViewBag.Edu == "0")
+                        {
+                            <label class="text-danger"> Pending</label>
+                        }
+                        else
+                        {
+                            <label class="text-success"> Completed</label>
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="headBox">
+                        <h5 class="text-info">Documents</h5>
+                        @if (ViewBag.Docs == "0")
+                        {
+                            <label class="text-danger"> Pending</label>
+                        }
+                        else
+                        {
+                            <label class="text-success"> Completed</label>
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <input type="checkbox" id="validInfo" class="styled-checkbox" name="validInfo"required>
+                    <label for="validInfo" class="checkbox-label" style="width: 75%;">
+                        The Information provided by me regarding this application is true and complete.
+                    </label>
+                    <br /><br />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <input type="checkbox" id="invalidInfo" class="styled-checkbox" name="invalidInfo" required>
+                    <label for="invalidInfo" class="checkbox-label" style="width: 75%;">I understand that any inaccurate/false information shall render this application invalid, and if admitted on the basis of such information, I may be asked to leave at any stage of the program.</label>
+                    <br /><br />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <input type="checkbox" id="validateLaw" class="styled-checkbox" name="invalidInfo" required>
+                    <label for="validateLaw" class="checkbox-label" style="width: 75%;">
+                        I understand that the provision of any inaccurate or false information may render me liable to prosecution in a court of law in Pakistan.
+                    </label>
+                    <br /><br />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    @if (ViewBag.Declaration != 1)
                     {
-                        <i class="fa-regular fa-circle-xmark" style="font-size: 38px;color: red;"></i>
+                        <input class="savebtn global-btn-purple  float-right" type="button" onclick="submitDeclaration();" value="Submit">
                     }
                     else
-                    {
-                        <i class="fa-solid fa-check" style="font-size: 38px;color: green;"></i>
+                    { <span class="text-danger float-right">You have already Submited your Application</span>
                     }
                 </div>
             </div>
-        <div class="row">
-            <div class="col-lg-6">
-                <div class="headBox">
-                    <h2>Documents</h2>
-                    @if (ViewBag.Docs == "0")
-                    {
-                        <label class="text-danger"> Section not Completed Or not Submited</label>
-                    }
-                    else
-                    {
-                        <label class="text-success"> Section Completed</label>
-                    }
-                </div>
-            </div>
-            <div class="col-lg-6">
-                @if (ViewBag.Docs == "0")
-                {
-                    <i class="fa-regular fa-circle-xmark" style="font-size: 38px;color: red;"></i>
-                }
-                else
-                {
-                    <i class="fa-solid fa-check" style="font-size: 38px;color: green;"></i>
-                }
-            </div>
-        </div>
-
-
+        </form>
     </div>
 </div>
+
+
 

@@ -35,7 +35,6 @@
                             </div>
                         </div>
                         <div class="row">
-                            
                             <button class="savebtn global-btn-purple  float-right" type="submit">Login</button>
                         </div>
                         <div class="row">
@@ -54,9 +53,10 @@
 </section>
 
 <script>
-    
+
     if ('@ViewBag.Result' !== "")
     {
+        $('#error').html('@ViewBag.Result');
         ShowDivError('@ViewBag.Result');
     }
 </script>
