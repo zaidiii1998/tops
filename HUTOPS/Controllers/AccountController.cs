@@ -8,7 +8,8 @@ namespace HUTOPS.Controllers
     public class AccountController : Controller
     {
         // GET: Account
-        HU_TOPSEntities DB = new HU_TOPSEntities();
+        //HU_TOPSEntities DB = new HU_TOPSEntities(); // Local System DB
+        HUTOPSEntities DB = new HUTOPSEntities(); // Server DB
         public ActionResult Login()
         {
             Helper.Helper.AddLog(Constants.LogType.ActivityLog, "User has navigated to the registration page.");
@@ -88,6 +89,12 @@ namespace HUTOPS.Controllers
                     {
                         IsValid = false;
                         ModelState.AddModelError("FirstName", "First Name length must be greater than 3 and less than 25 characters");
+
+                    }
+                    if (!string.IsNullOrEmpty(model["MiddleName"]) && (model["MiddleName"].Length < 3 || model["MiddleName"].Length > 25))
+                    {
+                        IsValid = false;
+                        ModelState.AddModelError("MiddleName", "Middle Name length must be greater than 3 and less than 25 characters");
 
                     }
                     if (string.IsNullOrEmpty(model["LastName"]))

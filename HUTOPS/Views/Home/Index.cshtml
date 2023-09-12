@@ -12,7 +12,6 @@
         </div>
         <form id="mainForm" method="post" onsubmit="return validatePersonalInfoForm();">
             @Html.AntiForgeryToken()
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             <div class="row">
                 <div class="col-lg-4">
                     <div class="form-group">
@@ -209,7 +208,7 @@
                         <label for="residentialCountry">Select Country:</label>
                         @*@Html.DropDownList("ResidentialCountry",(IEnumerable<SelectListItem>)ViewBag.Country, "--Please Select--", new { @class = "form-control", @id = "residentialCountry" })*@
                         <select class="form-control" id="residentialCountry" name="ResidentialCountry" onchange="updateProvince(this.id,'residentialProvince');" required>
-                            <option value="" disabled>Select Country</option>
+                            <option value="" selected disabled>Select Country</option>
                             @foreach (var item in Model.Country)
                             {
                                 if (item.Name == Model.Main.ResidentialCountry)
@@ -229,7 +228,7 @@
                         <label for="residentialProvince">Select Province/State:</label>
                         @*@Html.DropDownList("ResidentialProvince", (IEnumerable<SelectListItem>)ViewBag.Province, "--Please Select--", new { @class = "form-control", @id = "residentialProvince" })*@
                         <select class="form-control" id="residentialProvince" name="ResidentialProvince" onchange="updateCities(this.id,'residentialCity');" required>
-                            <option value="" disabled>Select Provience</option>
+                            <option value="" selected disabled>Select Provience</option>
                             @foreach (var item in Model.Province)
                             {
                                 if (item.Name == Model.Main.ResidentialProvince)
@@ -250,7 +249,7 @@
                         @*@Html.DropDownList("ResidentialCity", (IEnumerable<SelectListItem>)ViewBag.City, "--Please Select--", new { @class = "form-control", @id = "residentialCity" })*@
 
                         <select class="form-control" id="residentialCity" name="ResidentialCity" onchange="toggleOtherCityInput(this.id,'divResidentialCityOther')" required>
-                            <option value="" disabled>Select City</option>
+                            <option value="" selected disabled>Select City</option>
                             @foreach (var item in Model.City)
                             {
                                 if (item.Name == Model.Main.ResidentialCity)

@@ -8,7 +8,10 @@ namespace HUTOPS.Controllers
 {
     public class CommonController : Controller
     {
-        HU_TOPSEntities DB = new HU_TOPSEntities();
+
+        //HU_TOPSEntities DB = new HU_TOPSEntities(); // Local System DB
+        HUTOPSEntities DB = new HUTOPSEntities(); // Server DB
+
         // GET: Common
         public ActionResult CheckPhoneNumber(string number)
         {

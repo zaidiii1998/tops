@@ -15,11 +15,11 @@ namespace HUTOPS
     public partial class Document
     {
         public int Id { get; set; }
+        public Nullable<int> UserId { get; set; }
         public string Photograph { get; set; }
         public string SSCMarkSheet { get; set; }
         public string HSSCMarkSheet { get; set; }
         public string CNIC { get; set; }
-        public Nullable<int> UserId { get; set; }
         public Nullable<int> IsCompleted { get; set; }
     }
 }

@@ -89,9 +89,16 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div id="divError">
-                                    <p class="text-danger" id="error"></p>
-                                </div>
+                                @if (@ViewBag.Result + "" != "")
+                                {
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="alert alert-danger" style="max-height: 45px;">
+                                                <p style="color:red;">@ViewBag.Result</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
@@ -117,9 +124,9 @@
 </div>
 <script>
     // Get the modal
-    if ('@ViewBag.Result' !== "")
+    @*if ('@ViewBag.Result' !== "")
     {
     ShowDivError('@ViewBag.Result');
-    }
+    }*@
 
 </script>

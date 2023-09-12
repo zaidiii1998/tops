@@ -12,7 +12,8 @@ namespace HUTOPS.Controllers
     [SessionValidatorActionFilter]
     public class EducationController : Controller
     {
-        HU_TOPSEntities DB = new HU_TOPSEntities();
+        //HU_TOPSEntities DB = new HU_TOPSEntities(); // Local System DB
+        HUTOPSEntities DB = new HUTOPSEntities(); // Server DB
         // GET: Education
         public ActionResult Index()
         {

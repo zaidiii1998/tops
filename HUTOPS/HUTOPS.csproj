@@ -127,19 +127,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Activity.cs">
-      <DependentUpon>HUTOPS.tt</DependentUpon>
+      <DependentUpon>HUTOPS_Server.tt</DependentUpon>
     </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Board.cs">
-      <DependentUpon>HUTOPS.tt</DependentUpon>
+      <DependentUpon>HUTOPS_Server.tt</DependentUpon>
     </Compile>
     <Compile Include="BoardGroup.cs">
-      <DependentUpon>HUTOPS.tt</DependentUpon>
+      <DependentUpon>HUTOPS_Server.tt</DependentUpon>
     </Compile>
     <Compile Include="City.cs">
-      <DependentUpon>HUTOPS.tt</DependentUpon>
+      <DependentUpon>HUTOPS_Server.tt</DependentUpon>
     </Compile>
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CommonController.cs" />
@@ -147,24 +147,23 @@
     <Compile Include="Controllers\DocumentsController.cs" />
     <Compile Include="Controllers\EducationController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\PersonalInformationsController.cs" />
     <Compile Include="Country.cs">
-      <DependentUpon>HUTOPS.tt</DependentUpon>
+      <DependentUpon>HUTOPS_Server.tt</DependentUpon>
     </Compile>
     <Compile Include="Document.cs">
-      <DependentUpon>HUTOPS.tt</DependentUpon>
+      <DependentUpon>HUTOPS_Server.tt</DependentUpon>
     </Compile>
     <Compile Include="Educational.cs">
-      <DependentUpon>HUTOPS.tt</DependentUpon>
+      <DependentUpon>HUTOPS_Server.tt</DependentUpon>
     </Compile>
     <Compile Include="EducationalSubject.cs">
-      <DependentUpon>HUTOPS.tt</DependentUpon>
+      <DependentUpon>HUTOPS_Server.tt</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="GroupSubject.cs">
-      <DependentUpon>HUTOPS.tt</DependentUpon>
+      <DependentUpon>HUTOPS_Server.tt</DependentUpon>
     </Compile>
     <Compile Include="Handler1.ashx.cs">
       <DependentUpon>Handler1.ashx</DependentUpon>
@@ -192,13 +191,28 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>HUTOPS.tt</DependentUpon>
     </Compile>
+    <Compile Include="HUTOPS_Server.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HUTOPS_Server.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HUTOPS_Server.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HUTOPS_Server.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HUTOPS_Server.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HUTOPS_Server.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Log.cs">
-      <DependentUpon>HUTOPS.tt</DependentUpon>
+      <DependentUpon>HUTOPS_Server.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\PersonalInfoPageModel.cs" />
     <Compile Include="Models\EducationPageModel.cs" />
     <Compile Include="PersonalInformation.cs">
-      <DependentUpon>HUTOPS.tt</DependentUpon>
+      <DependentUpon>HUTOPS_Server.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="sp_helpdiagramdefinition_Result.cs">
@@ -208,7 +222,7 @@
       <DependentUpon>HUTOPS.tt</DependentUpon>
     </Compile>
     <Compile Include="State.cs">
-      <DependentUpon>HUTOPS.tt</DependentUpon>
+      <DependentUpon>HUTOPS_Server.tt</DependentUpon>
     </Compile>
     <Compile Include="sysdiagram.cs">
       <DependentUpon>HUTOPS.tt</DependentUpon>
@@ -229,7 +243,7 @@
       <DependentUpon>HUTOPS.tt</DependentUpon>
     </Compile>
     <Compile Include="WEB_UserLogin_Result.cs">
-      <DependentUpon>HUTOPS.tt</DependentUpon>
+      <DependentUpon>HUTOPS_Server.tt</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -361,6 +375,16 @@
       <DependentUpon>HUTOPS.edmx</DependentUpon>
       <LastGenOutput>HUTOPS1.cs</LastGenOutput>
     </Content>
+    <Content Include="HUTOPS_Server.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>HUTOPS_Server.edmx</DependentUpon>
+      <LastGenOutput>HUTOPS_Server.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="HUTOPS_Server.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>HUTOPS_Server.edmx</DependentUpon>
+      <LastGenOutput>HUTOPS_Server.cs</LastGenOutput>
+    </Content>
     <Content Include="Scripts\Custom.js" />
     <Content Include="Content\Custom\HomeForm.css" />
     <Content Include="Content\Custom\LoginCustom.css" />
@@ -410,6 +434,13 @@
       <DependentUpon>HUTOPS.edmx</DependentUpon>
     </Content>
     <Content Include="Handler1.ashx" />
+    <EntityDeploy Include="HUTOPS_Server.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>HUTOPS_Server.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="HUTOPS_Server.edmx.diagram">
+      <DependentUpon>HUTOPS_Server.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\esm\popper-utils.js" />
     <Content Include="Scripts\esm\popper-utils.min.js" />
@@ -534,11 +565,6 @@
     <Content Include="Views\Declaration\Index.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
-    <Content Include="Views\PersonalInformations\Create.cshtml" />
-    <Content Include="Views\PersonalInformations\Delete.cshtml" />
-    <Content Include="Views\PersonalInformations\Details.cshtml" />
-    <Content Include="Views\PersonalInformations\Edit.cshtml" />
-    <Content Include="Views\PersonalInformations\Index.cshtml" />
     <Content Include="Views\Home\Activity.cshtml" />
     <Content Include="Views\Home\TestDate.cshtml" />
     <Content Include="Views\Documents\View.cshtml" />

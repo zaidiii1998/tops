@@ -901,6 +901,9 @@ function SubmitTestDate() {
             }
         }
     } else {
-        ShowDivError("Please Select Test Date")
+        //ShowDivError("Please Select Test Date")
+        $('#testdateError').html(response.message);
+
+
     }
 }

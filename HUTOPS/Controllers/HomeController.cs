@@ -11,7 +11,8 @@ namespace HUTOPS.Controllers
     [SessionValidatorActionFilter]
     public class HomeController : Controller
     {
-        HU_TOPSEntities DB = new HU_TOPSEntities();
+        //HU_TOPSEntities DB = new HU_TOPSEntities(); // Local System DB
+        HUTOPSEntities DB = new HUTOPSEntities(); // Server DB
         public ActionResult Index()
         {
             try
@@ -140,7 +141,7 @@ namespace HUTOPS.Controllers
                 else
                 {
                     Helper.Helper.AddLog(Constants.LogType.ActivityLog, $"User provided Date is NULL or empty string");
-                    return Json(new { status = false, message = "Provided Date is not Valid" });
+                    return Json(new { status = false, message = "Please select Test Date " });
                 }
                 
             }

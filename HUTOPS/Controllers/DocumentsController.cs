@@ -12,7 +12,8 @@ namespace HUTOPS.Controllers
     public class DocumentsController : Controller
     {
         // GET: Documents
-        HUTOPS.HU_TOPSEntities DB = new HU_TOPSEntities();
+        //HU_TOPSEntities DB = new HU_TOPSEntities(); // Local System DB
+        HUTOPSEntities DB = new HUTOPSEntities(); // Server DB
         public ActionResult Index()
         {
             int userId = int.Parse(Helper.Helper.GetSession(Constants.Session.UserId));
