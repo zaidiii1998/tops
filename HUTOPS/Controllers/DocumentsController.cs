@@ -16,7 +16,7 @@ namespace HUTOPS.Controllers
         HUTOPSEntities DB = new HUTOPSEntities(); // Server DB
         public ActionResult Index()
         {
-            int userId = int.Parse(Helper.Helper.GetSession(Constants.Session.UserId));
+            int userId = int.Parse(Helper.Utility.GetSession(Constants.Session.UserId));
             var documents = DB.Documents.ToList().Where(x => x.UserId == userId).ToList().FirstOrDefault();
             ViewBag.Declaration = DB.PersonalInformations.ToList().Where(x => x.Id == userId).ToList().FirstOrDefault().Declaration;
             return View(documents == null? new Document() : documents);
@@ -26,7 +26,7 @@ namespace HUTOPS.Controllers
         {
             try
             {
-                int userId = int.Parse(Helper.Helper.GetSession(Constants.Session.UserId));
+                int userId = int.Parse(Helper.Utility.GetSession(Constants.Session.UserId));
                 var documents = DB.Documents.ToList().Where(x => x.UserId == userId).ToList().FirstOrDefault();
                 var url = "";
                 if(documents != null) { 

@@ -7,7 +7,7 @@ using System.Web;
 
 namespace HUTOPS.Helper
 {
-    public class Helper
+    public class Utility
     {
         public static string ToCamelCase(string input)
         {
@@ -30,12 +30,38 @@ namespace HUTOPS.Helper
         {
             return HttpContext.Current.Session[SessionName].ToString();
         }
+
+        public static void SetUserSession(PersonalInformation personalInformation)
+        {
+            var userObjSession = HttpContext.Current.Session[Constants.Session.UserSession];
+            if (personalInformation != null)
+            {
+                HttpContext.Current.Session[Constants.Session.UserSession] = personalInformation;
+            }
+        }
+        public static PersonalInformation GetUserFromSession()
+        {
+
+            PersonalInformation personalInformation = new PersonalInformation();
+            var userObjSession = HttpContext.Current.Session[Constants.Session.UserSession];
+            if (userObjSession != null)
+            {
+                personalInformation = userObjSession as PersonalInformation;
+            }
+
+            return personalInformation;
+
+        }
         public static void SetSession(string SessionName, string SessionValue)
         {
             HttpContext.Current.Session[SessionName] = SessionValue;
         }
+        public static async void AddLogs() { 
+          
+        }
         public static void AddLog(string LogType, string Description)
         {
+            
             HU_TOPSEntities DB = new HU_TOPSEntities();
             DB.Logs.Add(new Log
             {

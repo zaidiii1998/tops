@@ -19,7 +19,7 @@ namespace HUTOPS
         {
             try
             {
-                Helper.Helper.AddLog(Constants.LogType.ActivityLog, $"User-requested to Submit Documents.");
+                Helper.Utility.AddLog(Constants.LogType.ActivityLog, $"User-requested to Submit Documents.");
                 var userId = int.Parse(context.Request["UserId"]);
                 var isSuccess = true;
                 HttpPostedFile CnicFile = context.Request.Files["CNIC"];
@@ -41,7 +41,7 @@ namespace HUTOPS
                 }
                 if ((SSC != null && SSC.ContentLength > 0) && (Photograph != null && Photograph.ContentLength > 0))
                 {
-                    Helper.Helper.AddLog(Constants.LogType.ActivityLog, $"User-provided Documents are validated.");
+                    Helper.Utility.AddLog(Constants.LogType.ActivityLog, $"User-provided Documents are validated.");
                     // Check if files are present
                     if (CnicFile != null && CnicFile.ContentLength > 0)
                     {
@@ -86,7 +86,7 @@ namespace HUTOPS
                         });
                         DB.SaveChanges();
                     }
-                    Helper.Helper.AddLog(Constants.LogType.ActivityLog, $"User successfully submited Documents.");
+                    Helper.Utility.AddLog(Constants.LogType.ActivityLog, $"User successfully submited Documents.");
 
                     context.Response.ContentType = "application/json";
                     JavaScriptSerializer js = new JavaScriptSerializer();

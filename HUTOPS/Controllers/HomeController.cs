@@ -17,7 +17,7 @@ namespace HUTOPS.Controllers
         {
             try
             {
-                int userId = int.Parse(Helper.Helper.GetSession(Constants.Session.UserId));
+                int userId = int.Parse(Helper.Utility.GetSession(Constants.Session.UserId));
                 var user = DB.PersonalInformations.ToList();
                 var LoginUser = user.Where(x => x.Id == userId).FirstOrDefault();
                 var country = DB.Countries.ToList();
@@ -50,9 +50,9 @@ namespace HUTOPS.Controllers
         {
             try
             {
-                int userId = int.Parse(Helper.Helper.GetSession(Constants.Session.UserId));
-                List<Activity> activities = DB.Activities.ToList().Where(x => x.UserId == userId).ToList();
-                ViewBag.Declaration = DB.PersonalInformations.ToList().Where(x => x.Id == userId).ToList().FirstOrDefault().Declaration;
+                var personalInfo = Utility.GetUserFromSession();
+                List<Activity> activities = DB.Activities.ToList().Where(x => x.UserId == personalInfo.Id).ToList();
+                ViewBag.Declaration = DB.PersonalInformations.ToList().Where(x => x.Id == personalInfo.Id).ToList().FirstOrDefault().Declaration;
                 return View(activities);
             }
             catch (System.Exception)
@@ -64,8 +64,8 @@ namespace HUTOPS.Controllers
         {
             try
             {
-                Helper.Helper.AddLog(Constants.LogType.ActivityLog, $"User request to Update Activities ");
-                int userId = int.Parse(Helper.Helper.GetSession(Constants.Session.UserId));
+                Helper.Utility.AddLog(Constants.LogType.ActivityLog, $"User request to Update Activities ");
+                int userId = int.Parse(Helper.Utility.GetSession(Constants.Session.UserId));
                 List<Activity> activities = DB.Activities.ToList().Where(x => x.UserId == userId).ToList();
                 
                 ActivityName = ActivityName[0].Split(',');
@@ -77,7 +77,7 @@ namespace HUTOPS.Controllers
                         DB.Activities.Remove(activity);
                         DB.SaveChanges();
                     }
-                    Helper.Helper.AddLog(Constants.LogType.ActivityLog, $"User Previous Activities has been removed");
+                    Helper.Utility.AddLog(Constants.LogType.ActivityLog, $"User Previous Activities has been removed");
 
                     for (var i = 0; i < ActivityName.Length; i++)
                     {
@@ -92,19 +92,19 @@ namespace HUTOPS.Controllers
                             DB.SaveChanges();
                         }
                     }
-                    Helper.Helper.AddLog(Constants.LogType.ActivityLog, $"User Activities has been updated successfully");
+                    Helper.Utility.AddLog(Constants.LogType.ActivityLog, $"User Activities has been updated successfully");
 
                     return Json(new { status = true, message = "Activities Updated Successfully" });
                 }
                 else {
-                    Helper.Helper.AddLog(Constants.LogType.ActivityLog, $"User Activities updation Failed");
+                    Helper.Utility.AddLog(Constants.LogType.ActivityLog, $"User Activities updation Failed");
                     return Json(new { status = false, message = "Activities are not provided" });
                 }
 
             }
             catch (System.Exception ex)
             {
-                Helper.Helper.AddLog(Constants.LogType.Exception, "Exception occurred during Submiting User Activities." + ((ex.InnerException != null) ? ex.InnerException.Message : ""));                
+                Helper.Utility.AddLog(Constants.LogType.Exception, "Exception occurred during Submiting User Activities." + ((ex.InnerException != null) ? ex.InnerException.Message : ""));                
                     return Json(new { status = false, message = "Activities Updation Failed" });
             }
 
@@ -113,7 +113,7 @@ namespace HUTOPS.Controllers
         {
             try
             {
-                int userId = int.Parse(Helper.Helper.GetSession(Constants.Session.UserId));
+                int userId = int.Parse(Helper.Utility.GetSession(Constants.Session.UserId));
                 var user = DB.PersonalInformations.ToList().Where(x => x.Id == userId).ToList().FirstOrDefault();
 
                 return View(user);
@@ -127,27 +127,27 @@ namespace HUTOPS.Controllers
         {
             try
             {
-                Helper.Helper.AddLog(Constants.LogType.ActivityLog, $"User request to update test date");
+                Utility.AddLog(Constants.LogType.ActivityLog, $"User request to update test date");
 
-                int userId = int.Parse(Helper.Helper.GetSession(Constants.Session.UserId));
+                int userId = int.Parse(Helper.Utility.GetSession(Constants.Session.UserId));
                 var user = DB.PersonalInformations.ToList().Where(x => x.Id == userId).ToList().FirstOrDefault();
                 if(!string.IsNullOrEmpty(Date))
                 {
-                    Helper.Helper.AddLog(Constants.LogType.ActivityLog, $"User provided Date is Verified");
+                    Helper.Utility.AddLog(Constants.LogType.ActivityLog, $"User provided Date is Verified");
                     user.TestDate = Date;
                     DB.SaveChanges();
                     return Json(new { status = true, message = "Test Date Updated Successfully" });
                 }
                 else
                 {
-                    Helper.Helper.AddLog(Constants.LogType.ActivityLog, $"User provided Date is NULL or empty string");
+                    Helper.Utility.AddLog(Constants.LogType.ActivityLog, $"User provided Date is NULL or empty string");
                     return Json(new { status = false, message = "Please select Test Date " });
                 }
                 
             }
             catch (System.Exception ex)
             {
-                Helper.Helper.AddLog(Constants.LogType.Exception, "Exception occurred while submiting Test Date." + ((ex.InnerException != null) ? ex.InnerException.Message : ""));            
+                Helper.Utility.AddLog(Constants.LogType.Exception, "Exception occurred while submiting Test Date." + ((ex.InnerException != null) ? ex.InnerException.Message : ""));            
 
                 return Json(new { status = false, message = "Test Date Updation Failed" });
             }
@@ -156,19 +156,19 @@ namespace HUTOPS.Controllers
         {
             try
             {
-                model.Id = int.Parse(Helper.Helper.GetSession(Constants.Session.UserId));
+                model.Id = int.Parse(Helper.Utility.GetSession(Constants.Session.UserId));
                 model.IsCompleted = 0;
-                Helper.Helper.AddLog(Constants.LogType.ActivityLog, $"User-requested to Update Personal Information. Details: {JsonConvert.SerializeObject(model)}");
+                Helper.Utility.AddLog(Constants.LogType.ActivityLog, $"User-requested to Update Personal Information. Details: {JsonConvert.SerializeObject(model)}");
                 DB.WEB_UpdatePersonal(
                         model.Id,
-                        Helper.Helper.ToCamelCase(model.FirstName),
-                        Helper.Helper.ToCamelCase(model.MiddleName),
-                        Helper.Helper.ToCamelCase(model.LastName),
-                        Helper.Helper.ToCamelCase(model.FatherFirstName),
-                        Helper.Helper.ToCamelCase(model.FatherMiddleName),
-                        Helper.Helper.ToCamelCase(model.FatherLastName),
+                        Helper.Utility.ToCamelCase(model.FirstName),
+                        Helper.Utility.ToCamelCase(model.MiddleName),
+                        Helper.Utility.ToCamelCase(model.LastName),
+                        Helper.Utility.ToCamelCase(model.FatherFirstName),
+                        Helper.Utility.ToCamelCase(model.FatherMiddleName),
+                        Helper.Utility.ToCamelCase(model.FatherLastName),
                         model.Gender == null? null : model.Gender.ToString(),
-                        Helper.Helper.ToCamelCase(model.HusbandName),
+                        Helper.Utility.ToCamelCase(model.HusbandName),
                         model.DateOfBirth == null ? null : model.DateOfBirth.ToString(),
                         model.CNIC,
                         model.EmailAddress,
@@ -196,155 +196,155 @@ namespace HUTOPS.Controllers
                         model.PermanentPostalCode,
                         model.IsCompleted
                         );
-                Helper.Helper.AddLog(Constants.LogType.ActivityLog, $"User has Successfully Updated Personal Information. Details: {JsonConvert.SerializeObject(model)}");
+                Helper.Utility.AddLog(Constants.LogType.ActivityLog, $"User has Successfully Updated Personal Information. Details: {JsonConvert.SerializeObject(model)}");
                 return Json(new { status = true, message = "Personal Information Successfully Updated" });
             }
             catch (System.Exception ex)
             {
-                Helper.Helper.AddLog(Constants.LogType.Exception, "Exception occurred during Save personal Information." + ((ex.InnerException != null) ? ex.InnerException.Message : "") + "Model Details: " + JsonConvert.SerializeObject(model));
+                Helper.Utility.AddLog(Constants.LogType.Exception, "Exception occurred during Save personal Information." + ((ex.InnerException != null) ? ex.InnerException.Message : "") + "Model Details: " + JsonConvert.SerializeObject(model));
                 return Json(new { status = false, message = "Failed to save Record, Please try again" });
             }
         }
         [HttpPost, ValidateAntiForgeryToken]
-        public ActionResult Index(PersonalInformation model)
+        public ActionResult Index(PersonalInformation personalInfo)
         {
             try
             {
-                model.Id = int.Parse(Helper.Helper.GetSession(Constants.Session.UserId));
-                model.IsCompleted = 1;
-                Helper.Helper.AddLog(Constants.LogType.ActivityLog, $"User-requested to Submit Personal Information. Details: {JsonConvert.SerializeObject(model)}");
+                personalInfo.Id = int.Parse(Helper.Utility.GetSession(Constants.Session.UserId));
+                personalInfo.IsCompleted = 1;
+                Helper.Utility.AddLog(Constants.LogType.ActivityLog, $"User-requested to Submit Personal Information. Details: {JsonConvert.SerializeObject(personalInfo)}");
                 var IsValid = true;
-                if (string.IsNullOrEmpty(model.FirstName))
+                if (string.IsNullOrEmpty(personalInfo.FirstName))
                 {
                     IsValid = false;
                     ModelState.AddModelError("Main.FirstName", "First Name is required");
                 }
-                if (!string.IsNullOrEmpty(model.FirstName) && (model.FirstName.Length < 3 || model.FirstName.Length > 25))
+                if (!string.IsNullOrEmpty(personalInfo.FirstName) && (personalInfo.FirstName.Length < 3 || personalInfo.FirstName.Length > 25))
                 {
                     IsValid = false;
                     ModelState.AddModelError("Main.FirstName", "First Name length must be greater than 3 and less than 25 characters");
 
                 }
-                if (string.IsNullOrEmpty(model.LastName))
+                if (string.IsNullOrEmpty(personalInfo.LastName))
                 {
                     IsValid = false;
                     ModelState.AddModelError("Main.LastName", "Last Name is required");
                 }
-                if (!string.IsNullOrEmpty(model.LastName) && (model.LastName.Length < 3 || model.LastName.Length > 25))
+                if (!string.IsNullOrEmpty(personalInfo.LastName) && (personalInfo.LastName.Length < 3 || personalInfo.LastName.Length > 25))
                 {
                     IsValid = false;
                     ModelState.AddModelError("Main.LastName", "Last Name length must be greater than 3 and less than 25 characters");
 
                 }
-                if (string.IsNullOrEmpty(model.FatherFirstName))
+                if (string.IsNullOrEmpty(personalInfo.FatherFirstName))
                 {
                     IsValid = false;
                     ModelState.AddModelError("Main.FatherFirstName", "Father First Name is required");
                 }
-                if (!string.IsNullOrEmpty(model.FatherFirstName) && (model.FatherFirstName.Length < 3 || model.FatherFirstName.Length > 25))
+                if (!string.IsNullOrEmpty(personalInfo.FatherFirstName) && (personalInfo.FatherFirstName.Length < 3 || personalInfo.FatherFirstName.Length > 25))
                 {
                     IsValid = false;
                     ModelState.AddModelError("Main.FatherFirstName", "Father First Name length must be greater than 3 and less than 25 characters");
 
                 }
-                if (string.IsNullOrEmpty(model.FatherLastName))
+                if (string.IsNullOrEmpty(personalInfo.FatherLastName))
                 {
                     IsValid = false;
                     ModelState.AddModelError("Main.FatherLastName", "Father Last Name is required");
                 }
-                if (!string.IsNullOrEmpty(model.FatherLastName) && (model.FatherLastName.Length < 3 || model.FatherLastName.Length > 25))
+                if (!string.IsNullOrEmpty(personalInfo.FatherLastName) && (personalInfo.FatherLastName.Length < 3 || personalInfo.FatherLastName.Length > 25))
                 {
                     IsValid = false;
                     ModelState.AddModelError("Main.FatherLastName", "Father Last Name length must be greater than 3 and less than 25 characters");
                 }
-                if (!string.IsNullOrEmpty(model.AlterEmailAddress) && !Helper.Helper.isValidEmail(model.AlterEmailAddress))
+                if (!string.IsNullOrEmpty(personalInfo.AlterEmailAddress) && !Helper.Utility.isValidEmail(personalInfo.AlterEmailAddress))
                 {
                     IsValid = false;
                     ModelState.AddModelError("Main.AlterEmailAddress", "Provided Email Address is Invalid");
                 }
-                if (string.IsNullOrEmpty(model.GuardianEmailAddress))
+                if (string.IsNullOrEmpty(personalInfo.GuardianEmailAddress))
                 {
                     IsValid = false;
                     ModelState.AddModelError("Main.GuardianEmailAddress", "Guardian Email Address is Required");
                 }
-                if (!string.IsNullOrEmpty(model.GuardianEmailAddress) && !Helper.Helper.isValidEmail(model.GuardianEmailAddress))
+                if (!string.IsNullOrEmpty(personalInfo.GuardianEmailAddress) && !Helper.Utility.isValidEmail(personalInfo.GuardianEmailAddress))
                 {
                     IsValid = false;
                     ModelState.AddModelError("Main.GuardianEmailAddress", "Provided Email Address is Invalid");
                 }
-                if (!string.IsNullOrEmpty(model.CellPhoneNumber) && !Helper.Helper.IsValidPhoneNumber(model.CellPhoneNumber))
+                if (!string.IsNullOrEmpty(personalInfo.CellPhoneNumber) && !Helper.Utility.IsValidPhoneNumber(personalInfo.CellPhoneNumber))
                 {
                     IsValid = false;
                     ModelState.AddModelError("Main.CellPhoneNumber", "Cell Phone Number is Invalid");
                 }
-                if (!string.IsNullOrEmpty(model.WhatsAppNumber) && !Helper.Helper.IsValidPhoneNumber(model.WhatsAppNumber))
+                if (!string.IsNullOrEmpty(personalInfo.WhatsAppNumber) && !Helper.Utility.IsValidPhoneNumber(personalInfo.WhatsAppNumber))
                 {
                     IsValid = false;
                     ModelState.AddModelError("Main.WhatsAppNumber", "WhatsApp Number Number is Invalid");
                 }
-                if (!string.IsNullOrEmpty(model.AlternateCellPhoneNumber) && !Helper.Helper.IsValidPhoneNumber(model.AlternateCellPhoneNumber))
+                if (!string.IsNullOrEmpty(personalInfo.AlternateCellPhoneNumber) && !Helper.Utility.IsValidPhoneNumber(personalInfo.AlternateCellPhoneNumber))
                 {
                     IsValid = false;
                     ModelState.AddModelError("Main.AlternateCellPhoneNumber", "Alternate Cell Phone Number is Invalid");
                 }
-                if (!string.IsNullOrEmpty(model.GuardianCellPhoneNumber) && !Helper.Helper.IsValidPhoneNumber(model.GuardianCellPhoneNumber))
+                if (!string.IsNullOrEmpty(personalInfo.GuardianCellPhoneNumber) && !Helper.Utility.IsValidPhoneNumber(personalInfo.GuardianCellPhoneNumber))
                 {
                     IsValid = false;
                     ModelState.AddModelError("Main.GuardianCellPhoneNumber", "Guardian Cell Phone Number is Invalid");
                 }
-                if (string.IsNullOrEmpty(model.GuardianCellPhoneNumber))
+                if (string.IsNullOrEmpty(personalInfo.GuardianCellPhoneNumber))
                 {
                     IsValid = false;
                     ModelState.AddModelError("Main.GuardianCellPhoneNumber", "Phone Number is Required");
                 }
-                if (string.IsNullOrEmpty(model.HomePhoneNumber))
+                if (string.IsNullOrEmpty(personalInfo.HomePhoneNumber))
                 {
                     IsValid = false;
                     ModelState.AddModelError("Main.HomePhoneNumber", "Phone Number is Required");
                 }
                 if (IsValid)
                 {
-                    Helper.Helper.AddLog(Constants.LogType.ActivityLog, $"User provided data is Valid for Submit Personal Information. Details: {JsonConvert.SerializeObject(model)}");
+                    Helper.Utility.AddLog(Constants.LogType.ActivityLog, $"User provided data is Valid for Submit Personal Information. Details: {JsonConvert.SerializeObject(personalInfo)}");
                     DB.WEB_UpdatePersonal(
-                        model.Id,
-                        Helper.Helper.ToCamelCase(model.FirstName),
-                        Helper.Helper.ToCamelCase(model.MiddleName),
-                        Helper.Helper.ToCamelCase(model.LastName),
-                        Helper.Helper.ToCamelCase(model.FatherFirstName),
-                        Helper.Helper.ToCamelCase(model.FatherMiddleName),
-                        Helper.Helper.ToCamelCase(model.FatherLastName),
-                        model.Gender.ToString(),
-                        Helper.Helper.ToCamelCase(model.HusbandName),
-                        model.DateOfBirth.ToString(),
-                        model.CNIC,
-                        model.EmailAddress,
-                        model.AlterEmailAddress,
+                        personalInfo.Id,
+                        personalInfo.FirstName = Helper.Utility.ToCamelCase(personalInfo.FirstName),
+                        Helper.Utility.ToCamelCase(personalInfo.MiddleName),
+                        Helper.Utility.ToCamelCase(personalInfo.LastName),
+                        Helper.Utility.ToCamelCase(personalInfo.FatherFirstName),
+                        Helper.Utility.ToCamelCase(personalInfo.FatherMiddleName),
+                        Helper.Utility.ToCamelCase(personalInfo.FatherLastName),
+                        personalInfo.Gender.ToString(),
+                        Helper.Utility.ToCamelCase(personalInfo.HusbandName),
+                        personalInfo.DateOfBirth.ToString(),
+                        personalInfo.CNIC,
+                        personalInfo.EmailAddress,
+                        personalInfo.AlterEmailAddress,
                         // Contact
-                        model.CellPhoneNumber,
-                        model.WhatsAppNumber,
-                        model.AlternateCellPhoneNumber,
-                        model.HomePhoneNumber,
-                        model.AlternateLandline,
-                        model.GuardianCellPhoneNumber,
-                        model.GuardianEmailAddress,
+                        personalInfo.CellPhoneNumber,
+                        personalInfo.WhatsAppNumber,
+                        personalInfo.AlternateCellPhoneNumber,
+                        personalInfo.HomePhoneNumber,
+                        personalInfo.AlternateLandline,
+                        personalInfo.GuardianCellPhoneNumber,
+                        personalInfo.GuardianEmailAddress,
                         // Address
-                        model.ResidentialAddress,
-                        model.ResidentialCountry == null ? null : DB.Countries.ToList().Where(x => x.Id == int.Parse(model.ResidentialCountry)).ToList().FirstOrDefault().Name,
-                        model.ResidentialProvince == null ? null : DB.States.ToList().Where(x => x.Id == int.Parse(model.ResidentialProvince)).ToList().FirstOrDefault().Name,
-                        model.ResidentialCity == null ? null : model.ResidentialCity == "other" ? "Other" : DB.Cities.ToList().Where(x => x.Id == int.Parse(model.ResidentialCity)).ToList().FirstOrDefault().Name,
-                        model.ResidentialCityOther,
-                        model.ResidentialPostalCode,
-                        model.PermanentAddress,
-                        model.PermanentCountry == null ? null : DB.Countries.ToList().Where(x => x.Id == int.Parse(model.PermanentCountry)).ToList().FirstOrDefault().Name,
-                        model.PermanentProvince == null ? null : DB.States.ToList().Where(x => x.Id == int.Parse(model.PermanentProvince)).ToList().FirstOrDefault().Name,
-                        model.PermanentCity == null ? null : model.PermanentCity == "other" ? "Other" : DB.Cities.ToList().Where(x => x.Id == int.Parse(model.PermanentCity)).ToList().FirstOrDefault().Name,
-                        model.PermanentCityOther,
-                        model.PermanentPostalCode,
-                        model.IsCompleted
+                        personalInfo.ResidentialAddress,
+                        personalInfo.ResidentialCountry == null ? null : DB.Countries.ToList().Where(x => x.Id == int.Parse(personalInfo.ResidentialCountry)).ToList().FirstOrDefault().Name,
+                        personalInfo.ResidentialProvince == null ? null : DB.States.ToList().Where(x => x.Id == int.Parse(personalInfo.ResidentialProvince)).ToList().FirstOrDefault().Name,
+                        personalInfo.ResidentialCity == null ? null : personalInfo.ResidentialCity == "other" ? "Other" : DB.Cities.ToList().Where(x => x.Id == int.Parse(personalInfo.ResidentialCity)).ToList().FirstOrDefault().Name,
+                        personalInfo.ResidentialCityOther,
+                        personalInfo.ResidentialPostalCode,
+                        personalInfo.PermanentAddress,
+                        personalInfo.PermanentCountry == null ? null : DB.Countries.ToList().Where(x => x.Id == int.Parse(personalInfo.PermanentCountry)).ToList().FirstOrDefault().Name,
+                        personalInfo.PermanentProvince == null ? null : DB.States.ToList().Where(x => x.Id == int.Parse(personalInfo.PermanentProvince)).ToList().FirstOrDefault().Name,
+                        personalInfo.PermanentCity == null ? null : personalInfo.PermanentCity == "other" ? "Other" : DB.Cities.ToList().Where(x => x.Id == int.Parse(personalInfo.PermanentCity)).ToList().FirstOrDefault().Name,
+                        personalInfo.PermanentCityOther,
+                        personalInfo.PermanentPostalCode,
+                        personalInfo.IsCompleted
                         );
-
+                    Utility.SetUserSession(personalInfo);
                     TempData["Result"] = "Personal Inofmation Submited Successfully";
-                    Helper.Helper.AddLog(Constants.LogType.ActivityLog, $"User Submited Personal Information Successfully. Details: {JsonConvert.SerializeObject(model)}");
+                    Helper.Utility.AddLog(Constants.LogType.ActivityLog, $"User Submited Personal Information Successfully. Details: {JsonConvert.SerializeObject(personalInfo)}");
                     return RedirectToAction("Index", "Education");
                 }
                 else
@@ -354,18 +354,18 @@ namespace HUTOPS.Controllers
                     var city = DB.Cities.ToList();
                     var pageModel = new PersonalInfoPageModel()
                     {
-                        Main = model,
+                        Main = personalInfo,
                         Country = country,
                         Province = province,
                         City = city
                     };
-                    Helper.Helper.AddLog(Constants.LogType.ActivityLog, $"User provided data is InValid for Submit Personal Information. Details: {JsonConvert.SerializeObject(model)}");
+                    Helper.Utility.AddLog(Constants.LogType.ActivityLog, $"User provided data is InValid for Submit Personal Information. Details: {JsonConvert.SerializeObject(personalInfo)}");
                     return View(pageModel);
                 }
             }
             catch (System.Exception ex)
             {
-                Helper.Helper.AddLog(Constants.LogType.Exception, "Exception occurred during Submiting personal Information." + ((ex.InnerException != null) ? ex.InnerException.Message : "")+"Model Details: " + JsonConvert.SerializeObject(model));
+                Helper.Utility.AddLog(Constants.LogType.Exception, "Exception occurred during Submiting personal Information." + ((ex.InnerException != null) ? ex.InnerException.Message : "")+"Model Details: " + JsonConvert.SerializeObject(personalInfo));
                 TempData["Result"] = "Error occured while submiting your form";
                 return RedirectToAction("Index", "Home");
 

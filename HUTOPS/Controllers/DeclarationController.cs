@@ -17,9 +17,9 @@ namespace HUTOPS.Controllers
         // GET: Declaration
         public ActionResult Index()
         {
-            var personal = DB.PersonalInformations.ToList().Where(x => x.Id == int.Parse(Helper.Helper.GetSession(Helper.Constants.Session.UserId))).ToList().FirstOrDefault();
-            var edu = DB.Educationals.ToList().Where(x => x.UserId == int.Parse(Helper.Helper.GetSession(Helper.Constants.Session.UserId))).ToList().FirstOrDefault();
-            var docs = DB.Documents.ToList().Where(x => x.UserId == int.Parse(Helper.Helper.GetSession(Helper.Constants.Session.UserId))).ToList().FirstOrDefault();
+            var personal = DB.PersonalInformations.ToList().Where(x => x.Id == int.Parse(Helper.Utility.GetSession(Helper.Constants.Session.UserId))).ToList().FirstOrDefault();
+            var edu = DB.Educationals.ToList().Where(x => x.UserId == int.Parse(Helper.Utility.GetSession(Helper.Constants.Session.UserId))).ToList().FirstOrDefault();
+            var docs = DB.Documents.ToList().Where(x => x.UserId == int.Parse(Helper.Utility.GetSession(Helper.Constants.Session.UserId))).ToList().FirstOrDefault();
             ViewBag.Personal = personal == null ? "" : personal.IsCompleted.ToString();
             ViewBag.Edu = edu == null ? "" : edu.IsCompleted.ToString(); 
             ViewBag.Docs = docs == null ? "" :docs.IsCompleted.ToString();
@@ -30,10 +30,10 @@ namespace HUTOPS.Controllers
         {
             try
             {
-                Helper.Helper.AddLog(Constants.LogType.ActivityLog, $"User-requested to submit declarations:");
-                var personal = DB.PersonalInformations.ToList().Where(x => x.Id == int.Parse(Helper.Helper.GetSession(Helper.Constants.Session.UserId))).ToList().FirstOrDefault();
-                var edu = DB.Educationals.ToList().Where(x => x.UserId == int.Parse(Helper.Helper.GetSession(Helper.Constants.Session.UserId))).ToList().FirstOrDefault();
-                var docs = DB.Documents.ToList().Where(x => x.UserId == int.Parse(Helper.Helper.GetSession(Helper.Constants.Session.UserId))).ToList().FirstOrDefault();
+                Helper.Utility.AddLog(Constants.LogType.ActivityLog, $"User-requested to submit declarations:");
+                var personal = DB.PersonalInformations.ToList().Where(x => x.Id == int.Parse(Helper.Utility.GetSession(Helper.Constants.Session.UserId))).ToList().FirstOrDefault();
+                var edu = DB.Educationals.ToList().Where(x => x.UserId == int.Parse(Helper.Utility.GetSession(Helper.Constants.Session.UserId))).ToList().FirstOrDefault();
+                var docs = DB.Documents.ToList().Where(x => x.UserId == int.Parse(Helper.Utility.GetSession(Helper.Constants.Session.UserId))).ToList().FirstOrDefault();
                 if (string.IsNullOrWhiteSpace(HearHU))
                 {
                     return Json(new { status = false, message = "How did you first hear about Habib University : is required" });
@@ -41,11 +41,11 @@ namespace HUTOPS.Controllers
                 
                 if (personal.IsCompleted == 1 && edu.IsCompleted == 1 && docs.IsCompleted == 1)
                 {
-                    Helper.Helper.AddLog(Constants.LogType.ActivityLog, $"User has completed All required Sections to submit declarations:");
+                    Helper.Utility.AddLog(Constants.LogType.ActivityLog, $"User has completed All required Sections to submit declarations:");
                     if (check1 && check2 && check3)
                     {
 
-                        var userId = int.Parse(Helper.Helper.GetSession(Constants.Session.UserId));
+                        var userId = int.Parse(Helper.Utility.GetSession(Constants.Session.UserId));
                         var user = DB.PersonalInformations.ToList().Where(x => x.Id == userId).ToList().FirstOrDefault();
                         user.Declaration = 1;
                         user.SubmissionDate = DateTime.Now;
@@ -53,7 +53,7 @@ namespace HUTOPS.Controllers
                         user.HearAboutHUOther = HearHUOther;
                         DB.SaveChanges();
 
-                        Helper.Helper.AddLog(Constants.LogType.ActivityLog, $"Declarations and Aplication Submited Successfully");
+                        Helper.Utility.AddLog(Constants.LogType.ActivityLog, $"Declarations and Aplication Submited Successfully");
                         return Json(new { status = true, message = "Aplication Submited Successfully" });
                     }
                     else

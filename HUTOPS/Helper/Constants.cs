@@ -8,6 +8,7 @@ namespace HUTOPS.Helper
         {
             public const string UserId = "UserId";
             public const string UserName = "Name";
+            public const string UserSession = "LogedInUserSession";
         }
         public class LogType
         {

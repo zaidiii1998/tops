@@ -91,7 +91,7 @@ namespace HUTOPS.Controllers
         {
             try
             {
-                var result = DB.WEB_CheckPersonalInfo(int.Parse(Helper.Helper.GetSession(Constants.Session.UserId))).ToList().FirstOrDefault();
+                var result = DB.WEB_CheckPersonalInfo(int.Parse(Helper.Utility.GetSession(Constants.Session.UserId))).ToList().FirstOrDefault();
                 if (result.Response == 1)
                 {
                     return Json(new { status = true, message = result.Reason });

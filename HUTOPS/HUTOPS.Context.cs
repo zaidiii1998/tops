@@ -18,7 +18,7 @@ namespace HUTOPS
     public partial class HU_TOPSEntities : DbContext
     {
         public HU_TOPSEntities()
-            : base("name=HU_TOPSEntities")
+            : base("name=HUTOPSEntities")
         {
         }
     

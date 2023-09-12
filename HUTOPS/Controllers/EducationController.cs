@@ -17,7 +17,7 @@ namespace HUTOPS.Controllers
         // GET: Education
         public ActionResult Index()
         {
-            int userId = int.Parse(Helper.Helper.GetSession(Constants.Session.UserId));
+            int userId = int.Parse(Helper.Utility.GetSession(Constants.Session.UserId));
             EducationPageModel mymodel = new EducationPageModel();
             var edu = DB.Educationals.ToList();
             var sub = DB.EducationalSubjects.ToList();
@@ -45,12 +45,12 @@ namespace HUTOPS.Controllers
         {
             try
             {
-                Helper.Helper.AddLog(Constants.LogType.ActivityLog, $"User-requested to Save Educational Information. Details: {JsonConvert.SerializeObject(educational)}");
+                Helper.Utility.AddLog(Constants.LogType.ActivityLog, $"User-requested to Save Educational Information. Details: {JsonConvert.SerializeObject(educational)}");
                 var userId = int.Parse(Session["UserId"].ToString());
-                var SubNames = Helper.Helper.ConvertArrayToCSV(SubjectName);
-                var SubObtain = Helper.Helper.ConvertArrayToCSV(SubjectObtain);
-                var SubTotal = Helper.Helper.ConvertArrayToCSV(SubjectTotal);
-                var SubGrade = Helper.Helper.ConvertArrayToCSV(SubjectGrade);
+                var SubNames = Helper.Utility.ConvertArrayToCSV(SubjectName);
+                var SubObtain = Helper.Utility.ConvertArrayToCSV(SubjectObtain);
+                var SubTotal = Helper.Utility.ConvertArrayToCSV(SubjectTotal);
+                var SubGrade = Helper.Utility.ConvertArrayToCSV(SubjectGrade);
                 educational.BoardName = DB.Boards.ToList().Where(x => x.Id == (educational.BoardOfEdu == "" ? 0 : int.Parse(educational.BoardOfEdu))).ToList().FirstOrDefault().Name;
                 educational.GroupName = DB.BoardGroups.ToList().Where(x => x.Id == (educational.GroupOfStudy == "" ? 0 : int.Parse(educational.GroupOfStudy))).ToList().FirstOrDefault().Name;
                 educational.IsCompleted = 0;
@@ -77,12 +77,12 @@ namespace HUTOPS.Controllers
                     SubTotal + ',',
                     SubGrade + ','
                     );
-                Helper.Helper.AddLog(Constants.LogType.ActivityLog, $"User Successfully Save Educational Information. Details: {JsonConvert.SerializeObject(educational)}");
+                Helper.Utility.AddLog(Constants.LogType.ActivityLog, $"User Successfully Save Educational Information. Details: {JsonConvert.SerializeObject(educational)}");
                 return Json(new {status = true,message = "Educational Information Updated Successfully"});
             }
             catch (Exception ex)
             {
-                Helper.Helper.AddLog(Constants.LogType.Exception, "Exception occurred during Saving educational Information." + ((ex.InnerException != null) ? ex.InnerException.Message : "") + "Model Details: " + JsonConvert.SerializeObject(educational));
+                Helper.Utility.AddLog(Constants.LogType.Exception, "Exception occurred during Saving educational Information." + ((ex.InnerException != null) ? ex.InnerException.Message : "") + "Model Details: " + JsonConvert.SerializeObject(educational));
                 return Json(new { status = false, message = "Educational Information Updation Failed" });
 
             }
@@ -94,12 +94,12 @@ namespace HUTOPS.Controllers
             {
                 var IsValid = true;
                 List<string> Err = new List<string>();
-                Helper.Helper.AddLog(Constants.LogType.ActivityLog, $"User-requested to Submit Educational Information. Details: {JsonConvert.SerializeObject(educational)}");
-                var userId = int.Parse(Helper.Helper.GetSession(Constants.Session.UserId));
-                var SubNames = Helper.Helper.ConvertArrayToCSV(SubjectName);
-                var SubObtain = Helper.Helper.ConvertArrayToCSV(SubjectObtain);
-                var SubTotal = Helper.Helper.ConvertArrayToCSV(SubjectTotal);
-                var SubGrade = Helper.Helper.ConvertArrayToCSV(SubjectGrade);
+                Helper.Utility.AddLog(Constants.LogType.ActivityLog, $"User-requested to Submit Educational Information. Details: {JsonConvert.SerializeObject(educational)}");
+                var userId = int.Parse(Helper.Utility.GetSession(Constants.Session.UserId));
+                var SubNames = Helper.Utility.ConvertArrayToCSV(SubjectName);
+                var SubObtain = Helper.Utility.ConvertArrayToCSV(SubjectObtain);
+                var SubTotal = Helper.Utility.ConvertArrayToCSV(SubjectTotal);
+                var SubGrade = Helper.Utility.ConvertArrayToCSV(SubjectGrade);
                 educational.BoardName = DB.Boards.ToList().Where(x => x.Id == (educational.BoardOfEdu == "" ? 0: educational.BoardOfEdu == null ? 0 : int.Parse(educational.BoardOfEdu))).ToList().FirstOrDefault().Name;
                 educational.GroupName = DB.BoardGroups.ToList().Where(x => x.Id == (educational.GroupOfStudy == "" ? 0 : educational.GroupOfStudy == null ? 0 : int.Parse(educational.GroupOfStudy))).ToList().FirstOrDefault().Name;
                 educational.IsCompleted = 1;
@@ -164,7 +164,7 @@ namespace HUTOPS.Controllers
                     Err.Add("Which Degree Program you are planning to pursue at Habib University?: is required");
                 }
                 if (IsValid) {
-                    Helper.Helper.AddLog(Constants.LogType.ActivityLog, $"User provided data is Valid for Submit Personal Information. Details: {JsonConvert.SerializeObject(educational)}");
+                    Helper.Utility.AddLog(Constants.LogType.ActivityLog, $"User provided data is Valid for Submit Personal Information. Details: {JsonConvert.SerializeObject(educational)}");
                     var EducationalId = DB.WEB_InsertEducation(
                     userId,
                     educational.CurrentLevelOfEdu,
@@ -188,7 +188,7 @@ namespace HUTOPS.Controllers
                     SubTotal + ',',
                     SubGrade + ','
                     );
-                    Helper.Helper.AddLog(Constants.LogType.ActivityLog, $"Educational Information Submited Successfully. Details: {JsonConvert.SerializeObject(educational)}");
+                    Helper.Utility.AddLog(Constants.LogType.ActivityLog, $"Educational Information Submited Successfully. Details: {JsonConvert.SerializeObject(educational)}");
                     return Json(new { status = true, message = "Educational Information Submited Successfully" });
                 }
                 else
@@ -214,7 +214,7 @@ namespace HUTOPS.Controllers
             } 
             catch (Exception ex)
             {
-                Helper.Helper.AddLog(Constants.LogType.Exception, "Exception occurred during Submiting educational Information." + ((ex.InnerException != null) ? ex.InnerException.Message : "") + "Model Details: " + JsonConvert.SerializeObject(educational));
+                Helper.Utility.AddLog(Constants.LogType.Exception, "Exception occurred during Submiting educational Information." + ((ex.InnerException != null) ? ex.InnerException.Message : "") + "Model Details: " + JsonConvert.SerializeObject(educational));
                 return Json(new { status = false, message = "Educational Information Submition Failed" });
 
             }
