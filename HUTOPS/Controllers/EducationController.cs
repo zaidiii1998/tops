@@ -187,7 +187,6 @@ namespace HUTOPS.Controllers
                     SubTotal + ',',
                     SubGrade + ','
                     );
-                    TempData["Result"] = "Educational Information Submited Successfully";
                     Helper.Helper.AddLog(Constants.LogType.ActivityLog, $"Educational Information Submited Successfully. Details: {JsonConvert.SerializeObject(educational)}");
                     return Json(new { status = true, message = "Educational Information Submited Successfully" });
                 }

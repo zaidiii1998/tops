@@ -147,7 +147,7 @@ namespace HUTOPS.Controllers
                         IsValid = false;
                         ModelState.AddModelError("CellPhoneNumber", "Phone Number is Invalid");
                     }
-                    if (!string.IsNullOrEmpty(model["CellPhoneNumber"].ToString()) && userCNIC.Count == 1)
+                    if (!string.IsNullOrEmpty(model["CellPhoneNumber"].ToString()) && userPhone.Count == 1)
                     {
                         IsValid = false;
                         ModelState.AddModelError("CellPhoneNumber", "Phone Number already Exist");

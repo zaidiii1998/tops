@@ -209,7 +209,7 @@
                         <label for="residentialCountry">Select Country:</label>
                         @*@Html.DropDownList("ResidentialCountry",(IEnumerable<SelectListItem>)ViewBag.Country, "--Please Select--", new { @class = "form-control", @id = "residentialCountry" })*@
                         <select class="form-control" id="residentialCountry" name="ResidentialCountry" onchange="updateProvince(this.id,'residentialProvince');" required>
-                            <option value="">Select Country</option>
+                            <option value="" disabled>Select Country</option>
                             @foreach (var item in Model.Country)
                             {
                                 if (item.Name == Model.Main.ResidentialCountry)
@@ -229,7 +229,7 @@
                         <label for="residentialProvince">Select Province/State:</label>
                         @*@Html.DropDownList("ResidentialProvince", (IEnumerable<SelectListItem>)ViewBag.Province, "--Please Select--", new { @class = "form-control", @id = "residentialProvince" })*@
                         <select class="form-control" id="residentialProvince" name="ResidentialProvince" onchange="updateCities(this.id,'residentialCity');" required>
-                            <option value="">Select Provience</option>
+                            <option value="" disabled>Select Provience</option>
                             @foreach (var item in Model.Province)
                             {
                                 if (item.Name == Model.Main.ResidentialProvince)
@@ -250,7 +250,7 @@
                         @*@Html.DropDownList("ResidentialCity", (IEnumerable<SelectListItem>)ViewBag.City, "--Please Select--", new { @class = "form-control", @id = "residentialCity" })*@
 
                         <select class="form-control" id="residentialCity" name="ResidentialCity" onchange="toggleOtherCityInput(this.id,'divResidentialCityOther')" required>
-                            <option value="">Select City</option>
+                            <option value="" disabled>Select City</option>
                             @foreach (var item in Model.City)
                             {
                                 if (item.Name == Model.Main.ResidentialCity)
@@ -305,7 +305,7 @@
                             @*@Html.DropDownList("PermanentCountry", (IEnumerable<SelectListItem>)ViewBag.Country, "--Please Select--", new { @class = "form-control", @id = "permanentCountry" })*@
 
                             <select class="form-control" id="permanentCountry" name="PermanentCountry" onchange="updateProvince(this.id,'permanentProvince');">
-                                <option value="">Select Country</option>
+                                <option value="" disabled>Select Country</option>
                                 @foreach (var item in Model.Country)
                                 {
                                     if (item.Name == Model.Main.PermanentCountry)
@@ -326,7 +326,7 @@
                             <label for="permanentProvince">Select Province/State:</label>
                             @*@Html.DropDownList("PermanentProvince", (IEnumerable<SelectListItem>)ViewBag.Province, "--Please Select--", new { @class = "form-control", @id = "permanentProvince" })*@
                             <select class="form-control" id="permanentProvince" name="PermanentProvince" onchange="updateCities(this.id,'permanentCity');">
-                                <option value="">Select Provience</option>
+                                <option value="" disabled>Select Provience</option>
                                 @foreach (var item in Model.Province)
                                 {
                                     if (item.Name == Model.Main.PermanentProvince)
@@ -346,7 +346,7 @@
                             <label for="permanentCity">City:</label>
                             @*@Html.DropDownList("PermanentCity", (IEnumerable<SelectListItem>)ViewBag.City, "--Please Select--", new { @class = "form-control", @id = "permanentCity" })*@
                             <select class="form-control" id="permanentCity" name="PermanentCity" onchange="toggleOtherCityInput(this.id,'divPermanentCityOther')">
-                                <option value="">Select City</option>
+                                <option value="" disabled>Select City</option>
                                 @foreach (var item in Model.City)
                                 {
                                     if (item.Name == Model.Main.PermanentCity)

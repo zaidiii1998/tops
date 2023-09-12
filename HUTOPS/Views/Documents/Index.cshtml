@@ -19,8 +19,8 @@
                     <!-- Other file input fields -->
                 </div>
                 <div class="col-lg-3">
-                    @if(@Model.Photograph != null || @Model.Photograph != "") { 
-                        <a href="/@Model.Photograph.Substring(Model.Photograph.IndexOf("Upload"))" target="_blank"><i class="fa-solid fa-eye" style="margin-top: 10px; color: blue;" ></i></a>
+                    @if(@Model.Photograph != null && @Model.Photograph != "") { 
+                        <a href="/Documents/View?doc=1" target="_blank" class="btn btn-default form-control"><i class="fa-solid fa-eye" style="color: blue;" ></i></a>
                     }
                 </div>
             </div><br /><br />
@@ -33,9 +33,9 @@
                     <span class="text-danger" id="errSSC"></span>
                 </div>
                 <div class="col-lg-3">
-                    @if (@Model.SSCMarkSheet != null || @Model.SSCMarkSheet != "")
+                    @if (@Model.SSCMarkSheet != null && @Model.SSCMarkSheet != "")
                     {
-                        <a href="/@Model.SSCMarkSheet.Substring(Model.SSCMarkSheet.IndexOf("Upload"))" target="_blank"><i class="fa-solid fa-eye" style="margin-top: 10px; color: blue;"></i></a>
+                        <a href="/Documents/View?doc=2" target="_blank" class="btn btn-default form-control"><i class="fa-solid fa-eye" style="color: blue;"></i></a>
                     }
                 </div>
             </div><br /><br />
@@ -50,7 +50,7 @@
                 <div class="col-lg-3">
                     @if (@Model.HSSCMarkSheet != null && @Model.HSSCMarkSheet != "")
                     {
-                        <a href="/@Model.HSSCMarkSheet.Substring(Model.HSSCMarkSheet.IndexOf("Upload"))" target="_blank"><i class="fa-solid fa-eye" style="margin-top: 10px; color: blue;"></i></a>
+                        <a href="/Documents/View?doc=3" target="_blank" class="btn btn-default form-control"><i class="fa-solid fa-eye" style="color: blue;"></i></a>
                     }
                 </div>
             </div><br /><br />
@@ -65,7 +65,7 @@
                 <div class="col-lg-3">
                     @if (@Model.CNIC != null && @Model.CNIC != "")
                     {
-                        <a href="/@Model.CNIC.Substring(Model.CNIC.IndexOf("Upload"))" target="_blank"><i class="fa-solid fa-eye" style="margin-top: 10px; color: blue;"></i></a>
+                        <a href="/Documents/View?doc=4" target="_blank" class="btn btn-default form-control"><i class="fa-solid fa-eye" style="color: blue;"></i></a>
                     }
                 </div>
             </div><br /><br />

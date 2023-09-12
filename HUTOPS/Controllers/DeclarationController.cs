@@ -19,13 +19,13 @@ namespace HUTOPS.Controllers
             var personal = DB.PersonalInformations.ToList().Where(x => x.Id == int.Parse(Helper.Helper.GetSession(Helper.Constants.Session.UserId))).ToList().FirstOrDefault();
             var edu = DB.Educationals.ToList().Where(x => x.UserId == int.Parse(Helper.Helper.GetSession(Helper.Constants.Session.UserId))).ToList().FirstOrDefault();
             var docs = DB.Documents.ToList().Where(x => x.UserId == int.Parse(Helper.Helper.GetSession(Helper.Constants.Session.UserId))).ToList().FirstOrDefault();
-            ViewBag.Personal = personal.IsCompleted.ToString();
-            ViewBag.Edu = edu.IsCompleted.ToString(); 
-            ViewBag.Docs = docs.IsCompleted.ToString();
+            ViewBag.Personal = personal == null ? "" : personal.IsCompleted.ToString();
+            ViewBag.Edu = edu == null ? "" : edu.IsCompleted.ToString(); 
+            ViewBag.Docs = docs == null ? "" :docs.IsCompleted.ToString();
             ViewBag.Declaration = personal.Declaration;
             return View();
         }
-        public ActionResult Submit(bool check1, bool check2, bool check3)
+        public ActionResult Submit(bool check1, bool check2, bool check3, string HearHU, string HearHUOther)
         {
             try
             {
@@ -33,6 +33,11 @@ namespace HUTOPS.Controllers
                 var personal = DB.PersonalInformations.ToList().Where(x => x.Id == int.Parse(Helper.Helper.GetSession(Helper.Constants.Session.UserId))).ToList().FirstOrDefault();
                 var edu = DB.Educationals.ToList().Where(x => x.UserId == int.Parse(Helper.Helper.GetSession(Helper.Constants.Session.UserId))).ToList().FirstOrDefault();
                 var docs = DB.Documents.ToList().Where(x => x.UserId == int.Parse(Helper.Helper.GetSession(Helper.Constants.Session.UserId))).ToList().FirstOrDefault();
+                if (string.IsNullOrWhiteSpace(HearHU))
+                {
+                    return Json(new { status = false, message = "How did you first hear about Habib University : is required" });
+                }
+                
                 if (personal.IsCompleted == 1 && edu.IsCompleted == 1 && docs.IsCompleted == 1)
                 {
                     Helper.Helper.AddLog(Constants.LogType.ActivityLog, $"User has completed All required Sections to submit declarations:");
@@ -43,6 +48,8 @@ namespace HUTOPS.Controllers
                         var user = DB.PersonalInformations.ToList().Where(x => x.Id == userId).ToList().FirstOrDefault();
                         user.Declaration = 1;
                         user.SubmissionDate = DateTime.Now;
+                        user.HearAboutHU = HearHU;
+                        user.HearAboutHUOther = HearHUOther;
                         DB.SaveChanges();
 
                         Helper.Helper.AddLog(Constants.LogType.ActivityLog, $"Declarations and Aplication Submited Successfully");

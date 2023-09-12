@@ -2,6 +2,10 @@
     $('.number').inputmask("0399-9999999");
     $('.cnic').inputmask("99999-9999999-9");
     $('.Percentage').inputmask("99.99%");
+
+    $('.trashActivity').click(function () {
+        $(this).closest(".row").remove();
+    });
 });
 
 function showLoader() {
@@ -679,8 +683,11 @@ function SubmitEducation() {
         function editEducationCallback(response) {
             debugger
             if (response.status) {
-                document.getElementById("redirectLnk").click();
                 ShowDivSuccess(response.message);
+                setTimeout(function () {
+                    document.getElementById("redirectLnk").click();
+                }, 2000);
+                
                 
             }
             else {
@@ -741,8 +748,10 @@ function submitDocuments(sessionUserId) {
             success: function (response) {
                 debugger
                 if (response.status) {
-                    ShowDivError(response.message);
-                    document.getElementById("redirectToActivity").click();
+                    ShowDivSuccess(response.message);
+                    setTimeout(function () {
+                        document.getElementById("redirectToActivity").click();
+                    }, 2000);
                 }
                 else {
                     ShowDivError(response.message)
@@ -770,28 +779,49 @@ function AddActivityRow() {
     var newRow = document.createElement("div");
     newRow.className = "row";
 
-    for (let i = 1; i <= 2; i++) {
+    for (let i = 1; i <= 3; i++) {
         var newCol = document.createElement("div");
         newCol.className = "col-lg-3";
         var newcontrol = document.createElement("div");
         newcontrol.className = "form-group";
 
-        var input = document.createElement("input");
-        input.type = "text";
-        input.className = "form-control";
         if (i === 1) {
+            var input = document.createElement("input");
+            input.type = "text";
+            input.className = "form-control";
             input.classList.add("ActivityName");
-        } else {
+            newcontrol.appendChild(input);
+        } else if (i === 2) {
+            var input = document.createElement("input");
+            input.type = "text";
+            input.className = "form-control";
             input.classList.add("ActivityDuration");
+            newcontrol.appendChild(input);
+        } else {
+            var button = document.createElement("button");
+            button.onclick = removeActivityRow(this);
+            button.className = "form-control";
+            button.classList.add("trashActivity");
+            var icon = document.createElement("i");
+            icon.classList.add("fa");
+            icon.classList.add("fa-trash");
+            button.appendChild(icon);
+            newcontrol.appendChild(button);
         }
 
 
-        newcontrol.appendChild(input);
         newCol.appendChild(newcontrol);
         newRow.appendChild(newCol);
+        $('.trashActivity').click(function () {
+            $(this).closest(".row").remove();
+        });
     }
 
     $('#divActivity').append(newRow);
+}
+
+function removeActivityRow(button) {
+    $(button).closest(".row").remove();
 }
 
 function SubmitActivity() {
@@ -811,7 +841,9 @@ function SubmitActivity() {
     function SubmitActivityCB(response) {
         if (response.status) {
             ShowDivSuccess(response.message);
-            document.getElementById("redirectToTestDate").click();
+            setTimeout(function () {
+                document.getElementById("redirectToTestDate").click();
+            }, 2000);
         }
         else {
             ShowDivError(response.message)
@@ -824,10 +856,13 @@ function submitDeclaration() {
     var check1 = $('#validateLaw').is(':checked');
     var check2 = $('#invalidInfo').is(':checked');
     var check3 = $('#validInfo').is(':checked');
-
+    if ($('#comboHearHU').val() == null || $('#comboHearHU').val() == "") {
+        ShowDivError("How did you first hear about Habib University : is required");
+        return false;
+    }
     if (check1 == true && check2 == true && check3 == true) {
 
-        CallAsyncService("/Declaration/Submit?check1=true&check2=true&check3=true", null, submitDeclarationCB)
+        CallAsyncService("/Declaration/Submit?check1=true&check2=true&check3=true&HearHU=" + $('#comboHearHU').val() + "&HearHUOther=" + $('#OtherHearHU').val(), null, submitDeclarationCB)
         function submitDeclarationCB(response) {
             if (response.status) {
                 ShowDivSuccess(response.message)
@@ -860,7 +895,9 @@ function SubmitTestDate() {
                 document.getElementById("redirectToDeclaration").click();
             }
             else {
-                ShowDivError(response.message)
+                $('#testdateError').html(response.message);
+
+                //ShowDivError(response.message)
             }
         }
     } else {

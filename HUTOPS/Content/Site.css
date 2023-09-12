@@ -59,7 +59,11 @@ html{-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:transparent;    /
         /**/
         .signInWrap .imgWrap{position:relative;transition:all .5s;}
         .signInWrap .imgWrap img{}
-        .signInWrap{padding:0 22px 0 39px;height:100vh;display:flex;align-items:center;}
+.signInWrap {
+    padding: 0 22px 0 39px; /*height:100vh;*/
+    display: flex;
+    align-items: center;
+}
         .signInWrap .contentWrap{text-align:center;}
         .signInWrap .contentWrap img{padding:40px 0 0;width:45%;}
         .signInWrap .contentWrap h1{font-size:19px;font-weight:700;padding-bottom:15px;color:var(--global-clr);text-align:center;line-height:26px;}

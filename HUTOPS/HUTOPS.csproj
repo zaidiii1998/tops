@@ -541,6 +541,7 @@
     <Content Include="Views\PersonalInformations\Index.cshtml" />
     <Content Include="Views\Home\Activity.cshtml" />
     <Content Include="Views\Home\TestDate.cshtml" />
+    <Content Include="Views\Documents\View.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
