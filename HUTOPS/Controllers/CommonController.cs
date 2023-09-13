@@ -1,8 +1,6 @@
 ﻿using HUTOPS.Helper;
-using Microsoft.Ajax.Utilities;
 using System.Linq;
 using System.Web.Mvc;
-using System.Web.Services.Description;
 
 namespace HUTOPS.Controllers
 {
@@ -18,8 +16,8 @@ namespace HUTOPS.Controllers
             try
             {
                 var result = DB.PersonalInformations.ToList();
-                var res = result.Where(x => x.CellPhoneNumber == number).ToList();
-                if (res.Count == 0)
+                var res = result.Exists(x => x.CellPhoneNumber == number);
+                if (!res)
                 {
                     return Json(new { status = true });
                 }
@@ -38,8 +36,8 @@ namespace HUTOPS.Controllers
             try
             {
                 var result = DB.PersonalInformations.ToList();
-                var res = result.Where(x => x.EmailAddress == email).ToList();
-                if (res.Count == 0)
+                var res = result.Exists(x => x.EmailAddress == email);
+                if (!res)
                 {
                     return Json(new { status = true });
                 }
@@ -58,8 +56,8 @@ namespace HUTOPS.Controllers
             try
             {
                 var result = DB.PersonalInformations.ToList();
-                var res = result.Where(x => x.CNIC == cnic).ToList();
-                if (res.Count == 0)
+                var res = result.Exists(x => x.CNIC == cnic);
+                if (!res)
                 {
                     return Json(new { status = true });
                 }
@@ -91,7 +89,8 @@ namespace HUTOPS.Controllers
         {
             try
             {
-                var result = DB.WEB_CheckPersonalInfo(int.Parse(Helper.Utility.GetSession(Constants.Session.UserId))).ToList().FirstOrDefault();
+                var personalInfo = Utility.GetUserFromSession();
+                var result = DB.WEB_CheckPersonalInfo(personalInfo.Id).ToList().FirstOrDefault();
                 if (result.Response == 1)
                 {
                     return Json(new { status = true, message = result.Reason });

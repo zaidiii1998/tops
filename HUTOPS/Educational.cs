@@ -32,5 +32,6 @@ namespace HUTOPS
         public string UniversityName { get; set; }
         public string IntendedProgram { get; set; }
         public Nullable<int> IsCompleted { get; set; }
+        public string HUSchoolName { get; set; }
     }
 }

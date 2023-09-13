@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="HUTOPSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="HUTOPSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Activity">
           <Key>
             <PropertyRef Name="Id" />
@@ -81,6 +81,7 @@
           <Property Name="UniversityName" Type="varchar" MaxLength="50" />
           <Property Name="IntendedProgram" Type="varchar" MaxLength="50" />
           <Property Name="IsCompleted" Type="int" />
+          <Property Name="HUSchoolName" Type="varchar" MaxLength="50" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'HUTOPS.dbo.EducationalSubjects' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -206,6 +207,8 @@ warning 6002: The table/view 'HUTOPS.dbo.EducationalSubjects' does not have a pr
           <Parameter Name="CellPhoneNumber" Type="varchar" Mode="In" />
           <Parameter Name="EmailAddress" Type="varchar" Mode="In" />
           <Parameter Name="Password" Type="varchar" Mode="In" />
+          <Parameter Name="HearAboutHU" Type="varchar" Mode="In" />
+          <Parameter Name="HearAboutHUOther" Type="varchar" Mode="In" />
         </Function>
         <Function Name="WEB_GetAll" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="WEB_GetBoards" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
@@ -347,8 +350,7 @@ warning 6002: The table/view 'HUTOPS.dbo.EducationalSubjects' does not have a pr
     FROM [dbo].[EducationalSubjects] AS [EducationalSubjects]</DefiningQuery>
           </EntitySet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="HUTOPSModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -428,6 +430,7 @@ warning 6002: The table/view 'HUTOPS.dbo.EducationalSubjects' does not have a pr
           <Property Name="UniversityName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="IntendedProgram" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="IsCompleted" Type="Int32" />
+          <Property Name="HUSchoolName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="GroupSubject">
           <Key>
@@ -554,7 +557,7 @@ warning 6002: The table/view 'HUTOPS.dbo.EducationalSubjects' does not have a pr
             <Parameter Name="GroupId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="WEB_CheckPersonalInfo" ReturnType="Collection(HUTOPSModel.WEB_UserLogin_Result)">
-            <Parameter Name="Id" Mode="In" Type="Int32" />
+          <Parameter Name="Id" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="WEB_CreateUser" ReturnType="Collection(HUTOPSModel.WEB_UserLogin_Result)">
             <Parameter Name="FirstName" Mode="In" Type="String" />
@@ -564,14 +567,16 @@ warning 6002: The table/view 'HUTOPS.dbo.EducationalSubjects' does not have a pr
             <Parameter Name="CellPhoneNumber" Mode="In" Type="String" />
             <Parameter Name="EmailAddress" Mode="In" Type="String" />
             <Parameter Name="Password" Mode="In" Type="String" />
+            <Parameter Name="HearAboutHU" Mode="In" Type="String" />
+            <Parameter Name="HearAboutHUOther" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="WEB_GetAll" />
           <FunctionImport Name="WEB_GetBoards" />
           <FunctionImport Name="WEB_GetGroups">
-            <Parameter Name="BoardId" Mode="In" Type="Int32" />
+          <Parameter Name="BoardId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="WEB_GetSubjects">
-            <Parameter Name="GroupId" Mode="In" Type="Int32" />
+          <Parameter Name="GroupId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="WEB_InsertEducation">
             <Parameter Name="UserId" Mode="In" Type="Int32" />
@@ -756,6 +761,7 @@ warning 6002: The table/view 'HUTOPS.dbo.EducationalSubjects' does not have a pr
           <EntitySetMapping Name="Educationals">
             <EntityTypeMapping TypeName="HUTOPSModel.Educational">
               <MappingFragment StoreEntitySet="Educational">
+                <ScalarProperty Name="HUSchoolName" ColumnName="HUSchoolName" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="CurrentLevelOfEdu" ColumnName="CurrentLevelOfEdu" />

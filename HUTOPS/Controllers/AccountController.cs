@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using System.Net.Mail;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 using HUTOPS.Helper;
 
@@ -12,7 +12,7 @@ namespace HUTOPS.Controllers
         HUTOPSEntities DB = new HUTOPSEntities(); // Server DB
         public ActionResult Login()
         {
-            Helper.Utility.AddLog(Constants.LogType.ActivityLog, "User has navigated to the registration page.");
+            Utility.AddLog(Constants.LogType.ActivityLog, "User has navigated to the registration page.");
             return View();
         }
         [HttpPost, ValidateAntiForgeryToken]
@@ -24,48 +24,51 @@ namespace HUTOPS.Controllers
                 if (result.Response != -1)
                 {
                     var personalInformation = DB.PersonalInformations.ToList().Where(x => x.Id == result.Response).FirstOrDefault();
+                    var education = DB.Educationals.ToList().Where(x => x.UserId == result.Response).FirstOrDefault();
+                    var document = DB.Documents.ToList().Where(x => x.UserId == result.Response).FirstOrDefault();
                     Utility.AddLog(Constants.LogType.ActivityLog, "User Successfully LogIn" + "UserID: " + result.Response + "UserName" + personalInformation.FirstName + " " + personalInformation.LastName);
-                    Helper.Utility.SetSession(Constants.Session.UserId, result.Response.ToString());
-                    Helper.Utility.SetSession(Constants.Session.UserName, personalInformation.FirstName + " " + personalInformation.LastName);
-                    Helper.Utility.SetUserSession(personalInformation);
+                    Utility.SetSession(personalInformation);
+                    Utility.SetSession(education);
+                    Utility.SetSession(document);
                     return RedirectToAction("Index", "Home");
                 }
                 else
                 {
-                    Helper.Utility.AddLog(Constants.LogType.ActivityLog, "User LogIn Failed" + "Reason: " + result.Reason);
-                    ViewBag.Result = "Invalid User";
+                    Utility.AddLog(Constants.LogType.ActivityLog, "User LogIn Failed" + "Reason: " + result.Reason);
+                    ViewBag.Result = "User Password/Email is not valid";
                     return View();
                 }
             }
             catch (System.Exception ex)
             {
-                Helper.Utility.AddLog(Constants.LogType.ActivityLog, "Exception Occur While Login" + "Ex: " + ex.InnerException.Message);
-                ViewBag.Result = "Invalid User";
+                Utility.AddLog(Constants.LogType.ActivityLog, "Exception Occur While Login" + "Ex: " + ex.InnerException.Message);
+                ViewBag.Result = "User Password/Email is not valid";
                 return View();
             }
             
         }
         public ActionResult Register()
         {
-            Helper.Utility.AddLog(Constants.LogType.ActivityLog, "User has navigated to the registration page.");
+            Utility.AddLog(Constants.LogType.ActivityLog, "User has navigated to the registration page.");
             return View(new PersonalInformation());
         }
         [HttpPost, ValidateAntiForgeryToken]
         public ActionResult Register(FormCollection model)
         {
-            PersonalInformation GivenModel = new PersonalInformation()
+            PersonalInformation personalInfo = new PersonalInformation()
             {
                 FirstName = model["FirstName"],
                 MiddleName = model["MiddleName"],
                 LastName = model["LastName"],
                 EmailAddress = model["EmailAddress"],
                 CNIC = model["CNIC"],
-                CellPhoneNumber = model["CellPhoneNumber"]
+                CellPhoneNumber = model["CellPhoneNumber"],
+                HearAboutHU = model["HearAboutHU"],
+                HearAboutHUOther = model["HearAboutHUOther"]
 
             };
             try
             {
-                
                 var IsValid = true;
                 var user = DB.PersonalInformations.ToList();
                 var userEmail = user.Exists(x => x.EmailAddress == model["EmailAddress"]);
@@ -74,7 +77,7 @@ namespace HUTOPS.Controllers
 
                 if (ModelState.IsValid)
                 {
-                    Helper.Utility.AddLog(Constants.LogType.ActivityLog, "Model Validation Is true");
+                    Utility.AddLog(Constants.LogType.ActivityLog, "Model Validation Is true");
                     if (model["Password"] != model["ConfirmPassword"])
                     {
                         IsValid = false;
@@ -125,7 +128,7 @@ namespace HUTOPS.Controllers
                         IsValid = false;
                         ModelState.AddModelError("EmailAddress", "Email is required");
                     }
-                    if (!Helper.Utility.isValidEmail(model["EmailAddress"].ToString()))
+                    if (!Utility.isValidEmail(model["EmailAddress"].ToString()))
                     {
                         IsValid = false;
                         ModelState.AddModelError("EmailAddress", "Invalid Email");
@@ -150,7 +153,7 @@ namespace HUTOPS.Controllers
                         IsValid = false;
                         ModelState.AddModelError("CellPhoneNumber", "Phone Number is required");
                     }
-                    if (!string.IsNullOrEmpty(model["CellPhoneNumber"]) && !Helper.Utility.IsValidPhoneNumber(model["CellPhoneNumber"]))
+                    if (!string.IsNullOrEmpty(model["CellPhoneNumber"]) && !Utility.IsValidPhoneNumber(model["CellPhoneNumber"]))
                     {
                         IsValid = false;
                         ModelState.AddModelError("CellPhoneNumber", "Phone Number is Invalid");
@@ -160,50 +163,64 @@ namespace HUTOPS.Controllers
                         IsValid = false;
                         ModelState.AddModelError("CellPhoneNumber", "Phone Number already Exist");
                     }
+                    if (string.IsNullOrEmpty(model["HearAboutHU"].ToString()))
+                    {
+                        IsValid = false;
+                        ModelState.AddModelError("HearAboutHU", "Hear About HU Field is required");
+                    }
+                    if (model["HearAboutHU"].ToString() == "Other" && string.IsNullOrEmpty(model["HearAboutHUOther"].ToString()))
+                    {
+                        IsValid = false;
+                        ModelState.AddModelError("HearAboutHUOther", "Hear About HU Other Value is required");
+                    }
 
                     if (IsValid)
                     {
-                        Helper.Utility.AddLog(Constants.LogType.ActivityLog, $"User-provided data has been successfully validated.Details: Firstname: {model["FirstName"]}, LastName: {model["LastName"]}, Email: {model["EmailAddress"]}, CNIC: {model["CNIC"]}, PhoneNumber: {model["CellPhoneNumber"]} ");
-                        var result = DB.WEB_CreateUser(model["FirstName"], model["MiddleName"], model["LastName"], model["CNIC"], model["CellPhoneNumber"], model["EmailAddress"], model["Password"].ToString()).ToList().FirstOrDefault();
+                        Utility.AddLog(Constants.LogType.ActivityLog, $"User-provided data has been successfully validated.Details: Firstname: {model["FirstName"]}, LastName: {model["LastName"]}, Email: {model["EmailAddress"]}, CNIC: {model["CNIC"]}, PhoneNumber: {model["CellPhoneNumber"]} ");
+                        var result = DB.WEB_CreateUser(personalInfo.FirstName, personalInfo.MiddleName, personalInfo.LastName, personalInfo.CNIC, personalInfo.CellPhoneNumber, personalInfo.EmailAddress, model["Password"].ToString(), personalInfo.HearAboutHU, personalInfo.HearAboutHUOther).ToList().FirstOrDefault();
                         if (result.Response != 0)
                         {
                             var currentUser = DB.PersonalInformations.ToList().Where(x => x.Id == result.Response).FirstOrDefault();
-                            Helper.Utility.AddLog(Constants.LogType.ActivityLog, "User account has been successfully created." + "UserID: "+ result.Response + "UserName" + currentUser.FirstName + " " + currentUser.LastName);
-                            Helper.Utility.SetSession(Constants.Session.UserId, result.Response.ToString());
-                            Helper.Utility.SetUserSession(currentUser);
-                            Helper.Utility.SetSession(Constants.Session.UserName, currentUser.FirstName + " " + currentUser.LastName);
+                            var education = DB.Educationals.ToList().Where(x => x.UserId == result.Response).FirstOrDefault();
+                            var document = DB.Documents.ToList().Where(x => x.UserId == result.Response).FirstOrDefault();
+                            Utility.AddLog(Constants.LogType.ActivityLog, "User account has been successfully created." + "UserID: "+ result.Response + "UserName" + currentUser.FirstName + " " + currentUser.LastName);
+                            Utility.SetSession(currentUser);
+                            Utility.SetSession(education);
+                            Utility.SetSession(document);
                             return RedirectToAction("Index", "Home");
                         }
                         else
                         {
-                            Helper.Utility.AddLog(Constants.LogType.ActivityLog, "User Registration Failed" + result.Reason.ToString());
+                           Utility.AddLog(Constants.LogType.ActivityLog, "User Registration Failed" + result.Reason.ToString());
                             ViewBag.Result = "Registration Failed," + result.Reason.ToString();
                         }
                     }
                     else
                     {
-                        Helper.Utility.AddLog(Constants.LogType.ActivityLog, $"User-provided data is Invalid. Details: Firstname: {model["FirstName"]}, LastName: {model["LastName"]}, Email: {model["EmailAddress"]}, CNIC: {model["CNIC"]}, PhoneNumber: {model["CellPhoneNumber"]} ");
-                        return View(GivenModel);
+                        Utility.AddLog(Constants.LogType.ActivityLog, $"User-provided data is Invalid. Details: Firstname: {model["FirstName"]}, LastName: {model["LastName"]}, Email: {model["EmailAddress"]}, CNIC: {model["CNIC"]}, PhoneNumber: {model["CellPhoneNumber"]} ");
+                        return View(personalInfo);
                     }
-                    return View(GivenModel);
+                    return View(personalInfo);
                 }
                 else
                 {
-                    Helper.Utility.AddLog(Constants.LogType.ActivityLog, $"User-provided data is Invalid. Details: Firstname: {model["FirstName"]}, LastName: {model["LastName"]}, Email: {model["EmailAddress"]}, CNIC: {model["CNIC"]}, PhoneNumber: {model["CellPhoneNumber"]} ");
+                    Utility.AddLog(Constants.LogType.ActivityLog, $"User-provided data is Invalid. Details: Firstname: {model["FirstName"]}, LastName: {model["LastName"]}, Email: {model["EmailAddress"]}, CNIC: {model["CNIC"]}, PhoneNumber: {model["CellPhoneNumber"]} ");
                     ViewBag.Result = "Invalid Model";
-                    return View(GivenModel);
+                    return View(personalInfo);
                 }
             }
             catch (System.Exception ex)
             {
-                Helper.Utility.AddLog(Constants.LogType.ActivityLog, "Exception occurred during user registration." + ((ex.InnerException != null)? ex.InnerException.Message: ""));
+                Utility.AddLog(Constants.LogType.ActivityLog, "Exception occurred during user registration." + ((ex.InnerException != null)? ex.InnerException.Message: ""));
                 ViewBag.Result = "Registration Failed, Please try again later";
-                return View(GivenModel);
+                return View(personalInfo);
             }
         }
         public ActionResult LogOut()
         {
-            Session.Remove("UserId");
+            Session.Remove(Constants.Session.UserSession);
+            Session.Remove(Constants.Session.EducationSession);
+            Session.Remove(Constants.Session.DocumentSession);
             return RedirectToAction("Login","Account");
         }
 

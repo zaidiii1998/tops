@@ -15,7 +15,7 @@
         </div>
         <form method="post">
             <div class="headBox">
-                <h2>HSSC/College Information</h2>
+                <h6>HSSC/College Information</h6>
             </div>
             <div class="row">
                 <div class="col-lg-3">
@@ -115,9 +115,9 @@
                         <input class="form-control Percentage" type="text" id="hsscPercentage" name="hsscPercentage" value="@Model.Education.HSSCPercentage" required>
                     </div>
                 </div>
-            </div>
+            </div><br /><br />
             <div class="headBox">
-                <h2>SSC/School Information</h2>
+                <h6>SSC/School Information</h6>
             </div>
             <div class="row">
                 <div class="col-lg-3">
@@ -141,7 +141,7 @@
             </div>
             <!-- Habib University Section -->
             <div class="headBox">
-                <h2>Intended Program</h2>
+                <h6>Intended Program</h6>
             </div>
             <div class="row">
                 <div class="col-lg-6">
@@ -166,83 +166,85 @@
             </div>
 
 
+            <section style="display:none;">
+                <div class="headBox">
+                    <h2>Subjects Information</h2>
+                </div>
+                <div class="row">
+                    <div class="col-lg-3">
+                        <div class="form-group">
+                            <label>Subject</label>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="form-group">
+                            <label>Obtain Marks</label>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="form-group">
+                            <label>Max Marks</label>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="form-group">
+                            <label>Grade</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div id="divSubjects">
+                            @foreach (var item in Model.Subjects)
+                            {
+                                <div class="row">
+                                    <div class="col-lg-3">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control SubjectName" value="@item.Name">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control SubjectObtain" value="@item.ObtainMarks">
+                                        </div>
+                                    </div><div class="col-lg-3">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control SubjectTotal" value="@item.TotalMarks">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control SubjectGrade" value="@item.Grade">
+                                        </div>
+                                    </div>
+                                </div>
+                            }
 
-            <div class="headBox">
-                <h2>Subjects Information</h2>
-            </div>
-            <div class="row">
-                <div class="col-lg-3">
-                    <div class="form-group">
-                        <label>Subject</label>
+                        </div>
                     </div>
                 </div>
-                <div class="col-lg-3">
-                    <div class="form-group">
-                        <label>Obtain Marks</label>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <button type="button" class="global-btn-purple float-right" onclick="AddRow();"><i class="fa fa-plus"></i></button>
                     </div>
                 </div>
-                <div class="col-lg-3">
-                    <div class="form-group">
-                        <label>Max Marks</label>
-                    </div>
-                </div>
-                <div class="col-lg-3">
-                    <div class="form-group">
-                        <label>Grade</label>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-12">
-                    <div id="divSubjects">
-                        @foreach (var item in Model.Subjects)
+            </section>
+                <hr />
+                <div class="row">
+                    <div class="col-lg-12">
+                        @if (ViewBag.Declaration != 1)
                         {
-                            <div class="row">
-                                <div class="col-lg-3">
-                                    <div class="form-group">
-                                        <input type="text" class="form-control SubjectName" value="@item.Name">
-                                    </div>
-                                </div>
-                                <div class="col-lg-3">
-                                    <div class="form-group">
-                                        <input type="text" class="form-control SubjectObtain" value="@item.ObtainMarks" required="">
-                                    </div>
-                                </div><div class="col-lg-3">
-                                    <div class="form-group">
-                                        <input type="text" class="form-control SubjectTotal" value="@item.TotalMarks" required="">
-                                    </div>
-                                </div>
-                                <div class="col-lg-3">
-                                    <div class="form-group">
-                                        <input type="text" class="form-control SubjectGrade" value="@item.Grade" required="">
-                                    </div>
-                                </div>
-                            </div>
-                        }
+                            <input class="savebtn global-btn-purple  float-right m-1" type="button" onclick="SubmitEducation();" value="Submit">
 
+
+                            <input class="savebtn global-btn-purple  float-right m-1" type="button" id="editEducation" onclick="SaveEducation();" value="Save">
+                        }
+                        else
+                        { <span class="text-danger float-right">You have already Submited your Application</span>
+                        }
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-12">
-                    <button type="button" class="global-btn-purple float-right" onclick="AddRow();"><i class="fa fa-plus"></i></button>
-                </div>
-            </div>
-            <hr />
-            <div class="row">
-                <div class="col-lg-12">
-                    @if (ViewBag.Declaration != 1)
-                    {
-                        <input class="savebtn global-btn-purple  float-right m-1" type="button" onclick="SubmitEducation();" value="Submit">
-
-
-                        <input class="savebtn global-btn-purple  float-right m-1" type="button" id="editEducation" onclick="SaveEducation();" value="Save">
-                    }
-                    else
-                    { <span class="text-danger float-right">You have already Submited your Application</span>
-                    }
-                </div>
-            </div>
+            
         </form>
         <div id="Error">
             <ul></ul>

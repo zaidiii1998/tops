@@ -73,7 +73,7 @@
                 <div class="col-lg-12">
                     @if (ViewBag.Declaration != 1)
                     {
-                        <input class="savebtn global-btn-purple  float-right" type="button" onclick="submitDocuments('@HUTOPS.Helper.Helper.GetSession(HUTOPS.Helper.Constants.Session.UserId)');" value="Submit">
+                        <input class="savebtn global-btn-purple  float-right" type="button" onclick="submitDocuments('@HUTOPS.Helper.Utility.GetUserFromSession().Id');" value="Submit">
                     }
                     else
                     {

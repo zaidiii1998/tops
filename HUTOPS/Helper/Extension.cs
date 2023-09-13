@@ -28,7 +28,7 @@ namespace HUTOPS.Helper
         {
             if (!filterContext.HttpContext.Request.IsAjaxRequest())
             {
-                if (HttpContext.Current.Session[Constants.Session.UserId] == null
+                if (HttpContext.Current.Session[Constants.Session.UserSession] == null
                     //|| filterContext.HttpContext.Session["Email"] == null
                     )
                 {

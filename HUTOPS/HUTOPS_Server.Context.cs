@@ -75,7 +75,7 @@ namespace HUTOPS
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<WEB_UserLogin_Result>("WEB_CheckPersonalInfo", idParameter);
         }
     
-        public virtual ObjectResult<WEB_UserLogin_Result> WEB_CreateUser(string firstName, string middleName, string lastName, string cNIC, string cellPhoneNumber, string emailAddress, string password)
+        public virtual ObjectResult<WEB_UserLogin_Result> WEB_CreateUser(string firstName, string middleName, string lastName, string cNIC, string cellPhoneNumber, string emailAddress, string password, string hearAboutHU, string hearAboutHUOther)
         {
             var firstNameParameter = firstName != null ?
                 new ObjectParameter("FirstName", firstName) :
@@ -105,7 +105,15 @@ namespace HUTOPS
                 new ObjectParameter("Password", password) :
                 new ObjectParameter("Password", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<WEB_UserLogin_Result>("WEB_CreateUser", firstNameParameter, middleNameParameter, lastNameParameter, cNICParameter, cellPhoneNumberParameter, emailAddressParameter, passwordParameter);
+            var hearAboutHUParameter = hearAboutHU != null ?
+                new ObjectParameter("HearAboutHU", hearAboutHU) :
+                new ObjectParameter("HearAboutHU", typeof(string));
+    
+            var hearAboutHUOtherParameter = hearAboutHUOther != null ?
+                new ObjectParameter("HearAboutHUOther", hearAboutHUOther) :
+                new ObjectParameter("HearAboutHUOther", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<WEB_UserLogin_Result>("WEB_CreateUser", firstNameParameter, middleNameParameter, lastNameParameter, cNICParameter, cellPhoneNumberParameter, emailAddressParameter, passwordParameter, hearAboutHUParameter, hearAboutHUOtherParameter);
         }
     
         public virtual int WEB_GetAll()

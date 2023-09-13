@@ -181,6 +181,8 @@ function validateRegisterForm() {
     const email = $('#email').val();
     const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
 
+    
+
     if (pass.value != cpass.value || pass.value.length < 6) {
         pass.style.borderBlockColor = "red";
         cpass.style.borderBlockColor = "red";
@@ -191,11 +193,26 @@ function validateRegisterForm() {
         debugger
         $('#emailError').html("Please Enter a valid Email Address");
         return false;
+    } else if ($('#comboHearHU').val() == '') {
+        $('#hearAboutHU').html('Please Select Value');
+        return false;
+    } else if ($('#comboHearHU').val() == 'Other' && $('#OtherHearHU').val() == '') {
+        $('#hearAboutHUOther').html('Please Enter Other Value');
+        return false;
     } else {
         pass.style.borderBlockColor = "green";
         cpass.style.borderBlockColor = "green";
         return true;
     }
 
+}
+
+function ShowHideField(divId, selectId, value) {
+    var select = document.getElementById(selectId);
+    if (select.value === value) {
+        $('#' + divId).show();
+    } else {
+        $('#' + divId).hide();
+    }
 }
 

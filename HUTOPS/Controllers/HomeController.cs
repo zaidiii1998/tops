@@ -5,6 +5,7 @@ using HUTOPS.Models;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System;
+using System.EnterpriseServices.Internal;
 
 namespace HUTOPS.Controllers
 {
@@ -17,9 +18,7 @@ namespace HUTOPS.Controllers
         {
             try
             {
-                int userId = int.Parse(Helper.Utility.GetSession(Constants.Session.UserId));
-                var user = DB.PersonalInformations.ToList();
-                var LoginUser = user.Where(x => x.Id == userId).FirstOrDefault();
+                var LoginUser = Utility.GetUserFromSession();
                 var country = DB.Countries.ToList();
                 var province = DB.States.ToList();
                 var city = DB.Cities.ToList();
@@ -52,7 +51,7 @@ namespace HUTOPS.Controllers
             {
                 var personalInfo = Utility.GetUserFromSession();
                 List<Activity> activities = DB.Activities.ToList().Where(x => x.UserId == personalInfo.Id).ToList();
-                ViewBag.Declaration = DB.PersonalInformations.ToList().Where(x => x.Id == personalInfo.Id).ToList().FirstOrDefault().Declaration;
+                ViewBag.Declaration = personalInfo.Declaration;
                 return View(activities);
             }
             catch (System.Exception)
@@ -64,9 +63,14 @@ namespace HUTOPS.Controllers
         {
             try
             {
-                Helper.Utility.AddLog(Constants.LogType.ActivityLog, $"User request to Update Activities ");
-                int userId = int.Parse(Helper.Utility.GetSession(Constants.Session.UserId));
-                List<Activity> activities = DB.Activities.ToList().Where(x => x.UserId == userId).ToList();
+                Utility.AddLog(Constants.LogType.ActivityLog, $"User request to Update Activities ");
+                var personalInfo = Utility.GetUserFromSession();
+
+                if (personalInfo.Declaration == 1)
+                {
+                    return Json(new { status = false, message = "You have already submited your application" });
+                }
+                List<Activity> activities = DB.Activities.ToList().Where(x => x.UserId == personalInfo.Id).ToList();
                 
                 ActivityName = ActivityName[0].Split(',');
                 ActivityDuration = ActivityDuration[0].Split(',');
@@ -84,7 +88,7 @@ namespace HUTOPS.Controllers
                         if (!string.IsNullOrEmpty(ActivityName[i])) { 
                             DB.Activities.Add(new Activity
                             {
-                                UserId = userId,
+                                UserId = personalInfo.Id,
                                 Name = ActivityName[i],
                                 Duration = ActivityDuration[i],
                                 CreatedDatetime = DateTime.Now
@@ -113,10 +117,7 @@ namespace HUTOPS.Controllers
         {
             try
             {
-                int userId = int.Parse(Helper.Utility.GetSession(Constants.Session.UserId));
-                var user = DB.PersonalInformations.ToList().Where(x => x.Id == userId).ToList().FirstOrDefault();
-
-                return View(user);
+                return View(Utility.GetUserFromSession());
             }
             catch (System.Exception)
             {
@@ -129,18 +130,23 @@ namespace HUTOPS.Controllers
             {
                 Utility.AddLog(Constants.LogType.ActivityLog, $"User request to update test date");
 
-                int userId = int.Parse(Helper.Utility.GetSession(Constants.Session.UserId));
-                var user = DB.PersonalInformations.ToList().Where(x => x.Id == userId).ToList().FirstOrDefault();
-                if(!string.IsNullOrEmpty(Date))
+                var user = Utility.GetUserFromSession();
+                if (user.Declaration == 1)
                 {
-                    Helper.Utility.AddLog(Constants.LogType.ActivityLog, $"User provided Date is Verified");
+                    return Json(new { status = false, message = "You have already submited your application" });
+                }
+
+                if (!string.IsNullOrEmpty(Date))
+                {
+                    Utility.AddLog(Constants.LogType.ActivityLog, $"User provided Date is Verified");
                     user.TestDate = Date;
                     DB.SaveChanges();
+                    Utility.SetSession(user);
                     return Json(new { status = true, message = "Test Date Updated Successfully" });
                 }
                 else
                 {
-                    Helper.Utility.AddLog(Constants.LogType.ActivityLog, $"User provided Date is NULL or empty string");
+                    Utility.AddLog(Constants.LogType.ActivityLog, $"User provided Date is NULL or empty string");
                     return Json(new { status = false, message = "Please select Test Date " });
                 }
                 
@@ -156,19 +162,20 @@ namespace HUTOPS.Controllers
         {
             try
             {
-                model.Id = int.Parse(Helper.Utility.GetSession(Constants.Session.UserId));
+                var personalInfo = Utility.GetUserFromSession();
+                model.Id = personalInfo.Id;
                 model.IsCompleted = 0;
-                Helper.Utility.AddLog(Constants.LogType.ActivityLog, $"User-requested to Update Personal Information. Details: {JsonConvert.SerializeObject(model)}");
+                Utility.AddLog(Constants.LogType.ActivityLog, $"User-requested to Update Personal Information. Details: {JsonConvert.SerializeObject(model)}");
                 DB.WEB_UpdatePersonal(
                         model.Id,
-                        Helper.Utility.ToCamelCase(model.FirstName),
-                        Helper.Utility.ToCamelCase(model.MiddleName),
-                        Helper.Utility.ToCamelCase(model.LastName),
-                        Helper.Utility.ToCamelCase(model.FatherFirstName),
-                        Helper.Utility.ToCamelCase(model.FatherMiddleName),
-                        Helper.Utility.ToCamelCase(model.FatherLastName),
+                        model.FirstName,
+                        model.MiddleName,
+                        model.LastName,
+                        model.FatherFirstName,
+                        model.FatherMiddleName,
+                        model.FatherLastName,
                         model.Gender == null? null : model.Gender.ToString(),
-                        Helper.Utility.ToCamelCase(model.HusbandName),
+                        model.HusbandName,
                         model.DateOfBirth == null ? null : model.DateOfBirth.ToString(),
                         model.CNIC,
                         model.EmailAddress,
@@ -183,19 +190,20 @@ namespace HUTOPS.Controllers
                         model.GuardianEmailAddress,
                         // Address
                         model.ResidentialAddress,
-                        model.ResidentialCountry == null ? null : DB.Countries.ToList().Where(x => x.Id == int.Parse(model.ResidentialCountry)).ToList().FirstOrDefault().Name,
-                        model.ResidentialProvince == null ? null : DB.States.ToList().Where(x => x.Id == int.Parse(model.ResidentialProvince)).ToList().FirstOrDefault().Name,
-                        model.ResidentialCity == null ? null : model.ResidentialCity == "other" ? "Other" : DB.Cities.ToList().Where(x => x.Id == int.Parse(model.ResidentialCity)).ToList().FirstOrDefault().Name,
+                        model.ResidentialCountry,
+                        model.ResidentialProvince,
+                        model.ResidentialCity,
                         model.ResidentialCityOther,
                         model.ResidentialPostalCode,
                         model.PermanentAddress,
-                        model.PermanentCountry == null ? null : DB.Countries.ToList().Where(x => x.Id == int.Parse(model.PermanentCountry)).ToList().FirstOrDefault().Name,
-                        model.PermanentProvince == null ? null : DB.States.ToList().Where(x => x.Id == int.Parse(model.PermanentProvince)).ToList().FirstOrDefault().Name,
-                        model.PermanentCity == null ? null : model.PermanentCity == "other" ? "Other" : DB.Cities.ToList().Where(x => x.Id == int.Parse(model.PermanentCity)).ToList().FirstOrDefault().Name,
+                        model.PermanentCountry,
+                        model.PermanentProvince,
+                        model.PermanentCity,
                         model.PermanentCityOther,
                         model.PermanentPostalCode,
                         model.IsCompleted
                         );
+                Utility.SetSession(model);
                 Helper.Utility.AddLog(Constants.LogType.ActivityLog, $"User has Successfully Updated Personal Information. Details: {JsonConvert.SerializeObject(model)}");
                 return Json(new { status = true, message = "Personal Information Successfully Updated" });
             }
@@ -210,7 +218,12 @@ namespace HUTOPS.Controllers
         {
             try
             {
-                personalInfo.Id = int.Parse(Helper.Utility.GetSession(Constants.Session.UserId));
+                var user = Utility.GetUserFromSession();
+                if (user.Declaration == 1)
+                {
+                    return Json(new { status = false, message = "You have already submited your application" });
+                }
+                personalInfo.Id = user.Id;
                 personalInfo.IsCompleted = 1;
                 Helper.Utility.AddLog(Constants.LogType.ActivityLog, $"User-requested to Submit Personal Information. Details: {JsonConvert.SerializeObject(personalInfo)}");
                 var IsValid = true;
@@ -304,17 +317,17 @@ namespace HUTOPS.Controllers
                 }
                 if (IsValid)
                 {
-                    Helper.Utility.AddLog(Constants.LogType.ActivityLog, $"User provided data is Valid for Submit Personal Information. Details: {JsonConvert.SerializeObject(personalInfo)}");
+                    Utility.AddLog(Constants.LogType.ActivityLog, $"User provided data is Valid for Submit Personal Information. Details: {JsonConvert.SerializeObject(personalInfo)}");
                     DB.WEB_UpdatePersonal(
                         personalInfo.Id,
                         personalInfo.FirstName = Helper.Utility.ToCamelCase(personalInfo.FirstName),
-                        Helper.Utility.ToCamelCase(personalInfo.MiddleName),
-                        Helper.Utility.ToCamelCase(personalInfo.LastName),
-                        Helper.Utility.ToCamelCase(personalInfo.FatherFirstName),
-                        Helper.Utility.ToCamelCase(personalInfo.FatherMiddleName),
-                        Helper.Utility.ToCamelCase(personalInfo.FatherLastName),
+                        personalInfo.MiddleName,
+                        personalInfo.LastName,
+                        personalInfo.FatherFirstName,
+                        personalInfo.FatherMiddleName,
+                        personalInfo.FatherLastName,
                         personalInfo.Gender.ToString(),
-                        Helper.Utility.ToCamelCase(personalInfo.HusbandName),
+                        personalInfo.HusbandName,
                         personalInfo.DateOfBirth.ToString(),
                         personalInfo.CNIC,
                         personalInfo.EmailAddress,
@@ -329,29 +342,31 @@ namespace HUTOPS.Controllers
                         personalInfo.GuardianEmailAddress,
                         // Address
                         personalInfo.ResidentialAddress,
-                        personalInfo.ResidentialCountry == null ? null : DB.Countries.ToList().Where(x => x.Id == int.Parse(personalInfo.ResidentialCountry)).ToList().FirstOrDefault().Name,
-                        personalInfo.ResidentialProvince == null ? null : DB.States.ToList().Where(x => x.Id == int.Parse(personalInfo.ResidentialProvince)).ToList().FirstOrDefault().Name,
-                        personalInfo.ResidentialCity == null ? null : personalInfo.ResidentialCity == "other" ? "Other" : DB.Cities.ToList().Where(x => x.Id == int.Parse(personalInfo.ResidentialCity)).ToList().FirstOrDefault().Name,
+                        personalInfo.ResidentialCountry,
+                        personalInfo.ResidentialProvince,
+                        personalInfo.ResidentialCity,
                         personalInfo.ResidentialCityOther,
                         personalInfo.ResidentialPostalCode,
                         personalInfo.PermanentAddress,
-                        personalInfo.PermanentCountry == null ? null : DB.Countries.ToList().Where(x => x.Id == int.Parse(personalInfo.PermanentCountry)).ToList().FirstOrDefault().Name,
-                        personalInfo.PermanentProvince == null ? null : DB.States.ToList().Where(x => x.Id == int.Parse(personalInfo.PermanentProvince)).ToList().FirstOrDefault().Name,
-                        personalInfo.PermanentCity == null ? null : personalInfo.PermanentCity == "other" ? "Other" : DB.Cities.ToList().Where(x => x.Id == int.Parse(personalInfo.PermanentCity)).ToList().FirstOrDefault().Name,
+                        personalInfo.PermanentCountry,
+                        personalInfo.PermanentProvince,
+                        personalInfo.PermanentCity,
                         personalInfo.PermanentCityOther,
                         personalInfo.PermanentPostalCode,
                         personalInfo.IsCompleted
                         );
-                    Utility.SetUserSession(personalInfo);
+                    Utility.SetSession(personalInfo);
                     TempData["Result"] = "Personal Inofmation Submited Successfully";
                     Helper.Utility.AddLog(Constants.LogType.ActivityLog, $"User Submited Personal Information Successfully. Details: {JsonConvert.SerializeObject(personalInfo)}");
                     return RedirectToAction("Index", "Education");
                 }
                 else
                 {
+
                     var country = DB.Countries.ToList();
                     var province = DB.States.ToList();
                     var city = DB.Cities.ToList();
+
                     var pageModel = new PersonalInfoPageModel()
                     {
                         Main = personalInfo,

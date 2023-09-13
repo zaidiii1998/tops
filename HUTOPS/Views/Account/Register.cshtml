@@ -2,26 +2,66 @@
 @{
     Layout = "~/Views/Shared/_loginLayout.cshtml";
 }
-<div class="container-fluid" style="width:85%;">
-    <div class="">
-        <section class="signInWrap">
-            <div class="container-fluid">
+<section class="signInWrap">
+    <div class="container-fluid p-0">
+        <div class="row m-0">
+            <div class="col-lg-6 p-0">
                 <div class="row">
-                    @*<div class="col-lg-6 p-0 none991">
-            <div class="imgWrap">
-                <img src="~/Content/img/image-content.jpg" alt="Alternate Text" />
+                    <div>
+                        <p><strong>Who Can Apply?</strong></p>
+                        <ul style="font-size:16px;">
+                            <li>
+                                Graduated from or Enrolled in any of the following board:
+                                <ul>
+                                    <li>
+                                        <ol>
+                                            <li>Board of Intermediate Education</li>
+                                            <li>Federal Board of Pakistan</li>
+                                            <li>Aga Khan University Examination Board</li>
+                                        </ol>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>Have completed or will complete HSSC II by September 2023</li>
+                            <li>Planning to pursue a four-year undergraduate program at Habib University</li>
+                            <li>
+                                Have scored the following marks:
+                                <ul>
+                                    <li>Science Group: <br>80% or above in SSC (Matric) 75% or above in HSSC (Intermediate)</li>
+                                    <li>Other Groups:<br>75% or above in SSC (Matric) 70% or above in HSSC (Intermediate)</li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <p><strong>Read the following instructions carefully before starting your application.</strong></p>
+                        <ul style="font-size:16px;">
+                            <li>You need to fill in this form in one sitting as you cannot save it to be completed later on.</li>
+                            <li>
+                                Before starting filling in the HU TOPS Registration Form, keep the following documents and files ready with you:
+                                <ul>
+                                    <li>Soft copy/digital copy of your passport size photograph</li>
+                                    <li>Your SSC Marks Sheet and its scanned copy/image</li>
+                                    <li>Your HSSC Marks Sheet and its scanned copy/image <br><span style="color: #ea3223;"><em>Note: This requirement is only mandatory for students who have received their HSSC-I or HSSC-II marks-sheet from their respective examination board.</em></span></li>
+                                    <li>Your B-Form or CNIC and its scanned copy/image (If available)</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             </div>
-        </div>*@
-                    <div class="col-md-3 p-2"></div>
-                    <div class="col-md-6 p-2">
-                        <div class="contentWrap">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <img src="~/Content/img/mct-logo.svg" alt="Alternate Text" />
-                                    <h1>Testimony for student diverse interest, talent and skills !</h1>
-                                    <p>A purpose-built digital platform to collect, verify and report student meta-curricular experience during their tenure at Habib University.</p>
-                                </div>
+            <div class="col-lg-6 p-0">
+                <div class="contentWrap">
+                    <br /><br /><br /><br />
+                    <div class="row d-flex justify-content-center">
+                        <div class="col-md-12">
+                            <img src="~/Content/img/HUTOPS-logo.png" style="max-width: 36%;" alt="Alternate Text" />
+
+                            <div class="headBox">
+                                <h2>Register New Application</h2>
                             </div>
+                        </div>
+                    </div>
+                    <div class="row d-flex justify-content-center">
+                        <div class="col-md-12">
                             <form method="post" id="registerForm" onsubmit=" return validateRegisterForm()">
                                 @Html.AntiForgeryToken()
                                 <div class="row">
@@ -49,22 +89,20 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
                                         <div class="form-group">
                                             <label class="float-left" for="cnic"><b>CNIC</b></label>
                                             <input class="input input100 cnic" type="tel" placeholder="Enter CNIC" id="cnic" name="cnic" onchange="checkCNIC(this.id);" value="@Model.CNIC" maxlength="15" required>
                                             @Html.ValidationMessageFor(model => model.CNIC, "", new { @class = "text-danger", id = "cnicError" })
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
                                         <div class="form-group">
                                             <label class="float-left" for="number"><b>Phone Number</b></label>
                                             <input class="input input100 number" type="tel" placeholder="Enter Phone Number" id="number" onchange="checkPhoneNumber(this.id);" value="@Model.CellPhoneNumber" name="CellPhoneNumber" maxlength="12" required>
                                             @Html.ValidationMessageFor(model => model.CellPhoneNumber, "", new { @class = "text-danger", id = "numberError" })
                                         </div>
                                     </div>
-                                </div>
-                                <div class="row">
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label class="float-left" for="email"><b>Email</b></label>
@@ -73,10 +111,12 @@
 
                                         </div>
                                     </div>
+                                </div>
+                                <div class="row">
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label class="float-left" for="password"><b>Password</b></label>
-                                            <input class="input input100" type="password" placeholder="**************" name="Password" id="password" maxlength="25" minlength="6" oninput="validatePassword('password','cpassword')" required>
+                                            <input class="input input100" type="password" placeholder="Enter Password" name="Password" id="password" maxlength="25" minlength="6" oninput="validatePassword('password','cpassword')" required>
                                             @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger", id = "passwordError" })
                                         </div>
 
@@ -84,8 +124,41 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label class="float-left" for="cpassword"><b> Confirm Password</b></label>
-                                            <input class="input input100" type="password" placeholder="**************" name="ConfirmPassword" id="cpassword" maxlength="25" minlength="6" oninput="validatePassword('password','cpassword')" required>
+                                            <input class="input input100" type="password" placeholder="Enter Password" name="ConfirmPassword" id="cpassword" maxlength="25" minlength="6" oninput="validatePassword('password','cpassword')" required>
                                             @Html.ValidationMessageFor(model => model.Id, "", new { @class = "text-danger", id = "cpasswordError" })
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <label>How did you first hear about Habib University?</label>
+                                            <select class="input input100" id="comboHearHU" name="HearAboutHU" onchange="ShowHideField('divOtherHearHU','comboHearHU','Other')" required>
+                                                <option value="" selected disabled>How did you first hear about Habib University?</option>
+                                                <option value="College/School visit by HU TOPS team">College/School visit by HU TOPS team</option>
+                                                <option value="HU TOPS/Habib University Website">HU TOPS/Habib University Website</option>
+                                                <option value="HU TOPS/Habib University Facebook page">HU TOPS/Habib University Facebook page</option>
+                                                <option value="Habib University Instagram page">Habib University Instagram page</option>
+                                                <option value="Through Teacher/Tutor ">Through Teacher/Tutor </option>
+                                                <option value="Poster/Flyer">Poster/Flyer</option>
+                                                <option value="College Magazine">College Magazine</option>
+                                                <option value="Newspaper">Newspaper</option>
+                                                <option value="School Expo/Career Fair">School Expo/Career Fair</option>
+                                                <option value="Dawn/Jung/Express Education Expo">Dawn/Jung/Express Education Expo</option>
+                                                <option value="Habib University Open House">Habib University Open House</option>
+                                                <option value="HU TOPS Admissions Camp">HU TOPS Admissions Camp</option>
+                                                <option value="Through a Habib University/HU TOPS Student">Through a Habib University/HU TOPS Student</option>
+                                                <option value="Through Peers/Friends/Colleagues">Through Peers/Friends/Colleagues</option>
+                                                <option value="Television/Radio">Television/Radio</option>
+                                                <option value="Other">Other</option>
+                                            </select>
+                                            @Html.ValidationMessageFor(model => model.HearAboutHU, "", new { @class = "text-danger", id = "hearAboutHU" })
+
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="form-group" id="divOtherHearHU" style="display:none;">
+                                            <label>Other</label>
+                                            <input type="text" class="input input100" id="OtherHearHU" name="HearAboutHUOther" />
+                                            @Html.ValidationMessageFor(model => model.HearAboutHUOther, "", new { @class = "text-danger", id = "hearAboutHUOther" })
                                         </div>
                                     </div>
                                 </div>
@@ -110,23 +183,38 @@
 
                             </form>
                         </div>
-                            </div>
-                            <div class="col-md-3 p-2"></div>
-                        </div>
-                <div class="row m-0 justify-content-end">
-                    <div class="col-lg-6 p-0 justify-content-flex-end">
-                        <p class="loginFooter">© Habib University <span>|</span> Powered by <a href="#" class="hoverUnderLine">HUIT</a> (ISO 27001 Certified)</p>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
+        <div class="row m-0 justify-content-end">
+            <div class="col-lg-6 p-0 justify-content-flex-end">
+                <p class="loginFooter">© Habib University <span>|</span> Powered by <a href="#" class="hoverUnderLine">HUIT</a> (ISO 27001 Certified)</p>
+            </div>
+        </div>
     </div>
-</div>
-<script>
-    // Get the modal
-    @*if ('@ViewBag.Result' !== "")
-    {
-    ShowDivError('@ViewBag.Result');
-    }*@
+</section>
 
-</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

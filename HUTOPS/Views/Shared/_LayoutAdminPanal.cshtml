@@ -37,7 +37,7 @@
         }
 
             .styled-checkbox + .checkbox-label:before {
-                content: '\2713'; /* Checkmark symbol */
+                content: ''; /* Checkmark symbol */
                 display: inline-block;
                 vertical-align: middle;
                 margin-right: 5px;
@@ -54,6 +54,7 @@
 
             /* Style the custom checkbox when checked */
             .styled-checkbox:checked + .checkbox-label:before {
+                content: '\2713';
                 background-color: #333;
                 color: white;
             }
@@ -91,7 +92,7 @@
             <div class="row align-items-center">
                 <div class="col-xl-2 col-lg-3 col-md-3">
                     <div class="LogoWraper">
-                        <img src="~/Content/img/mct-logo.svg" alt="Alternate Text" />
+                        <img src="~/Content/img/HUTOPS-logo.png" style="max-width: 52%;" alt="Alternate Text" />
                     </div>
                 </div>
                 <div class="col-xl-10 col-lg-9 col-md-9">
@@ -115,7 +116,7 @@
                                         //}
                                     }
                                     @*<h4 class="designation">Role: @role</h4>*@
-                                    <h5 class="userName"><i class="fa-solid fa-user" style="font-size: 15px;margin-right: 10px;"></i>  @Utility.GetSession(Constants.Session.UserName)</h5>
+                                    <h5 class="userName"><i class="fa-solid fa-user" style="font-size: 15px;margin-right: 10px;"></i>  @Utility.GetUserFromSession().FirstName  @Utility.GetUserFromSession().LastName </h5>
                                 </div>
 
                                 <ul class="logoutDrop">

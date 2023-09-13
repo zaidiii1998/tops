@@ -111,8 +111,8 @@
                         </select>
                     </div>
                 </div>
-                <div class="col-lg-4">
-                    <div class="form-group" id="divHusband" style="display:none;">
+                <div class="col-lg-4" id="divHusband" style="display:none;">
+                    <div class="form-group">
                         <label for="husbandName">Husband's Name:</label>
                         <input class="form-control" type="text" id="husbandName" maxlength="25" name="HusbandName">
                     </div>
@@ -131,7 +131,7 @@
             </div>
             @*<form action="#" method="post">*@
             <div class="row">
-                <div class="col-lg-12">
+                <div class="col-lg-4">
                     <div class="form-group">
                         <label for="cellPhone">Cell Phone Number:</label>
                         <input class="form-control number" type="tel" id="cellPhone" name="CellPhoneNumber" placeholder="0333-3333333" maxlength="15" value="@Model.Main.CellPhoneNumber" readonly>
@@ -147,8 +147,8 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-lg-4">
-                    <div id="WhatsAppSection" style="display: none;">
+                <div class="col-lg-4" id="WhatsAppSection" style="display: none;">
+                    <div>
                         <div class="form-group">
                             <label for="whatsappNumber ">WhatsApp Number:</label>
                             <input class="form-control number" type="tel" id="whatsappNumber" name="WhatsAppNumber" value="@Model.Main.WhatsAppNumber" maxlength="15" placeholder="0333-3333333">
@@ -195,19 +195,17 @@
             </div>
 
             <div class="row">
-                <div class="col-lg-12">
+                <div class="col-lg-4">
                     <div class="form-group">
                         <label for="residentialAddress">Residential Address:</label>
                         <textarea class="form-control" id="residentialAddress" name="ResidentialAddress" rows="2" cols="100" maxlength="100" required> @Model.Main.ResidentialAddress</textarea><br><br>
                     </div>
                 </div>
-            </div>
-            <div class="row">
                 <div class="col-lg-4">
                     <div class="form-group">
                         <label for="residentialCountry">Select Country:</label>
                         @*@Html.DropDownList("ResidentialCountry",(IEnumerable<SelectListItem>)ViewBag.Country, "--Please Select--", new { @class = "form-control", @id = "residentialCountry" })*@
-                        <select class="form-control" id="residentialCountry" name="ResidentialCountry" onchange="updateProvince(this.id,'residentialProvince');" required>
+                        <select class="form-control" id="residentialCountry" onchange="updateProvince(this.id, 'residentialProvince');" required>
                             <option value="" selected disabled>Select Country</option>
                             @foreach (var item in Model.Country)
                             {
@@ -227,7 +225,7 @@
                     <div class="form-group">
                         <label for="residentialProvince">Select Province/State:</label>
                         @*@Html.DropDownList("ResidentialProvince", (IEnumerable<SelectListItem>)ViewBag.Province, "--Please Select--", new { @class = "form-control", @id = "residentialProvince" })*@
-                        <select class="form-control" id="residentialProvince" name="ResidentialProvince" onchange="updateCities(this.id,'residentialCity');" required>
+                        <select class="form-control" id="residentialProvince" onchange="updateCities(this.id,'residentialCity');" required>
                             <option value="" selected disabled>Select Provience</option>
                             @foreach (var item in Model.Province)
                             {
@@ -243,12 +241,14 @@
                         </select>
                     </div>
                 </div>
+            </div>
+            <div class="row">
                 <div class="col-lg-4">
                     <div class="form-group">
                         <label for="residentialCity">City:</label>
                         @*@Html.DropDownList("ResidentialCity", (IEnumerable<SelectListItem>)ViewBag.City, "--Please Select--", new { @class = "form-control", @id = "residentialCity" })*@
 
-                        <select class="form-control" id="residentialCity" name="ResidentialCity" onchange="toggleOtherCityInput(this.id,'divResidentialCityOther')" required>
+                        <select class="form-control" id="residentialCity" onchange="toggleOtherCityInput(this.id,'divResidentialCityOther')" required>
                             <option value="" selected disabled>Select City</option>
                             @foreach (var item in Model.City)
                             {
@@ -266,12 +266,10 @@
                         </select>
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-4">
-                    <div class="form-group" id="divResidentialCityOther" style="display: none;">
+                <div class="col-lg-4" id="divResidentialCityOther" style="display: none;">
+                    <div class="form-group">
                         <label for="residentialCityOther">Other City:</label>
-                        <input class="form-control" type="text" id="residentialCityOther" name="ResidentialCityOther" value="value=" @Model.Main.ResidentialCityOther ""><br><br>
+                        <input class="form-control" type="text" id="residentialCityOther" name="ResidentialCityOther" value="@Model.Main.ResidentialCityOther"><br><br>
                     </div>
                 </div>
                 <div class="col-lg-4">
@@ -290,21 +288,19 @@
 
             <div id="permanentForm" style="display: none;">
                 <div class="row">
-                    <div class="col-lg-12">
+                    <div class="col-lg-4">
                         <div class="form-group">
                             <label for="permanentAddress">Permanent Address:</label>
                             <textarea class="form-control" id="permanentAddress" name="PermanentAddress" rows="2" cols="50" maxlength="100">@Model.Main.PermanentAddress</textarea><br><br>
                         </div>
                     </div>
-                </div>
-                <div class="row">
                     <div class="col-lg-4">
                         <div class="form-group">
                             <label for="permanentCountry">Select Country:</label>
                             @*@Html.DropDownList("PermanentCountry", (IEnumerable<SelectListItem>)ViewBag.Country, "--Please Select--", new { @class = "form-control", @id = "permanentCountry" })*@
 
-                            <select class="form-control" id="permanentCountry" name="PermanentCountry" onchange="updateProvince(this.id,'permanentProvince');">
-                                <option value="" disabled>Select Country</option>
+                            <select class="form-control" id="permanentCountry" onchange="updateProvince(this.id,'permanentProvince');">
+                                <option value="" selected disabled>Select Country</option>
                                 @foreach (var item in Model.Country)
                                 {
                                     if (item.Name == Model.Main.PermanentCountry)
@@ -324,8 +320,8 @@
                         <div class="form-group">
                             <label for="permanentProvince">Select Province/State:</label>
                             @*@Html.DropDownList("PermanentProvince", (IEnumerable<SelectListItem>)ViewBag.Province, "--Please Select--", new { @class = "form-control", @id = "permanentProvince" })*@
-                            <select class="form-control" id="permanentProvince" name="PermanentProvince" onchange="updateCities(this.id,'permanentCity');">
-                                <option value="" disabled>Select Provience</option>
+                            <select class="form-control" id="permanentProvince" onchange="updateCities(this.id,'permanentCity');">
+                                <option value="" selected disabled>Select Provience</option>
                                 @foreach (var item in Model.Province)
                                 {
                                     if (item.Name == Model.Main.PermanentProvince)
@@ -340,12 +336,14 @@
                             </select>
                         </div>
                     </div>
+                </div>
+                <div class="row">
                     <div class="col-lg-4">
                         <div class="form-group">
                             <label for="permanentCity">City:</label>
                             @*@Html.DropDownList("PermanentCity", (IEnumerable<SelectListItem>)ViewBag.City, "--Please Select--", new { @class = "form-control", @id = "permanentCity" })*@
-                            <select class="form-control" id="permanentCity" name="PermanentCity" onchange="toggleOtherCityInput(this.id,'divPermanentCityOther')">
-                                <option value="" disabled>Select City</option>
+                            <select class="form-control" id="permanentCity" onchange="toggleOtherCityInput(this.id,'divPermanentCityOther')">
+                                <option value="" selected disabled>Select City</option>
                                 @foreach (var item in Model.City)
                                 {
                                     if (item.Name == Model.Main.PermanentCity)
@@ -361,12 +359,11 @@
                             </select>
                         </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-4">
-                        <div class="form-group" id="divPermanentCityOther">
+
+                    <div class="col-lg-4"  id="divPermanentCityOther" style="display: none;">
+                        <div class="form-group">
                             <label for="permanentCityOther">Other City:</label>
-                            <input class="form-control" type="text" id="permanentCityOther" name="PermanentCityOther" value="@Model.Main.PermanentCityOther" style="display: none;"><br><br>
+                            <input class="form-control" type="text" id="permanentCityOther" name="PermanentCityOther" value="@Model.Main.PermanentCityOther"><br><br>
                         </div>
                     </div>
                     <div class="col-lg-4">
@@ -390,6 +387,13 @@
                     }
                 </div>
             </div>
+            <input type="text" name="ResidentialCountry" id="txtResidentialCountry" style="display:none;" />
+            <input type="text" name="ResidentialProvince" id="txtResidentialProvince" style="display:none;" />
+            <input type="text" name="ResidentialCity" id="txtResidentialCity" style="display:none;" />
+
+            <input type="text" name="PermanentCountry" id="txtPermanentCountry" style="display:none;" />
+            <input type="text" name="PermanentProvince" id="txtPermanentProvince" style="display:none;" />
+            <input type="text" name="PermanentCity" id="txtPermanentCity" style="display:none;" />
         </form>
 
 

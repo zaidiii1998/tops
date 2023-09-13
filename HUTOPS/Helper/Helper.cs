@@ -3,7 +3,9 @@ using System;
 using System.Data;
 using System.Globalization;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Web;
+using static HUTOPS.Helper.Constants;
 
 namespace HUTOPS.Helper
 {
@@ -26,17 +28,28 @@ namespace HUTOPS.Helper
             // Use string.Join to concatenate the array elements with commas
             return string.Join(",", array);
         }
-        public static string GetSession(string SessionName)
-        {
-            return HttpContext.Current.Session[SessionName].ToString();
-        }
-
-        public static void SetUserSession(PersonalInformation personalInformation)
+        public static void SetSession(PersonalInformation personalInformation)
         {
             var userObjSession = HttpContext.Current.Session[Constants.Session.UserSession];
             if (personalInformation != null)
             {
                 HttpContext.Current.Session[Constants.Session.UserSession] = personalInformation;
+            }
+        }
+        public static void SetSession(Educational educational)
+        {
+            var userObjSession = HttpContext.Current.Session[Constants.Session.UserSession];
+            if (educational != null)
+            {
+                HttpContext.Current.Session[Constants.Session.EducationSession] = educational;
+            }
+        }
+        public static void SetSession(Document document)
+        {
+            var userObjSession = HttpContext.Current.Session[Constants.Session.UserSession];
+            if (document != null)
+            {
+                HttpContext.Current.Session[Constants.Session.DocumentSession] = document;
             }
         }
         public static PersonalInformation GetUserFromSession()
@@ -52,18 +65,35 @@ namespace HUTOPS.Helper
             return personalInformation;
 
         }
-        public static void SetSession(string SessionName, string SessionValue)
+        public static Educational GetEducationFromSession()
         {
-            HttpContext.Current.Session[SessionName] = SessionValue;
+
+            Educational educational = new Educational();
+            var userObjSession = HttpContext.Current.Session[Constants.Session.EducationSession];
+            if (userObjSession != null)
+            {
+                educational = userObjSession as Educational;
+            }
+
+            return educational;
+
         }
-        public static async void AddLogs() { 
-          
-        }
-        public static void AddLog(string LogType, string Description)
+        public static Document GetDocumentFromSession()
         {
-            
-            HU_TOPSEntities DB = new HU_TOPSEntities();
-            DB.Logs.Add(new Log
+
+            Document document = new Document();
+            var userObjSession = HttpContext.Current.Session[Constants.Session.DocumentSession];
+            if (userObjSession != null)
+            {
+                document = userObjSession as Document;
+            }
+
+            return document;
+
+        }
+        public static void AddLog(string LogType, string Description) {
+            HUTOPSEntities DB = new HUTOPSEntities();
+             DB.Logs.Add(new Log
             {
                 Type = LogType,
                 Description = Description,
@@ -71,6 +101,7 @@ namespace HUTOPS.Helper
             });
             DB.SaveChanges();
         }
+        
         public static bool isValidEmail(string inputEmail)
         {
             string strRegex = @"^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}" +

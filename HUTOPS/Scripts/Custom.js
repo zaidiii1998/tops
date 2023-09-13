@@ -213,6 +213,12 @@ function toggleOtherCityInput(cityId, otherCityId) {
     var select = document.getElementById(cityId.toString(), otherCityId.toString());
     var otherInput = document.getElementById(otherCityId.toString());
 
+    if (cityId == 'residentialCity') {
+        $('#txtResidentialCity').val($('#residentialCity :selected').text())
+    } else {
+        $('#txtPermanentCity').val($('#permanentCity :selected').text())
+    }
+
     if (select.value === "other") {
         otherInput.style.display = "block";
     } else {
@@ -239,7 +245,12 @@ function toggleFormSection(sectionId, checkboxId) {
 }
 function updateCities(comboProvinceId, ComboCityId) {
     var provinceId = $('#' + comboProvinceId).val();
-    
+
+    if (comboProvinceId == 'residentialProvince') {
+        $('#txtResidentialProvince').val($('#residentialProvince :selected').text())
+    } else {
+        $('#txtPermanentProvince').val($('#permanentProvince :selected').text())
+    }
     CallAsyncService("/Common/GetCities?ProvinceId=" + provinceId, null, updateCitiesCB)
     function updateCitiesCB(response) {
         $('#' + ComboCityId).html('');
@@ -254,6 +265,11 @@ function updateCities(comboProvinceId, ComboCityId) {
 
 function updateProvince(comboCountryId, comboProvinceId) {
     debugger
+    if (comboCountryId == 'residentialCountry') {
+        $('#txtResidentialCountry').val($('#residentialCountry :selected').text())
+    } else {
+        $('#txtPermanentCountry').val($('#permanentCountry :selected').text())
+    }
     var countryId = $('#' + comboCountryId).val();
     var param = {
         CountryId: countryId
@@ -294,16 +310,16 @@ function Save() {
         guardianEmailAddress: $('#guardianEmail').val(),
         // Address info
         residentialAddress: $('#residentialAddress').val(),
-        residentialCountry: $('#residentialCountry').val(),
-        residentialProvince: $('#residentialProvince').val(),
-        residentialCity: $('#residentialCity').val(),
+        residentialCountry: $('#residentialCountry :selected').text(),
+        residentialProvince: $('#residentialProvince :selected').text(),
+        residentialCity: $('#residentialCity :selected').text(),
         residentialCityOther: $('#residentialCityOther').val(),
         residentialPostalCode: $('#residentialPostalCode').val(),
 
         permanentAddress: $('#permanentAddress').val(),
-        permanentCountry: $('#permanentCountry').val(),
-        permanentProvince: $('#permanentProvince').val(),
-        permanentCity: $('#permanentCity').val(),
+        permanentCountry: $('#permanentCountry :selected').text(),
+        permanentProvince: $('#permanentProvince :selected').text(),
+        permanentCity: $('#permanentCity :selected').text(),
         permanentCityOther: $('#permanentCityOther').val(),
         permanentPostalCode: $('#permanentPostalCode').val(),
 
@@ -351,6 +367,14 @@ function validatePersonalInfoForm() {
     ) {
         return false;
     } else {
+        debugger
+        $('#residentialCountry').val($('#residentialCountry :selected').text());
+        $('#residentialProvince').val($('#residentialProvince :selected').text());
+        $('#residentialCity').val($('#residentialCity :selected').text());
+
+        $('#permanentCountry').val($('#permanentCountry :selected').text());
+        $('#permanentProvince').val($('#permanentProvince :selected').text());
+        $('#permanentCity').val($('#permanentCity :selected').text());
         return true;
     }
 
@@ -561,8 +585,10 @@ function SaveEducation() {
         CollegeStartDate: $('#startingYear').val(),
         CollegeCompletionDate: $('#completionYear').val(),
         BoardOfEdu: $('#boardOfEducation').val(),
+        BoardName: $('#boardOfEducation').text(),
 
         GroupOfStudy: $('#groupOfStudy').val(),
+        GroupName: $('#groupOfStudy').text(),
         SchoolName: $('#secondarySchoolName').val(),
         SchoolAddress: $('#secondarySchoolAddress').val(),
         SSCPercentage: $('#sscPercentage').val(),
@@ -664,8 +690,10 @@ function SubmitEducation() {
             CollegeStartDate: $('#startingYear').val(),
             CollegeCompletionDate: $('#completionYear').val(),
             BoardOfEdu: $('#boardOfEducation').val(),
+            BoardName: $('#boardOfEducation').text(),
 
             GroupOfStudy: $('#groupOfStudy').val(),
+            GroupName: $('#groupOfStudy').text(),
             SchoolName: $('#secondarySchoolName').val(),
             SchoolAddress: $('#secondarySchoolAddress').val(),
             SSCPercentage: $('#sscPercentage').val(),
@@ -802,6 +830,7 @@ function AddActivityRow() {
             button.onclick = removeActivityRow(this);
             button.className = "form-control";
             button.classList.add("trashActivity");
+            button.classList.add("border-0");
             var icon = document.createElement("i");
             icon.classList.add("fa");
             icon.classList.add("fa-trash");
@@ -856,13 +885,9 @@ function submitDeclaration() {
     var check1 = $('#validateLaw').is(':checked');
     var check2 = $('#invalidInfo').is(':checked');
     var check3 = $('#validInfo').is(':checked');
-    if ($('#comboHearHU').val() == null || $('#comboHearHU').val() == "") {
-        ShowDivError("How did you first hear about Habib University : is required");
-        return false;
-    }
     if (check1 == true && check2 == true && check3 == true) {
 
-        CallAsyncService("/Declaration/Submit?check1=true&check2=true&check3=true&HearHU=" + $('#comboHearHU').val() + "&HearHUOther=" + $('#OtherHearHU').val(), null, submitDeclarationCB)
+        CallAsyncService("/Declaration/Submit?check1=true&check2=true&check3=true", null, submitDeclarationCB)
         function submitDeclarationCB(response) {
             if (response.status) {
                 ShowDivSuccess(response.message)
