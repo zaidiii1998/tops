@@ -386,13 +386,13 @@ function validatePersonalInfoForm() {
 function LoadEducationalData(Model) {
     $('#currentLevel').val(Model.Education.CurrentLevelOfEdu == null ? '' : Model.Education.CurrentLevelOfEdu.toString());
     $('#currentLevel').trigger('change');
-    $('#startingYear').val(Model.Education.CollegeStartDate == null ? '' : Model.Education.CollegeStartDate.toString());
+    $('#startingYear').val(Model.Education.HSSCStartDate == null ? '' : Model.Education.HSSCStartDate.toString());
     $('#startingYear').trigger('change');
-    $('#completionYear').val(Model.Education.CollegeCompletionDate == null ? '' : Model.Education.CollegeCompletionDate.toString());
+    $('#completionYear').val(Model.Education.HSSCCompletionDate == null ? '' : Model.Education.HSSCCompletionDate.toString());
     $('#completionYear').trigger('change');
 
     var program = Model.Education.IntendedProgram.toString();
-    if (program.substring(0, 2) == 'BS' && program.substring(0, 2) != 'BSc') {
+    if (Model.Education.HUSchoolName.toString() === 'SE') {
         $('#dhananiSchool').click();
     } else {
         $('#artsSchool').click();
@@ -526,10 +526,11 @@ function loadPrograms(radioValue) {
     const selectBox = document.getElementById('degreeProgram');
     selectBox.innerHTML = ''; // Clear previous options
 
-    if (radioValue === 'dhanani') {
+    if (radioValue === 'SE') {
         const programs = ['BS Electrical Engineering', 'BS Computer Science', 'BS Computer Engineering'];
         const defaultOption = document.createElement('option');
         defaultOption.text = 'Select Program';
+        defaultOption.value = "";
         selectBox.add(defaultOption);
         programs.forEach(programs => {
             const option = document.createElement('option');
@@ -537,10 +538,11 @@ function loadPrograms(radioValue) {
             option.text = programs;
             selectBox.add(option);
         });
-    } else if (radioValue === 'arts') {
+    } else if (radioValue === 'SA') {
         const programs = ['BA (Honours) Communication and Design', 'BSc (Honours) Social Development and Policy', 'BA (Honors) Comparative Humanities'];
         const defaultOption = document.createElement('option');
         defaultOption.text = 'Select Program';
+        defaultOption.value = "";
         selectBox.add(defaultOption);
         programs.forEach(programs => {
             const option = document.createElement('option');
@@ -579,21 +581,22 @@ function SaveEducation() {
 
     var param = {
         CurrentLevelOfEdu: $('#currentLevel').val(),
-        CurrentCollege: $('#collegeName').val(),
-        CollegeAddress: $('#collegeAddress').val(),
+        HSSCSchoolName: $('#collegeName').val(),
+        HSSCSchoolAddress: $('#collegeAddress').val(),
         HSSCPercentage: $('#hsscPercentage').val(),
-        CollegeStartDate: $('#startingYear').val(),
-        CollegeCompletionDate: $('#completionYear').val(),
-        BoardOfEdu: $('#boardOfEducation').val(),
-        BoardName: $('#boardOfEducation').text(),
+        HSSCStartDate: $('#startingYear').val(),
+        HSSCCompletionDate: $('#completionYear').val(),
+        HSSCBoardId: $('#boardOfEducation').val(),
+        HSSCBoardName: $('#boardOfEducation').text(),
 
-        GroupOfStudy: $('#groupOfStudy').val(),
-        GroupName: $('#groupOfStudy').text(),
-        SchoolName: $('#secondarySchoolName').val(),
-        SchoolAddress: $('#secondarySchoolAddress').val(),
+        HSSCGroupId: $('#groupOfStudy').val(),
+        HSSCGroupName: $('#groupOfStudy').text(),
+        SSCSchoolName: $('#secondarySchoolName').val(),
+        SSCSchoolAddress: $('#secondarySchoolAddress').val(),
         SSCPercentage: $('#sscPercentage').val(),
         UniversityName: $('#universityName').val(),
         IntendedProgram: $('#degreeProgram').val(),
+        HUSchoolName: $('input[name="huSchool"]:checked').val(),
 
         SubjectName: SubjectName,
         SubjectObtain: SubjectObtain,
@@ -648,16 +651,13 @@ function SubmitEducation() {
             $(this).removeClass("error");
         }
     });
-    $('input[type=radio][required]').each(function () {
 
-        if (($(this).val().trim() === '') || ($(this).val() === null)) {
-            isValid = false;
-            $(this).addClass("error");
-
-        } else {
-            $(this).removeClass("error");
-        }
-    });
+    if ($('input[name="huSchool"]:checked').val() == "" || $('input[name="huSchool"]:checked').val() == null) {
+        isValid = false;
+        $('#errHUSchool').html("Please select School Name");
+    } else {
+        $('#errHUSchool').html("");
+    }
 
     if (isValid)
         {
@@ -684,21 +684,22 @@ function SubmitEducation() {
 
         var param = {
             CurrentLevelOfEdu: $('#currentLevel').val(),
-            CurrentCollege: $('#collegeName').val(),
-            CollegeAddress: $('#collegeAddress').val(),
+            HSSCSchoolName: $('#collegeName').val(),
+            HSSCSchoolAddress: $('#collegeAddress').val(),
             HSSCPercentage: $('#hsscPercentage').val(),
-            CollegeStartDate: $('#startingYear').val(),
-            CollegeCompletionDate: $('#completionYear').val(),
-            BoardOfEdu: $('#boardOfEducation').val(),
-            BoardName: $('#boardOfEducation').text(),
+            HSSCStartDate: $('#startingYear').val(),
+            HSSCCompletionDate: $('#completionYear').val(),
+            HSSCBoardId: $('#boardOfEducation').val(),
+            HSSCBoardName: $('#boardOfEducation').text(),
 
-            GroupOfStudy: $('#groupOfStudy').val(),
-            GroupName: $('#groupOfStudy').text(),
-            SchoolName: $('#secondarySchoolName').val(),
-            SchoolAddress: $('#secondarySchoolAddress').val(),
+            HSSCGroupId: $('#groupOfStudy').val(),
+            HSSCGroupName: $('#groupOfStudy').text(),
+            SSCSchoolName: $('#secondarySchoolName').val(),
+            SSCSchoolAddress: $('#secondarySchoolAddress').val(),
             SSCPercentage: $('#sscPercentage').val(),
             UniversityName: $('#universityName').val(),
             IntendedProgram: $('#degreeProgram').val(),
+            HUSchoolName: $('input[name="huSchool"]:checked').val(),
 
             SubjectName: SubjectName,
             SubjectObtain: SubjectObtain,

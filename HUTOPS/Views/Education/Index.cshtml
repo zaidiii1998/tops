@@ -44,7 +44,7 @@
                             <option value="" selected>Select Board</option>
                             @foreach (var item in Model.Boards)
                             {
-                                if (item.Id.ToString() == Model.Education.BoardOfEdu)
+                                if (item.Id.ToString() == Model.Education.HSSCBoardId)
                                 {
                                     <option value="@item.Id" selected>@item.Name</option>
                                 }
@@ -63,7 +63,7 @@
                             <option value="">Select Group</option>
                             @foreach (var item in Model.Groups)
                             {
-                                if (item.Id.ToString() == Model.Education.GroupOfStudy)
+                                if (item.Id.ToString() == Model.Education.HSSCGroupId)
                                 {
                                     <option value="@item.Id" selected>@item.Name</option>
                                 }
@@ -81,13 +81,13 @@
                 <div class="col-lg-3">
                     <div class="form-group">
                         <label for="collegeName">Current College/Last College Name:</label>
-                        <input class="form-control" type="text" id="collegeName" name="collegeName" value="@Model.Education.CurrentCollege" required>
+                        <input class="form-control" type="text" id="collegeName" name="collegeName" value="@Model.Education.HSSCSchoolName" required>
                     </div>
                 </div>
                 <div class="col-lg-3">
                     <div class="form-group">
                         <label for="collegeAddress">College Address with City Name:</label>
-                        <textarea class="form-control" id="collegeAddress" name="collegeAddress" rows="2" required>@Model.Education.CollegeAddress</textarea>
+                        <textarea class="form-control" id="collegeAddress" name="collegeAddress" rows="2" required>@Model.Education.HSSCSchoolAddress</textarea>
                     </div>
                 </div>
                 <div class="col-lg-3">
@@ -123,13 +123,13 @@
                 <div class="col-lg-3">
                     <div class="form-group">
                         <label for="secondarySchoolName">Secondary Education School Name:</label>
-                        <input class="form-control" type="text" id="secondarySchoolName" name="secondarySchoolName" value="@Model.Education.SchoolName" required>
+                        <input class="form-control" type="text" id="secondarySchoolName" name="secondarySchoolName" value="@Model.Education.SSCSchoolName" required>
                     </div>
                 </div>
                 <div class="col-lg-3">
                     <div class="form-group">
                         <label for="secondarySchoolAddress">Secondary Education School Address with City Name:</label>
-                        <textarea class="form-control" type="text" id="secondarySchoolAddress" name="secondarySchoolAddress" rows="2" required>@Model.Education.SchoolAddress</textarea>
+                        <textarea class="form-control" type="text" id="secondarySchoolAddress" name="secondarySchoolAddress" rows="2" required>@Model.Education.SSCSchoolAddress</textarea>
                     </div>
                 </div>
                 <div class="col-lg-3">
@@ -147,11 +147,12 @@
                 <div class="col-lg-6">
                     <div class="form-group">
                         <label>Which HU School are you planning to apply to at Habib University?</label><br>
-                        <input type="radio" id="dhananiSchool" name="huSchool" value="dhanani" onclick="loadPrograms(this.value)" required>
+                        <input type="radio" id="dhananiSchool" name="huSchool" value="SE" onclick="loadPrograms(this.value)" required>
                         <label for="dhananiSchool">Dhanani School of Science and Engineering</label><br>
-                        <input type="radio" id="artsSchool" name="huSchool" value="arts" onclick="loadPrograms(this.value)">
+                        <input type="radio" id="artsSchool" name="huSchool" value="SA" onclick="loadPrograms(this.value)">
                         <label for="artsSchool">School of Arts, Humanities and Social Sciences</label><br><br>
                     </div>
+                    <span class="text-danger" id="errHUSchool"></span>
                 </div>
                 <div class="col-lg-3">
                     <div class="form-group">
@@ -163,6 +164,7 @@
                         </select>
                     </div>
                 </div>
+                
             </div>
 
 

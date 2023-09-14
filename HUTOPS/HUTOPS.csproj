@@ -150,6 +150,9 @@
     <Compile Include="Country.cs">
       <DependentUpon>HUTOPS_Server.tt</DependentUpon>
     </Compile>
+    <Compile Include="database_firewall_rules.cs">
+      <DependentUpon>HUTOPS_Server.tt</DependentUpon>
+    </Compile>
     <Compile Include="Document.cs">
       <DependentUpon>HUTOPS_Server.tt</DependentUpon>
     </Compile>

@@ -17,6 +17,7 @@
         <EntityTypeShape EntityType="HUTOPSModel.PersonalInformation" Width="1.5" PointX="2.75" PointY="7.75" IsExpanded="true" />
         <EntityTypeShape EntityType="HUTOPSModel.State" Width="1.5" PointX="8.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="HUTOPSModel.EducationalSubject" Width="1.5" PointX="8.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HUTOPSModel.database_firewall_rules" Width="1.5" PointX="5.375" PointY="9.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

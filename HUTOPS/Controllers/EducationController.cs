@@ -3,7 +3,6 @@ using HUTOPS.Models;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Dynamic;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -60,20 +59,21 @@ namespace HUTOPS.Controllers
                 var EducationalId = DB.WEB_InsertEducation(
                     educational.UserId, 
                     educational.CurrentLevelOfEdu, 
-                    educational.CurrentCollege,
-                    educational.CollegeAddress,
-                    educational.CollegeStartDate.ToString(),
-                    educational.CollegeCompletionDate.ToString(),
+                    educational.HSSCSchoolName,
+                    educational.HSSCSchoolAddress,
+                    educational.HSSCStartDate.ToString(),
+                    educational.HSSCCompletionDate.ToString(),
                     educational.HSSCPercentage,
-                    educational.BoardOfEdu,
-                    educational.BoardName,
-                    educational.GroupOfStudy,
-                    educational.GroupName,
-                    educational.SchoolName,
-                    educational.SchoolAddress,
+                    educational.HSSCBoardId,
+                    educational.HSSCBoardName,
+                    educational.HSSCGroupId,
+                    educational.HSSCGroupName,
+                    educational.SSCSchoolName,
+                    educational.SSCSchoolAddress,
                     educational.SSCPercentage,
                     educational.UniversityName,
                     educational.IntendedProgram,
+                    educational.HUSchoolName,
                     educational.IsCompleted,
                     SubNames + ',',
                     SubObtain + ',',
@@ -106,44 +106,44 @@ namespace HUTOPS.Controllers
                 }
 
                 
-                var SubNames = Helper.Utility.ConvertArrayToCSV(SubjectName);
-                var SubObtain = Helper.Utility.ConvertArrayToCSV(SubjectObtain);
-                var SubTotal = Helper.Utility.ConvertArrayToCSV(SubjectTotal);
-                var SubGrade = Helper.Utility.ConvertArrayToCSV(SubjectGrade);
-                educational.BoardName = DB.Boards.ToList().Where(x => x.Id == (educational.BoardOfEdu == "" ? 0: educational.BoardOfEdu == null ? 0 : int.Parse(educational.BoardOfEdu))).ToList().FirstOrDefault().Name;
-                educational.GroupName = DB.BoardGroups.ToList().Where(x => x.Id == (educational.GroupOfStudy == "" ? 0 : educational.GroupOfStudy == null ? 0 : int.Parse(educational.GroupOfStudy))).ToList().FirstOrDefault().Name;
+                var SubNames = Utility.ConvertArrayToCSV(SubjectName);
+                var SubObtain = Utility.ConvertArrayToCSV(SubjectObtain);
+                var SubTotal = Utility.ConvertArrayToCSV(SubjectTotal);
+                var SubGrade = Utility.ConvertArrayToCSV(SubjectGrade);
+                //educational.BoardName = DB.Boards.ToList().Where(x => x.Id == (educational.BoardOfEdu == "" ? 0: educational.BoardOfEdu == null ? 0 : int.Parse(educational.BoardOfEdu))).ToList().FirstOrDefault().Name;
+                //educational.GroupName = DB.BoardGroups.ToList().Where(x => x.Id == (educational.GroupOfStudy == "" ? 0 : educational.GroupOfStudy == null ? 0 : int.Parse(educational.GroupOfStudy))).ToList().FirstOrDefault().Name;
                 educational.IsCompleted = 1;
                 if (string.IsNullOrEmpty(educational.CurrentLevelOfEdu))
                 {
                     IsValid = false;
                     Err.Add("Your Current Level of Study: is required");
                 }
-                if (string.IsNullOrEmpty(educational.CollegeStartDate.ToString()))
+                if (string.IsNullOrEmpty(educational.HSSCStartDate.ToString()))
                 {
                     IsValid = false;
                     Err.Add("Starting Year: is required");
                 }
-                if (string.IsNullOrEmpty(educational.CollegeCompletionDate.ToString()))
+                if (string.IsNullOrEmpty(educational.HSSCCompletionDate.ToString()))
                 {
                     IsValid = false;
                     Err.Add("Completion Year: is required");
                 }
-                if (string.IsNullOrEmpty(educational.CurrentCollege))
+                if (string.IsNullOrEmpty(educational.HSSCSchoolName))
                 {
                     IsValid = false;
                     Err.Add("Current College/Last College Name: is required");
                 }
-                if (string.IsNullOrEmpty(educational.CollegeAddress))
+                if (string.IsNullOrEmpty(educational.HSSCSchoolAddress))
                 {
                     IsValid = false;
                     Err.Add("College Address with City Name: is required");
                 }
-                if (string.IsNullOrEmpty(educational.BoardOfEdu))
+                if (string.IsNullOrEmpty(educational.HSSCBoardId))
                 {
                     IsValid = false;
                     Err.Add("Board Of Education: is required");
                 }
-                if (string.IsNullOrEmpty(educational.GroupOfStudy))
+                if (string.IsNullOrEmpty(educational.HSSCGroupId))
                 {
                     IsValid = false;
                     Err.Add("Group Of Studies: is required");
@@ -153,12 +153,12 @@ namespace HUTOPS.Controllers
                     IsValid = false;
                     Err.Add("Overall HSSC Percentage: is required");
                 }
-                if (string.IsNullOrEmpty(educational.SchoolName))
+                if (string.IsNullOrEmpty(educational.SSCSchoolName))
                 {
                     IsValid = false;
                     Err.Add("Secondary Education School Name: is required");
                 }
-                if (string.IsNullOrEmpty(educational.SchoolAddress))
+                if (string.IsNullOrEmpty(educational.SSCSchoolAddress))
                 {
                     IsValid = false;
                     Err.Add("Secondary Education School Address with City Name: is required");
@@ -178,20 +178,21 @@ namespace HUTOPS.Controllers
                     var EducationalId = DB.WEB_InsertEducation(
                     user.Id,
                     educational.CurrentLevelOfEdu,
-                    educational.CurrentCollege,
-                    educational.CollegeAddress,
-                    educational.CollegeStartDate.ToString(),
-                    educational.CollegeCompletionDate.ToString(),
+                    educational.HSSCSchoolName,
+                    educational.HSSCSchoolAddress,
+                    educational.HSSCStartDate.ToString(),
+                    educational.HSSCCompletionDate.ToString(),
                     educational.HSSCPercentage,
-                    educational.BoardOfEdu,
-                    educational.BoardName,
-                    educational.GroupOfStudy,
-                    educational.GroupName,
-                    educational.SchoolName,
-                    educational.SchoolAddress,
+                    educational.HSSCBoardId,
+                    educational.HSSCBoardName,
+                    educational.HSSCGroupId,
+                    educational.HSSCGroupName,
+                    educational.SSCSchoolName,
+                    educational.SSCSchoolAddress,
                     educational.SSCPercentage,
                     educational.UniversityName,
                     educational.IntendedProgram,
+                    educational.HUSchoolName,
                     educational.IsCompleted,
                     SubNames + ',',
                     SubObtain + ',',
