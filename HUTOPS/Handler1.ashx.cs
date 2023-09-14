@@ -35,9 +35,14 @@ namespace HUTOPS
                 List<string> Err = new List<string>();
 
                 string uploadDirectory = context.Server.MapPath("~/UploadedFiles");
+                string UserDirectory = context.Server.MapPath("~/UploadedFiles/" + userId);
                 if (!Directory.Exists(uploadDirectory))
                 {
                     Directory.CreateDirectory(uploadDirectory);
+                }
+                if (!Directory.Exists(UserDirectory))
+                {
+                    Directory.CreateDirectory(UserDirectory);
                 }
                 if ((SSC != null && SSC.ContentLength > 0) && (Photograph != null && Photograph.ContentLength > 0))
                 {
@@ -45,22 +50,22 @@ namespace HUTOPS
                     // Check if files are present
                     if (CnicFile != null && CnicFile.ContentLength > 0)
                     {
-                        CnicPath = Path.Combine(context.Server.MapPath("~/UploadedFiles"), Path.GetFileName(CnicFile.FileName));
+                        CnicPath = Path.Combine(UserDirectory, "CNIC.jpeg" );
                         CnicFile.SaveAs(CnicPath);
                     }
                     if (SSC != null && SSC.ContentLength > 0)
                     {
-                        SSCPath = Path.Combine(context.Server.MapPath("~/UploadedFiles"), Path.GetFileName(SSC.FileName));
+                        SSCPath = Path.Combine(UserDirectory, "SSC Mark Sheet.jpeg");
                         SSC.SaveAs(SSCPath);
                     }
                     if (HSSC != null && HSSC.ContentLength > 0)
                     {
-                        HSSCPath = Path.Combine(context.Server.MapPath("~/UploadedFiles"), Path.GetFileName(HSSC.FileName));
+                        HSSCPath = Path.Combine(UserDirectory, "HSSC Mark Sheet.jpeg");
                         HSSC.SaveAs(HSSCPath);
                     }
                     if (Photograph != null && Photograph.ContentLength > 0)
                     {
-                        PhotographPath = Path.Combine(context.Server.MapPath("~/UploadedFiles"), Path.GetFileName(Photograph.FileName));
+                        PhotographPath = Path.Combine(UserDirectory, "Photo.jpeg");
                         Photograph.SaveAs(PhotographPath);
                     }
                     var document = DB.Documents.Where(x => x.UserId == userId).ToList().FirstOrDefault();
