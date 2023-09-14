@@ -448,4 +448,68 @@ div#contentWrapperDashboard.contentWrapAdon .boxWraper {
 
 
 
-        
+.error {
+    border: 2px solid red !important;
+}
+
+.styled-checkbox {
+    display: none;
+}
+
+    .styled-checkbox + .checkbox-label:before {
+        content: ''; /* Checkmark symbol */
+        display: inline-block;
+        vertical-align: middle;
+        margin-right: 5px;
+        font-size: 18px;
+        color: #333;
+        border: 1px solid #333;
+        width: 20px;
+        height: 20px;
+        text-align: center;
+        line-height: 18px;
+        cursor: pointer;
+        border-radius: 4px;
+    }
+
+    /* Style the custom checkbox when checked */
+    .styled-checkbox:checked + .checkbox-label:before {
+        content: '\2713';
+        background-color: #333;
+        color: white;
+    }
+
+/* Hover effect for the custom checkbox */
+.styled-checkbox {
+    background-color: #f0f0f0;
+    color: #333;
+}
+
+    /* Focus effect for the custom checkbox */
+    .styled-checkbox:focus + .checkbox-label:before {
+        box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.5);
+    }
+
+.loader {
+    position: fixed;
+    z-index: 999;
+    overflow: show;
+    margin: auto;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    width: 20% !important;
+    height: 50% !important;
+}
+
+    .loader:before {
+        content: '';
+        display: block;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(255,255,255,0.5);
+    }       

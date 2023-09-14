@@ -325,10 +325,11 @@ function Save() {
 
 
     };
-
+    $('#mainLoader').show();
     CallAsyncService('/Home/Save', JSON.stringify(param), editSaveCallback);
 
     function editSaveCallback(response) {
+        $('#mainLoader').hide();
         if (response.status) {
             ShowDivSuccess(response.message)
         }
@@ -346,38 +347,47 @@ function LoadDate(stringDate, DateId) {
 }
 
 function validatePersonalInfoForm() {
-
+    var isValid = true;
     debugger
-    if (
-        !validateName('firstName', 'errFirstName') ||
-        !validateName('lirstName', 'errLastName') ||
-        !validateName('fatherFirstName', 'errFatherFName') ||
-        !validateName('fatherLastName', 'errFatherLName') ||
-        ($('#cnic').val() == '')  ||
-        !validateEmail('email', 'errEmail') ||
-        ($('#gender').val() == '') ||
-        ($('#dob').val() == '') ||
-        !($('#cellPhone').val() == '') ||
-        ($('#guardianCellPhone').val() == '') ||
-        !validateEmail('guardianEmail', 'errGuardianEmail') ||
-        ($('#residentialAddress').val() == '') ||
-        ($('#residentialCountry').val() == '') ||
-        ($('#residentialProvince').val() == '') ||
-        ($('#residentialCity').val() == '')
-    ) {
-        return false;
-    } else {
-        debugger
-        $('#residentialCountry').val($('#residentialCountry :selected').text());
-        $('#residentialProvince').val($('#residentialProvince :selected').text());
-        $('#residentialCity').val($('#residentialCity :selected').text());
+    $('input[required]').each(function () {
 
-        $('#permanentCountry').val($('#permanentCountry :selected').text());
-        $('#permanentProvince').val($('#permanentProvince :selected').text());
-        $('#permanentCity').val($('#permanentCity :selected').text());
+        if ($(this).val().trim() === '') {
+            isValid = false;
+            $(this).addClass("error");
+
+        } else {
+            $(this).removeClass("error");
+        }
+    });
+    $('select[required]').each(function () {
+
+        if (($(this).val().trim() === '') || ($(this).val() === null)) {
+            isValid = false;
+            $(this).addClass("error");
+
+        } else {
+            $(this).removeClass("error");
+        }
+    });
+    $('textarea[required]').each(function () {
+
+        if (($(this).val().trim() === '') || ($(this).val() === null)) {
+            isValid = false;
+            $(this).addClass("error");
+
+        } else {
+            $(this).removeClass("error");
+        }
+    });
+    debugger
+    if (isValid) {
+        $('#mainLoader').show();
+        $('#mainForm').submit();
         return true;
+    } else {
+        return false;
     }
-
+    
 }
 
 // Educational Info Functions
@@ -603,10 +613,11 @@ function SaveEducation() {
         SubjectTotal: SubjectTotal,
         SubjectGrade: SubjectGrade
     };
-
+    $('#mainLoader').show();
     CallAsyncService('/Education/Save', JSON.stringify(param), editEducationCallback);
 
     function editEducationCallback(response) {
+        $('#mainLoader').hide();
         debugger
         if (response.status) {
             ShowDivSuccess(response.message)
@@ -706,10 +717,11 @@ function SubmitEducation() {
             SubjectTotal: SubjectTotal,
             SubjectGrade: SubjectGrade
         };
-
+        $('#mainLoader').show();
         CallAsyncService('/Education/Submit', JSON.stringify(param), editEducationCallback);
     
         function editEducationCallback(response) {
+            $('#mainLoader').hide();
             debugger
             if (response.status) {
                 ShowDivSuccess(response.message);
@@ -768,6 +780,7 @@ function submitDocuments(sessionUserId) {
         var form = $('#fileUploadForm');
         var formData = new FormData(form[0]);
         formData.append("UserId", sessionUserId)
+        $('#mainLoader').show();
         $.ajax({
             url: '/Handler1.ashx', // Change the URL to your MVC controller's action
             type: 'POST',
@@ -775,6 +788,7 @@ function submitDocuments(sessionUserId) {
             processData: false,
             contentType: false,
             success: function (response) {
+                $('#mainLoader').hide();
                 debugger
                 if (response.status) {
                     ShowDivSuccess(response.message);
@@ -865,10 +879,11 @@ function SubmitActivity() {
     $(".ActivityDuration").each(function () {
         ActivityDuration.push($(this).val());
     });
-
+    $('#mainLoader').show();
     debugger
     CallAsyncService("/Home/SubmitActivity?ActivityName=" + ActivityName + "&ActivityDuration=" + ActivityDuration, null, SubmitActivityCB)
     function SubmitActivityCB(response) {
+        $('#mainLoader').hide();
         if (response.status) {
             ShowDivSuccess(response.message);
             setTimeout(function () {
@@ -887,9 +902,10 @@ function submitDeclaration() {
     var check2 = $('#invalidInfo').is(':checked');
     var check3 = $('#validInfo').is(':checked');
     if (check1 == true && check2 == true && check3 == true) {
-
+        $('#mainLoader').show();
         CallAsyncService("/Declaration/Submit?check1=true&check2=true&check3=true", null, submitDeclarationCB)
         function submitDeclarationCB(response) {
+            $('#mainLoader').hide();
             if (response.status) {
                 ShowDivSuccess(response.message)
             }
@@ -914,8 +930,10 @@ function SubmitTestDate() {
 
     if (date != null || date != "") {
 
+        $('#mainLoader').show();
         CallAsyncService("/Home/SubmitTestDate?Date=" + date, null, SubmitActivityCB)
         function SubmitActivityCB(response) {
+            $('#mainLoader').hide();
             if (response.status) {
                 ShowDivSuccess(response.message)
                 document.getElementById("redirectToDeclaration").click();

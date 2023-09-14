@@ -1,5 +1,6 @@
 ﻿using HUTOPS.Helper;
 using System;
+using System.Linq;
 using System.Web.Mvc;
 
 namespace HUTOPS.Controllers
@@ -39,11 +40,11 @@ namespace HUTOPS.Controllers
                     Utility.AddLog(Constants.LogType.ActivityLog, $"User has completed All required Sections to submit declarations:");
                     if (check1 && check2 && check3)
                     {
-
-                        personal.Declaration = 1;
-                        personal.SubmissionDate = DateTime.Now;
+                        var person = DB.PersonalInformations.ToList().Where(x => x.Id == personal.Id).FirstOrDefault();
+                        person.Declaration = 1;
+                        person.SubmissionDate = DateTime.Now;
                         DB.SaveChanges();
-                        Utility.SetSession(personal);
+                        Utility.SetSession(person);
 
                         Utility.AddLog(Constants.LogType.ActivityLog, $"Declarations and Aplication Submited Successfully");
                         return Json(new { status = true, message = "Aplication Submited Successfully" });

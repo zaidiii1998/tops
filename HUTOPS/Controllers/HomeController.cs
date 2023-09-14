@@ -21,7 +21,8 @@ namespace HUTOPS.Controllers
                 var LoginUser = Utility.GetUserFromSession();
                 var country = DB.Countries.ToList();
                 var province = DB.States.ToList();
-                var city = DB.Cities.ToList();
+                var UserProvince = province.Where(x => x.Name == LoginUser.ResidentialProvince).FirstOrDefault();
+                var city = DB.Cities.ToList().Where(x => x.StateId == (UserProvince == null? 0 : UserProvince.Id)).ToList();
                 var pageModel = new PersonalInfoPageModel()
                 {
                     Main = LoginUser,
@@ -139,9 +140,10 @@ namespace HUTOPS.Controllers
                 if (!string.IsNullOrEmpty(Date))
                 {
                     Utility.AddLog(Constants.LogType.ActivityLog, $"User provided Date is Verified");
-                    user.TestDate = Date;
+                    var person = DB.PersonalInformations.ToList().Where(x => x.Id == user.Id).FirstOrDefault();
+                    person.TestDate = Date;
                     DB.SaveChanges();
-                    Utility.SetSession(user);
+                    Utility.SetSession(person);
                     return Json(new { status = true, message = "Test Date Updated Successfully" });
                 }
                 else
@@ -320,12 +322,12 @@ namespace HUTOPS.Controllers
                     Utility.AddLog(Constants.LogType.ActivityLog, $"User provided data is Valid for Submit Personal Information. Details: {JsonConvert.SerializeObject(personalInfo)}");
                     DB.WEB_UpdatePersonal(
                         personalInfo.Id,
-                        personalInfo.FirstName = Helper.Utility.ToCamelCase(personalInfo.FirstName),
-                        personalInfo.MiddleName,
-                        personalInfo.LastName,
-                        personalInfo.FatherFirstName,
-                        personalInfo.FatherMiddleName,
-                        personalInfo.FatherLastName,
+                        personalInfo.FirstName = Utility.ToCamelCase(personalInfo.FirstName),
+                        personalInfo.MiddleName = Utility.ToCamelCase(personalInfo.MiddleName),
+                        personalInfo.LastName = Utility.ToCamelCase(personalInfo.LastName),
+                        personalInfo.FatherFirstName = Utility.ToCamelCase(personalInfo.FatherFirstName),
+                        personalInfo.FatherMiddleName = Utility.ToCamelCase(personalInfo.FatherMiddleName),
+                        personalInfo.FatherLastName = Utility.ToCamelCase(personalInfo.FatherLastName),
                         personalInfo.Gender.ToString(),
                         personalInfo.HusbandName,
                         personalInfo.DateOfBirth.ToString(),

@@ -6,24 +6,25 @@
     <div class="container-fluid p-0">
         <div class="row m-0">
             <div class="col-lg-6 p-0 none991">
-                <div class="imgWrap">
-                    <img src="~/Content/img/image-content.jpg" alt="Alternate Text" />
+                <div class="row d-flex justify-content-center">
+                    <img src="~/Content/Images/bg_logo_large.jpg" alt="Alternate Text" />
                 </div>
             </div>
             <div class="col-lg-6 p-0">
                 <div class="contentWrap">
                     <br /><br /><br /><br />
                     <div class="row d-flex justify-content-center">
-                        <div class="col-md-8">
+                        <div class="col-md-12">
                             <img src="~/Content/img/HUTOPS-logo.png" alt="Alternate Text" />
 
-                            <div class="headBox">
-                                <h2>Sign In</h2>
-                            </div>
                         </div>
                     </div>
                     <div class="row d-flex justify-content-center">
                         <div class="col-md-8">
+
+                            <div class="headBox">
+                                <h2>Sign In</h2>
+                            </div>
                             <form method="post">
                                 @Html.AntiForgeryToken()
                                 <div class="row">

@@ -10,7 +10,7 @@
         <div class="headBox">
             <h2>Personal Information</h2>
         </div>
-        <form id="mainForm" method="post" onsubmit="return validatePersonalInfoForm();">
+        <form id="mainForm" method="post">
             @Html.AntiForgeryToken()
             <div class="row">
                 <div class="col-lg-4">
@@ -170,8 +170,8 @@
                         @Html.ValidationMessageFor(model => model.Main.HomePhoneNumber, "", new { @class = "text-danger" })
                     </div>
                 </div>
-            </div>
-            <div class="row">
+            @*</div>
+            <div class="row">*@
                 <div class="col-lg-4">
                     <div class="form-group">
                         <label for="altLandline">Alternate Landline Number:</label>
@@ -378,7 +378,7 @@
                 <div class="col-lg-12">
                     @if (Model.Main.Declaration != 1)
                     {
-                        <input class="savebtn global-btn-purple  float-right m-1" type="submit" value="Submit">
+                        <input class="savebtn global-btn-purple  float-right m-1" type="button" onclick="validatePersonalInfoForm();" value="Submit">
                         <input class="savebtn global-btn-purple  float-right m-1" type="button" onclick="Save()" value="Save">
                     }
                     else
@@ -387,13 +387,13 @@
                     }
                 </div>
             </div>
-            <input type="text" name="ResidentialCountry" id="txtResidentialCountry" style="display:none;" />
-            <input type="text" name="ResidentialProvince" id="txtResidentialProvince" style="display:none;" />
-            <input type="text" name="ResidentialCity" id="txtResidentialCity" style="display:none;" />
+            <input type="text" name="ResidentialCountry" id="txtResidentialCountry" value="@Model.Main.ResidentialCountry" style="display:none;" />
+            <input type="text" name="ResidentialProvince" id="txtResidentialProvince" value="@Model.Main.ResidentialProvince" style="display:none;" />
+            <input type="text" name="ResidentialCity" id="txtResidentialCity" value="@Model.Main.ResidentialCity" style="display:none;" />
 
-            <input type="text" name="PermanentCountry" id="txtPermanentCountry" style="display:none;" />
-            <input type="text" name="PermanentProvince" id="txtPermanentProvince" style="display:none;" />
-            <input type="text" name="PermanentCity" id="txtPermanentCity" style="display:none;" />
+            <input type="text" name="PermanentCountry" id="txtPermanentCountry" value="@Model.Main.PermanentCountry" style="display:none;" />
+            <input type="text" name="PermanentProvince" id="txtPermanentProvince" value="@Model.Main.PermanentProvince" style="display:none;" />
+            <input type="text" name="PermanentCity" id="txtPermanentCity" value="@Model.Main.PermanentCity" style="display:none;" />
         </form>
 
 
@@ -401,12 +401,6 @@
 </div>
 
 
-
-
-
-
-
-qs
 <script>
     LoadDate('@Model.Main.DateOfBirth','dob');
     if ('@ViewBag.Result' !== "")
