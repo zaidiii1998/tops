@@ -17,7 +17,8 @@ namespace HUTOPS.Controllers
         public ActionResult Index()
         {
 
-            var documents = Utility.GetDocumentFromSession();
+            var personalInfo = Utility.GetUserFromSession();
+            var documents = DB.Documents.ToList().Where(x => x.UserId == personalInfo.Id).FirstOrDefault();
             ViewBag.Declaration = Utility.GetUserFromSession().Declaration;
             return View(documents == null? new Document() : documents);
 
@@ -26,7 +27,8 @@ namespace HUTOPS.Controllers
         {
             try
             {
-                var documents = Utility.GetDocumentFromSession();
+                var personalInfo = Utility.GetUserFromSession();
+                var documents = DB.Documents.ToList().Where(x => x.UserId == personalInfo.Id).FirstOrDefault();
                 var url = "";
                 if(documents != null) { 
                 if (doc == 1){url = documents.Photograph == "" ? "" : documents.Photograph.Substring(documents.Photograph.IndexOf("Upload"));}
