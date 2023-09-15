@@ -1,4 +1,5 @@
-﻿using Microsoft.Ajax.Utilities;
+﻿using HUTOPS.Models;
+using Microsoft.Ajax.Utilities;
 using System;
 using System.Data;
 using System.Globalization;
@@ -28,17 +29,26 @@ namespace HUTOPS.Helper
             // Use string.Join to concatenate the array elements with commas
             return string.Join(",", array);
         }
+        public static string GetParam(DTParameters param, int Index)
+        {
+            return param.Columns[Index].Search.Value == null ? null : param.Columns[Index].Search.Value;
+        }
         public static void SetSession(PersonalInformation personalInformation)
         {
-            var userObjSession = HttpContext.Current.Session[Constants.Session.UserSession];
             if (personalInformation != null)
             {
                 HttpContext.Current.Session[Constants.Session.UserSession] = personalInformation;
             }
         }
+        public static void SetSession(Admin admin)
+        {
+            if (admin != null)
+            {
+                HttpContext.Current.Session[Constants.Session.AdminSession] = admin;
+            }
+        }
         public static void SetSession(Educational educational)
         {
-            var userObjSession = HttpContext.Current.Session[Constants.Session.UserSession];
             if (educational != null)
             {
                 HttpContext.Current.Session[Constants.Session.EducationSession] = educational;
@@ -46,7 +56,6 @@ namespace HUTOPS.Helper
         }
         public static void SetSession(Document document)
         {
-            var userObjSession = HttpContext.Current.Session[Constants.Session.UserSession];
             if (document != null)
             {
                 HttpContext.Current.Session[Constants.Session.DocumentSession] = document;
@@ -89,6 +98,19 @@ namespace HUTOPS.Helper
             }
 
             return document;
+
+        }
+        public static Admin GetAdminFromSession()
+        {
+
+            Admin admin = new Admin();
+            var userObjSession = HttpContext.Current.Session[Constants.Session.AdminSession];
+            if (userObjSession != null)
+            {
+                admin = userObjSession as Admin;
+            }
+
+            return admin;
 
         }
         public static void AddLog(string LogType, string Description) {

@@ -9,6 +9,8 @@ namespace HUTOPS.Helper
             public const string UserSession = "LogedInUserSession";
             public const string EducationSession = "LogedInEducationSession";
             public const string DocumentSession = "LogedInDocumentSession";
+
+            public const string AdminSession = "LogedInAdminSession";
         }
         public class LogType
         {

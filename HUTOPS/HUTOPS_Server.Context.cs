@@ -563,5 +563,38 @@ namespace HUTOPS
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<WEB_UserLogin_Result>("WEB_UserLogin", emailParameter, passwordParameter);
         }
+    
+        public virtual ObjectResult<SP_GetStudents_Result> SP_GetStudents(Nullable<int> pageIndex, Nullable<int> pageSize, string hUTOPSId, string name, string cNIC, string phoneNumber, string email)
+        {
+            var pageIndexParameter = pageIndex.HasValue ?
+                new ObjectParameter("PageIndex", pageIndex) :
+                new ObjectParameter("PageIndex", typeof(int));
+    
+            var pageSizeParameter = pageSize.HasValue ?
+                new ObjectParameter("PageSize", pageSize) :
+                new ObjectParameter("PageSize", typeof(int));
+    
+            var hUTOPSIdParameter = hUTOPSId != null ?
+                new ObjectParameter("HUTOPSId", hUTOPSId) :
+                new ObjectParameter("HUTOPSId", typeof(string));
+    
+            var nameParameter = name != null ?
+                new ObjectParameter("Name", name) :
+                new ObjectParameter("Name", typeof(string));
+    
+            var cNICParameter = cNIC != null ?
+                new ObjectParameter("CNIC", cNIC) :
+                new ObjectParameter("CNIC", typeof(string));
+    
+            var phoneNumberParameter = phoneNumber != null ?
+                new ObjectParameter("PhoneNumber", phoneNumber) :
+                new ObjectParameter("PhoneNumber", typeof(string));
+    
+            var emailParameter = email != null ?
+                new ObjectParameter("Email", email) :
+                new ObjectParameter("Email", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_GetStudents_Result>("SP_GetStudents", pageIndexParameter, pageSizeParameter, hUTOPSIdParameter, nameParameter, cNICParameter, phoneNumberParameter, emailParameter);
+        }
     }
 }

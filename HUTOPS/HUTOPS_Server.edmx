@@ -178,6 +178,7 @@ warning 6002: The table/view 'HUTOPS.dbo.EducationalSubjects' does not have a pr
           <Property Name="CreatedDatetime" Type="datetime2" Precision="7" />
           <Property Name="Declaration" Type="int" />
           <Property Name="IsCompleted" Type="int" />
+          <Property Name="UserType" Type="int" />
         </EntityType>
         <EntityType Name="State">
           <Key>
@@ -214,6 +215,15 @@ warning 6002: The table/view 'HUTOPS.sys.database_firewall_rules' does not have 
         <Function Name="InsertGroupSubjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="SubjectNames" Type="nvarchar(max)" Mode="In" />
           <Parameter Name="GroupId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_GetStudents" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="PageIndex" Type="int" Mode="In" />
+          <Parameter Name="PageSize" Type="int" Mode="In" />
+          <Parameter Name="HUTOPSId" Type="varchar" Mode="In" />
+          <Parameter Name="Name" Type="varchar" Mode="In" />
+          <Parameter Name="CNIC" Type="nvarchar" Mode="In" />
+          <Parameter Name="PhoneNumber" Type="varchar" Mode="In" />
+          <Parameter Name="Email" Type="varchar" Mode="In" />
         </Function>
         <Function Name="WEB_CheckPersonalInfo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Id" Type="int" Mode="In" />
@@ -543,6 +553,7 @@ warning 6002: The table/view 'HUTOPS.sys.database_firewall_rules' does not have 
           <Property Name="CreatedDatetime" Type="DateTime" Precision="7" />
           <Property Name="Declaration" Type="Int32" />
           <Property Name="IsCompleted" Type="Int32" />
+          <Property Name="UserType" Type="Int32" />
         </EntityType>
         <EntityType Name="State">
           <Key>
@@ -719,6 +730,15 @@ warning 6002: The table/view 'HUTOPS.sys.database_firewall_rules' does not have 
             <Parameter Name="Password" Mode="In" Type="String" />
           </FunctionImport>
           <EntitySet Name="database_firewall_rules" EntityType="HUTOPSModel.database_firewall_rules" />
+          <FunctionImport Name="SP_GetStudents" ReturnType="Collection(HUTOPSModel.SP_GetStudents_Result)">
+            <Parameter Name="PageIndex" Mode="In" Type="Int32" />
+            <Parameter Name="PageSize" Mode="In" Type="Int32" />
+            <Parameter Name="HUTOPSId" Mode="In" Type="String" />
+            <Parameter Name="Name" Mode="In" Type="String" />
+            <Parameter Name="CNIC" Mode="In" Type="String" />
+            <Parameter Name="PhoneNumber" Mode="In" Type="String" />
+            <Parameter Name="Email" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="WEB_UserLogin_Result">
           <Property Type="Int32" Name="Response" Nullable="false" />
@@ -740,6 +760,69 @@ warning 6002: The table/view 'HUTOPS.sys.database_firewall_rules' does not have 
           <Property Name="create_date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="modify_date" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
+        <ComplexType Name="SP_GetStudents_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="HUTopId" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="AppId" Nullable="true" />
+          <Property Type="String" Name="FirstName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="MiddleName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="LastName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="FatherFirstName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="FatherMiddleName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="FatherLastName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Gender" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="HusbandName" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="DateOfBirth" Nullable="true" />
+          <Property Type="String" Name="CountyAdd" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="CellPhoneNumber" Nullable="false" MaxLength="15" />
+          <Property Type="String" Name="AlternateCellPhoneNumber" Nullable="true" MaxLength="15" />
+          <Property Type="String" Name="TellUs" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="ResidentialAddress" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="ResidentialCity" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="ResidentialCityOther" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="ResidentialProvince" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="ResidentialCountry" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="ResidentialPostalCode" Nullable="true" />
+          <Property Type="String" Name="PermanentAddress" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="PermanentCity" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="PermanentCityOther" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="PermanentProvince" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="PermanentCountry" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="PermanentPostalCode" Nullable="true" />
+          <Property Type="String" Name="CNIC" Nullable="false" MaxLength="15" />
+          <Property Type="String" Name="EmailAddress" Nullable="false" MaxLength="30" />
+          <Property Type="String" Name="AlterEmailAddress" Nullable="true" MaxLength="30" />
+          <Property Type="Binary" Name="Password" Nullable="false" MaxLength="50" />
+          <Property Type="DateTime" Name="SaveDate" Nullable="true" />
+          <Property Type="DateTime" Name="UpdateDate" Nullable="true" />
+          <Property Type="Int32" Name="AppStatus" Nullable="true" />
+          <Property Type="Int32" Name="StudentStatus" Nullable="true" />
+          <Property Type="Int32" Name="TempId" Nullable="true" />
+          <Property Type="String" Name="School" Nullable="true" MaxLength="2" />
+          <Property Type="Int32" Name="SchoolCode" Nullable="true" />
+          <Property Type="String" Name="SchoolName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="SchoolNameOther" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="CurrentQualification" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="CurrentQualificationOther" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="AlternateLandline" Nullable="true" MaxLength="15" />
+          <Property Type="Int32" Name="UserId" Nullable="true" />
+          <Property Type="String" Name="TestDate" Nullable="true" MaxLength="100" />
+          <Property Type="DateTime" Name="SubmissionDate" Nullable="true" />
+          <Property Type="Int32" Name="Retake" Nullable="true" />
+          <Property Type="Int32" Name="IsAppliedBefore" Nullable="true" />
+          <Property Type="Int32" Name="AppliedBeforeMonth" Nullable="true" />
+          <Property Type="Int32" Name="AppliedBeforeYear" Nullable="true" />
+          <Property Type="String" Name="HomePhoneNumber" Nullable="true" MaxLength="15" />
+          <Property Type="String" Name="WhatsAppNumber" Nullable="true" MaxLength="15" />
+          <Property Type="String" Name="GuardianCellPhoneNumber" Nullable="true" MaxLength="12" />
+          <Property Type="String" Name="GuardianEmailAddress" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="HearAboutHU" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="HearAboutHUOther" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="CreatedDatetime" Nullable="true" />
+          <Property Type="Int32" Name="Declaration" Nullable="true" />
+          <Property Type="Int32" Name="IsCompleted" Nullable="true" />
+          <Property Type="Int32" Name="Count" Nullable="true" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -853,6 +936,7 @@ warning 6002: The table/view 'HUTOPS.sys.database_firewall_rules' does not have 
           <EntitySetMapping Name="PersonalInformations">
             <EntityTypeMapping TypeName="HUTOPSModel.PersonalInformation">
               <MappingFragment StoreEntitySet="PersonalInformation">
+                <ScalarProperty Name="UserType" ColumnName="UserType" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="HUTopId" ColumnName="HUTopId" />
                 <ScalarProperty Name="AppId" ColumnName="AppId" />
@@ -986,6 +1070,73 @@ warning 6002: The table/view 'HUTOPS.sys.database_firewall_rules' does not have 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="SP_GetStudents" FunctionName="HUTOPSModel.Store.SP_GetStudents">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="HUTOPSModel.SP_GetStudents_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="HUTopId" ColumnName="HUTopId" />
+                <ScalarProperty Name="AppId" ColumnName="AppId" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FatherFirstName" ColumnName="FatherFirstName" />
+                <ScalarProperty Name="FatherMiddleName" ColumnName="FatherMiddleName" />
+                <ScalarProperty Name="FatherLastName" ColumnName="FatherLastName" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="HusbandName" ColumnName="HusbandName" />
+                <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+                <ScalarProperty Name="CountyAdd" ColumnName="CountyAdd" />
+                <ScalarProperty Name="CellPhoneNumber" ColumnName="CellPhoneNumber" />
+                <ScalarProperty Name="AlternateCellPhoneNumber" ColumnName="AlternateCellPhoneNumber" />
+                <ScalarProperty Name="TellUs" ColumnName="TellUs" />
+                <ScalarProperty Name="ResidentialAddress" ColumnName="ResidentialAddress" />
+                <ScalarProperty Name="ResidentialCity" ColumnName="ResidentialCity" />
+                <ScalarProperty Name="ResidentialCityOther" ColumnName="ResidentialCityOther" />
+                <ScalarProperty Name="ResidentialProvince" ColumnName="ResidentialProvince" />
+                <ScalarProperty Name="ResidentialCountry" ColumnName="ResidentialCountry" />
+                <ScalarProperty Name="ResidentialPostalCode" ColumnName="ResidentialPostalCode" />
+                <ScalarProperty Name="PermanentAddress" ColumnName="PermanentAddress" />
+                <ScalarProperty Name="PermanentCity" ColumnName="PermanentCity" />
+                <ScalarProperty Name="PermanentCityOther" ColumnName="PermanentCityOther" />
+                <ScalarProperty Name="PermanentProvince" ColumnName="PermanentProvince" />
+                <ScalarProperty Name="PermanentCountry" ColumnName="PermanentCountry" />
+                <ScalarProperty Name="PermanentPostalCode" ColumnName="PermanentPostalCode" />
+                <ScalarProperty Name="CNIC" ColumnName="CNIC" />
+                <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
+                <ScalarProperty Name="AlterEmailAddress" ColumnName="AlterEmailAddress" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="SaveDate" ColumnName="SaveDate" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="AppStatus" ColumnName="AppStatus" />
+                <ScalarProperty Name="StudentStatus" ColumnName="StudentStatus" />
+                <ScalarProperty Name="TempId" ColumnName="TempId" />
+                <ScalarProperty Name="School" ColumnName="School" />
+                <ScalarProperty Name="SchoolCode" ColumnName="SchoolCode" />
+                <ScalarProperty Name="SchoolName" ColumnName="SchoolName" />
+                <ScalarProperty Name="SchoolNameOther" ColumnName="SchoolNameOther" />
+                <ScalarProperty Name="CurrentQualification" ColumnName="CurrentQualification" />
+                <ScalarProperty Name="CurrentQualificationOther" ColumnName="CurrentQualificationOther" />
+                <ScalarProperty Name="AlternateLandline" ColumnName="AlternateLandline" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="TestDate" ColumnName="TestDate" />
+                <ScalarProperty Name="SubmissionDate" ColumnName="SubmissionDate" />
+                <ScalarProperty Name="Retake" ColumnName="Retake" />
+                <ScalarProperty Name="IsAppliedBefore" ColumnName="IsAppliedBefore" />
+                <ScalarProperty Name="AppliedBeforeMonth" ColumnName="AppliedBeforeMonth" />
+                <ScalarProperty Name="AppliedBeforeYear" ColumnName="AppliedBeforeYear" />
+                <ScalarProperty Name="HomePhoneNumber" ColumnName="HomePhoneNumber" />
+                <ScalarProperty Name="WhatsAppNumber" ColumnName="WhatsAppNumber" />
+                <ScalarProperty Name="GuardianCellPhoneNumber" ColumnName="GuardianCellPhoneNumber" />
+                <ScalarProperty Name="GuardianEmailAddress" ColumnName="GuardianEmailAddress" />
+                <ScalarProperty Name="HearAboutHU" ColumnName="HearAboutHU" />
+                <ScalarProperty Name="HearAboutHUOther" ColumnName="HearAboutHUOther" />
+                <ScalarProperty Name="CreatedDatetime" ColumnName="CreatedDatetime" />
+                <ScalarProperty Name="Declaration" ColumnName="Declaration" />
+                <ScalarProperty Name="IsCompleted" ColumnName="IsCompleted" />
+                <ScalarProperty Name="Count" ColumnName="Count" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

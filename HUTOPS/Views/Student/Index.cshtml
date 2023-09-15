@@ -1,0 +1,175 @@
+﻿
+@{
+    Page.Title = "All Students";
+    Layout = "~/Views/Shared/_LayoutAdminPanal.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-lg-12">
+            <div class="boxWraper">
+                <div class="headBox">
+                    <h2>Filters</h2>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>HUTOPS Id</label>
+                            <input type="text" class="form-control" id="txtFilterHUTOPSId" />
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Name</label>
+                            <input type="text" class="form-control" id="txtFilterName" />
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>CNIC</label>
+                            <input type="text" class="form-control cnic" id="txtFilterCNIC" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Phone Number</label>
+                            <input type="tel" class="form-control number" id="txtFilterPhoneNumber" />
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" class="form-control cnic" id="txtFilterEmail" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <input class="savebtn global-btn-purple  float-right m-1" type="button" id="btnSearch" value="Search">
+                        <input class="savebtn global-btn-purple  float-right m-1" type="button" id="btnClear" value="Clear">
+                    </div>
+                </div>
+            </div>
+            <div class="boxWraper">
+                <div class="headBox">
+                    <h2>All Applicants</h2>
+                    <div class="btnWraper">
+                    </div>
+                </div>
+                @* table *@
+                <table class="ctmTable table table-responsive table-hover" id="main-datatables">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>HUTOPS Id</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Cell Phone Number</th>
+                            <th>Email Address</th>
+                            <th>CNIC/B-Form</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+                @* table *@
+            </div>
+
+        </div>
+    </div>
+</div>
+<a href="#" id="redirectToStudent" target="_blank"> link
+    </a>
+
+<script>
+    $(document).ready(function () {
+        var mainTable = $('#main-datatables').DataTable({
+            dom: 'lrtip',
+            "processing": true,
+            "serverSide": true,
+            "pagingType": "full_numbers",
+            "paging": true,
+            "lengthMenu": [10, 25, 50, 75],
+            "ordering": false,
+            "language": {
+                "processing": "<image src='/Content/images/preloader.gif' />"
+            },
+            "ajax": {
+                "type": "POST",
+                "url": '/Student/Get',
+                'data': function (data) {
+                    return (data);
+
+                }
+            },
+            "columns": [
+                { "data": "Id" },
+                { "data": "HUTopId" },
+                { "data": "FirstName" },
+                { "data": "LastName" },
+                { "data": "CellPhoneNumber" },
+                { "data": "EmailAddress" },
+                { "data": "CNIC" },
+                {
+                    "data": null,
+                    "defaultContent": "<button data-v-aa799a9e='' id='btnEdit' type='button' class='btn btn-icon savebtn global-btn-purple'><i class='fa fa-edit'></i></button> "
+                }
+            ],
+            "columnDefs": [
+                {
+                    "targets": "_all",
+                    "className": "dt-center",
+                    "orderable": true
+                },
+                {
+                    "targets": [0],
+                    "visible": false,
+                    "searchable": false
+                }
+            ]
+
+        });
+        $('#btnSearch').click(function () {
+            mainTable.column(1).search($("#txtFilterHUTOPSId").val());
+            mainTable.column(2).search($("#txtFilterName").val());
+            mainTable.column(3).search($("#txtFilterCNIC").val());
+            mainTable.column(4).search($("#txtFilterPhone").val());
+            mainTable.column(5).search($("#txtFilterEmail").val());
+
+            mainTable.draw();
+        });
+
+        $('#btnClear').click(function (e) {
+            e.preventDefault();
+
+            $("#txtFilterHUTOPSId").val('');
+            $("#txtFilterName").val('');
+            $("#txtFilterCNIC").val('');
+            $("#txtFilterPhone").val('');
+            $("#txtFilterEmail").val('');
+            $('#btnSearch').trigger('click');
+        })
+
+        // Edit Transaction
+        $('#main-datatables tbody').on('click', '#btnEdit', function () {
+            debugger
+            var data = mainTable.row($(this).parents('tr')).data();
+            $('#redirectToStudent').attr("href", '/Home/Index?Id=' + data.Id);
+
+            CallAsyncService("/Student/UpdateSession?Id=" + data.Id, null, CBFunction)
+            function CBFunction(response) {
+                if (response.status) {
+                    $('#redirectToStudent').attr("href", '/Home/Index');
+                    $('#redirectToStudent')[0].click();
+                } else {
+                    ShowDivError("User Data not Loaded");
+                }
+            }
+            
+        });
+
+    })
+</script>

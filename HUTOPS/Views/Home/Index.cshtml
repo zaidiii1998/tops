@@ -12,6 +12,7 @@
         </div>
         <form id="mainForm" method="post">
             @Html.AntiForgeryToken()
+            <input class="form-control" type="text" id="Id" name="Id" maxlength="25">
             <div class="row">
                 <div class="col-lg-4">
                     <div class="form-group">
@@ -170,7 +171,7 @@
                         @Html.ValidationMessageFor(model => model.Main.HomePhoneNumber, "", new { @class = "text-danger" })
                     </div>
                 </div>
-            @*</div>
+                @*</div>
             <div class="row">*@
                 <div class="col-lg-4">
                     <div class="form-group">
@@ -360,7 +361,7 @@
                         </div>
                     </div>
 
-                    <div class="col-lg-4"  id="divPermanentCityOther" style="display: none;">
+                    <div class="col-lg-4" id="divPermanentCityOther" style="display: none;">
                         <div class="form-group">
                             <label for="permanentCityOther">Other City:</label>
                             <input class="form-control" type="text" id="permanentCityOther" name="PermanentCityOther" value="@Model.Main.PermanentCityOther"><br><br>
@@ -402,7 +403,10 @@
 
 
 <script>
-    LoadDate('@Model.Main.DateOfBirth','dob');
+    LoadDate('@Model.Main.DateOfBirth', 'dob');
+    var Value = window.location.href.slice(window.location.href.indexOf('?') + 1).split('=');
+
+    $('#Id').val(Value[1]);
     if ('@ViewBag.Result' !== "")
     {
         ShowDivError('@ViewBag.Result');

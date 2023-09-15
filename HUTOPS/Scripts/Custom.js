@@ -486,13 +486,10 @@ function GetSubjectListCallback(response) {
                 input.value = value.Name;
             } else if (i === 2) {
                 input.classList.add("SubjectObtain");
-                input.required = true;
             } else if (i === 3) {
                 input.classList.add("SubjectTotal");
-                input.required = true;
             } else {
                 input.classList.add("SubjectGrade");
-                input.required = true;
             }
             newcontrol.appendChild(input);
             newCol.appendChild(newcontrol);

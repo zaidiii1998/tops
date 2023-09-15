@@ -52,6 +52,9 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="HUCryptography">
+      <HintPath>..\..\..\..\..\Downloads\HUCryptography.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -147,6 +150,7 @@
     <Compile Include="Controllers\DocumentsController.cs" />
     <Compile Include="Controllers\EducationController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\StudentController.cs" />
     <Compile Include="Country.cs">
       <DependentUpon>HUTOPS_Server.tt</DependentUpon>
     </Compile>
@@ -212,12 +216,17 @@
     <Compile Include="Log.cs">
       <DependentUpon>HUTOPS_Server.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Admin.cs" />
+    <Compile Include="Models\DataTableRequest.cs" />
     <Compile Include="Models\PersonalInfoPageModel.cs" />
     <Compile Include="Models\EducationPageModel.cs" />
     <Compile Include="PersonalInformation.cs">
       <DependentUpon>HUTOPS_Server.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SP_GetStudents_Result.cs">
+      <DependentUpon>HUTOPS_Server.tt</DependentUpon>
+    </Compile>
     <Compile Include="sp_helpdiagramdefinition_Result.cs">
       <DependentUpon>HUTOPS.tt</DependentUpon>
     </Compile>
@@ -575,6 +584,7 @@
     <Content Include="Views\Home\Activity.cshtml" />
     <Content Include="Views\Home\TestDate.cshtml" />
     <Content Include="Views\Documents\View.cshtml" />
+    <Content Include="Views\Student\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

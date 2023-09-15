@@ -15,7 +15,7 @@ namespace HUTOPS.Controllers
         {
             var personal = Utility.GetUserFromSession();
             var edu = Utility.GetEducationFromSession();
-            var docs = Utility.GetDocumentFromSession();
+            var docs = DB.Documents.ToList().Where(x => x.UserId == personal.Id).FirstOrDefault();
             ViewBag.Personal = personal == null ? "" : personal.IsCompleted.ToString();
             ViewBag.Edu = edu == null ? "" : edu.IsCompleted.ToString(); 
             ViewBag.Docs = docs == null ? "" :docs.IsCompleted.ToString();

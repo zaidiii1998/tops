@@ -5,7 +5,6 @@ using HUTOPS.Models;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System;
-using System.EnterpriseServices.Internal;
 
 namespace HUTOPS.Controllers
 {
@@ -225,6 +224,7 @@ namespace HUTOPS.Controllers
                 {
                     return Json(new { status = false, message = "You have already submited your application" });
                 }
+                
                 personalInfo.Id = user.Id;
                 personalInfo.IsCompleted = 1;
                 Helper.Utility.AddLog(Constants.LogType.ActivityLog, $"User-requested to Submit Personal Information. Details: {JsonConvert.SerializeObject(personalInfo)}");

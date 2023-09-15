@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using HUTOPS.Helper;
+using HUTOPS.Models;
 
 namespace HUTOPS.Controllers
 {
@@ -27,9 +28,22 @@ namespace HUTOPS.Controllers
                     var education = DB.Educationals.ToList().Where(x => x.UserId == result.Response).FirstOrDefault();
                     var document = DB.Documents.ToList().Where(x => x.UserId == result.Response).FirstOrDefault();
                     Utility.AddLog(Constants.LogType.ActivityLog, "User Successfully LogIn" + "UserID: " + result.Response + "UserName" + personalInformation.FirstName + " " + personalInformation.LastName);
-                    Utility.SetSession(personalInformation);
+                    
+                    
                     Utility.SetSession(education);
                     Utility.SetSession(document);
+                    if (personalInformation.UserType == 1)
+                    {
+                        Admin admin = new Admin();
+                        admin.Id = result.Response;
+                        admin.Name = personalInformation.FirstName + " " + personalInformation.LastName;
+                        Utility.SetSession(admin);
+                        Utility.SetSession(new PersonalInformation());
+                        return RedirectToAction("Index", "Student");
+
+                    }
+                    else { Utility.SetSession(personalInformation); }
+                    
                     return RedirectToAction("Index", "Home");
                 }
                 else
@@ -221,6 +235,7 @@ namespace HUTOPS.Controllers
             Session.Remove(Constants.Session.UserSession);
             Session.Remove(Constants.Session.EducationSession);
             Session.Remove(Constants.Session.DocumentSession);
+            Session.Remove(Constants.Session.AdminSession);
             return RedirectToAction("Login","Account");
         }
 

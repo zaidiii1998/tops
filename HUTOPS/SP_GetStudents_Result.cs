@@ -10,9 +10,8 @@
 namespace HUTOPS
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class PersonalInformation
+    public partial class SP_GetStudents_Result
     {
         public int Id { get; set; }
         public string HUTopId { get; set; }
@@ -74,6 +73,6 @@ namespace HUTOPS
         public Nullable<System.DateTime> CreatedDatetime { get; set; }
         public Nullable<int> Declaration { get; set; }
         public Nullable<int> IsCompleted { get; set; }
-        public Nullable<int> UserType { get; set; }
+        public Nullable<int> Count { get; set; }
     }
 }
