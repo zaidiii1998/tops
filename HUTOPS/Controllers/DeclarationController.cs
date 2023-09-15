@@ -30,11 +30,12 @@ namespace HUTOPS.Controllers
                 var personal = Utility.GetUserFromSession();
                 if (personal.Declaration == 1)
                 {
+                    Utility.AddLog(Constants.LogType.ActivityLog, $"User has already submited the application");
                     return Json(new { status = false, message = "You have already submited your application" });
                 }
                 var edu = Utility.GetEducationFromSession();
-                var docs = Utility.GetDocumentFromSession(); 
-                
+                var docs = DB.Documents.ToList().Where(x => x.UserId == personal.Id).FirstOrDefault();
+
                 if (personal.IsCompleted == 1 && edu.IsCompleted == 1 && docs.IsCompleted == 1)
                 {
                     Utility.AddLog(Constants.LogType.ActivityLog, $"User has completed All required Sections to submit declarations:");

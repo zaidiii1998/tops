@@ -46,7 +46,7 @@ namespace HUTOPS
                 }
                 if ((SSC != null && SSC.ContentLength > 0) && (Photograph != null && Photograph.ContentLength > 0))
                 {
-                    Helper.Utility.AddLog(Constants.LogType.ActivityLog, $"User-provided Documents are validated.");
+                    Utility.AddLog(Constants.LogType.ActivityLog, $"User-provided Documents are validated.");
                     // Check if files are present
                     if (CnicFile != null && CnicFile.ContentLength > 0)
                     {
