@@ -66,7 +66,7 @@ namespace HUTOPS.Controllers
                 Utility.AddLog(Constants.LogType.ActivityLog, $"User request to Update Activities ");
                 var personalInfo = Utility.GetUserFromSession();
 
-                if (personalInfo.Declaration == 1)
+                if (personalInfo.Declaration == 1 && Utility.GetAdminFromSession().Name == null)
                 {
                     return Json(new { status = false, message = "You have already submited your application" });
                 }
@@ -131,7 +131,7 @@ namespace HUTOPS.Controllers
                 Utility.AddLog(Constants.LogType.ActivityLog, $"User request to update test date");
 
                 var user = Utility.GetUserFromSession();
-                if (user.Declaration == 1)
+                if (user.Declaration == 1 && Utility.GetAdminFromSession().Name == null)
                 {
                     return Json(new { status = false, message = "You have already submited your application" });
                 }
@@ -164,6 +164,10 @@ namespace HUTOPS.Controllers
             try
             {
                 var personalInfo = Utility.GetUserFromSession();
+                if (personalInfo.Declaration == 1 && Utility.GetAdminFromSession().Name == null)
+                {
+                    return Json(new { status = false, message = "You have already submited your application" });
+                }
                 model.Id = personalInfo.Id;
                 model.IsCompleted = 0;
                 Utility.AddLog(Constants.LogType.ActivityLog, $"User-requested to Update Personal Information. Details: {JsonConvert.SerializeObject(model)}");
@@ -204,6 +208,18 @@ namespace HUTOPS.Controllers
                         model.PermanentPostalCode,
                         model.IsCompleted
                         );
+                if(Utility.GetAdminFromSession().Name != null)
+                {
+                    using(HUTOPSEntities Db = new HUTOPSEntities())
+                    {
+                        var personInfo = Db.PersonalInformations.ToList().Where(x => x.Id == model.Id).FirstOrDefault();
+                        personInfo.CNIC = model.CNIC;
+                        personInfo.EmailAddress = model.EmailAddress;
+                        personInfo.CellPhoneNumber = model.CellPhoneNumber;
+                        Db.SaveChanges();
+                    }
+                }
+
                 Utility.SetSession(model);
                 Helper.Utility.AddLog(Constants.LogType.ActivityLog, $"User has Successfully Updated Personal Information. Details: {JsonConvert.SerializeObject(model)}");
                 return Json(new { status = true, message = "Personal Information Successfully Updated" });
@@ -220,7 +236,7 @@ namespace HUTOPS.Controllers
             try
             {
                 var user = Utility.GetUserFromSession();
-                if (user.Declaration == 1)
+                if (user.Declaration == 1 && Utility.GetAdminFromSession().Name == null)
                 {
                     return Json(new { status = false, message = "You have already submited your application" });
                 }
@@ -357,6 +373,17 @@ namespace HUTOPS.Controllers
                         personalInfo.PermanentPostalCode,
                         personalInfo.IsCompleted
                         );
+                    if (Utility.GetAdminFromSession().Name != null)
+                    {
+                        using (HUTOPSEntities Db = new HUTOPSEntities())
+                        {
+                            var personInfo = Db.PersonalInformations.ToList().Where(x => x.Id == personalInfo.Id).FirstOrDefault();
+                            personInfo.CNIC = personalInfo.CNIC;
+                            personInfo.EmailAddress = personalInfo.EmailAddress;
+                            personInfo.CellPhoneNumber = personalInfo.CellPhoneNumber;
+                            Db.SaveChanges();
+                        }
+                    }
                     Utility.SetSession(personalInfo);
                     TempData["Result"] = "Personal Inofmation Submited Successfully";
                     Helper.Utility.AddLog(Constants.LogType.ActivityLog, $"User Submited Personal Information Successfully. Details: {JsonConvert.SerializeObject(personalInfo)}");

@@ -7,6 +7,7 @@ using System.Web.Mvc;
 
 namespace HUTOPS.Controllers
 {
+    [SessionValidatorActionFilter]
     public class StudentController : Controller
     {
         // GET: Student

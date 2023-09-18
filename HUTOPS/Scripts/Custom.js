@@ -361,7 +361,7 @@ function validatePersonalInfoForm() {
     });
     $('select[required]').each(function () {
 
-        if (($(this).val().trim() === '') || ($(this).val() === null)) {
+        if (($(this).val() === '') || ($(this).val() === null)) {
             isValid = false;
             $(this).addClass("error");
 

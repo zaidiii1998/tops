@@ -12,7 +12,7 @@
         </div>
         <form id="mainForm" method="post">
             @Html.AntiForgeryToken()
-            <input class="form-control" type="text" id="Id" name="Id" maxlength="25">
+            <input class="form-control" type="text" id="Id" name="Id" maxlength="25" style="display:none;">
             <div class="row">
                 <div class="col-lg-4">
                     <div class="form-group">
@@ -61,13 +61,27 @@
                 <div class="col-lg-4">
                     <div class="form-group">
                         <label for="cnic">CNIC:</label>
-                        <input class="form-control cnic" type="text" id="cnic" name="CNIC" placeholder="12345-1234567-1" maxlength="15" value="@Model.Main.CNIC" readonly>
+                        @if (HUTOPS.Helper.Utility.GetAdminFromSession().Name == null)
+                        {
+                            <input class="form-control cnic" type="text" id="cnic" name="CNIC" placeholder="12345-1234567-1" maxlength="15" value="@Model.Main.CNIC" readonly>
+                        }
+                        else
+                        {
+                            <input class="form-control cnic" type="text" id="cnic" name="CNIC" placeholder="12345-1234567-1" maxlength="15" value="@Model.Main.CNIC">
+                        }
                     </div>
                 </div>
                 <div class="col-lg-4">
                     <div class="form-group">
                         <label for="email">Email Address:</label>
-                        <input class="form-control" type="email" id="email" name="EmailAddress" maxlength="25" value="@Model.Main.EmailAddress" readonly>
+                        @if (HUTOPS.Helper.Utility.GetAdminFromSession().Name == null)
+                        {
+                            <input class="form-control" type="email" id="email" name="EmailAddress" maxlength="25" value="@Model.Main.EmailAddress" readonly>
+                        }
+                        else
+                        { 
+                            <input class="form-control" type="email" id="email" name="EmailAddress" maxlength="25" value="@Model.Main.EmailAddress">
+                        }
                     </div>
                 </div>
                 <div class="col-lg-4">
@@ -135,7 +149,14 @@
                 <div class="col-lg-4">
                     <div class="form-group">
                         <label for="cellPhone">Cell Phone Number:</label>
-                        <input class="form-control number" type="tel" id="cellPhone" name="CellPhoneNumber" placeholder="0333-3333333" maxlength="15" value="@Model.Main.CellPhoneNumber" readonly>
+                        @if (HUTOPS.Helper.Utility.GetAdminFromSession().Name == null)
+                        {
+                            <input class="form-control number" type="tel" id="cellPhone" name="CellPhoneNumber" placeholder="0333-3333333" maxlength="15" value="@Model.Main.CellPhoneNumber" readonly>
+                        }
+                        else
+                        {
+                            <input class="form-control number" type="tel" id="cellPhone" name="CellPhoneNumber" placeholder="0333-3333333" maxlength="15" value="@Model.Main.CellPhoneNumber">
+                        }
                         @Html.ValidationMessageFor(model => model.Main.CellPhoneNumber, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -377,7 +398,7 @@
             </div>
             <div class="row">
                 <div class="col-lg-12">
-                    @if (Model.Main.Declaration != 1)
+                    @if (Model.Main.Declaration != 1 || HUTOPS.Helper.Utility.GetAdminFromSession().Name != null)
                     {
                         <input class="savebtn global-btn-purple  float-right m-1" type="button" onclick="validatePersonalInfoForm();" value="Submit">
                         <input class="savebtn global-btn-purple  float-right m-1" type="button" onclick="Save()" value="Save">

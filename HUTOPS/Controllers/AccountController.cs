@@ -21,7 +21,7 @@ namespace HUTOPS.Controllers
         {
             try
             {
-                var result = DB.WEB_UserLogin(form["email"], form["psw"]).ToList().FirstOrDefault();
+                var result = DB.WEB_UserLogin(form["email"], HUCryptography.Crypto.Encrypt(form["psw"].ToString())).ToList().FirstOrDefault();
                 if (result.Response != -1)
                 {
                     var personalInformation = DB.PersonalInformations.ToList().Where(x => x.Id == result.Response).FirstOrDefault();
@@ -191,7 +191,14 @@ namespace HUTOPS.Controllers
                     if (IsValid)
                     {
                         Utility.AddLog(Constants.LogType.ActivityLog, $"User-provided data has been successfully validated.Details: Firstname: {model["FirstName"]}, LastName: {model["LastName"]}, Email: {model["EmailAddress"]}, CNIC: {model["CNIC"]}, PhoneNumber: {model["CellPhoneNumber"]} ");
-                        var result = DB.WEB_CreateUser(personalInfo.FirstName, personalInfo.MiddleName, personalInfo.LastName, personalInfo.CNIC, personalInfo.CellPhoneNumber, personalInfo.EmailAddress, model["Password"].ToString(), personalInfo.HearAboutHU, personalInfo.HearAboutHUOther).ToList().FirstOrDefault();
+                        var result = DB.WEB_CreateUser(
+                            personalInfo.FirstName,
+                            personalInfo.MiddleName,
+                            personalInfo.LastName,
+                            personalInfo.CNIC,
+                            personalInfo.CellPhoneNumber,
+                            personalInfo.EmailAddress,
+                            HUCryptography.Crypto.Encrypt(model["Password"].ToString()), personalInfo.HearAboutHU, personalInfo.HearAboutHUOther).ToList().FirstOrDefault();
                         if (result.Response != 0)
                         {
                             var currentUser = DB.PersonalInformations.ToList().Where(x => x.Id == result.Response).FirstOrDefault();

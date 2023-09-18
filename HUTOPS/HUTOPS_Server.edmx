@@ -149,7 +149,7 @@ warning 6002: The table/view 'HUTOPS.dbo.EducationalSubjects' does not have a pr
           <Property Name="CNIC" Type="varchar" MaxLength="15" Nullable="false" />
           <Property Name="EmailAddress" Type="varchar" MaxLength="30" Nullable="false" />
           <Property Name="AlterEmailAddress" Type="varchar" MaxLength="30" />
-          <Property Name="Password" Type="varbinary" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="50" />
           <Property Name="SaveDate" Type="datetime2" Precision="7" />
           <Property Name="UpdateDate" Type="datetime2" Precision="7" />
           <Property Name="AppStatus" Type="int" />
@@ -524,7 +524,7 @@ warning 6002: The table/view 'HUTOPS.sys.database_firewall_rules' does not have 
           <Property Name="CNIC" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="EmailAddress" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="AlterEmailAddress" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="Password" Type="Binary" MaxLength="50" FixedLength="false" Nullable="false" />
+          <Property Name="Password" Type="String" />
           <Property Name="SaveDate" Type="DateTime" Precision="7" />
           <Property Name="UpdateDate" Type="DateTime" Precision="7" />
           <Property Name="AppStatus" Type="Int32" />
@@ -792,7 +792,7 @@ warning 6002: The table/view 'HUTOPS.sys.database_firewall_rules' does not have 
           <Property Type="String" Name="CNIC" Nullable="false" MaxLength="15" />
           <Property Type="String" Name="EmailAddress" Nullable="false" MaxLength="30" />
           <Property Type="String" Name="AlterEmailAddress" Nullable="true" MaxLength="30" />
-          <Property Type="Binary" Name="Password" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Password" Nullable="false" />
           <Property Type="DateTime" Name="SaveDate" Nullable="true" />
           <Property Type="DateTime" Name="UpdateDate" Nullable="true" />
           <Property Type="Int32" Name="AppStatus" Nullable="true" />

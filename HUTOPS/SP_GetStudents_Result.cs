@@ -44,7 +44,7 @@ namespace HUTOPS
         public string CNIC { get; set; }
         public string EmailAddress { get; set; }
         public string AlterEmailAddress { get; set; }
-        public byte[] Password { get; set; }
+        public string Password { get; set; }
         public Nullable<System.DateTime> SaveDate { get; set; }
         public Nullable<System.DateTime> UpdateDate { get; set; }
         public Nullable<int> AppStatus { get; set; }

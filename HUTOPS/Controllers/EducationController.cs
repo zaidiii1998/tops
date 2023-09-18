@@ -45,7 +45,7 @@ namespace HUTOPS.Controllers
             {
                 Utility.AddLog(Constants.LogType.ActivityLog, $"User-requested to Save Educational Information. Details: {JsonConvert.SerializeObject(educational)}");
                 var user = Utility.GetUserFromSession();
-                if (user.Declaration == 1)
+                if (user.Declaration == 1 && Utility.GetAdminFromSession().Name == null)
                 {
                     return Json(new { status = false, message = "You have already submited your application" });
                 }
@@ -100,7 +100,7 @@ namespace HUTOPS.Controllers
                 List<string> Err = new List<string>();
                 Utility.AddLog(Constants.LogType.ActivityLog, $"User-requested to Submit Educational Information. Details: {JsonConvert.SerializeObject(educational)}");
                 var user = Utility.GetUserFromSession();
-                if (user.Declaration == 1)
+                if (user.Declaration == 1 && Utility.GetAdminFromSession().Name == null)
                 {
                     return Json(new { status = false, message = "You have already submited your application" });
                 }

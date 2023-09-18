@@ -28,7 +28,7 @@ namespace HUTOPS.Controllers
             {
                 Utility.AddLog(Constants.LogType.ActivityLog, $"User-requested to submit declarations:");
                 var personal = Utility.GetUserFromSession();
-                if (personal.Declaration == 1)
+                if (personal.Declaration == 1 && Utility.GetAdminFromSession().Name == null)
                 {
                     Utility.AddLog(Constants.LogType.ActivityLog, $"User has already submited the application");
                     return Json(new { status = false, message = "You have already submited your application" });
