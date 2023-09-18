@@ -1,4 +1,6 @@
 ﻿$(document).ready(function () {
+    debugger
+    //document.addEventListener('scroll', handleScroll, true);
     $('.number').inputmask("0399-9999999");
     $('.cnic').inputmask("99999-9999999-9");
     $('.Percentage').inputmask("99.99%");

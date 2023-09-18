@@ -105,7 +105,7 @@
 
         @*@if (!string.IsNullOrWhiteSpace(role) && role.Equals("Admin"))
             {*@
-        <div id="sidebarDashboard">
+        <div id="sidebarDashboard" class="scrolled">
             <span id="expandSideBarBtn"><i class="fas fa-angle-right"></i></span>
             <ul id="accordionmenu" class="accordionmenu">
                 @if (Utility.GetUserFromSession().Id != 0)
@@ -185,49 +185,49 @@
         });
 
     </script>
-    <script>
+    @*<script>
         // Get a reference to the sidebar element
-        const sidebar = document.getElementById('sidebarDashboard');
+            const sidebar = document.getElementById('sidebarDashboard');
 
-        // Variable to track the previous scroll position
-        let previousScrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+            // Variable to track the previous scroll position
+            let previousScrollPosition = window.pageYOffset || document.documentElement.scrollTop;
 
-        // Function to handle scroll event
-        function handleScroll() {
-            // Get the current scroll position
-            const currentScrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+            // Function to handle scroll event
+            function handleScroll() {
+                debugger
+                // Get the current scroll position
+                const currentScrollPosition = window.pageYOffset || document.documentElement.scrollTop;
 
-            // Get the screen width
-            const screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+                // Get the screen width
+                const screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
 
-            if (screenWidth < 767) {
-                // Screen width is less than 767px
-                if (currentScrollPosition >= 90) {
-                    // Add the class to the sidebar
-                    sidebar.classList.add('scrolled');
+                if (screenWidth < 767) {
+                    // Screen width is less than 767px
+                    if (currentScrollPosition >= 90) {
+                        // Add the class to the sidebar
+                        sidebar.classList.add('scrolled');
+                    } else {
+                        // Remove the class from the sidebar
+                        sidebar.classList.remove('scrolled');
+                    }
                 } else {
-                    // Remove the class from the sidebar
-                    sidebar.classList.remove('scrolled');
+                    // Screen width is 767px or greater
+                    if (currentScrollPosition >= 100) {
+                        // Add the class to the sidebar
+                        sidebar.classList.add('scrolled');
+                    } else {
+                        // Remove the class from the sidebar
+                        sidebar.classList.remove('scrolled');
+                    }
                 }
-            } else {
-                // Screen width is 767px or greater
-                if (currentScrollPosition >= 100) {
-                    // Add the class to the sidebar
-                    sidebar.classList.add('scrolled');
-                } else {
-                    // Remove the class from the sidebar
-                    sidebar.classList.remove('scrolled');
-                }
+
+                // Update the previous scroll position
+                previousScrollPosition = currentScrollPosition;
             }
 
-            // Update the previous scroll position
-            previousScrollPosition = currentScrollPosition;
-        }
-
-        // Attach the scroll event listener
-        window.addEventListener('scroll', handleScroll);
-
-    </script>
+            // Attach the scroll event listener
+            window.addEventListener('scroll', handleScroll);
+    </script>*@
     @*<script src="https://cdn.datatables.net/autofill/2.6.0/js/dataTables.autoFill.min.js"></script>*@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/js/jquery.dataTables.min.js" integrity="sha512-BkpSL20WETFylMrcirBahHfSnY++H2O1W+UnEEO4yNIl+jI2+zowyoGJpbtk6bx97fBXf++WJHSSK2MV4ghPcg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </body>

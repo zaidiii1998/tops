@@ -253,7 +253,7 @@ html{-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:transparent;    /
         .table-responsive{display:inline-table!important}
         .commentBox.one tr th:nth-last-child(1),.commentBox.one tr td:nth-last-child(1){width:120px;text-align:center;}
         span.commentMessage{font-size:14px;line-height:22px;font-weight:500;}
-        #sidebarDashboard.scrolled ul#accordionmenu{position:fixed;top:-20px;width:250px;}
+        #sidebarDashboard.scrolled ul#accordionmenu{position:fixed;top:65px;width:250px;}
         .dashboardWrapper{justify-content:center;overflow-x:hidden;}
         .infoBox .form-group span{font-size:12px;font-weight:600;}
         .infoBox .form-group span{font-size:12px;font-weight:600;}
@@ -357,6 +357,9 @@ div#contentWrapperDashboard.contentWrapAdon .boxWraper {
             .dashboardWrapper .headBox .btnWraper{padding-top:15px;}
             .LogoWraper img{max-width:50%;margin:0 auto;text-align:center;}
             .LogoWraper{text-align:center;}
+            .LogoWraper img{
+                max-width:25% !important;
+            }
             .nameWrapper { /* display:flex; */
                 text-align: center;
             }
