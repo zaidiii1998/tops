@@ -1,0 +1,50 @@
+﻿@model List<EmailTemplate>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutAdminPanal.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-lg-12">
+            <div class="boxWraper">
+                <div class="headBox">
+                    <h2>Filters</h2>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <select class="form-control" id="comboEmailTemp" onchange="UpdateTemplate(this.id)">
+                            <option value="" selected disabled>Select Email Template</option>
+                            @foreach (var item in Model)
+                            {
+                                    <option value="@item.Id">@item.Description</option>
+                            }
+                        </select>
+                        <form method="post">
+                            <textarea class="tinyMceTxt" id="textAreaEmailTemp"></textarea>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function UpdateTemplate(Id) {
+        TempVal = $('#' + Id).val();
+        var model = @Html.Raw(Json.Encode(Model))
+        $.each(model, function (key, value) {
+            if (value.Id == TempVal) {
+                debugger
+                document.getElementById("tinymce").innerHTML = value.Body.toString();
+            }
+        })
+
+
+
+
+    }
+</script>

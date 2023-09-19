@@ -97,6 +97,21 @@ warning 6002: The table/view 'HUTOPS.dbo.EducationalSubjects' does not have a pr
           <Property Name="Grade" Type="varchar" MaxLength="50" />
           <Property Name="EducationalId" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="EmailTemplates">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Description" Type="text" Nullable="false" />
+          <Property Name="Subject" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Body" Type="text" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedOn" Type="datetime" Nullable="false" />
+          <Property Name="LastMailSentOn" Type="datetime" />
+          <Property Name="TypeId" Type="int" Nullable="false" />
+          <Property Name="NextEmailToSent" Type="int" Nullable="false" />
+          <Property Name="SAFAUndertakingDocTypeId" Type="int" />
+        </EntityType>
         <EntityType Name="GroupSubjects">
           <Key>
             <PropertyRef Name="Id" />
@@ -365,6 +380,7 @@ warning 6002: The table/view 'HUTOPS.sys.database_firewall_rules' does not have 
           <EntitySet Name="Country" EntityType="Self.Country" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Documents" EntityType="Self.Documents" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Educational" EntityType="Self.Educational" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EmailTemplates" EntityType="Self.EmailTemplates" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="GroupSubjects" EntityType="Self.GroupSubjects" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Log" EntityType="Self.Log" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PersonalInformation" EntityType="Self.PersonalInformation" Schema="dbo" store:Type="Tables" />
@@ -524,7 +540,7 @@ warning 6002: The table/view 'HUTOPS.sys.database_firewall_rules' does not have 
           <Property Name="CNIC" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="EmailAddress" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="AlterEmailAddress" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="Password" Type="String" />
+          <Property Name="Password" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
           <Property Name="SaveDate" Type="DateTime" Precision="7" />
           <Property Name="UpdateDate" Type="DateTime" Precision="7" />
           <Property Name="AppStatus" Type="Int32" />
@@ -739,6 +755,7 @@ warning 6002: The table/view 'HUTOPS.sys.database_firewall_rules' does not have 
             <Parameter Name="PhoneNumber" Mode="In" Type="String" />
             <Parameter Name="Email" Mode="In" Type="String" />
           </FunctionImport>
+          <EntitySet Name="EmailTemplates" EntityType="HUTOPSModel.EmailTemplate" />
         </EntityContainer>
         <ComplexType Name="WEB_UserLogin_Result">
           <Property Type="Int32" Name="Response" Nullable="false" />
@@ -823,6 +840,21 @@ warning 6002: The table/view 'HUTOPS.sys.database_firewall_rules' does not have 
           <Property Type="Int32" Name="IsCompleted" Nullable="true" />
           <Property Type="Int32" Name="Count" Nullable="true" />
         </ComplexType>
+        <EntityType Name="EmailTemplate">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Subject" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Body" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LastMailSentOn" Type="DateTime" Precision="3" />
+          <Property Name="TypeId" Type="Int32" Nullable="false" />
+          <Property Name="NextEmailToSent" Type="Int32" Nullable="false" />
+          <Property Name="SAFAUndertakingDocTypeId" Type="Int32" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1137,6 +1169,22 @@ warning 6002: The table/view 'HUTOPS.sys.database_firewall_rules' does not have 
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="EmailTemplates">
+            <EntityTypeMapping TypeName="HUTOPSModel.EmailTemplate">
+              <MappingFragment StoreEntitySet="EmailTemplates">
+                <ScalarProperty Name="SAFAUndertakingDocTypeId" ColumnName="SAFAUndertakingDocTypeId" />
+                <ScalarProperty Name="NextEmailToSent" ColumnName="NextEmailToSent" />
+                <ScalarProperty Name="TypeId" ColumnName="TypeId" />
+                <ScalarProperty Name="LastMailSentOn" ColumnName="LastMailSentOn" />
+                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="Body" ColumnName="Body" />
+                <ScalarProperty Name="Subject" ColumnName="Subject" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -40,6 +40,7 @@ namespace HUTOPS
         public virtual DbSet<State> States { get; set; }
         public virtual DbSet<EducationalSubject> EducationalSubjects { get; set; }
         public virtual DbSet<database_firewall_rules> database_firewall_rules { get; set; }
+        public virtual DbSet<EmailTemplate> EmailTemplates { get; set; }
     
         public virtual int InsertBoardGroups(string groupNames, Nullable<int> boardId)
         {

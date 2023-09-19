@@ -1,5 +1,4 @@
 ﻿$(document).ready(function () {
-    debugger
     //document.addEventListener('scroll', handleScroll, true);
     $('.number').inputmask("0399-9999999");
     $('.cnic').inputmask("99999-9999999-9");
@@ -7,6 +6,9 @@
 
     $('.trashActivity').click(function () {
         $(this).closest(".row").remove();
+    });
+    tinymce.init({
+        selector: '.tinyMceTxt'
     });
 });
 
@@ -949,4 +951,93 @@ function SubmitTestDate() {
 
 
     }
+}
+
+// Students DataTable
+
+function LoadStudentDatatable() {
+    var mainTable = $('#main-datatables').DataTable({
+        dom: 'lrtip',
+        "processing": true,
+        "serverSide": true,
+        "pagingType": "full_numbers",
+        "paging": true,
+        "lengthMenu": [10, 25, 50, 75],
+        "ordering": false,
+        "language": {
+            "processing": "<image src='/Content/images/preloader.gif' />"
+        },
+        "ajax": {
+            "type": "POST",
+            "url": '/Student/Get',
+            'data': function (data) {
+                return (data);
+
+            }
+        },
+        "columns": [
+            { "data": "Id" },
+            { "data": "HUTopId" },
+            { "data": "FirstName" },
+            { "data": "LastName" },
+            { "data": "CellPhoneNumber" },
+            { "data": "EmailAddress" },
+            { "data": "CNIC" },
+            {
+                "data": null,
+                "defaultContent": "<button data-v-aa799a9e='' id='btnEdit' type='button' class='btn btn-icon savebtn global-btn-purple'><i class='fa fa-edit'></i></button> "
+            }
+        ],
+        "columnDefs": [
+            {
+                "targets": "_all",
+                "className": "dt-center",
+                "orderable": true
+            },
+            {
+                "targets": [0],
+                "visible": false,
+                "searchable": false
+            }
+        ]
+
+    });
+    $('#btnSearch').click(function () {
+        mainTable.column(1).search($("#txtFilterHUTOPSId").val());
+        mainTable.column(2).search($("#txtFilterName").val());
+        mainTable.column(3).search($("#txtFilterCNIC").val());
+        mainTable.column(4).search($("#txtFilterPhone").val());
+        mainTable.column(5).search($("#txtFilterEmail").val());
+
+        mainTable.draw();
+    });
+
+    $('#btnClear').click(function (e) {
+        e.preventDefault();
+
+        $("#txtFilterHUTOPSId").val('');
+        $("#txtFilterName").val('');
+        $("#txtFilterCNIC").val('');
+        $("#txtFilterPhone").val('');
+        $("#txtFilterEmail").val('');
+        $('#btnSearch').trigger('click');
+    })
+
+    // Edit Transaction
+    $('#main-datatables tbody').on('click', '#btnEdit', function () {
+        debugger
+        var data = mainTable.row($(this).parents('tr')).data();
+        $('#redirectToStudent').attr("href", '/Home/Index?Id=' + data.Id);
+
+        CallAsyncService("/Student/UpdateSession?Id=" + data.Id, null, CBFunction)
+        function CBFunction(response) {
+            if (response.status) {
+                $('#redirectToStudent').attr("href", '/Home/Index');
+                $('#redirectToStudent')[0].click();
+            } else {
+                ShowDivError("User Data not Loaded");
+            }
+        }
+
+    });
 }

@@ -59,6 +59,7 @@
                                     <div class="row">
                                         <div class="col-md-12">
                                             <button class="savebtn global-btn-purple  float-right" type="submit">Login</button>
+                                            <a class="float-left" href="@Url.Action("ForgotPassword","Account")">Forgot Password</a>
                                         </div>
                                     </div><br /><br />
                                     <div class="row">
@@ -77,11 +78,3 @@
         </div>
     </div>
 </section>
-
-<script>
-    @*ShowDivError("Success");
-    if ('@ViewBag.Result' !== "")
-    {
-        ShowDivError('@ViewBag.Result');
-    }*@
-</script>

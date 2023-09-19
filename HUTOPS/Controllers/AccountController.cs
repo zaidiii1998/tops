@@ -246,7 +246,39 @@ namespace HUTOPS.Controllers
             return RedirectToAction("Login","Account");
         }
 
+        public ActionResult ForgotPassword()
+        {
+            return View();
+        }
+        [HttpPost, ValidateAntiForgeryToken]
+        public ActionResult ForgotPassword(string email)
+        {
+            if (Utility.isValidEmail(email))
+            {
+                var personalInfo = DB.PersonalInformations.ToList();
+                var IsRecordFound = personalInfo.Where(x => x.EmailAddress == email).FirstOrDefault();
+                if (IsRecordFound != null)
+                {
+                    var password = HUCryptography.Crypto.Decrypt(IsRecordFound.Password);
+                    var Name = IsRecordFound.FirstName + " " + IsRecordFound.LastName;
+                    string EmailHTML = DB.EmailTemplates.ToList().Where(x => x.Description == "Forgot Password").FirstOrDefault().Body;
+                    EmailHTML = EmailHTML.Replace("{{name}}", Name);
+                    EmailHTML = EmailHTML.Replace("{{Password}}", password);
 
+                }
+                else {
+                    ViewBag.Result = "Record not found against this email address";
+                    return View();
+                }
+            }
+            else
+            {
+                ViewBag.Result = "Invalid Email Address";
+                return View();
+            }
+
+            return View();
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)
