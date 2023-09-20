@@ -51,7 +51,7 @@ namespace HUTOPS.Controllers
             {
                 var personalInfo = Utility.GetUserFromSession();
                 List<Activity> activities = DB.Activities.ToList().Where(x => x.UserId == personalInfo.Id).ToList();
-                ViewBag.Declaration = personalInfo.Declaration;
+                ViewBag.User = personalInfo;
                 return View(activities);
             }
             catch (System.Exception)
@@ -59,7 +59,7 @@ namespace HUTOPS.Controllers
                 return View();
             }
         }
-        public ActionResult SubmitActivity(string[] ActivityName, string[] ActivityDuration)
+        public ActionResult SubmitActivity(string[] ActivityName, string[] ActivityDuration, int UserId)
         {
             try
             {
@@ -69,6 +69,11 @@ namespace HUTOPS.Controllers
                 if (personalInfo.Declaration == 1 && Utility.GetAdminFromSession().Name == null)
                 {
                     return Json(new { status = false, message = "You have already submited your application" });
+                }
+
+                if (UserId != personalInfo.Id)
+                {
+                    return Json(new { status = false, message = "Multi profile conflict occur while saving student record" });
                 }
                 List<Activity> activities = DB.Activities.ToList().Where(x => x.UserId == personalInfo.Id).ToList();
                 
@@ -124,7 +129,7 @@ namespace HUTOPS.Controllers
                 return View();
             }
         }
-        public ActionResult SubmitTestDate(string Date)
+        public ActionResult SubmitTestDate(string Date,int UserId)
         {
             try
             {
@@ -135,7 +140,10 @@ namespace HUTOPS.Controllers
                 {
                     return Json(new { status = false, message = "You have already submited your application" });
                 }
-
+                if (UserId != user.Id)
+                {
+                    return Json(new { status = false, message = "Multi profile conflict occur while saving student record" });
+                }
                 if (!string.IsNullOrEmpty(Date))
                 {
                     Utility.AddLog(Constants.LogType.ActivityLog, $"User provided Date is Verified");
@@ -168,6 +176,11 @@ namespace HUTOPS.Controllers
                 {
                     return Json(new { status = false, message = "You have already submited your application" });
                 }
+                if (model.Id != personalInfo.Id) {
+                    return Json(new { status = false, message = "Multi profile conflict occur while saving student record" });
+                }
+
+
                 model.Id = personalInfo.Id;
                 model.IsCompleted = 0;
                 Utility.AddLog(Constants.LogType.ActivityLog, $"User-requested to Update Personal Information. Details: {JsonConvert.SerializeObject(model)}");
@@ -240,7 +253,11 @@ namespace HUTOPS.Controllers
                 {
                     return Json(new { status = false, message = "You have already submited your application" });
                 }
-                
+                if (personalInfo.Id != user.Id)
+                {
+                    TempData["Result"] = "Multi profile conflict occur while saving student record";
+                    return RedirectToAction("Index", "Home");
+                }
                 personalInfo.Id = user.Id;
                 personalInfo.IsCompleted = 1;
                 Helper.Utility.AddLog(Constants.LogType.ActivityLog, $"User-requested to Submit Personal Information. Details: {JsonConvert.SerializeObject(personalInfo)}");

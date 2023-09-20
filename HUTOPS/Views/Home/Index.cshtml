@@ -12,7 +12,7 @@
         </div>
         <form id="mainForm" method="post">
             @Html.AntiForgeryToken()
-            <input class="form-control" type="text" id="Id" name="Id" maxlength="25" style="display:none;">
+            <input class="form-control" type="text" id="id" name="Id" maxlength="25" style="display:none;" value="@Model.Main.Id">
             <div class="row">
                 <div class="col-lg-4">
                     <div class="form-group">

@@ -20,33 +20,20 @@ namespace HUTOPS.Controllers
         {
             try
             {
-                if(emailTemplate.Id == 0)
-                {
-                    Utility.AddLog(Constants.LogType.ActivityLog, $"Admin Request to add new Email Template. Template Details: {JsonConvert.SerializeObject(emailTemplate)}");
-                    DB.EmailTemplates.Add(new EmailTemplate
-                    {
-                        Description = emailTemplate.Description,
-                        Subject = emailTemplate.Subject,
-                        Body = emailTemplate.Body,
-                        CreatedOn = DateTime.Now,
-                    });
-                    DB.SaveChanges();
-                    Utility.AddLog(Constants.LogType.ActivityLog, $"Email Template Added Successfully. Template Details: {JsonConvert.SerializeObject(emailTemplate)}");
-                    return Json(new {status = true, message = "Email Template Added Successfully"});
-                }
-                else
+                if(emailTemplate.Id != 0)
                 {
                     Utility.AddLog(Constants.LogType.ActivityLog, $"Admin Request to Update Email Template. Template Details: {JsonConvert.SerializeObject(emailTemplate)}");
                     var email = DB.EmailTemplates.Where(x => x.Id == emailTemplate.Id).FirstOrDefault();
                     email.Subject = emailTemplate.Subject;
                     email.Body = emailTemplate.Body;
                     email.UpdatedOn = DateTime.Now;
-                    email.Description = emailTemplate.Description;
                     DB.SaveChanges();
                     Utility.AddLog(Constants.LogType.ActivityLog, $"Email Template Updated Successfully. Template Details: {JsonConvert.SerializeObject(emailTemplate)}");
 
                     return Json(new { status = true, message = "Email Template Updated Successfully" });
                 }
+                return Json(new { status = true, message = "Error occured while saving Email Template" });
+
             }
             catch (Exception ex)
             {

@@ -65,6 +65,11 @@ namespace HUTOPS.Controllers
         }
         public ActionResult UpdateSession(int? Id)
         {
+            var currentSession = Utility.GetUserFromSession();
+            if(currentSession.Id != 0)
+            {
+                return Json(new { status = false, message = "you have already open Student Profile. Kindly close the profile first" });
+            }
 
             var personalInformation = DB.PersonalInformations.ToList().Where(x => x.Id == Id).FirstOrDefault();
             var education = DB.Educationals.ToList().Where(x => x.UserId == personalInformation.Id).FirstOrDefault();
@@ -77,6 +82,16 @@ namespace HUTOPS.Controllers
             Utility.SetSession(education == null ? new Educational() : education);
             Utility.SetSession(document == null ? new Document() : document);
             return Json(new {status = true, message = "Session Updated Successfully"});
+        }
+        public ActionResult CloseSession()
+        {
+
+            Utility.AddLog(Constants.LogType.ActivityLog, $"Admin Request to close Current Student profile.");
+
+            Utility.SetSession( new PersonalInformation());
+            Utility.SetSession( new Educational());
+            Utility.SetSession( new Document());
+            return Json(new { status = true, message = "Student Profile Closed Successfully" });
         }
     }
 }

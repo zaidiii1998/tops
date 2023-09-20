@@ -19,10 +19,10 @@ namespace HUTOPS.Controllers
             ViewBag.Personal = personal == null ? "" : personal.IsCompleted.ToString();
             ViewBag.Edu = edu == null ? "" : edu.IsCompleted.ToString(); 
             ViewBag.Docs = docs == null ? "" :docs.IsCompleted.ToString();
-            ViewBag.Declaration = personal.Declaration;
+            ViewBag.User = personal;
             return View();
         }
-        public ActionResult Submit(bool check1, bool check2, bool check3)
+        public ActionResult Submit(bool check1, bool check2, bool check3, int UserId)
         {
             try
             {
@@ -32,6 +32,10 @@ namespace HUTOPS.Controllers
                 {
                     Utility.AddLog(Constants.LogType.ActivityLog, $"User has already submited the application");
                     return Json(new { status = false, message = "You have already submited your application" });
+                }
+                if (UserId != personal.Id)
+                {
+                    return Json(new { status = false, message = "Multi profile conflict occur while saving student record" });
                 }
                 var edu = Utility.GetEducationFromSession();
                 var docs = DB.Documents.ToList().Where(x => x.UserId == personal.Id).FirstOrDefault();

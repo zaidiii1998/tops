@@ -11,8 +11,10 @@
         <div class="row">
             <div class="col-lg-3">
                 <div class="form-group">
+                    <input class="form-control" type="text" id="id" name="Id" maxlength="25" style="display:none;" value="@Model.Id">
+
                     <label for="currentLevel">To appear for HU TOPS Qualifying Round Test (Core Skills Test). Please choose a test date:<span class="text-danger">*:</span></label>
-                    <select class="form-control" id="TestDate" name="currentLevel" onchange="ShowHideField('divUniName','currentLevel','Already enrolled in a University')" required>
+                    <select class="form-control" id="TestDate" required>
                         <option value="">Select Date </option>
                         <option value="23rd/24th/25th February 2023 [For Karachi/Sindh/Baluchistan Applicants]">23rd/24th/25th February 2023 [For Karachi/Sindh/Baluchistan Applicants]</option>
                         <option value="3rd/4th/5th March 2023 [For Islamabad/Punjab/GB/KPK/AJK Applicants]">3rd/4th/5th March 2023 [For Islamabad/Punjab/GB/KPK/AJK Applicants]</option>

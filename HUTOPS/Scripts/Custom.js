@@ -324,6 +324,7 @@ function updateProvince(comboCountryId, comboProvinceId) {
 function Save() {
     // Create a new Date object using the selected values
     var param = {
+        Id: $('#id').val(),
         firstName: $('#firstName').val(),
         middleName: $('#middleName').val(),
         lastName: $('#lastName').val(),
@@ -623,6 +624,7 @@ function SaveEducation() {
 
 
     var param = {
+        UserId: $('#id'),
         CurrentLevelOfEdu: $('#currentLevel').val(),
         HSSCSchoolName: $('#collegeName').val(),
         HSSCSchoolAddress: $('#collegeAddress').val(),
@@ -727,6 +729,7 @@ function SubmitEducation() {
 
 
         var param = {
+            UserId: $('#id'),
             CurrentLevelOfEdu: $('#currentLevel').val(),
             HSSCSchoolName: $('#collegeName').val(),
             HSSCSchoolAddress: $('#collegeAddress').val(),
@@ -813,6 +816,12 @@ function submitDocuments(sessionUserId) {
         var form = $('#fileUploadForm');
         var formData = new FormData(form[0]);
         formData.append("UserId", sessionUserId)
+        if ($('#id').val() != sessionUserId) {
+            ShowDivError('Multi profile conflict occur while saving student record');
+            return false;
+        }
+
+
         $('#mainLoader').show();
         $.ajax({
             url: '/Handler1.ashx', // Change the URL to your MVC controller's action
@@ -914,7 +923,7 @@ function SubmitActivity() {
     });
     $('#mainLoader').show();
     debugger
-    CallAsyncService("/Home/SubmitActivity?ActivityName=" + ActivityName + "&ActivityDuration=" + ActivityDuration, null, SubmitActivityCB)
+    CallAsyncService("/Home/SubmitActivity?ActivityName=" + ActivityName + "&ActivityDuration=" + ActivityDuration + "&UserId=" + $('#id').val(), null, SubmitActivityCB)
     function SubmitActivityCB(response) {
         $('#mainLoader').hide();
         if (response.status) {
@@ -936,7 +945,7 @@ function submitDeclaration() {
     var check3 = $('#validInfo').is(':checked');
     if (check1 == true && check2 == true && check3 == true) {
         $('#mainLoader').show();
-        CallAsyncService("/Declaration/Submit?check1=true&check2=true&check3=true", null, submitDeclarationCB)
+        CallAsyncService("/Declaration/Submit?check1=true&check2=true&check3=true&UserId=" + $('#id').val(), null, submitDeclarationCB)
         function submitDeclarationCB(response) {
             $('#mainLoader').hide();
             if (response.status) {
@@ -964,7 +973,7 @@ function SubmitTestDate() {
     if (date != null || date != "") {
 
         $('#mainLoader').show();
-        CallAsyncService("/Home/SubmitTestDate?Date=" + date, null, SubmitActivityCB)
+        CallAsyncService("/Home/SubmitTestDate?Date=" + date + "&UserId=" + $('#id').val(), null, SubmitActivityCB)
         function SubmitActivityCB(response) {
             $('#mainLoader').hide();
             if (response.status) {
@@ -974,7 +983,7 @@ function SubmitTestDate() {
             else {
                 $('#testdateError').html(response.message);
 
-                //ShowDivError(response.message)
+                ShowDivError(response.message)
             }
         }
     } else {
@@ -1059,21 +1068,31 @@ function LoadStudentDatatable() {
     $('#main-datatables tbody').on('click', '#btnEdit', function () {
         debugger
         var data = mainTable.row($(this).parents('tr')).data();
-        $('#redirectToStudent').attr("href", '/Home/Index?Id=' + data.Id);
-
+        $('#mainLoader').show();
         CallAsyncService("/Student/UpdateSession?Id=" + data.Id, null, CBFunction)
         function CBFunction(response) {
+            $('#mainLoader').hide();
             if (response.status) {
-                $('#redirectToStudent').attr("href", '/Home/Index');
                 $('#redirectToStudent')[0].click();
             } else {
-                ShowDivError("User Data not Loaded");
+                ShowDivError(response.message);
             }
         }
 
     });
 }
 
+function closeStudentProfile(){
+    CallAsyncService("/Student/CloseSession", null, closeStudentProfileCB);
+    function closeStudentProfileCB(response) {
+        if (response.status) {
+            ShowDivSuccess(response.message);
+        } else {
+            ShowDivError(response.message);
+        }
+
+    }
+}
 
 
 // Email Tab
@@ -1084,7 +1103,6 @@ function LoadEmailTemplate(Id, model) {
         if (value.Id == TempVal) {
             tinymce.activeEditor.setContent(value.Body);
             $('#txtSubject').val(value.Subject);
-            $('#txtDescription').val(value.Description);
         }
     })
 }
@@ -1096,7 +1114,6 @@ function SaveEmailTemplate() {
     }
     var param = {
         Id: Id,
-        Description: $('#txtDescription').val(),
         Subject: $('#txtSubject').val(),
         Body: tinymce.get("textAreaEmailTemp").getContent()
     }
@@ -1104,12 +1121,14 @@ function SaveEmailTemplate() {
     CallAsyncService("/Email/Save", JSON.stringify(param), SaveEmailTemplateCB);
     function SaveEmailTemplateCB(response) {
         $('#mainLoader').hide();
-        setInterval(location.reload(), 2000);
+        
         if (response.status) {
-            ShowDivSuccess(response.message)
+            ShowDivSuccess(response.message);
+            setInterval(location.reload(), 2000);
         }
         else {
-            ShowDivError(response.message)
+            ShowDivError(response.message);
+            setInterval(location.reload(), 2000);
         }
     }
 }

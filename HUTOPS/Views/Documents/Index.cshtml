@@ -10,6 +10,7 @@
         </div>
         <form id="fileUploadForm" enctype="multipart/form-data" >
             <div class="row">
+                <input class="form-control" type="text" id="id" name="Id" maxlength="25" style="display:none;" value="@Model.Id">
                 <div class="col-lg-3">
                     <label>A recent passport size photograph. Please do not use old photographs.*</label>
                 </div>
@@ -19,8 +20,9 @@
                     <!-- Other file input fields -->
                 </div>
                 <div class="col-lg-3">
-                    @if(@Model.Photograph != null && @Model.Photograph != "") { 
-                        <a href="/Documents/View?doc=1" target="_blank" class="btn btn-default form-control"><i class="fa-solid fa-eye" style="color: blue;" ></i></a>
+                    @if (@Model.Photograph != null && @Model.Photograph != "")
+                    {
+                        <a href="/Documents/View?doc=1" target="_blank" class="btn btn-default form-control"><i class="fa-solid fa-eye" style="color: blue;"></i></a>
                     }
                 </div>
             </div><br /><br />

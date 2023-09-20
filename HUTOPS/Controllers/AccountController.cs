@@ -264,9 +264,14 @@ namespace HUTOPS.Controllers
                 {
                     var password = HUCryptography.Crypto.Decrypt(IsRecordFound.Password);
                     var Name = IsRecordFound.FirstName + " " + IsRecordFound.LastName;
-                    string EmailHTML = DB.EmailTemplates.ToList().Where(x => x.Description == "Forgot Password").FirstOrDefault().Body;
-                    EmailHTML = EmailHTML.Replace("{{Name}}", Name);
-                    EmailHTML = EmailHTML.Replace("{{Password}}", password);
+                    var EmailTemplate = DB.EmailTemplates.ToList().Where(x => x.Description == "Forgot Password").FirstOrDefault();
+                    string EmailBody = EmailTemplate.Body;
+                    EmailBody = EmailBody.Replace("{{Name}}", Name);
+                    EmailBody = EmailBody.Replace("{{Password}}", password);
+
+                    CPD.Framework.Core.EmailService.SendEmail(email, null, EmailTemplate.Subject, EmailBody);
+                    ViewBag.Result = "We have sent an email to the registered email address";
+                    return View();
 
                 }
                 else {

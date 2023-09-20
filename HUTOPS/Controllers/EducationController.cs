@@ -35,7 +35,8 @@ namespace HUTOPS.Controllers
             {
                 ViewBag.Result = TempData["Result"].ToString();
             }
-            ViewBag.Declaration = Utility.GetUserFromSession().Declaration;
+            ViewBag.User = Utility.GetUserFromSession();
+            
             return View(educationPageModel);
         }
         [HttpPost]
@@ -48,6 +49,10 @@ namespace HUTOPS.Controllers
                 if (user.Declaration == 1 && Utility.GetAdminFromSession().Name == null)
                 {
                     return Json(new { status = false, message = "You have already submited your application" });
+                }
+                if(user.Id != educational.UserId)
+                {
+                    return Json(new { status = false, message = "Multi profile conflict occur while saving student record" });
                 }
 
                 educational.UserId = user.Id;
@@ -104,8 +109,11 @@ namespace HUTOPS.Controllers
                 {
                     return Json(new { status = false, message = "You have already submited your application" });
                 }
+                if (user.Id != educational.UserId)
+                {
+                    return Json(new { status = false, message = "Multi profile conflict occur while saving student record" });
+                }
 
-                
                 var SubNames = Utility.ConvertArrayToCSV(SubjectName);
                 var SubObtain = Utility.ConvertArrayToCSV(SubjectObtain);
                 var SubTotal = Utility.ConvertArrayToCSV(SubjectTotal);

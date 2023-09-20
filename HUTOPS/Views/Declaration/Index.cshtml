@@ -9,6 +9,8 @@
             <h2>Declarations</h2>
         </div>
         <form method="post">
+            <input class="form-control" type="text" id="id" name="Id" maxlength="25" style="display:none;" value="@ViewBag.User.Id">
+
             <div class="row">
                 <div class="col-lg-6">
                     <div class="headBox">
@@ -82,7 +84,7 @@
             </div>
             <div class="row">
                 <div class="col-lg-12">
-                    @if (ViewBag.Declaration != 1 || HUTOPS.Helper.Utility.GetAdminFromSession().Name != null)
+                    @if (ViewBag.User.Declaration != 1 || HUTOPS.Helper.Utility.GetAdminFromSession().Name != null)
                     {
                         <input class="savebtn global-btn-purple  float-right" type="button" onclick="submitDeclaration();" value="Submit">
                     }
