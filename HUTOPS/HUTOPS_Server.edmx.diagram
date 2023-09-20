@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="7ff2980f0ed8428d974410c98b18d18d" Name="Diagram1" ZoomLevel="45">
+      <Diagram DiagramId="7ff2980f0ed8428d974410c98b18d18d" Name="Diagram1" ZoomLevel="86">
         <EntityTypeShape EntityType="HUTOPSModel.Activity" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="HUTOPSModel.Board" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="HUTOPSModel.BoardGroup" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />

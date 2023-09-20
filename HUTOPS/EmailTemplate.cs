@@ -18,11 +18,8 @@ namespace HUTOPS
         public string Description { get; set; }
         public string Subject { get; set; }
         public string Body { get; set; }
-        public System.DateTime CreatedOn { get; set; }
-        public System.DateTime UpdatedOn { get; set; }
-        public Nullable<System.DateTime> LastMailSentOn { get; set; }
+        public Nullable<System.DateTime> CreatedOn { get; set; }
+        public Nullable<System.DateTime> UpdatedOn { get; set; }
         public int TypeId { get; set; }
-        public int NextEmailToSent { get; set; }
-        public Nullable<int> SAFAUndertakingDocTypeId { get; set; }
     }
 }

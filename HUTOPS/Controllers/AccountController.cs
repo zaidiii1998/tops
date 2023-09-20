@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using System.Web.Mvc;
 using HUTOPS.Helper;
 using HUTOPS.Models;
+using Newtonsoft.Json;
 
 namespace HUTOPS.Controllers
 {
@@ -255,6 +256,8 @@ namespace HUTOPS.Controllers
         {
             if (Utility.isValidEmail(email))
             {
+                Utility.AddLog(Constants.LogType.ActivityLog, $"user requested to forgot password against Email Address: {email}");
+
                 var personalInfo = DB.PersonalInformations.ToList();
                 var IsRecordFound = personalInfo.Where(x => x.EmailAddress == email).FirstOrDefault();
                 if (IsRecordFound != null)
@@ -262,17 +265,21 @@ namespace HUTOPS.Controllers
                     var password = HUCryptography.Crypto.Decrypt(IsRecordFound.Password);
                     var Name = IsRecordFound.FirstName + " " + IsRecordFound.LastName;
                     string EmailHTML = DB.EmailTemplates.ToList().Where(x => x.Description == "Forgot Password").FirstOrDefault().Body;
-                    EmailHTML = EmailHTML.Replace("{{name}}", Name);
+                    EmailHTML = EmailHTML.Replace("{{Name}}", Name);
                     EmailHTML = EmailHTML.Replace("{{Password}}", password);
 
                 }
                 else {
+                    Utility.AddLog(Constants.LogType.ActivityLog, $"user record not found against Email Address: {email}");
+
                     ViewBag.Result = "Record not found against this email address";
                     return View();
                 }
             }
             else
             {
+                Utility.AddLog(Constants.LogType.ActivityLog, $"user provide invalid Email Address: {email}");
+
                 ViewBag.Result = "Invalid Email Address";
                 return View();
             }

@@ -8,8 +8,40 @@
         $(this).closest(".row").remove();
     });
     tinymce.init({
-        selector: '.tinyMceTxt'
+        selector: '.tinyMceTxt',
+        plugins: "preview powerpaste casechange searchreplace autolink autosave save directionality advcode visualblocks visualchars fullscreen image link media mediaembed template codesample advtable table charmap pagebreak nonbreaking anchor advlist lists checklist wordcount tinymcespellchecker a11ychecker help formatpainter permanentpen pageembed linkchecker emoticons export",
+        height: '700px',
+        toolbar_sticky: true,
+        icons: 'thin',
+        autosave_restore_when_empty: false,
+        content_style: `
+                body {
+                    background: #fff;
+                }
+
+                @media (min-width: 840px) {
+                    html {
+                        background: #eceef4;
+                        min-height: 100%;
+                        padding: 0 .5rem
+                    }
+
+                    body {
+                        background-color: #fff;
+                        box-shadow: 0 0 4px rgba(0, 0, 0, .15);
+                        box-sizing: border-box;
+                        margin: 1rem auto 0;
+                        max-width: 820px;
+                        min-height: calc(100vh - 1rem);
+                        padding:4rem 6rem 6rem 6rem
+                    }
+                }
+            `,
+            
+
     });
+    tinymce.activeEditor.setContent('');
+
 });
 
 function showLoader() {
@@ -1040,4 +1072,53 @@ function LoadStudentDatatable() {
         }
 
     });
+}
+
+
+
+// Email Tab
+
+function LoadEmailTemplate(Id, model) {
+    TempVal = $('#' + Id).val();
+    $.each(model, function (key, value) {
+        if (value.Id == TempVal) {
+            tinymce.activeEditor.setContent(value.Body);
+            $('#txtSubject').val(value.Subject);
+            $('#txtDescription').val(value.Description);
+        }
+    })
+}
+
+function SaveEmailTemplate() {
+    var Id = 0;
+    if (!$('#btnAddNewEmail').prop('disabled')) {
+        Id = $('#comboEmailTemp').val();
+    }
+    var param = {
+        Id: Id,
+        Description: $('#txtDescription').val(),
+        Subject: $('#txtSubject').val(),
+        Body: tinymce.get("textAreaEmailTemp").getContent()
+    }
+    $('#mainLoader').show();
+    CallAsyncService("/Email/Save", JSON.stringify(param), SaveEmailTemplateCB);
+    function SaveEmailTemplateCB(response) {
+        $('#mainLoader').hide();
+        setInterval(location.reload(), 2000);
+        if (response.status) {
+            ShowDivSuccess(response.message)
+        }
+        else {
+            ShowDivError(response.message)
+        }
+    }
+}
+
+function AddNewEmailTemplate() {
+    tinymce.activeEditor.setContent('');
+    $('#txtSubject').val('');
+    $('#txtDescription').val('');
+    $('#btnAddNewEmail').prop('disabled', true);
+    $('#btnAddNewEmail').css("background-color", "#6c757d");
+    $('#btnAddNewEmail').unbind("mouseenter mouseleave");
 }

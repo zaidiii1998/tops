@@ -1,4 +1,5 @@
 ﻿using HUTOPS.Helper;
+using Newtonsoft.Json;
 using System;
 using System.Data;
 using System.Linq;
@@ -64,9 +65,13 @@ namespace HUTOPS.Controllers
         }
         public ActionResult UpdateSession(int? Id)
         {
+
             var personalInformation = DB.PersonalInformations.ToList().Where(x => x.Id == Id).FirstOrDefault();
             var education = DB.Educationals.ToList().Where(x => x.UserId == personalInformation.Id).FirstOrDefault();
             var document = DB.Documents.ToList().Where(x => x.UserId == personalInformation.Id).FirstOrDefault();
+
+            Utility.AddLog(Constants.LogType.ActivityLog, $"Admin Request to get Student Access For Updation. Student Details: {JsonConvert.SerializeObject(personalInformation)}");
+
 
             Utility.SetSession(personalInformation == null ? new PersonalInformation() : personalInformation);
             Utility.SetSession(education == null ? new Educational() : education);
