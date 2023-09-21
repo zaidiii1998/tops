@@ -11,66 +11,44 @@
     <script src="~/Scripts/jquery-3.5.1.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.6/jquery.inputmask.min.js"></script>
-    @{
-        string __UserName = "";
-        var userClaims = User.Identity as System.Security.Claims.ClaimsIdentity;
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/autofill/2.6.0/css/autoFill.dataTables.min.css" />
 
-        //You get the user’s first and last name below:
-        __UserName = userClaims?.FindFirst("name")?.Value;
+    <style>
+        html, body {
+            height: 100%;
+        }
 
-    }
+        body {
+            display: flex;
+            flex-flow: column;
+        }
+
+        header {
+            flex: 0 1 auto;
+        }
+
+        .dashboardWrapper {
+            flex: 1 1 auto;
+        }
+    </style>
+    <script src="~/Scripts/Duplicate.js"></script>
+    <script src="~/Scripts/notify.js"></script>
+    <script src="~/Scripts/notify.min.js"></script>
+    <script src="~/Scripts/Custom.js"></script>
 </head>
 <body>
-    <div class="overlay" style="display:none;">
-        <div class="preloader">
-            <svg viewBox="0 0 102 102" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path class="big-circle" d="M101 51C101 78.6142 78.6142 101 51 101C23.3858 101 1 78.6142 1 51" stroke="#252525" stroke-width="2" />
-                <path class="small-circle" d="M91 51C91 28.9086 73.0914 11 51 11C28.9086 11 11 28.9086 11 51" stroke="#252525" stroke-width="2" />
-            </svg>
-        </div>
-    </div>
-    <header>
-        <div class="ctm alert alert-danger" role="alert" id="deadline-div" style="display: none;">
-            Please complete your partially filled activity(es) before deadline date: <label id="expireDate_lbl"></label>
-        </div>
+    <header class="dashboardHeader">
         <div class="container-fluid">
             <div class="row align-items-center">
-                <div class="col-xl-2 col-lg-3 col-md-4">
-                    <div class="LogoWraper">
-                        <img src="~/Content/img/mct-logo.svg" alt="Alternate Text" />
-                    </div>
-                </div>
-                <div class="col-xl-10 col-lg-9 col-md-8">
-                    <div class="rightMenu">
-                        <ul>
-                            <li>
-                                @Html.ActionLink("Activities", "ListActivities", "Student", new { @class = "hoverUnderLine" })
-                                @*<a class="hoverUnderLine" href="#">Activities</a>*@
-                            </li>
-                            <li><a class="hoverUnderLine" href="/Student/StudentManual">Help?</a></li>
-                            <li class="logoutDropWrap">
-                                <h5 class="userName">@__UserName</h5>
-                                <ul class="logoutDrop">
-                                    <li>
-                                        @*<a class="global-btn-purple" href="#">Logout</a>*@
-                                        @Html.ActionLink("Logout", "SignOut", "Home", new { area = "" }, new { @class = "global-btn-purple" })
-                                    </li>
-                                </ul>
-                            </li>
-
-                        </ul>
+                <div class="col-xl-12">
+                    <div class="LogoWraper d-flex justify-content-center">
+                        <img src="~/Content/Images/TOPS_logo_admin.png" style="max-width: 13%;" alt="Alternate Text" />
                     </div>
                 </div>
             </div>
         </div>
     </header>
-
-    <div class="navbar navbar-dark bg-dark fixed-top" style="display:none">
-        <div class="container">
-            @Html.ActionLink("Logo", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-        </div>
-    </div>
-
     <div class="body-content">
         @RenderBody()
     </div>
@@ -81,8 +59,11 @@
                     <ul>
                         <li><a class="hoverUnderLine" href="mailto:life@habib.edu.pk">life@habib.edu.pk</a></li>
                         <li>&copy; @DateTime.Now.Year - <a class="hoverUnderLine" href="#">© Habib University</a></li>
-                        <li>Powered by <a class="hoverUnderLine" href="#">Powered by HUIT
-</a></li>
+                        <li>
+                            Powered by <a class="hoverUnderLine" href="#">
+                                Powered by HUIT
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </div>

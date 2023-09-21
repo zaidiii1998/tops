@@ -231,7 +231,10 @@ function validateEmail(inputId, errSpanId) {
         debugger
         $('#' + errSpanId).html("Please Enter a valid Email Address");
         return false;
-    } else { return true }
+    } else {
+        $('#' + errSpanId).html("");
+        return true
+    }
 }
 
 
@@ -243,6 +246,7 @@ function validateText(input) {
 function validateNumber(input) {
     input.value = input.value.replace(/[^0-9.]/g, '');
 }
+
 
 // Personal Information Page Functions
 function toggleOtherCityInput(cityId, otherCityId) {
@@ -386,17 +390,17 @@ function LoadDate(stringDate, DateId) {
 function validatePersonalInfoForm() {
     var isValid = true;
     debugger
-    $('input[required]').each(function () {
+        $('#PersonalInfoForm input[required]').each(function () {
 
-        if ($(this).val().trim() === '') {
-            isValid = false;
-            $(this).addClass("error");
+            if ($(this).val().trim() === '') {
+                isValid = false;
+                $(this).addClass("error");
 
-        } else {
-            $(this).removeClass("error");
-        }
-    });
-    $('select[required]').each(function () {
+            } else {
+                $(this).removeClass("error");
+            }
+        });
+    $('#PersonalInfoForm select[required]').each(function () {
 
         if (($(this).val() === '') || ($(this).val() === null)) {
             isValid = false;
@@ -406,7 +410,7 @@ function validatePersonalInfoForm() {
             $(this).removeClass("error");
         }
     });
-    $('textarea[required]').each(function () {
+    $('#PersonalInfoForm textarea[required]').each(function () {
 
         if (($(this).val().trim() === '') || ($(this).val() === null)) {
             isValid = false;
@@ -416,13 +420,17 @@ function validatePersonalInfoForm() {
             $(this).removeClass("error");
         }
     });
+
+
+    if ($('#comboHearHU').val() == 'Other' && $('#OtherHearHU').val() == '') {
+        $('#hearAboutHUOther').html('Please Enter Other Value');
+        isValid = false;
+    }
     debugger
     if (isValid) {
-        $('#mainLoader').show();
-        $('#mainForm').submit();
-        return true;
-    } else {
-        return false;
+
+        $('#btnEducation').prop('disabled', false);
+        $('#btnEducation').trigger('click');
     }
     
 }
@@ -509,7 +517,7 @@ function GetSubjectListCallback(response) {
         var newRow = document.createElement("div");
         newRow.className = "row";
 
-        for (let i = 1; i <= 4; i++) {
+        for (let i = 1; i <= 2; i++) {
             var newCol = document.createElement("div");
             newCol.className = "col-lg-3";
             var newcontrol = document.createElement("div");
@@ -521,13 +529,9 @@ function GetSubjectListCallback(response) {
             if (i === 1) {
                 input.classList.add("SubjectName");
                 input.value = value.Name;
-            } else if (i === 2) {
+            } else{
                 input.classList.add("SubjectObtain");
-            } else if (i === 3) {
-                input.classList.add("SubjectTotal");
-            } else {
-                input.classList.add("SubjectGrade");
-            }
+            } 
             newcontrol.appendChild(input);
             newCol.appendChild(newcontrol);
             newRow.appendChild(newCol);
@@ -541,7 +545,7 @@ function AddRow() {
     var newRow = document.createElement("div");
     newRow.className = "row";
 
-    for (let i = 1; i <= 4; i++) {
+    for (let i = 1; i <= 2; i++) {
         var newCol = document.createElement("div");
         newCol.className = "col-lg-3";
         var newcontrol = document.createElement("div");
@@ -552,13 +556,9 @@ function AddRow() {
         input.className = "form-control";
         if (i === 1) {
             input.classList.add("SubjectName");
-        } else if (i === 2) {
+        } else{
             input.classList.add("SubjectObtain");
-        } else if (i === 3) {
-            input.classList.add("SubjectTotal");
-        } else {
-            input.classList.add("SubjectGrade");
-        }
+        } 
         newcontrol.appendChild(input);
         newCol.appendChild(newcontrol);
         newRow.appendChild(newCol);
@@ -667,7 +667,7 @@ function SubmitEducation() {
 
     var isValid = true;
     debugger
-    $('input[required]').each(function () {
+    $('#EducationForm input[required]').each(function () {
 
         if ($(this).val().trim() === '') {
             isValid = false;
@@ -677,7 +677,7 @@ function SubmitEducation() {
             $(this).removeClass("error");
         }
     });
-    $('select[required]').each(function () {
+    $('#EducationForm select[required]').each(function () {
 
         if (($(this).val().trim() === '') || ($(this).val() === null)) {
             isValid = false;
@@ -687,7 +687,7 @@ function SubmitEducation() {
             $(this).removeClass("error");
         }
     });
-    $('textarea[required]').each(function () {
+    $('#EducationForm textarea[required]').each(function () {
 
         if (($(this).val().trim() === '') || ($(this).val() === null)) {
             isValid = false;
@@ -707,79 +707,83 @@ function SubmitEducation() {
 
     if (isValid)
         {
-        var SubjectName = [];
-        var SubjectObtain = [];
-        var SubjectTotal = [];
-        var SubjectGrade = [];
+        //var SubjectName = [];
+        //var SubjectObtain = [];
+        //var SubjectTotal = [];
+        //var SubjectGrade = [];
 
-        // Iterate over input elements with the class "my-input"
-        $(".SubjectName").each(function () {
-            SubjectName.push($(this).val());
-        });
-        $(".SubjectObtain").each(function () {
-            SubjectObtain.push($(this).val());
-        });
-        $(".SubjectTotal").each(function () {
-            SubjectTotal.push($(this).val());
-        });
-        $(".SubjectGrade").each(function () {
-            SubjectGrade.push($(this).val());
-        });
+        //// Iterate over input elements with the class "my-input"
+        //$(".SubjectName").each(function () {
+        //    SubjectName.push($(this).val());
+        //});
+        //$(".SubjectObtain").each(function () {
+        //    SubjectObtain.push($(this).val());
+        //});
+        //$(".SubjectTotal").each(function () {
+        //    SubjectTotal.push($(this).val());
+        //});
+        //$(".SubjectGrade").each(function () {
+        //    SubjectGrade.push($(this).val());
+        //});
 
 
 
-        var param = {
-            UserId: $('#id'),
-            CurrentLevelOfEdu: $('#currentLevel').val(),
-            HSSCSchoolName: $('#collegeName').val(),
-            HSSCSchoolAddress: $('#collegeAddress').val(),
-            HSSCPercentage: $('#hsscPercentage').val(),
-            HSSCStartDate: $('#startingYear').val(),
-            HSSCCompletionDate: $('#completionYear').val(),
-            HSSCBoardId: $('#boardOfEducation').val(),
-            HSSCBoardName: $('#boardOfEducation').text(),
+        //var param = {
+        //    UserId: $('#id'),
+        //    CurrentLevelOfEdu: $('#currentLevel').val(),
+        //    HSSCSchoolName: $('#collegeName').val(),
+        //    HSSCSchoolAddress: $('#collegeAddress').val(),
+        //    HSSCPercentage: $('#hsscPercentage').val(),
+        //    HSSCStartDate: $('#startingYear').val(),
+        //    HSSCCompletionDate: $('#completionYear').val(),
+        //    HSSCBoardId: $('#boardOfEducation').val(),
+        //    HSSCBoardName: $('#boardOfEducation').text(),
 
-            HSSCGroupId: $('#groupOfStudy').val(),
-            HSSCGroupName: $('#groupOfStudy').text(),
-            SSCSchoolName: $('#secondarySchoolName').val(),
-            SSCSchoolAddress: $('#secondarySchoolAddress').val(),
-            SSCPercentage: $('#sscPercentage').val(),
-            UniversityName: $('#universityName').val(),
-            IntendedProgram: $('#degreeProgram').val(),
-            HUSchoolName: $('input[name="huSchool"]:checked').val(),
+        //    HSSCGroupId: $('#groupOfStudy').val(),
+        //    HSSCGroupName: $('#groupOfStudy').text(),
+        //    SSCSchoolName: $('#secondarySchoolName').val(),
+        //    SSCSchoolAddress: $('#secondarySchoolAddress').val(),
+        //    SSCPercentage: $('#sscPercentage').val(),
+        //    UniversityName: $('#universityName').val(),
+        //    IntendedProgram: $('#degreeProgram').val(),
+        //    HUSchoolName: $('input[name="huSchool"]:checked').val(),
 
-            SubjectName: SubjectName,
-            SubjectObtain: SubjectObtain,
-            SubjectTotal: SubjectTotal,
-            SubjectGrade: SubjectGrade
-        };
-        $('#mainLoader').show();
-        CallAsyncService('/Education/Submit', JSON.stringify(param), editEducationCallback);
-    
-        function editEducationCallback(response) {
-            $('#mainLoader').hide();
-            debugger
-            if (response.status) {
-                ShowDivSuccess(response.message);
-                setTimeout(function () {
-                    document.getElementById("redirectLnk").click();
-                }, 2000);
-                
-                
-            }
-            else {
-                debugger
-                ShowDivError(response.message)
-                console.log(response.error);
-                var errstring = response.error.toString();
-                var stringList = errstring.split(",");
-                $.each(stringList, function (key, value) {
-                    $("#Error ul").append('<li class="text-danger">'+ value +'</li>');
-                })
-                
+        //    SubjectName: SubjectName,
+        //    SubjectObtain: SubjectObtain,
+        //    SubjectTotal: SubjectTotal,
+        //    SubjectGrade: SubjectGrade
+        //};
+        //$('#mainLoader').show();
+        //CallAsyncService('/Education/Submit', JSON.stringify(param), editEducationCallback);
 
-            }
-        }
+        //function editEducationCallback(response) {
+        //    $('#mainLoader').hide();
+        //    debugger
+        //    if (response.status) {
+        //        ShowDivSuccess(response.message);
+        //        setTimeout(function () {
+        //            document.getElementById("redirectLnk").click();
+        //        }, 2000);
+
+
+        //    }
+        //    else {
+        //        debugger
+        //        ShowDivError(response.message)
+        //        console.log(response.error);
+        //        var errstring = response.error.toString();
+        //        var stringList = errstring.split(",");
+        //        $.each(stringList, function (key, value) {
+        //            $("#Error ul").append('<li class="text-danger">'+ value +'</li>');
+        //        })
+
+
+        //    }
+        //}
+        $('#btnDocument').prop('disabled', false);
+
+        $('#btnDocument').trigger('click');
+
     }
 };
 
@@ -813,49 +817,53 @@ function submitDocuments(sessionUserId) {
         }
     });
     if (isValid) {
-        var form = $('#fileUploadForm');
-        var formData = new FormData(form[0]);
-        formData.append("UserId", sessionUserId)
-        if ($('#id').val() != sessionUserId) {
-            ShowDivError('Multi profile conflict occur while saving student record');
-            return false;
-        }
+        //var form = $('#fileUploadForm');
+        //var formData = new FormData(form[0]);
+        //formData.append("UserId", sessionUserId)
+        //if ($('#id').val() != sessionUserId) {
+        //    ShowDivError('Multi profile conflict occur while saving student record');
+        //    return false;
+        //}
 
 
-        $('#mainLoader').show();
-        $.ajax({
-            url: '/Handler1.ashx', // Change the URL to your MVC controller's action
-            type: 'POST',
-            data: formData,
-            processData: false,
-            contentType: false,
-            success: function (response) {
-                $('#mainLoader').hide();
-                debugger
-                if (response.status) {
-                    ShowDivSuccess(response.message);
-                    setTimeout(function () {
-                        document.getElementById("redirectToActivity").click();
-                    }, 2000);
-                }
-                else {
-                    ShowDivError(response.message)
-                    console.log(response.error);
-                    var errstring = response.error.toString();
-                    var stringList = errstring.split(",");
-                    $.each(stringList, function (key, value) {
-                        $("#Error ul").append('<li class="text-danger">' + value + '</li>');
-                    })
-                }
+        //$('#mainLoader').show();
+        //$.ajax({
+        //    url: '/Handler1.ashx', // Change the URL to your MVC controller's action
+        //    type: 'POST',
+        //    data: formData,
+        //    processData: false,
+        //    contentType: false,
+        //    success: function (response) {
+        //        $('#mainLoader').hide();
+        //        debugger
+        //        if (response.status) {
+        //            ShowDivSuccess(response.message);
+        //            setTimeout(function () {
+        //                document.getElementById("redirectToActivity").click();
+        //            }, 2000);
+        //        }
+        //        else {
+        //            ShowDivError(response.message)
+        //            console.log(response.error);
+        //            var errstring = response.error.toString();
+        //            var stringList = errstring.split(",");
+        //            $.each(stringList, function (key, value) {
+        //                $("#Error ul").append('<li class="text-danger">' + value + '</li>');
+        //            })
+        //        }
 
-            },
-            error: function (xhr, status, error) {
-                debugger
-                ShowDivError(response.message);
+        //    },
+        //    error: function (xhr, status, error) {
+        //        debugger
+        //        ShowDivError(response.message);
 
-            }
-        });
-    } else {return false }
+        //    }
+        //});
+        $('#btnTest').prop('disabled', false);
+
+        $('#btnTest').trigger('click');
+
+    }
 }
 
 // Activity Section
@@ -943,9 +951,101 @@ function submitDeclaration() {
     var check1 = $('#validateLaw').is(':checked');
     var check2 = $('#invalidInfo').is(':checked');
     var check3 = $('#validInfo').is(':checked');
-    if (check1 == true && check2 == true && check3 == true) {
+    //if (check1 == true && check2 == true && check3 == true) {
+
+    var personalInfo = {
+        Id: $('#id').val(),
+        firstName: $('#firstName').val(),
+        middleName: $('#middleName').val(),
+        lastName: $('#lastName').val(),
+        fatherFirstName: $('#fatherFirstName').val(),
+        fatherMiddleName: $('#fatherMiddleName').val(),
+        fatherLastName: $('#fatherLastName').val(),
+        cnic: $('#cnic').val(),
+        emailAddress: $('#email').val(),
+        alterEmailAddress: $('#altEmail').val(),
+        gender: $("#gender").val(),
+        husbandName: $('#husbandName').val(),
+        dateofBirth: $('#dob').val(),
+        // Contact Info
+        cellPhoneNumber: $('#cellPhone').val(),
+        whatsAppNumber: $('#whatsappNumber').val(),
+        alternateCellPhoneNumber: $('#altCellPhone').val(),
+        homePhoneNumber: $('#homePhone').val(),
+        alternateLandline: $('#altLandline').val(),
+        guardianCellPhoneNumber: $('#guardianCellPhone').val(),
+        guardianEmailAddress: $('#guardianEmail').val(),
+        // Address info
+        residentialAddress: $('#residentialAddress').val(),
+        residentialCountry: $('#residentialCountry :selected').text(),
+        residentialProvince: $('#residentialProvince :selected').text(),
+        residentialCity: $('#residentialCity :selected').text(),
+        residentialCityOther: $('#residentialCityOther').val(),
+        residentialPostalCode: $('#residentialPostalCode').val(),
+
+        permanentAddress: $('#permanentAddress').val(),
+        permanentCountry: $('#permanentCountry :selected').text(),
+        permanentProvince: $('#permanentProvince :selected').text(),
+        permanentCity: $('#permanentCity :selected').text(),
+        permanentCityOther: $('#permanentCityOther').val(),
+        permanentPostalCode: $('#permanentPostalCode').val(),
+
+        // Hear About
+        HearAboutHU: $('#comboHearHU').val(),
+        HearAboutHUOther: $('#OtherHearHU').val(),
+
+        // Test Date
+
+        TestDate: $('#TestDate').val()
+
+    }
+    var education = {
+
+        CurrentLevelOfEdu: $('#currentLevel').val(),
+        HSSCSchoolName: $('#collegeName').val(),
+        HSSCSchoolAddress: $('#collegeAddress').val(),
+        HSSCPercentage: $('#hsscPercentage').val(),
+        HSSCStartDate: $('#startingYear').val(),
+        HSSCCompletionDate: $('#completionYear').val(),
+        HSSCBoardId: $('#boardOfEducation').val(),
+        HSSCBoardName: $('#boardOfEducation :selected').text(),
+
+        HSSCGroupId: $('#groupOfStudy').val(),
+        HSSCGroupName: $('#groupOfStudy :selected').text(),
+        SSCSchoolName: $('#secondarySchoolName').val(),
+        SSCSchoolAddress: $('#secondarySchoolAddress').val(),
+        SSCPercentage: $('#sscPercentage').val(),
+        UniversityName: $('#universityName').val(),
+        IntendedProgram: $('#degreeProgram').val(),
+        HUSchoolName: $('input[name="huSchool"]:checked').val(),
+
+    }
+    var document = {
+        Id: 5
+    }
+
+    var SubjectName = [];
+    var SubjectObtain = [];
+
+    // Iterate over input elements with the class "my-input"
+    $(".SubjectName").each(function () {
+        SubjectName.push($(this).val());
+    });
+    $(".SubjectObtain").each(function () {
+        SubjectObtain.push($(this).val());
+    });
+    var param = {
+        // Personal Info
+        PersonalInfo: personalInfo,
+        Education: education,
+        Document: document
+            
+    }
+    var value = JSON.stringify(param);
+        debugger
+
         $('#mainLoader').show();
-        CallAsyncService("/Declaration/Submit?check1=true&check2=true&check3=true&UserId=" + $('#id').val(), null, submitDeclarationCB)
+        CallAsyncService("/Application/Submit", JSON.stringify(param), submitDeclarationCB)
         function submitDeclarationCB(response) {
             $('#mainLoader').hide();
             if (response.status) {
@@ -956,9 +1056,9 @@ function submitDeclaration() {
             }
         }
 
-    } else {
-        ShowDivError("All checkboxes are required");
-    }
+    //} else {
+    //    ShowDivError("All checkboxes are required");
+    //}
 
 }
 
@@ -969,27 +1069,28 @@ function LoadTestDate(date) {
 }
 function SubmitTestDate() {
     date = $('#TestDate').val();
+    debugger
 
-    if (date != null || date != "") {
+    if (date != null && date != "") {
+        $('#btnDeclaration').prop('disabled', false);
+        $('#btnDeclaration').trigger('click');
+        //$('#mainLoader').show();
+        //CallAsyncService("/Home/SubmitTestDate?Date=" + date + "&UserId=" + $('#id').val(), null, SubmitActivityCB)
+        //function SubmitActivityCB(response) {
+        //    $('#mainLoader').hide();
+        //    if (response.status) {
+        //        ShowDivSuccess(response.message)
+        //        document.getElementById("redirectToDeclaration").click();
+        //    }
+        //    else {
+        //        $('#testdateError').html(response.message);
 
-        $('#mainLoader').show();
-        CallAsyncService("/Home/SubmitTestDate?Date=" + date + "&UserId=" + $('#id').val(), null, SubmitActivityCB)
-        function SubmitActivityCB(response) {
-            $('#mainLoader').hide();
-            if (response.status) {
-                ShowDivSuccess(response.message)
-                document.getElementById("redirectToDeclaration").click();
-            }
-            else {
-                $('#testdateError').html(response.message);
-
-                ShowDivError(response.message)
-            }
-        }
+        //        ShowDivError(response.message)
+        //    }
+        //}
     } else {
         //ShowDivError("Please Select Test Date")
-        $('#testdateError').html(response.message);
-
+        $('#testdateError').html("Please select Test Date");
 
     }
 }

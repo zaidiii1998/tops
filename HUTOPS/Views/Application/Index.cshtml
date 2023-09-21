@@ -1,0 +1,733 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div>
+    <div class="accordion" id="accordionExample">
+        <div class="card m-4">
+            <div class="card-header CollapseCard" id="headingOne"  onclick="document.getElementById('btnPersonalInfo').click()">
+                <h2 class="mb-0">
+                    <a class="btn btn-link" id="btnPersonalInfo" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        Personal Information
+                    </a>
+                </h2>
+            </div>
+            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                <div class="card-body">
+                    <div class="container-fluid">
+                        <div class="boxWraper infoBox">
+                            <div class="headBox">
+                                <h2>Personal Information</h2>
+                            </div>
+                            <form id="PersonalInfoForm">
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <label for="firstName">First Name:</label>
+                                            <input class="form-control" type="text" id="firstName" name="FirstName" maxlength="25" oninput="validateText(this); validateName(this.id,'errFirstName')" required>
+                                            <span class="text-danger" id="errFirstName"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <label for="middleName">Middle Name:</label>
+                                            <input class="form-control" type="text" id="middleName" name="MiddleName" maxlength="25" oninput="validateText(this);">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <label for="lastName">Last Name:</label>
+                                            <input class="form-control" type="text" id="lastName" name="LastName" maxlength="25" oninput="validateText(this); validateName(this.id,'errLastName')" required>
+                                            <span class="text-danger" id="errLastName"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <label for="fatherFirstName">Father's First Name:</label>
+                                            <input class="form-control" type="text" id="fatherFirstName" maxlength="25" name="FatherFirstName" oninput="validateText(this); validateName(this.id,'errFatherFName')" required>
+                                            <span class="text-danger" id="errFatherFName"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <label for="fatherMiddleName">Father's Middle Name:</label>
+                                            <input class="form-control" type="text" id="fatherMiddleName" maxlength="25" name="FatherMiddleName" oninput="validateText(this);">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <label for="fatherLastName">Father's Last Name:</label>
+                                            <input class="form-control" type="text" id="fatherLastName" maxlength="25" name="FatherLastName" oninput="validateText(this); validateName(this.id,'errFatherLName')" required>
+                                            <span class="text-danger" id="errFatherLName"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <label for="cnic">CNIC:</label>
+                                            <input class="form-control cnic" type="text" id="cnic" name="CNIC" placeholder="12345-1234567-1" maxlength="15" onchange="checkCNIC(this.id);" required>
+                                            <span class="text-danger" id = "cnicError"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <label for="email">Email Address:</label>
+                                            <input class="form-control" type="email" id="email" name="EmailAddress" maxlength="25" oninput="validateEmail(this.id,'emailError');" onchange="checkPhoneNumber(this.id);" required>
+                                            <span class="text-danger" id="emailError"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <label for="altEmail">Alternate Email Address:</label>
+                                            <input class="form-control" type="email" id="altEmail" name="AlterEmailAddress" maxlength="30" oninput="validateEmail(this.id,'errAltEmail');">
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <label>Gender:</label>
+                                            <select id="gender" name="Gender" class="custom-select" onchange="toggleFieldInput(this.id,'F','divHusband');" required>
+                                                <option value="">Select Gender</option>
+                                                <option value="M">Male</option>
+                                                <option value="F">Female</option>
+                                                <option value="T">Prefer not to self-identify</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4" id="divHusband" style="display:none;">
+                                        <div class="form-group">
+                                            <label for="husbandName">Husband's Name:</label>
+                                            <input class="form-control" type="text" id="husbandName" maxlength="25" name="HusbandName">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="dob">Date of Birth:</label>
+                                            <input type="date" class="form-control" id="dob" name="DateOfBirth"  required/>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Contact Details Section -->
+                                <div class="headBox">
+                                    <h2>Contact Details</h2>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <label for="cellPhone">Cell Phone Number:</label>
+                                            <input class="form-control number" type="tel" id="cellPhone" name="CellPhoneNumber" placeholder="0333-3333333" onchange="checkPhoneNumber(this.id);" maxlength="15" required>
+                                            <span class="text-danger" id="numberError"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <input type="checkbox" id="differentNumbers" class="styled-checkbox" name="differentNumbers" onclick="toggleFormSection('WhatsAppSection','differentNumbers')">
+                                        <label for="differentNumbers" class="checkbox-label" style="width: 75%;">Check if WhatsApp number is different from primary mobile number</label>
+                                        <br /><br />
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-4" id="WhatsAppSection" style="display: none;">
+                                        <div>
+                                            <div class="form-group">
+                                                <label for="whatsappNumber ">WhatsApp Number:</label>
+                                                <input class="form-control number" type="tel" id="whatsappNumber" name="WhatsAppNumber" maxlength="15" placeholder="0333-3333333">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <label for="altCellPhone">Alternate Cell Phone Number:</label>
+                                            <input class="form-control number" type="tel" id="altCellPhone" name="AlternateCellPhoneNumber" maxlength="15" placeholder="0333-3333333">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <label for="homePhone">Home Phone Number:</label>
+                                            <input class="form-control" type="tel" id="homePhone" name="HomePhoneNumber" oninput="validateNumber(this)" placeholder="1234567890" maxlength="15" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <label for="altLandline">Alternate Landline Number:</label>
+                                            <input class="form-control" type="tel" id="altLandline" name="AlternateLandline" oninput="validateNumber(this)" maxlength="15" placeholder="1234567890">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <label for="guardianCellPhone">Guardian Cell Phone Number:</label>
+                                            <input class="form-control number" type="tel" id="guardianCellPhone" name="GuardianCellPhoneNumber" maxlength="15" placeholder="1234567890" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <label for="guardianEmail">Guardian Email Address:</label>
+                                            <input class="form-control" type="email" id="guardianEmail" name="GuardianEmailAddress" oninput="validateEmail(this.id,'errGuardianEmail')" required>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <label for="residentialAddress">Residential Address:</label>
+                                            <textarea class="form-control" id="residentialAddress" name="ResidentialAddress" rows="2" cols="100" maxlength="100" required></textarea><br><br>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <label for="residentialCountry">Select Country:</label>
+                                            <select class="form-control" id="residentialCountry" onchange="updateProvince(this.id, 'residentialProvince');" required>
+                                                <option value="" selected disabled>Select Country</option>
+                                                <option value="1">Pakistan</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <label for="residentialProvince">Select Province/State:</label>
+                                            <select class="form-control" id="residentialProvince" onchange="updateCities(this.id,'residentialCity');" required>
+                                                <option value="" selected disabled>Select Provience</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <label for="residentialCity">City:</label>
+
+                                            <select class="form-control" id="residentialCity" onchange="toggleOtherCityInput(this.id,'divResidentialCityOther')" required>
+                                                <option value="" selected disabled>Select City</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4" id="divResidentialCityOther" style="display: none;">
+                                        <div class="form-group">
+                                            <label for="residentialCityOther">Other City:</label>
+                                            <input class="form-control" type="text" id="residentialCityOther" name="ResidentialCityOther"><br><br>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <label for="residentialPostalCode">Residential Postal Code:</label>
+                                            <input class="form-control" type="text" id="residentialPostalCode" oninput="validateNumber(this)" name="ResidentialPostalCode" maxlength="6" required><br><br>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <input type="checkbox" class="styled-checkbox" id="permanentDifferent" onclick="toggleFormSection('permanentForm', 'permanentDifferent');">
+                                        <label class="checkbox-label" for="permanentDifferent" style="width:75%;">Check the box if your permanent residential address is different from your Residential address:</label>
+                                    </div>
+                                </div>
+
+                                <div id="permanentForm" style="display: none;">
+                                    <div class="row">
+                                        <div class="col-lg-4">
+                                            <div class="form-group">
+                                                <label for="permanentAddress">Permanent Address:</label>
+                                                <textarea class="form-control" id="permanentAddress" name="PermanentAddress" rows="2" cols="50" maxlength="100"></textarea><br><br>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="form-group">
+                                                <label for="permanentCountry">Select Country:</label>
+
+                                                <select class="form-control" id="permanentCountry" onchange="updateProvince(this.id,'permanentProvince');">
+                                                    <option value="" selected disabled>Select Country</option>
+                                                    <option value="1">Pakistan</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+
+                                            <div class="form-group">
+                                                <label for="permanentProvince">Select Province/State:</label>
+                                                <select class="form-control" id="permanentProvince" onchange="updateCities(this.id,'permanentCity');">
+                                                    <option value="" selected disabled>Select Provience</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-4">
+                                            <div class="form-group">
+                                                <label for="permanentCity">City:</label>
+                                                <select class="form-control" id="permanentCity" onchange="toggleOtherCityInput(this.id,'divPermanentCityOther')">
+                                                    <option value="" selected disabled>Select City</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-4" id="divPermanentCityOther" style="display: none;">
+                                            <div class="form-group">
+                                                <label for="permanentCityOther">Other City:</label>
+                                                <input class="form-control" type="text" id="permanentCityOther" name="PermanentCityOther"><br><br>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="form-group">
+                                                <label for="permanentPostalCode">Permanent Postal Code:</label>
+                                                <input class="form-control" type="text" id="permanentPostalCode" oninput="validateNumber(this)" maxlength="6" name="PermanentPostalCode">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <label>How did you first hear about Habib University?</label>
+                                            <select class="form-control" id="comboHearHU" name="HearAboutHU" style="padding:0;" onchange="ShowHideField('divOtherHearHU','comboHearHU','Other')" required>
+                                                <option value="" selected disabled>How did you first hear about Habib University?</option>
+                                                <option value="College/School visit by HU TOPS team">College/School visit by HU TOPS team</option>
+                                                <option value="HU TOPS/Habib University Website">HU TOPS/Habib University Website</option>
+                                                <option value="HU TOPS/Habib University Facebook page">HU TOPS/Habib University Facebook page</option>
+                                                <option value="Habib University Instagram page">Habib University Instagram page</option>
+                                                <option value="Through Teacher/Tutor ">Through Teacher/Tutor </option>
+                                                <option value="Poster/Flyer">Poster/Flyer</option>
+                                                <option value="College Magazine">College Magazine</option>
+                                                <option value="Newspaper">Newspaper</option>
+                                                <option value="School Expo/Career Fair">School Expo/Career Fair</option>
+                                                <option value="Dawn/Jung/Express Education Expo">Dawn/Jung/Express Education Expo</option>
+                                                <option value="Habib University Open House">Habib University Open House</option>
+                                                <option value="HU TOPS Admissions Camp">HU TOPS Admissions Camp</option>
+                                                <option value="Through a Habib University/HU TOPS Student">Through a Habib University/HU TOPS Student</option>
+                                                <option value="Through Peers/Friends/Colleagues">Through Peers/Friends/Colleagues</option>
+                                                <option value="Television/Radio">Television/Radio</option>
+                                                <option value="Other">Other</option>
+                                            </select>
+                                            <span class="text-danger" id="hearAboutHU"></span>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="form-group" id="divOtherHearHU" style="display:none;">
+                                            <label>Other</label>
+                                            <input  type="text" class="form-control" id="OtherHearHU" name="HearAboutHUOther" />
+                                            <span class="text-danger" id="hearAboutHUOther"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <input class="savebtn global-btn-purple  float-right m-1" type="button" onclick="validatePersonalInfoForm();" value="Next">
+                                    </div>
+                                </div>
+                                <input type="text" name="ResidentialCountry" id="txtResidentialCountry" style="display:none;" />
+                                <input type="text" name="ResidentialProvince" id="txtResidentialProvince" style="display:none;" />
+                                <input type="text" name="ResidentialCity" id="txtResidentialCity" style="display:none;" />
+
+                                <input type="text" name="PermanentCountry" id="txtPermanentCountry" style="display:none;" />
+                                <input type="text" name="PermanentProvince" id="txtPermanentProvince" style="display:none;" />
+                                <input type="text" name="PermanentCity" id="txtPermanentCity" style="display:none;" />
+                            </form>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card m-4">
+            <div class="card-header CollapseCard" id="headingTwo" onclick="document.getElementById('btnEducation').click();">
+                <h2 class="mb-0">
+                    <a class="btn btn-link collapsed" data-toggle="collapse" id="btnEducation" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        Educational Information
+                    </a>
+                </h2>
+            </div>
+            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                <div class="card-body">
+                    <div class="container-fluid">
+                        <div class="boxWraper infoBox">
+                            <div class="headBox">
+                                <h2>Education</h2>
+                            </div>
+                            <form method="post" id="EducationForm">
+                                <input class="form-control" type="text" id="id" name="Id" maxlength="25" style="display:none;">
+                                <div class="headBox">
+                                    <h6>HSSC/College Information</h6>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-3">
+                                        <div class="form-group">
+                                            <label for="currentLevel">Your Current Level of Study:</label>
+                                            <select class="form-control" id="currentLevel" name="currentLevel" onchange="ShowHideField('divUniName','currentLevel','Already enrolled in a University')" required>
+                                                <option value="">Select Value </option>
+                                                <option value="HSSC II in progress">HSSC II in progress</option>
+                                                <option value="HSSC II Completed">HSSC II Completed</option>
+                                                <option value="Already enrolled in a University">Already enrolled in a University</option>
+                                            </select>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3" id="divUniName">
+                                        <div class="form-group">
+                                            <label for="universityName">University Name:</label>
+                                            <input class="form-control" type="text" id="universityName" name="universityName"><br><br>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="form-group">
+                                            <label for="boardOfEducation">Board Of Education:</label>
+                                            <select class="form-control" id="boardOfEducation" name="boardOfEducation" onchange="GetGroupList(this.value)" required>
+                                                <option value="" selected>Select Board</option>
+                                                <option value="1">Board Of Intermediate</option>
+                                                <option value="2">Federal Board</option>
+                                                <option value="3">Aga Khan University Examination Board</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="form-group">
+                                            <label for="groupOfStudy">Group Of Studies</label>
+                                            <select class="form-control" id="groupOfStudy" name="groupOfStudy" onchange="GetSubjectList(this.id)" required>
+                                                <option value="">Select Group</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-3">
+                                        <div class="form-group">
+                                            <label for="collegeName">Current College/Last College Name:</label>
+                                            <input class="form-control" type="text" id="collegeName" name="collegeName" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="form-group">
+                                            <label for="collegeAddress">College Address with City Name:</label>
+                                            <textarea class="form-control" id="collegeAddress" name="collegeAddress" rows="2" required></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="form-group">
+                                            <label for="startingYear">Starting Year:</label>
+                                            <select class="form-control" id="startingYear" name="startingYear" required>
+
+                                                <!-- Options for years, you can generate these dynamically with JavaScript -->
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="form-group">
+                                            <label for="completionYear">Completion Year:</label>
+                                            <select class="form-control" id="completionYear" name="completionYear" required>
+                                                <!-- Options for years, you can generate these dynamically with JavaScript -->
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-3">
+                                        <div class="form-group">
+                                            <label for="hsscPercentage">Overall HSSC Percentage:</label>
+                                            <input class="form-control Percentage" type="text" id="hsscPercentage" name="hsscPercentage" required>
+                                        </div>
+                                    </div>
+                                </div><br /><br />
+                                <div class="headBox">
+                                    <h6>SSC/School Information</h6>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-3">
+                                        <div class="form-group">
+                                            <label for="secondarySchoolName">Secondary Education School Name:</label>
+                                            <input class="form-control" type="text" id="secondarySchoolName" name="secondarySchoolName" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="form-group">
+                                            <label for="secondarySchoolAddress">Secondary Education School Address with City Name:</label>
+                                            <textarea class="form-control" type="text" id="secondarySchoolAddress" name="secondarySchoolAddress" rows="2" required></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="form-group">
+                                            <label for="sscPercentage">Overall SSC Percentage:</label>
+                                            <input class="form-control Percentage" type="text" id="sscPercentage" name="sscPercentage" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Habib University Section -->
+                                <div class="headBox">
+                                    <h6>Intended Program</h6>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label>Which HU School are you planning to apply to at Habib University?</label><br>
+                                            <input type="radio" id="dhananiSchool" name="huSchool" value="SE" onclick="loadPrograms(this.value)" required>
+                                            <label for="dhananiSchool">Dhanani School of Science and Engineering</label><br>
+                                            <input type="radio" id="artsSchool" name="huSchool" value="SA" onclick="loadPrograms(this.value)">
+                                            <label for="artsSchool">School of Arts, Humanities and Social Sciences</label><br><br>
+                                        </div>
+                                        <span class="text-danger" id="errHUSchool"></span>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="form-group">
+                                            <label>Which Degree Program you are planning to pursue at Habib University?</label><br>
+                                            <!-- This section will be updated based on the selection in the previous question -->
+                                            <!-- You can use JavaScript to update the options based on the selection -->
+                                            <select class="form-control" id="degreeProgram" name="degreeProgram" required>
+                                                <option value="">Select Program</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+                                <section>
+                                    <div class="headBox">
+                                        <h2>Subjects Information</h2>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-3">
+                                            <div class="form-group">
+                                                <label>Subject</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <div class="form-group">
+                                                <label>Obtain Marks</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <div class="form-group">
+                                                <label>Max Marks</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <div class="form-group">
+                                                <label>Grade</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div id="divSubjects">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <button type="button" class="global-btn-purple float-right" onclick="AddRow();"><i class="fa fa-plus"></i></button>
+                                        </div>
+                                    </div>
+                                </section>
+                                <hr />
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <input class="savebtn global-btn-purple  float-right m-1" type="button" onclick="SubmitEducation();" value="Next">
+                                    </div>
+                                </div>
+
+
+                            </form>
+                            <div id="Error">
+                                <ul></ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card m-4" >
+            <div class="card-header CollapseCard" id="headingThree" onclick="document.getElementById('btnDocument').click();">
+                <h2 class="mb-0">
+                    <a class="btn btn-link collapsed" id="btnDocument" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                        Documents
+                    </a>
+                </h2>
+            </div>
+            <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                <div class="card-body">
+                    <div class="container-fluid">
+                        <div class="boxWraper infoBox">
+                            <div class="headBox">
+                                <h2>Documents</h2>
+                            </div>
+                            <form id="fileUploadForm" enctype="multipart/form-data">
+                                <div class="row">
+                                    <input class="form-control" type="text" id="id" name="Id" maxlength="25" style="display:none;">
+                                    <div class="col-lg-3">
+                                        <label>A recent passport size photograph. Please do not use old photographs.*</label>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <input class="form-control" type="file" id="Photograph" size="1" name="Photograph" accept=".jpeg, .jpg" onchange="checkFileSize(this.id, 'errPhoto')" required>
+                                        <span class="text-danger" id="errPhoto"></span>
+                                        <!-- Other file input fields -->
+                                    </div>
+
+                                </div><br /><br />
+                                <div class="row">
+                                    <div class="col-lg-3">
+                                        <label>A scanned copy of your original SSC Final Marks Sheet *</label>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <input type="file" class="form-control" id="SSCMarkSheet" size="1" name="SSCMarkSheet" accept=".jpeg, .jpg" onchange="checkFileSize(this.id, 'errSSC')" required>
+                                        <span class="text-danger" id="errSSC"></span>
+                                    </div>
+
+                                </div><br /><br />
+                                <div class="row">
+                                    <div class="col-lg-3">
+                                        <label>A scanned copy of your original HSSC I or final HSSC Marks Sheet</label>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <input type="file" class="form-control" id="HSSCMarkSheet" size="1" name="HSSCMarkSheet" accept=".jpeg, .jpg" onchange="checkFileSize(this.id, 'errHSSC')">
+                                        <span class="text-danger" id="errHSSC"></span>
+                                    </div>
+
+                                </div><br /><br />
+                                <div class="row">
+                                    <div class="col-lg-3">
+                                        <label>A scanned copy of your B-Form or CNIC (If available)</label>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <input type="file" id="CNIC" class="form-control" size="1" name="CNIC" accept=".jpeg, .jpg" onchange="checkFileSize(this.id, 'errCNIC')">
+                                        <span class="text-danger" id="errCNIC"></span>
+                                    </div>
+
+                                </div><br /><br />
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <input class="savebtn global-btn-purple  float-right" type="button" onclick="submitDocuments('');" value="Next">
+                                    </div>
+                                </div>
+                            </form>
+                            <div id="Error">
+                                <ul></ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card m-4">
+            <div class="card-header CollapseCard" id="headingThree"  onclick="document.getElementById('btnTest').click();">
+                <h2 class="mb-0">
+                    <a class="btn btn-link collapsed" id="btnTest" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseThree">
+                        Test Date
+                    </a>
+                </h2>
+            </div>
+            <div id="collapseFour" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                <div class="card-body">
+                    <div class="container-fluid">
+                        <div class="boxWraper infoBox">
+                            <div class="headBox">
+                                <h2>Test Date</h2>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <input class="form-control" type="text" id="id" name="Id" maxlength="25" style="display:none;">
+
+                                        <label for="currentLevel">To appear for HU TOPS Qualifying Round Test (Core Skills Test). Please choose a test date:<span class="text-danger">*:</span></label>
+                                        <select class="form-control" id="TestDate" required>
+                                            <option value="">Select Date </option>
+                                            <option value="23rd/24th/25th February 2023 [For Karachi/Sindh/Baluchistan Applicants]">23rd/24th/25th February 2023 [For Karachi/Sindh/Baluchistan Applicants]</option>
+                                            <option value="3rd/4th/5th March 2023 [For Islamabad/Punjab/GB/KPK/AJK Applicants]">3rd/4th/5th March 2023 [For Islamabad/Punjab/GB/KPK/AJK Applicants]</option>
+                                        </select>
+                                        <span class="text-danger" id="testdateError"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                        <input class="savebtn global-btn-purple  float-right" type="button" onclick="SubmitTestDate();" value="Next">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card m-4">
+            <div class="card-header CollapseCard" id="headingThree"  onclick="document.getElementById('btnDeclaration').click();">
+                <h2 class="mb-0">
+                    <a class="btn btn-link collapsed" id="btnDeclaration" data-toggle="collapse" data-target="#collapseFive" aria-expanded="false" aria-controls="collapseThree">
+                        Declarations
+                    </a>
+                </h2>
+            </div>
+            <div id="collapseFive" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                <div class="card-body">
+                    <div class="container-fluid">
+                        <div class="boxWraper infoBox">
+                            <div class="headBox">
+                                <h2>Declarations</h2>
+                            </div>
+                            <form method="post">
+                                <input class="form-control" type="text" id="id" name="Id" maxlength="25" style="display:none;">
+
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <input type="checkbox" id="validInfo" class="styled-checkbox" name="validInfo" required>
+                                        <label for="validInfo" class="checkbox-label" style="width: 75%;">
+                                            The Information provided by me regarding this application is true and complete.
+                                        </label>
+                                        <br /><br />
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <input type="checkbox" id="invalidInfo" class="styled-checkbox" name="invalidInfo" required>
+                                        <label for="invalidInfo" class="checkbox-label" style="width: 75%;">I understand that any inaccurate/false information shall render this application invalid, and if admitted on the basis of such information, I may be asked to leave at any stage of the program.</label>
+                                        <br /><br />
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <input type="checkbox" id="validateLaw" class="styled-checkbox" name="invalidInfo" required>
+                                        <label for="validateLaw" class="checkbox-label" style="width: 75%;">
+                                            I understand that the provision of any inaccurate or false information may render me liable to prosecution in a court of law in Pakistan.
+                                        </label>
+                                        <br /><br />
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                            <input class="savebtn global-btn-purple  float-right" type="button" onclick="submitDeclaration();" value="Submit">
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $('#btnEducation').prop('disabled', true);
+    $('#btnDocument').prop('disabled', true);
+    $('#btnTest').prop('disabled', true);
+    $('#btnDeclaration').prop('disabled', true);
+
+
+    $('#divUniName').hide();
+    LoadYear('startingYear');
+    LoadYear('completionYear');
+</script>

@@ -149,6 +149,7 @@
       <DependentUpon>HUTOPS_Server.tt</DependentUpon>
     </Compile>
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ApplicationController.cs" />
     <Compile Include="Controllers\CommonController.cs" />
     <Compile Include="Controllers\DeclarationController.cs" />
     <Compile Include="Controllers\DocumentsController.cs" />
@@ -225,6 +226,7 @@
       <DependentUpon>HUTOPS_Server.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Admin.cs" />
+    <Compile Include="Models\ApplicationModel.cs" />
     <Compile Include="Models\DataTableRequest.cs" />
     <Compile Include="Models\PersonalInfoPageModel.cs" />
     <Compile Include="Models\EducationPageModel.cs" />
@@ -597,6 +599,7 @@
     <Content Include="Views\Student\Index.cshtml" />
     <Content Include="Views\Account\ForgotPassword.cshtml" />
     <Content Include="Views\Email\Index.cshtml" />
+    <Content Include="Views\Application\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Common\" />
