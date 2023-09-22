@@ -10,13 +10,10 @@
 namespace HUTOPS
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class EducationalSubject
+    public partial class SP_InsertApplication_Result
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public Nullable<int> ObtainMarks { get; set; }
-        public int EducationalId { get; set; }
+        public int Response { get; set; }
+        public string Reason { get; set; }
     }
 }

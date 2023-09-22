@@ -505,16 +505,6 @@
                                                 <label>Obtain Marks</label>
                                             </div>
                                         </div>
-                                        <div class="col-lg-3">
-                                            <div class="form-group">
-                                                <label>Max Marks</label>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-3">
-                                            <div class="form-group">
-                                                <label>Grade</label>
-                                            </div>
-                                        </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-lg-12">
@@ -718,15 +708,35 @@
             </div>
         </div>
     </div>
+    <div class="row" id="errorBlock">
+        <div class="col-md-4 m-4">
+            <h6 class="form-control">Personal Information Errors</h6>
+            <div id="PersonalError">
+                <ul></ul>
+            </div>
+        </div>
+        <div class="col-md-4 m-4">
+            <h6 class="form-control">Educational Information Errors</h6>
+            <div id="EducationError">
+                <ul></ul>
+            </div>
+        </div>
+        <div class="col-md-4 m-4">
+            <h6 class="form-control">Document Errors</h6>
+            <div id="DocumentError">
+                <ul></ul>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script>
-    $('#btnEducation').prop('disabled', true);
-    $('#btnDocument').prop('disabled', true);
-    $('#btnTest').prop('disabled', true);
-    $('#btnDeclaration').prop('disabled', true);
+    //$('#btnEducation').prop('disabled', true);
+    //$('#btnDocument').prop('disabled', true);
+    //$('#btnTest').prop('disabled', true);
+    //$('#btnDeclaration').prop('disabled', true);
 
-
+    $('#errorBlock').hide();
     $('#divUniName').hide();
     LoadYear('startingYear');
     LoadYear('completionYear');

@@ -68,7 +68,21 @@ $("#expandSideBarBtn").click(function () {
 //    $(".adminDashboard").toggleClass("sidexpendBody");
 //});
 
+function increaseProgressBarWidth(percent) {
+    let containerWidth = document.getElementById('barContainer').clientWidth;  // get the container width
+    let amount = Math.round(containerWidth * percent / 100);      // get amount of pixels the bars width needs to increase
+    let barWidth = document.getElementById('progressBar').offsetWidth;  // get the current bar width
 
+    // if the bar width + amount of pixels to increase exceeds the container's width, reduce it accordingly
+    if (barWidth + amount > containerWidth) {
+        return false   // we reached 100% so clear the interval
+    }
+
+    let totalPercent = Math.round((barWidth + amount) * 100 / containerWidth); // calculate the total percent finished
+
+    document.getElementById('progressBar').style.width = barWidth + amount + "px";    // increase bar width
+    document.getElementById('progressBar').innerHTML = totalPercent + "%";           // update the percentage text
+}
 
 
 
@@ -389,8 +403,7 @@ function LoadDate(stringDate, DateId) {
 
 function validatePersonalInfoForm() {
     var isValid = true;
-    debugger
-        $('#PersonalInfoForm input[required]').each(function () {
+    $('#PersonalInfoForm input[required]').each(function () {
 
             if ($(this).val().trim() === '') {
                 isValid = false;
@@ -426,9 +439,10 @@ function validatePersonalInfoForm() {
         $('#hearAboutHUOther').html('Please Enter Other Value');
         isValid = false;
     }
-    debugger
+    
     if (isValid) {
-
+        debugger
+        increaseProgressBarWidth(35);
         $('#btnEducation').prop('disabled', false);
         $('#btnEducation').trigger('click');
     }
@@ -780,6 +794,7 @@ function SubmitEducation() {
 
         //    }
         //}
+        increaseProgressBarWidth(35);
         $('#btnDocument').prop('disabled', false);
 
         $('#btnDocument').trigger('click');
@@ -859,6 +874,7 @@ function submitDocuments(sessionUserId) {
 
         //    }
         //});
+        increaseProgressBarWidth(10);
         $('#btnTest').prop('disabled', false);
 
         $('#btnTest').trigger('click');
@@ -948,117 +964,206 @@ function SubmitActivity() {
 }
 // Declaration Section
 function submitDeclaration() {
+    var isValid = true;
+    $('input[required]').each(function () {
+
+        if ($(this).val().trim() === '') {
+            isValid = false;
+            $(this).addClass("error");
+
+        } else {
+            $(this).removeClass("error");
+        }
+    });
+    $('select[required]').each(function () {
+
+        if (($(this).val() === '') || ($(this).val() === null)) {
+            isValid = false;
+            $(this).addClass("error");
+
+        } else {
+            $(this).removeClass("error");
+        }
+    });
+    $('textarea[required]').each(function () {
+
+        if (($(this).val().trim() === '') || ($(this).val() === null)) {
+            isValid = false;
+            $(this).addClass("error");
+
+        } else {
+            $(this).removeClass("error");
+        }
+    });
+
+
+    if ($('#comboHearHU').val() == 'Other' && $('#OtherHearHU').val() == '') {
+        $('#hearAboutHUOther').html('Please Enter Other Value');
+        isValid = false;
+    }
+
     var check1 = $('#validateLaw').is(':checked');
     var check2 = $('#invalidInfo').is(':checked');
     var check3 = $('#validInfo').is(':checked');
-    //if (check1 == true && check2 == true && check3 == true) {
+    if (check1 == true && check2 == true && check3 == true && isValid == true) {
+        increaseProgressBarWidth(10);
+        var personalInfo = {
+            Id: $('#id').val(),
+            firstName: $('#firstName').val(),
+            middleName: $('#middleName').val(),
+            lastName: $('#lastName').val(),
+            fatherFirstName: $('#fatherFirstName').val(),
+            fatherMiddleName: $('#fatherMiddleName').val(),
+            fatherLastName: $('#fatherLastName').val(),
+            cnic: $('#cnic').val(),
+            emailAddress: $('#email').val(),
+            alterEmailAddress: $('#altEmail').val(),
+            gender: $("#gender").val(),
+            husbandName: $('#husbandName').val(),
+            dateofBirth: $('#dob').val(),
+            // Contact Info
+            cellPhoneNumber: $('#cellPhone').val(),
+            whatsAppNumber: $('#whatsappNumber').val(),
+            alternateCellPhoneNumber: $('#altCellPhone').val(),
+            homePhoneNumber: $('#homePhone').val(),
+            alternateLandline: $('#altLandline').val(),
+            guardianCellPhoneNumber: $('#guardianCellPhone').val(),
+            guardianEmailAddress: $('#guardianEmail').val(),
+            // Address info
+            residentialAddress: $('#residentialAddress').val(),
+            residentialCountry: $('#residentialCountry :selected').text(),
+            residentialProvince: $('#residentialProvince :selected').text(),
+            residentialCity: $('#residentialCity :selected').text(),
+            residentialCityOther: $('#residentialCityOther').val(),
+            residentialPostalCode: $('#residentialPostalCode').val(),
 
-    var personalInfo = {
-        Id: $('#id').val(),
-        firstName: $('#firstName').val(),
-        middleName: $('#middleName').val(),
-        lastName: $('#lastName').val(),
-        fatherFirstName: $('#fatherFirstName').val(),
-        fatherMiddleName: $('#fatherMiddleName').val(),
-        fatherLastName: $('#fatherLastName').val(),
-        cnic: $('#cnic').val(),
-        emailAddress: $('#email').val(),
-        alterEmailAddress: $('#altEmail').val(),
-        gender: $("#gender").val(),
-        husbandName: $('#husbandName').val(),
-        dateofBirth: $('#dob').val(),
-        // Contact Info
-        cellPhoneNumber: $('#cellPhone').val(),
-        whatsAppNumber: $('#whatsappNumber').val(),
-        alternateCellPhoneNumber: $('#altCellPhone').val(),
-        homePhoneNumber: $('#homePhone').val(),
-        alternateLandline: $('#altLandline').val(),
-        guardianCellPhoneNumber: $('#guardianCellPhone').val(),
-        guardianEmailAddress: $('#guardianEmail').val(),
-        // Address info
-        residentialAddress: $('#residentialAddress').val(),
-        residentialCountry: $('#residentialCountry :selected').text(),
-        residentialProvince: $('#residentialProvince :selected').text(),
-        residentialCity: $('#residentialCity :selected').text(),
-        residentialCityOther: $('#residentialCityOther').val(),
-        residentialPostalCode: $('#residentialPostalCode').val(),
+            permanentAddress: $('#permanentAddress').val(),
+            permanentCountry: $('#permanentCountry :selected').text(),
+            permanentProvince: $('#permanentProvince :selected').text(),
+            permanentCity: $('#permanentCity :selected').text(),
+            permanentCityOther: $('#permanentCityOther').val(),
+            permanentPostalCode: $('#permanentPostalCode').val(),
 
-        permanentAddress: $('#permanentAddress').val(),
-        permanentCountry: $('#permanentCountry :selected').text(),
-        permanentProvince: $('#permanentProvince :selected').text(),
-        permanentCity: $('#permanentCity :selected').text(),
-        permanentCityOther: $('#permanentCityOther').val(),
-        permanentPostalCode: $('#permanentPostalCode').val(),
+            // Hear About
+            HearAboutHU: $('#comboHearHU').val(),
+            HearAboutHUOther: $('#OtherHearHU').val(),
 
-        // Hear About
-        HearAboutHU: $('#comboHearHU').val(),
-        HearAboutHUOther: $('#OtherHearHU').val(),
+            // Test Date
 
-        // Test Date
+            TestDate: $('#TestDate').val()
 
-        TestDate: $('#TestDate').val()
+        }
+        var education = {
 
-    }
-    var education = {
+            CurrentLevelOfEdu: $('#currentLevel').val(),
+            HSSCSchoolName: $('#collegeName').val(),
+            HSSCSchoolAddress: $('#collegeAddress').val(),
+            HSSCPercentage: $('#hsscPercentage').val(),
+            HSSCStartDate: $('#startingYear').val(),
+            HSSCCompletionDate: $('#completionYear').val(),
+            HSSCBoardId: $('#boardOfEducation').val(),
+            HSSCBoardName: $('#boardOfEducation :selected').text(),
 
-        CurrentLevelOfEdu: $('#currentLevel').val(),
-        HSSCSchoolName: $('#collegeName').val(),
-        HSSCSchoolAddress: $('#collegeAddress').val(),
-        HSSCPercentage: $('#hsscPercentage').val(),
-        HSSCStartDate: $('#startingYear').val(),
-        HSSCCompletionDate: $('#completionYear').val(),
-        HSSCBoardId: $('#boardOfEducation').val(),
-        HSSCBoardName: $('#boardOfEducation :selected').text(),
+            HSSCGroupId: $('#groupOfStudy').val(),
+            HSSCGroupName: $('#groupOfStudy :selected').text(),
+            SSCSchoolName: $('#secondarySchoolName').val(),
+            SSCSchoolAddress: $('#secondarySchoolAddress').val(),
+            SSCPercentage: $('#sscPercentage').val(),
+            UniversityName: $('#universityName').val(),
+            IntendedProgram: $('#degreeProgram').val(),
+            HUSchoolName: $('input[name="huSchool"]:checked').val(),
 
-        HSSCGroupId: $('#groupOfStudy').val(),
-        HSSCGroupName: $('#groupOfStudy :selected').text(),
-        SSCSchoolName: $('#secondarySchoolName').val(),
-        SSCSchoolAddress: $('#secondarySchoolAddress').val(),
-        SSCPercentage: $('#sscPercentage').val(),
-        UniversityName: $('#universityName').val(),
-        IntendedProgram: $('#degreeProgram').val(),
-        HUSchoolName: $('input[name="huSchool"]:checked').val(),
+        }
+        var document = {
+        }
 
-    }
-    var document = {
-        Id: 5
-    }
+        var SubjectName = [];
+        var SubjectObtain = [];
 
-    var SubjectName = [];
-    var SubjectObtain = [];
+        // Iterate over input elements with the class "my-input"
+        $(".SubjectName").each(function () {
+            SubjectName.push($(this).val());
+        });
+        $(".SubjectObtain").each(function () {
+            SubjectObtain.push($(this).val());
+        });
+        var param = {
+            // Personal Info
+            PersonalInfo: personalInfo,
+            Education: education,
+            Document: document,
 
-    // Iterate over input elements with the class "my-input"
-    $(".SubjectName").each(function () {
-        SubjectName.push($(this).val());
-    });
-    $(".SubjectObtain").each(function () {
-        SubjectObtain.push($(this).val());
-    });
-    var param = {
-        // Personal Info
-        PersonalInfo: personalInfo,
-        Education: education,
-        Document: document
+            SubjectName: SubjectName,
+            SubjectObtain: SubjectObtain
             
-    }
-    var value = JSON.stringify(param);
-        debugger
-
+        }
         $('#mainLoader').show();
         CallAsyncService("/Application/Submit", JSON.stringify(param), submitDeclarationCB)
         function submitDeclarationCB(response) {
             $('#mainLoader').hide();
             if (response.status) {
-                ShowDivSuccess(response.message)
+                $('#errorBlock').hide();
+            
+                var form = $('#fileUploadForm');
+                var formData = new FormData(form[0]);
+                formData.append("UserId", response.userId)
+
+                $('#mainLoader').show();
+                $.ajax({
+                    url: '/Handler1.ashx', // Change the URL to your MVC controller's action
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (response) {
+                        $('#mainLoader').hide();
+                        debugger
+                        if (response.status) {
+                            ShowDivSuccess(response.message);
+                            setTimeout(location.reload(), 2000);
+                        }
+                        else {
+                            ShowDivError(response.message)
+                            console.log(response.error);
+                            var errstring = response.error.toString();
+                            var stringList = errstring.split(",");
+                            $.each(stringList, function (key, value) {
+                                $("#DocumentError ul").append('<li class="text-danger">' + value + '</li>');
+                            })
+                        }
+
+                    },
+                    error: function (xhr, status, error) {
+                        debugger
+                        ShowDivError(response.message);
+
+                    }
+                });
+
             }
             else {
-                ShowDivError(response.message)
+                ShowDivError(response.message);
+            
+                var PersonalErrors = response.PersonalErrors.toString();
+                var PersonalErrorsList = PersonalErrors.split(",");
+                $.each(PersonalErrorsList, function (key, value) {
+                    $("#PersonalError ul").append('<li class="text-danger">'+ value +'</li>');
+                })
+                $('#errorBlock').show();
+                var EducationErrors = response.EducationErrors.toString();
+
+                var EducationErrorsList = EducationErrors.split(",");
+                $.each(EducationErrorsList, function (key, value) {
+                    $("#EducationError ul").append('<li class="text-danger">' + value + '</li>');
+                })
+            
+            
             }
         }
 
-    //} else {
-    //    ShowDivError("All checkboxes are required");
-    //}
+    } else {
+        ShowDivError("Please check all sections and enter in all required fields");
+    }
 
 }
 
@@ -1072,6 +1177,7 @@ function SubmitTestDate() {
     debugger
 
     if (date != null && date != "") {
+        increaseProgressBarWidth(10);
         $('#btnDeclaration').prop('disabled', false);
         $('#btnDeclaration').trigger('click');
         //$('#mainLoader').show();

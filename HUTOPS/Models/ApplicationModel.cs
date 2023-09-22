@@ -5,6 +5,8 @@
         public PersonalInformation PersonalInfo { get; set; }
         public Educational Education { get; set; }
         public Document Document { get; set; }
+        public string[] SubjectName { get; set; }
+        public string[] SubjectObtain { get; set; }
         public ApplicationModel()
         {
             PersonalInfo = new PersonalInformation();

@@ -47,7 +47,7 @@ html{-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:transparent;    /
         /*Alert*/
         .ctm.alert{font-size:14px;margin:0;text-align:center;font-weight:500;}
         .ctm.alert label{font-weight:600;}
-        .body-content{padding:30px 0;}
+        .body-content{padding:150px 0;}
 
         /**/
         .global-btn-purple,button.swal2-confirm.swal2-styled,button.swal2-cancel.swal2-styled{text-decoration:none!important;padding:7px 20px;background:var(--global-clr);color:#fff;font-size:16px;border:1px solid transparent;transition:all .5s;border-radius:0%;height:44px;min-width:130px;justify-content:center;display:flex!important;align-items:center;width:max-content;margin:0 auto;font-weight:600;}
@@ -407,7 +407,7 @@ div#contentWrapperDashboard.contentWrapAdon .boxWraper {
             .resetSaveSubmitWrap{padding:15px;}
             .resetSaveSubmitWrap .global-btn-purple{margin:5px;}
             .mctFormFooterBox p,.paraAskOption p{font-size:13px;line-height:22px;}
-            .body-content{padding:15px 0;}
+            .body-content{padding:100px 0;}
             .signInWrap .contentWrap h1{font-size:16px;line-height:20px;}
             .signInWrap .contentWrap p{font-size:13px;line-height:20px;}
             .termConditionContentWrap p{font-size:14px;line-height:22px;}
@@ -522,7 +522,11 @@ div#contentWrapperDashboard.contentWrapAdon .boxWraper {
     background-color: #5c2568 !important;
     border-radius: 50px;
 }
-    .CollapseCard a, .CollapseCard a:hover, .CollapseCard a:focus {
-        color: white;
-        border-color: #5c2568 !important;
-    }
+.CollapseCard a, .CollapseCard a:hover, .CollapseCard a:focus {
+    color: white;
+    border-color: #5c2568 !important;
+}
+
+.progress-bar {
+    background-color: #5c2568 !important;
+}

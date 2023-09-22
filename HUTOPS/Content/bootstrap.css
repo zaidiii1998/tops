@@ -4956,8 +4956,9 @@ input[type="button"].btn-block {
 }
 
 .accordion > .card > .card-header {
-  border-radius: 0;
-  margin-bottom: -1px;
+    border-radius: 0;
+    margin-bottom: -1px;
+    border-radius: 20px 20px 0px 0px;
 }
 
 .breadcrumb {

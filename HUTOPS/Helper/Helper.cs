@@ -1,6 +1,7 @@
 ﻿using HUTOPS.Models;
 using Microsoft.Ajax.Utilities;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Globalization;
 using System.Text.RegularExpressions;
@@ -142,6 +143,143 @@ namespace HUTOPS.Helper
 
             // Use Regex.IsMatch to check if the input matches the pattern
             return Regex.IsMatch(phoneNumber, pattern);
+        }
+        public static List<string> ValidatePersonalInfo(PersonalInformation personalInfo)
+        {
+            List<string> errors = new List<string>();
+            if (string.IsNullOrEmpty(personalInfo.FirstName))
+            {
+                errors.Add("First Name is required");
+            }
+            if (!string.IsNullOrEmpty(personalInfo.FirstName) && (personalInfo.FirstName.Length < 3 || personalInfo.FirstName.Length > 25))
+            {
+                errors.Add("First Name length must be greater than 3 and less than 25 characters");
+            }
+            if (string.IsNullOrEmpty(personalInfo.LastName))
+            {
+                errors.Add("Last Name is required");
+            }
+            if (!string.IsNullOrEmpty(personalInfo.LastName) && (personalInfo.LastName.Length < 3 || personalInfo.LastName.Length > 25))
+            {
+                errors.Add("Last Name length must be greater than 3 and less than 25 characters");
+            }
+            if (string.IsNullOrEmpty(personalInfo.FatherFirstName))
+            {
+                errors.Add("Father First Name is required");
+            }
+            if (!string.IsNullOrEmpty(personalInfo.FatherFirstName) && (personalInfo.FatherFirstName.Length < 3 || personalInfo.FatherFirstName.Length > 25))
+            {
+                errors.Add("Father First Name length must be greater than 3 and less than 25 characters");
+            }
+            if (string.IsNullOrEmpty(personalInfo.FatherLastName))
+            {
+                errors.Add("Father Last Name is required");
+            }
+            if (!string.IsNullOrEmpty(personalInfo.FatherLastName) && (personalInfo.FatherLastName.Length < 3 || personalInfo.FatherLastName.Length > 25))
+            {
+                errors.Add("Father Last Name length must be greater than 3 and less than 25 characters");
+            }
+            if (!string.IsNullOrEmpty(personalInfo.AlterEmailAddress) && !Helper.Utility.isValidEmail(personalInfo.AlterEmailAddress))
+            {
+                errors.Add("Provided Email Address is Invalid");
+            }
+            if (string.IsNullOrEmpty(personalInfo.GuardianEmailAddress))
+            {
+                errors.Add("Guardian Email Address is Required");
+            }
+            if (!string.IsNullOrEmpty(personalInfo.GuardianEmailAddress) && !Helper.Utility.isValidEmail(personalInfo.GuardianEmailAddress))
+            {
+                errors.Add("Provided Email Address is Invalid");
+            }
+            if (!string.IsNullOrEmpty(personalInfo.CellPhoneNumber) && !Helper.Utility.IsValidPhoneNumber(personalInfo.CellPhoneNumber))
+            {
+                errors.Add("Cell Phone Number is Invalid");
+            }
+            if (!string.IsNullOrEmpty(personalInfo.WhatsAppNumber) && !Helper.Utility.IsValidPhoneNumber(personalInfo.WhatsAppNumber))
+            {
+                errors.Add("WhatsApp Number Number is Invalid");
+            }
+            if (!string.IsNullOrEmpty(personalInfo.AlternateCellPhoneNumber) && !Helper.Utility.IsValidPhoneNumber(personalInfo.AlternateCellPhoneNumber))
+            {
+                errors.Add("Alternate Cell Phone Number is Invalid");
+            }
+            if (!string.IsNullOrEmpty(personalInfo.GuardianCellPhoneNumber) && !Helper.Utility.IsValidPhoneNumber(personalInfo.GuardianCellPhoneNumber))
+            {
+                errors.Add("Guardian Cell Phone Number is Invalid");
+            }
+            if (string.IsNullOrEmpty(personalInfo.GuardianCellPhoneNumber))
+            {
+                errors.Add("Phone Number is Required");
+            }
+            if (string.IsNullOrEmpty(personalInfo.HomePhoneNumber))
+            {
+                errors.Add("Phone Number is Required");
+            }
+            if (string.IsNullOrEmpty(personalInfo.HearAboutHU))
+            {
+                errors.Add("Hear About HU Field is required");
+            }
+            if (personalInfo.HearAboutHU == "Other" && string.IsNullOrEmpty(personalInfo.HearAboutHUOther))
+            {
+                errors.Add("Hear About HU Other Value is required");
+            }
+
+            return errors;
+        }
+
+        public static List<string> ValidateEducation(Educational educational)
+        {
+            List<string> errors = new List<string>();
+            if (string.IsNullOrEmpty(educational.CurrentLevelOfEdu))
+            {
+                errors.Add("Your Current Level of Study: is required");
+            }
+            if (string.IsNullOrEmpty(educational.HSSCStartDate.ToString()))
+            {
+                errors.Add("Starting Year: is required");
+            }
+            if (string.IsNullOrEmpty(educational.HSSCCompletionDate.ToString()))
+            {
+                errors.Add("Completion Year: is required");
+            }
+            if (string.IsNullOrEmpty(educational.HSSCSchoolName))
+            {
+                errors.Add("Current College/Last College Name: is required");
+            }
+            if (string.IsNullOrEmpty(educational.HSSCSchoolAddress))
+            {
+                errors.Add("College Address with City Name: is required");
+            }
+            if (string.IsNullOrEmpty(educational.HSSCBoardId))
+            {
+                errors.Add("Board Of Education: is required");
+            }
+            if (string.IsNullOrEmpty(educational.HSSCGroupId))
+            {
+                errors.Add("Group Of Studies: is required");
+            }
+            if (string.IsNullOrEmpty(educational.HSSCPercentage))
+            {
+                errors.Add("Overall HSSC Percentage: is required");
+            }
+            if (string.IsNullOrEmpty(educational.SSCSchoolName))
+            {
+                errors.Add("Secondary Education School Name: is required");
+            }
+            if (string.IsNullOrEmpty(educational.SSCSchoolAddress))
+            {
+                errors.Add("Secondary Education School Address with City Name: is required");
+            }
+            if (string.IsNullOrEmpty(educational.SSCPercentage))
+            {
+                errors.Add("Overall SSC Percentage: is required");
+            }
+            if (string.IsNullOrEmpty(educational.IntendedProgram))
+            {
+                errors.Add("Which Degree Program you are planning to pursue at Habib University?: is required");
+            }
+
+            return errors;
         }
     }
 }
