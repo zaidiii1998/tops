@@ -828,5 +828,218 @@ namespace HUTOPS
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_InsertApplication_Result>("SP_InsertApplication", fNameParameter, mNameParameter, lNameParameter, fatherFNameParameter, fatherMNameParameter, fatherLNameParameter, genderParameter, husbandNameParameter, dOBParameter, cNICParameter, emailParameter, alterEmailParameter, cellPhoneParameter, whatsAppParameter, altCellPhoneParameter, homeCellPhoneParameter, altLandlineParameter, guardianCellPhoneParameter, guardianEmailParameter, residentialAddressParameter, residentialCountryParameter, residentialProvinceParameter, residentialCityParameter, residentialCityOtherParameter, residentialPostalCodeParameter, permanentAddressParameter, permanentCountryParameter, permanentProvinceParameter, permanentCityParameter, permanentCityOtherParameter, permanentPostalCodeParameter, hearAboutHUParameter, hearAboutHUOtherParameter, currentLevelParameter, hSSCSchoolNameParameter, hSSCSchoolAddressParameter, hSSCStartDateParameter, hSSCCompletionDateParameter, hSSCPercentageParameter, boardOfEduParameter, boardNameParameter, groupParameter, groupNameParameter, sSCSchoolNameParameter, sSCSchoolAddressParameter, sSCPercentageParameter, universityNameParameter, intendedProgramParameter, hUSchoolNameParameter, subjectNameParameter, subjectObtainParameter);
         }
+    
+        public virtual ObjectResult<SP_UpdateApplication_Result> SP_UpdateApplication(Nullable<int> id, string fName, string mName, string lName, string fatherFName, string fatherMName, string fatherLName, string gender, string husbandName, string dOB, string cNIC, string email, string alterEmail, string cellPhone, string whatsApp, string altCellPhone, string homeCellPhone, string altLandline, string guardianCellPhone, string guardianEmail, string residentialAddress, string residentialCountry, string residentialProvince, string residentialCity, string residentialCityOther, Nullable<int> residentialPostalCode, string permanentAddress, string permanentCountry, string permanentProvince, string permanentCity, string permanentCityOther, Nullable<int> permanentPostalCode, string hearAboutHU, string hearAboutHUOther, string currentLevel, string hSSCSchoolName, string hSSCSchoolAddress, string hSSCStartDate, string hSSCCompletionDate, string hSSCPercentage, string hSSCBoardId, string hSSCBoardName, string hSSCGroupId, string hSSCGroupName, string sSCSchoolName, string sSCSchoolAddress, string sSCPercentage, string universityName, string intendedProgram, string hUSchoolName, string subjectName, string subjectObtain)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("Id", id) :
+                new ObjectParameter("Id", typeof(int));
+    
+            var fNameParameter = fName != null ?
+                new ObjectParameter("FName", fName) :
+                new ObjectParameter("FName", typeof(string));
+    
+            var mNameParameter = mName != null ?
+                new ObjectParameter("MName", mName) :
+                new ObjectParameter("MName", typeof(string));
+    
+            var lNameParameter = lName != null ?
+                new ObjectParameter("LName", lName) :
+                new ObjectParameter("LName", typeof(string));
+    
+            var fatherFNameParameter = fatherFName != null ?
+                new ObjectParameter("FatherFName", fatherFName) :
+                new ObjectParameter("FatherFName", typeof(string));
+    
+            var fatherMNameParameter = fatherMName != null ?
+                new ObjectParameter("FatherMName", fatherMName) :
+                new ObjectParameter("FatherMName", typeof(string));
+    
+            var fatherLNameParameter = fatherLName != null ?
+                new ObjectParameter("FatherLName", fatherLName) :
+                new ObjectParameter("FatherLName", typeof(string));
+    
+            var genderParameter = gender != null ?
+                new ObjectParameter("Gender", gender) :
+                new ObjectParameter("Gender", typeof(string));
+    
+            var husbandNameParameter = husbandName != null ?
+                new ObjectParameter("HusbandName", husbandName) :
+                new ObjectParameter("HusbandName", typeof(string));
+    
+            var dOBParameter = dOB != null ?
+                new ObjectParameter("DOB", dOB) :
+                new ObjectParameter("DOB", typeof(string));
+    
+            var cNICParameter = cNIC != null ?
+                new ObjectParameter("CNIC", cNIC) :
+                new ObjectParameter("CNIC", typeof(string));
+    
+            var emailParameter = email != null ?
+                new ObjectParameter("Email", email) :
+                new ObjectParameter("Email", typeof(string));
+    
+            var alterEmailParameter = alterEmail != null ?
+                new ObjectParameter("AlterEmail", alterEmail) :
+                new ObjectParameter("AlterEmail", typeof(string));
+    
+            var cellPhoneParameter = cellPhone != null ?
+                new ObjectParameter("CellPhone", cellPhone) :
+                new ObjectParameter("CellPhone", typeof(string));
+    
+            var whatsAppParameter = whatsApp != null ?
+                new ObjectParameter("WhatsApp", whatsApp) :
+                new ObjectParameter("WhatsApp", typeof(string));
+    
+            var altCellPhoneParameter = altCellPhone != null ?
+                new ObjectParameter("AltCellPhone", altCellPhone) :
+                new ObjectParameter("AltCellPhone", typeof(string));
+    
+            var homeCellPhoneParameter = homeCellPhone != null ?
+                new ObjectParameter("HomeCellPhone", homeCellPhone) :
+                new ObjectParameter("HomeCellPhone", typeof(string));
+    
+            var altLandlineParameter = altLandline != null ?
+                new ObjectParameter("AltLandline", altLandline) :
+                new ObjectParameter("AltLandline", typeof(string));
+    
+            var guardianCellPhoneParameter = guardianCellPhone != null ?
+                new ObjectParameter("GuardianCellPhone", guardianCellPhone) :
+                new ObjectParameter("GuardianCellPhone", typeof(string));
+    
+            var guardianEmailParameter = guardianEmail != null ?
+                new ObjectParameter("GuardianEmail", guardianEmail) :
+                new ObjectParameter("GuardianEmail", typeof(string));
+    
+            var residentialAddressParameter = residentialAddress != null ?
+                new ObjectParameter("ResidentialAddress", residentialAddress) :
+                new ObjectParameter("ResidentialAddress", typeof(string));
+    
+            var residentialCountryParameter = residentialCountry != null ?
+                new ObjectParameter("ResidentialCountry", residentialCountry) :
+                new ObjectParameter("ResidentialCountry", typeof(string));
+    
+            var residentialProvinceParameter = residentialProvince != null ?
+                new ObjectParameter("ResidentialProvince", residentialProvince) :
+                new ObjectParameter("ResidentialProvince", typeof(string));
+    
+            var residentialCityParameter = residentialCity != null ?
+                new ObjectParameter("ResidentialCity", residentialCity) :
+                new ObjectParameter("ResidentialCity", typeof(string));
+    
+            var residentialCityOtherParameter = residentialCityOther != null ?
+                new ObjectParameter("ResidentialCityOther", residentialCityOther) :
+                new ObjectParameter("ResidentialCityOther", typeof(string));
+    
+            var residentialPostalCodeParameter = residentialPostalCode.HasValue ?
+                new ObjectParameter("ResidentialPostalCode", residentialPostalCode) :
+                new ObjectParameter("ResidentialPostalCode", typeof(int));
+    
+            var permanentAddressParameter = permanentAddress != null ?
+                new ObjectParameter("PermanentAddress", permanentAddress) :
+                new ObjectParameter("PermanentAddress", typeof(string));
+    
+            var permanentCountryParameter = permanentCountry != null ?
+                new ObjectParameter("PermanentCountry", permanentCountry) :
+                new ObjectParameter("PermanentCountry", typeof(string));
+    
+            var permanentProvinceParameter = permanentProvince != null ?
+                new ObjectParameter("PermanentProvince", permanentProvince) :
+                new ObjectParameter("PermanentProvince", typeof(string));
+    
+            var permanentCityParameter = permanentCity != null ?
+                new ObjectParameter("PermanentCity", permanentCity) :
+                new ObjectParameter("PermanentCity", typeof(string));
+    
+            var permanentCityOtherParameter = permanentCityOther != null ?
+                new ObjectParameter("PermanentCityOther", permanentCityOther) :
+                new ObjectParameter("PermanentCityOther", typeof(string));
+    
+            var permanentPostalCodeParameter = permanentPostalCode.HasValue ?
+                new ObjectParameter("PermanentPostalCode", permanentPostalCode) :
+                new ObjectParameter("PermanentPostalCode", typeof(int));
+    
+            var hearAboutHUParameter = hearAboutHU != null ?
+                new ObjectParameter("HearAboutHU", hearAboutHU) :
+                new ObjectParameter("HearAboutHU", typeof(string));
+    
+            var hearAboutHUOtherParameter = hearAboutHUOther != null ?
+                new ObjectParameter("HearAboutHUOther", hearAboutHUOther) :
+                new ObjectParameter("HearAboutHUOther", typeof(string));
+    
+            var currentLevelParameter = currentLevel != null ?
+                new ObjectParameter("CurrentLevel", currentLevel) :
+                new ObjectParameter("CurrentLevel", typeof(string));
+    
+            var hSSCSchoolNameParameter = hSSCSchoolName != null ?
+                new ObjectParameter("HSSCSchoolName", hSSCSchoolName) :
+                new ObjectParameter("HSSCSchoolName", typeof(string));
+    
+            var hSSCSchoolAddressParameter = hSSCSchoolAddress != null ?
+                new ObjectParameter("HSSCSchoolAddress", hSSCSchoolAddress) :
+                new ObjectParameter("HSSCSchoolAddress", typeof(string));
+    
+            var hSSCStartDateParameter = hSSCStartDate != null ?
+                new ObjectParameter("HSSCStartDate", hSSCStartDate) :
+                new ObjectParameter("HSSCStartDate", typeof(string));
+    
+            var hSSCCompletionDateParameter = hSSCCompletionDate != null ?
+                new ObjectParameter("HSSCCompletionDate", hSSCCompletionDate) :
+                new ObjectParameter("HSSCCompletionDate", typeof(string));
+    
+            var hSSCPercentageParameter = hSSCPercentage != null ?
+                new ObjectParameter("HSSCPercentage", hSSCPercentage) :
+                new ObjectParameter("HSSCPercentage", typeof(string));
+    
+            var hSSCBoardIdParameter = hSSCBoardId != null ?
+                new ObjectParameter("HSSCBoardId", hSSCBoardId) :
+                new ObjectParameter("HSSCBoardId", typeof(string));
+    
+            var hSSCBoardNameParameter = hSSCBoardName != null ?
+                new ObjectParameter("HSSCBoardName", hSSCBoardName) :
+                new ObjectParameter("HSSCBoardName", typeof(string));
+    
+            var hSSCGroupIdParameter = hSSCGroupId != null ?
+                new ObjectParameter("HSSCGroupId", hSSCGroupId) :
+                new ObjectParameter("HSSCGroupId", typeof(string));
+    
+            var hSSCGroupNameParameter = hSSCGroupName != null ?
+                new ObjectParameter("HSSCGroupName", hSSCGroupName) :
+                new ObjectParameter("HSSCGroupName", typeof(string));
+    
+            var sSCSchoolNameParameter = sSCSchoolName != null ?
+                new ObjectParameter("SSCSchoolName", sSCSchoolName) :
+                new ObjectParameter("SSCSchoolName", typeof(string));
+    
+            var sSCSchoolAddressParameter = sSCSchoolAddress != null ?
+                new ObjectParameter("SSCSchoolAddress", sSCSchoolAddress) :
+                new ObjectParameter("SSCSchoolAddress", typeof(string));
+    
+            var sSCPercentageParameter = sSCPercentage != null ?
+                new ObjectParameter("SSCPercentage", sSCPercentage) :
+                new ObjectParameter("SSCPercentage", typeof(string));
+    
+            var universityNameParameter = universityName != null ?
+                new ObjectParameter("UniversityName", universityName) :
+                new ObjectParameter("UniversityName", typeof(string));
+    
+            var intendedProgramParameter = intendedProgram != null ?
+                new ObjectParameter("IntendedProgram", intendedProgram) :
+                new ObjectParameter("IntendedProgram", typeof(string));
+    
+            var hUSchoolNameParameter = hUSchoolName != null ?
+                new ObjectParameter("HUSchoolName", hUSchoolName) :
+                new ObjectParameter("HUSchoolName", typeof(string));
+    
+            var subjectNameParameter = subjectName != null ?
+                new ObjectParameter("SubjectName", subjectName) :
+                new ObjectParameter("SubjectName", typeof(string));
+    
+            var subjectObtainParameter = subjectObtain != null ?
+                new ObjectParameter("SubjectObtain", subjectObtain) :
+                new ObjectParameter("SubjectObtain", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_UpdateApplication_Result>("SP_UpdateApplication", idParameter, fNameParameter, mNameParameter, lNameParameter, fatherFNameParameter, fatherMNameParameter, fatherLNameParameter, genderParameter, husbandNameParameter, dOBParameter, cNICParameter, emailParameter, alterEmailParameter, cellPhoneParameter, whatsAppParameter, altCellPhoneParameter, homeCellPhoneParameter, altLandlineParameter, guardianCellPhoneParameter, guardianEmailParameter, residentialAddressParameter, residentialCountryParameter, residentialProvinceParameter, residentialCityParameter, residentialCityOtherParameter, residentialPostalCodeParameter, permanentAddressParameter, permanentCountryParameter, permanentProvinceParameter, permanentCityParameter, permanentCityOtherParameter, permanentPostalCodeParameter, hearAboutHUParameter, hearAboutHUOtherParameter, currentLevelParameter, hSSCSchoolNameParameter, hSSCSchoolAddressParameter, hSSCStartDateParameter, hSSCCompletionDateParameter, hSSCPercentageParameter, hSSCBoardIdParameter, hSSCBoardNameParameter, hSSCGroupIdParameter, hSSCGroupNameParameter, sSCSchoolNameParameter, sSCSchoolAddressParameter, sSCPercentageParameter, universityNameParameter, intendedProgramParameter, hUSchoolNameParameter, subjectNameParameter, subjectObtainParameter);
+        }
     }
 }

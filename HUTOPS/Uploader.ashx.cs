@@ -1,5 +1,4 @@
 ﻿using HUTOPS.Helper;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -10,11 +9,11 @@ using System.Web.Script.Serialization;
 namespace HUTOPS
 {
     /// <summary>
-    /// Summary description for Handler1
+    /// Summary description for Uploader
     /// </summary>
-    public class Handler1 : IHttpHandler
+    public class Uploader : IHttpHandler
     {
-        HU_TOPSEntities DB = new HU_TOPSEntities();
+        HUTOPSEntities DB = new HUTOPSEntities();
         public void ProcessRequest(HttpContext context)
         {
             try
@@ -31,6 +30,9 @@ namespace HUTOPS
                 string SSCPath = "";
                 string HSSCPath = "";
                 string PhotographPath = "";
+
+
+
 
                 List<string> Err = new List<string>();
 
@@ -50,7 +52,7 @@ namespace HUTOPS
                     // Check if files are present
                     if (CnicFile != null && CnicFile.ContentLength > 0)
                     {
-                        CnicPath = Path.Combine(UserDirectory, "CNIC.jpeg" );
+                        CnicPath = Path.Combine(UserDirectory, "CNIC.jpeg");
                         CnicFile.SaveAs(CnicPath);
                     }
                     if (SSC != null && SSC.ContentLength > 0)
@@ -95,7 +97,7 @@ namespace HUTOPS
 
                     context.Response.ContentType = "application/json";
                     JavaScriptSerializer js = new JavaScriptSerializer();
-                    context.Response.Write(js.Serialize(new {status = true, message = "Document Section submited Successfully"}));
+                    context.Response.Write(js.Serialize(new { status = true, message = "Document Section submited Successfully" }));
                 }
                 else
                 {
@@ -112,8 +114,6 @@ namespace HUTOPS
                 context.Response.ContentType = "application/json";
                 context.Response.Write(js.Serialize(new { status = false, message = "Document Section submition Failed" }));
             }
-
-
         }
 
         public bool IsReusable

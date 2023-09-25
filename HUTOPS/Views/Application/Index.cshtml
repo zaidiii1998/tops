@@ -1,4 +1,5 @@
-﻿
+﻿@using HUTOPS.Models
+@model ApplicationModel
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -22,24 +23,26 @@
                                 <h2>Personal Information</h2>
                             </div>
                             <form id="PersonalInfoForm">
+                                <input class="form-control" type="text" id="id" name="Id" maxlength="25" style="display:none;" value="@Model.PersonalInfo.Id">
+
                                 <div class="row">
                                     <div class="col-lg-4">
                                         <div class="form-group">
                                             <label for="firstName">First Name:</label>
-                                            <input class="form-control" type="text" id="firstName" name="FirstName" maxlength="25" oninput="validateText(this); validateName(this.id,'errFirstName')" required>
+                                            <input class="form-control" type="text" id="firstName" name="FirstName" maxlength="25" value="@Model.PersonalInfo.FirstName" oninput="validateText(this); validateName(this.id,'errFirstName')" required>
                                             <span class="text-danger" id="errFirstName"></span>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="form-group">
                                             <label for="middleName">Middle Name:</label>
-                                            <input class="form-control" type="text" id="middleName" name="MiddleName" maxlength="25" oninput="validateText(this);">
+                                            <input class="form-control" type="text" id="middleName" name="MiddleName" maxlength="25" value="@Model.PersonalInfo.MiddleName" oninput="validateText(this);">
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="form-group">
                                             <label for="lastName">Last Name:</label>
-                                            <input class="form-control" type="text" id="lastName" name="LastName" maxlength="25" oninput="validateText(this); validateName(this.id,'errLastName')" required>
+                                            <input class="form-control" type="text" id="lastName" name="LastName" maxlength="25" value="@Model.PersonalInfo.LastName" oninput="validateText(this); validateName(this.id,'errLastName')" required>
                                             <span class="text-danger" id="errLastName"></span>
                                         </div>
                                     </div>
@@ -48,20 +51,20 @@
                                     <div class="col-lg-4">
                                         <div class="form-group">
                                             <label for="fatherFirstName">Father's First Name:</label>
-                                            <input class="form-control" type="text" id="fatherFirstName" maxlength="25" name="FatherFirstName" oninput="validateText(this); validateName(this.id,'errFatherFName')" required>
+                                            <input class="form-control" type="text" id="fatherFirstName" maxlength="25" name="FatherFirstName" value="@Model.PersonalInfo.FatherFirstName" oninput="validateText(this); validateName(this.id,'errFatherFName')" required>
                                             <span class="text-danger" id="errFatherFName"></span>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="form-group">
                                             <label for="fatherMiddleName">Father's Middle Name:</label>
-                                            <input class="form-control" type="text" id="fatherMiddleName" maxlength="25" name="FatherMiddleName" oninput="validateText(this);">
+                                            <input class="form-control" type="text" id="fatherMiddleName" maxlength="25" name="FatherMiddleName" value="@Model.PersonalInfo.FatherMiddleName" oninput="validateText(this);">
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="form-group">
                                             <label for="fatherLastName">Father's Last Name:</label>
-                                            <input class="form-control" type="text" id="fatherLastName" maxlength="25" name="FatherLastName" oninput="validateText(this); validateName(this.id,'errFatherLName')" required>
+                                            <input class="form-control" type="text" id="fatherLastName" maxlength="25" name="FatherLastName" value="@Model.PersonalInfo.FatherLastName" oninput="validateText(this); validateName(this.id,'errFatherLName')" required>
                                             <span class="text-danger" id="errFatherLName"></span>
                                         </div>
                                     </div>
@@ -70,21 +73,21 @@
                                     <div class="col-lg-4">
                                         <div class="form-group">
                                             <label for="cnic">CNIC:</label>
-                                            <input class="form-control cnic" type="text" id="cnic" name="CNIC" placeholder="12345-1234567-1" maxlength="15" onchange="checkCNIC(this.id);" required>
-                                            <span class="text-danger" id = "cnicError"></span>
+                                            <input class="form-control cnic" type="text" id="cnic" name="CNIC" placeholder="12345-1234567-1" value="@Model.PersonalInfo.CNIC" maxlength="15" onchange="checkCNIC(this.id);" required>
+                                            <span class="text-danger" id="cnicError"></span>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="form-group">
                                             <label for="email">Email Address:</label>
-                                            <input class="form-control" type="email" id="email" name="EmailAddress" maxlength="25" oninput="validateEmail(this.id,'emailError');" onchange="checkPhoneNumber(this.id);" required>
+                                            <input class="form-control" type="email" id="email" name="EmailAddress" maxlength="25" value="@Model.PersonalInfo.EmailAddress" oninput="validateEmail(this.id,'emailError');" onchange="checkEmail(this.id);" required>
                                             <span class="text-danger" id="emailError"></span>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="form-group">
                                             <label for="altEmail">Alternate Email Address:</label>
-                                            <input class="form-control" type="email" id="altEmail" name="AlterEmailAddress" maxlength="30" oninput="validateEmail(this.id,'errAltEmail');">
+                                            <input class="form-control" type="email" id="altEmail" name="AlterEmailAddress" value="@Model.PersonalInfo.AlterEmailAddress" maxlength="30" oninput="validateEmail(this.id,'errAltEmail');">
 
                                         </div>
                                     </div>
@@ -95,22 +98,43 @@
                                             <label>Gender:</label>
                                             <select id="gender" name="Gender" class="custom-select" onchange="toggleFieldInput(this.id,'F','divHusband');" required>
                                                 <option value="">Select Gender</option>
-                                                <option value="M">Male</option>
-                                                <option value="F">Female</option>
-                                                <option value="T">Prefer not to self-identify</option>
+                                                @if (Model.PersonalInfo.Gender == "M")
+                                                {
+                                                    <option value="M" selected>Male</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="M">Male</option>
+                                                }
+                                                @if (Model.PersonalInfo.Gender == "F")
+                                                {
+                                                    <option value="F" selected>Female</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="F">Female</option>
+                                                }
+                                                @if (Model.PersonalInfo.Gender == "T")
+                                                {
+                                                    <option value="T" selected>Prefer not to self-identify</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="T">Prefer not to self-identify</option>
+                                                }
                                             </select>
                                         </div>
                                     </div>
                                     <div class="col-lg-4" id="divHusband" style="display:none;">
                                         <div class="form-group">
                                             <label for="husbandName">Husband's Name:</label>
-                                            <input class="form-control" type="text" id="husbandName" maxlength="25" name="HusbandName">
+                                            <input class="form-control" type="text" id="husbandName" value="@Model.PersonalInfo.HusbandName" maxlength="25" name="HusbandName">
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="dob">Date of Birth:</label>
-                                            <input type="date" class="form-control" id="dob" name="DateOfBirth"  required/>
+                                            <input type="date" class="form-control" id="dob" name="DateOfBirth" required />
                                         </div>
                                     </div>
                                 </div>
@@ -123,7 +147,7 @@
                                     <div class="col-lg-4">
                                         <div class="form-group">
                                             <label for="cellPhone">Cell Phone Number:</label>
-                                            <input class="form-control number" type="tel" id="cellPhone" name="CellPhoneNumber" placeholder="0333-3333333" onchange="checkPhoneNumber(this.id);" maxlength="15" required>
+                                            <input class="form-control number" type="tel" id="cellPhone" value="@Model.PersonalInfo.CellPhoneNumber" name="CellPhoneNumber" placeholder="0333-3333333" onchange="checkPhoneNumber(this.id);" maxlength="15" required>
                                             <span class="text-danger" id="numberError"></span>
                                         </div>
                                     </div>
@@ -140,38 +164,38 @@
                                         <div>
                                             <div class="form-group">
                                                 <label for="whatsappNumber ">WhatsApp Number:</label>
-                                                <input class="form-control number" type="tel" id="whatsappNumber" name="WhatsAppNumber" maxlength="15" placeholder="0333-3333333">
+                                                <input class="form-control number" type="tel" value="@Model.PersonalInfo.WhatsAppNumber" id="whatsappNumber" name="WhatsAppNumber" maxlength="15" placeholder="0333-3333333">
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="form-group">
                                             <label for="altCellPhone">Alternate Cell Phone Number:</label>
-                                            <input class="form-control number" type="tel" id="altCellPhone" name="AlternateCellPhoneNumber" maxlength="15" placeholder="0333-3333333">
+                                            <input class="form-control number" type="tel" id="altCellPhone" value="@Model.PersonalInfo.AlternateCellPhoneNumber" name="AlternateCellPhoneNumber" maxlength="15" placeholder="0333-3333333">
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="form-group">
                                             <label for="homePhone">Home Phone Number:</label>
-                                            <input class="form-control" type="tel" id="homePhone" name="HomePhoneNumber" oninput="validateNumber(this)" placeholder="1234567890" maxlength="15" required>
+                                            <input class="form-control" type="tel" id="homePhone" value="@Model.PersonalInfo.HomePhoneNumber" name="HomePhoneNumber" oninput="validateNumber(this)" placeholder="1234567890" maxlength="15" required>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="form-group">
                                             <label for="altLandline">Alternate Landline Number:</label>
-                                            <input class="form-control" type="tel" id="altLandline" name="AlternateLandline" oninput="validateNumber(this)" maxlength="15" placeholder="1234567890">
+                                            <input class="form-control" type="tel" id="altLandline" value="@Model.PersonalInfo.AlternateLandline" name="AlternateLandline" oninput="validateNumber(this)" maxlength="15" placeholder="1234567890">
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="form-group">
                                             <label for="guardianCellPhone">Guardian Cell Phone Number:</label>
-                                            <input class="form-control number" type="tel" id="guardianCellPhone" name="GuardianCellPhoneNumber" maxlength="15" placeholder="1234567890" required>
+                                            <input class="form-control number" type="tel" id="guardianCellPhone" value="@Model.PersonalInfo.GuardianCellPhoneNumber" name="GuardianCellPhoneNumber" maxlength="15" placeholder="1234567890" required>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="form-group">
                                             <label for="guardianEmail">Guardian Email Address:</label>
-                                            <input class="form-control" type="email" id="guardianEmail" name="GuardianEmailAddress" oninput="validateEmail(this.id,'errGuardianEmail')" required>
+                                            <input class="form-control" type="email" id="guardianEmail" value="@Model.PersonalInfo.GuardianEmailAddress" name="GuardianEmailAddress" oninput="validateEmail(this.id,'errGuardianEmail')" required>
                                         </div>
                                     </div>
                                 </div>
@@ -180,7 +204,7 @@
                                     <div class="col-lg-4">
                                         <div class="form-group">
                                             <label for="residentialAddress">Residential Address:</label>
-                                            <textarea class="form-control" id="residentialAddress" name="ResidentialAddress" rows="2" cols="100" maxlength="100" required></textarea><br><br>
+                                            <textarea class="form-control" id="residentialAddress" name="ResidentialAddress" rows="2" cols="100" maxlength="100" required> @Model.PersonalInfo.ResidentialAddress</textarea><br><br>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
@@ -188,7 +212,17 @@
                                             <label for="residentialCountry">Select Country:</label>
                                             <select class="form-control" id="residentialCountry" onchange="updateProvince(this.id, 'residentialProvince');" required>
                                                 <option value="" selected disabled>Select Country</option>
-                                                <option value="1">Pakistan</option>
+                                                @foreach (var item in Model.Country)
+                                                {
+                                                    if (item.Name == Model.PersonalInfo.ResidentialCountry)
+                                                    {
+                                                        <option value="@item.Id" selected>@item.Name</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="@item.Id">@item.Name</option>
+                                                    }
+                                                }
                                             </select>
                                         </div>
                                     </div>
@@ -197,6 +231,17 @@
                                             <label for="residentialProvince">Select Province/State:</label>
                                             <select class="form-control" id="residentialProvince" onchange="updateCities(this.id,'residentialCity');" required>
                                                 <option value="" selected disabled>Select Provience</option>
+                                                @foreach (var item in Model.Province)
+                                                {
+                                                    if (item.Name == Model.PersonalInfo.ResidentialProvince)
+                                                    {
+                                                        <option value="@item.Id" selected>@item.Name</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="@item.Id">@item.Name</option>
+                                                    }
+                                                }
                                             </select>
                                         </div>
                                     </div>
@@ -208,19 +253,31 @@
 
                                             <select class="form-control" id="residentialCity" onchange="toggleOtherCityInput(this.id,'divResidentialCityOther')" required>
                                                 <option value="" selected disabled>Select City</option>
+                                                @foreach (var item in Model.City)
+                                                {
+                                                    if (item.Name == Model.PersonalInfo.ResidentialCity)
+                                                    {
+                                                        <option value="@item.Id" selected>@item.Name</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="@item.Id">@item.Name</option>
+                                                    }
+
+                                                }
                                             </select>
                                         </div>
                                     </div>
                                     <div class="col-lg-4" id="divResidentialCityOther" style="display: none;">
                                         <div class="form-group">
                                             <label for="residentialCityOther">Other City:</label>
-                                            <input class="form-control" type="text" id="residentialCityOther" name="ResidentialCityOther"><br><br>
+                                            <input class="form-control" type="text" id="residentialCityOther" value="@Model.PersonalInfo.ResidentialCityOther" name="ResidentialCityOther"><br><br>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="form-group">
                                             <label for="residentialPostalCode">Residential Postal Code:</label>
-                                            <input class="form-control" type="text" id="residentialPostalCode" oninput="validateNumber(this)" name="ResidentialPostalCode" maxlength="6" required><br><br>
+                                            <input class="form-control" type="text" id="residentialPostalCode" value="@Model.PersonalInfo.ResidentialPostalCode" oninput="validateNumber(this)" name="ResidentialPostalCode" maxlength="6" required><br><br>
                                         </div>
                                     </div>
                                 </div>
@@ -236,7 +293,7 @@
                                         <div class="col-lg-4">
                                             <div class="form-group">
                                                 <label for="permanentAddress">Permanent Address:</label>
-                                                <textarea class="form-control" id="permanentAddress" name="PermanentAddress" rows="2" cols="50" maxlength="100"></textarea><br><br>
+                                                <textarea class="form-control" id="permanentAddress" name="PermanentAddress" rows="2" cols="50" maxlength="100">@Model.PersonalInfo.PermanentAddress</textarea><br><br>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
@@ -245,7 +302,17 @@
 
                                                 <select class="form-control" id="permanentCountry" onchange="updateProvince(this.id,'permanentProvince');">
                                                     <option value="" selected disabled>Select Country</option>
-                                                    <option value="1">Pakistan</option>
+                                                    @foreach (var item in Model.Country)
+                                                    {
+                                                        if (item.Name == Model.PersonalInfo.PermanentCountry)
+                                                        {
+                                                            <option value="@item.Id" selected>@item.Name</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="@item.Id">@item.Name</option>
+                                                        }
+                                                    }
                                                 </select>
                                             </div>
                                         </div>
@@ -255,6 +322,17 @@
                                                 <label for="permanentProvince">Select Province/State:</label>
                                                 <select class="form-control" id="permanentProvince" onchange="updateCities(this.id,'permanentCity');">
                                                     <option value="" selected disabled>Select Provience</option>
+                                                    @foreach (var item in Model.Province)
+                                                    {
+                                                        if (item.Name == Model.PersonalInfo.PermanentProvince)
+                                                        {
+                                                            <option value="@item.Id" selected>@item.Name</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="@item.Id">@item.Name</option>
+                                                        }
+                                                    }
                                                 </select>
                                             </div>
                                         </div>
@@ -265,6 +343,17 @@
                                                 <label for="permanentCity">City:</label>
                                                 <select class="form-control" id="permanentCity" onchange="toggleOtherCityInput(this.id,'divPermanentCityOther')">
                                                     <option value="" selected disabled>Select City</option>
+                                                    @foreach (var item in Model.City)
+                                                    {
+                                                        if (item.Name == Model.PersonalInfo.PermanentCity)
+                                                        {
+                                                            <option value="@item.Id" selected>@item.Name</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="@item.Id">@item.Name</option>
+                                                        }
+                                                    }
                                                 </select>
                                             </div>
                                         </div>
@@ -272,13 +361,13 @@
                                         <div class="col-lg-4" id="divPermanentCityOther" style="display: none;">
                                             <div class="form-group">
                                                 <label for="permanentCityOther">Other City:</label>
-                                                <input class="form-control" type="text" id="permanentCityOther" name="PermanentCityOther"><br><br>
+                                                <input class="form-control" type="text" id="permanentCityOther" name="PermanentCityOther" value="@Model.PersonalInfo.PermanentCityOther"><br><br>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="form-group">
                                                 <label for="permanentPostalCode">Permanent Postal Code:</label>
-                                                <input class="form-control" type="text" id="permanentPostalCode" oninput="validateNumber(this)" maxlength="6" name="PermanentPostalCode">
+                                                <input class="form-control" type="text" id="permanentPostalCode" value="@Model.PersonalInfo.PermanentPostalCode" oninput="validateNumber(this)" maxlength="6" name="PermanentPostalCode">
                                             </div>
                                         </div>
                                     </div>
@@ -313,7 +402,7 @@
                                     <div class="col-lg-4">
                                         <div class="form-group" id="divOtherHearHU" style="display:none;">
                                             <label>Other</label>
-                                            <input  type="text" class="form-control" id="OtherHearHU" name="HearAboutHUOther" />
+                                            <input type="text" class="form-control" id="OtherHearHU" value="@Model.PersonalInfo.HearAboutHUOther" name="HearAboutHUOther" />
                                             <span class="text-danger" id="hearAboutHUOther"></span>
                                         </div>
                                     </div>
@@ -355,7 +444,6 @@
                                 <h2>Education</h2>
                             </div>
                             <form method="post" id="EducationForm">
-                                <input class="form-control" type="text" id="id" name="Id" maxlength="25" style="display:none;">
                                 <div class="headBox">
                                     <h6>HSSC/College Information</h6>
                                 </div>
@@ -375,7 +463,7 @@
                                     <div class="col-lg-3" id="divUniName">
                                         <div class="form-group">
                                             <label for="universityName">University Name:</label>
-                                            <input class="form-control" type="text" id="universityName" name="universityName"><br><br>
+                                            <input class="form-control" type="text" id="universityName" value="@Model.Education.UniversityName" name="universityName"><br><br>
                                         </div>
                                     </div>
                                     <div class="col-lg-3">
@@ -383,9 +471,17 @@
                                             <label for="boardOfEducation">Board Of Education:</label>
                                             <select class="form-control" id="boardOfEducation" name="boardOfEducation" onchange="GetGroupList(this.value)" required>
                                                 <option value="" selected>Select Board</option>
-                                                <option value="1">Board Of Intermediate</option>
-                                                <option value="2">Federal Board</option>
-                                                <option value="3">Aga Khan University Examination Board</option>
+                                                @foreach (var item in Model.Boards)
+                                                {
+                                                    if (item.Id.ToString() == Model.Education.HSSCBoardId)
+                                                    {
+                                                        <option value="@item.Id" selected>@item.Name</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="@item.Id">@item.Name</option>
+                                                    }
+                                                }
                                             </select>
                                         </div>
                                     </div>
@@ -394,6 +490,17 @@
                                             <label for="groupOfStudy">Group Of Studies</label>
                                             <select class="form-control" id="groupOfStudy" name="groupOfStudy" onchange="GetSubjectList(this.id)" required>
                                                 <option value="">Select Group</option>
+                                                @foreach (var item in Model.Groups)
+                                                {
+                                                    if (item.Id.ToString() == Model.Education.HSSCGroupId)
+                                                    {
+                                                        <option value="@item.Id" selected>@item.Name</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="@item.Id">@item.Name</option>
+                                                    }
+                                                }
                                             </select>
                                         </div>
                                     </div>
@@ -403,13 +510,13 @@
                                     <div class="col-lg-3">
                                         <div class="form-group">
                                             <label for="collegeName">Current College/Last College Name:</label>
-                                            <input class="form-control" type="text" id="collegeName" name="collegeName" required>
+                                            <input class="form-control" type="text" value="@Model.Education.HSSCSchoolName" id="collegeName" name="collegeName" required>
                                         </div>
                                     </div>
                                     <div class="col-lg-3">
                                         <div class="form-group">
                                             <label for="collegeAddress">College Address with City Name:</label>
-                                            <textarea class="form-control" id="collegeAddress" name="collegeAddress" rows="2" required></textarea>
+                                            <textarea class="form-control" id="collegeAddress" name="collegeAddress" rows="2" required> @Model.Education.HSSCSchoolAddress</textarea>
                                         </div>
                                     </div>
                                     <div class="col-lg-3">
@@ -434,7 +541,7 @@
                                     <div class="col-lg-3">
                                         <div class="form-group">
                                             <label for="hsscPercentage">Overall HSSC Percentage:</label>
-                                            <input class="form-control Percentage" type="text" id="hsscPercentage" name="hsscPercentage" required>
+                                            <input class="form-control Percentage" type="text" id="hsscPercentage" value="@Model.Education.HSSCPercentage" name="hsscPercentage" required>
                                         </div>
                                     </div>
                                 </div><br /><br />
@@ -445,19 +552,19 @@
                                     <div class="col-lg-3">
                                         <div class="form-group">
                                             <label for="secondarySchoolName">Secondary Education School Name:</label>
-                                            <input class="form-control" type="text" id="secondarySchoolName" name="secondarySchoolName" required>
+                                            <input class="form-control" type="text" id="secondarySchoolName" value="@Model.Education.SSCSchoolName" name="secondarySchoolName" required>
                                         </div>
                                     </div>
                                     <div class="col-lg-3">
                                         <div class="form-group">
                                             <label for="secondarySchoolAddress">Secondary Education School Address with City Name:</label>
-                                            <textarea class="form-control" type="text" id="secondarySchoolAddress" name="secondarySchoolAddress" rows="2" required></textarea>
+                                            <textarea class="form-control" type="text" id="secondarySchoolAddress" name="secondarySchoolAddress" rows="2" required> @Model.Education.SSCSchoolAddress</textarea>
                                         </div>
                                     </div>
                                     <div class="col-lg-3">
                                         <div class="form-group">
                                             <label for="sscPercentage">Overall SSC Percentage:</label>
-                                            <input class="form-control Percentage" type="text" id="sscPercentage" name="sscPercentage" required>
+                                            <input class="form-control Percentage" value="@Model.Education.SSCPercentage" type="text" id="sscPercentage" name="sscPercentage" required>
                                         </div>
                                     </div>
                                 </div>
@@ -509,6 +616,21 @@
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <div id="divSubjects">
+                                                @foreach (var item in Model.Subjects)
+                                                {
+                                                    <div class="row">
+                                                        <div class="col-lg-3">
+                                                            <div class="form-group">
+                                                                <input type="text" class="form-control SubjectName" value="@item.Name">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <div class="form-group">
+                                                                <input type="text" class="form-control SubjectObtain" value="@item.ObtainMarks">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                }
                                             </div>
                                         </div>
                                     </div>
@@ -553,7 +675,6 @@
                             </div>
                             <form id="fileUploadForm" enctype="multipart/form-data">
                                 <div class="row">
-                                    <input class="form-control" type="text" id="id" name="Id" maxlength="25" style="display:none;">
                                     <div class="col-lg-3">
                                         <label>A recent passport size photograph. Please do not use old photographs.*</label>
                                     </div>
@@ -562,44 +683,55 @@
                                         <span class="text-danger" id="errPhoto"></span>
                                         <!-- Other file input fields -->
                                     </div>
-
-                                </div><br /><br />
-                                <div class="row">
                                     <div class="col-lg-3">
-                                        <label>A scanned copy of your original SSC Final Marks Sheet *</label>
-                                    </div>
-                                    <div class="col-lg-3">
-                                        <input type="file" class="form-control" id="SSCMarkSheet" size="1" name="SSCMarkSheet" accept=".jpeg, .jpg" onchange="checkFileSize(this.id, 'errSSC')" required>
-                                        <span class="text-danger" id="errSSC"></span>
+                                        @if (@Model.Document.Photograph != null && @Model.Document.Photograph != "")
+                                        {
+                                            <a href="/Documents/View?doc=1" target="_blank" class="btn btn-default form-control"><i class="fa-solid fa-eye" style="color: blue;"></i></a>
+                                        }
                                     </div>
 
                                 </div><br /><br />
-                                <div class="row">
-                                    <div class="col-lg-3">
-                                        <label>A scanned copy of your original HSSC I or final HSSC Marks Sheet</label>
-                                    </div>
-                                    <div class="col-lg-3">
-                                        <input type="file" class="form-control" id="HSSCMarkSheet" size="1" name="HSSCMarkSheet" accept=".jpeg, .jpg" onchange="checkFileSize(this.id, 'errHSSC')">
-                                        <span class="text-danger" id="errHSSC"></span>
-                                    </div>
+                                            <div class="row">
+                                                <div class="col-lg-3">
+                                                    <label>A scanned copy of your original SSC Final Marks Sheet *</label>
+                                                </div>
+                                                <div class="col-lg-3">
+                                                    <input type="file" class="form-control" id="SSCMarkSheet" size="1" name="SSCMarkSheet" accept=".jpeg, .jpg" onchange="checkFileSize(this.id, 'errSSC')" required>
+                                                    <span class="text-danger" id="errSSC"></span>
+                                                </div>
+                                                <div class="col-lg-3">
+                                                    @if (@Model.Document.SSCMarkSheet != null && @Model.Document.SSCMarkSheet != "")
+                                                    {
+                                                        <a href="/Documents/View?doc=2" target="_blank" class="btn btn-default form-control"><i class="fa-solid fa-eye" style="color: blue;"></i></a>
+                                                    }
+                                                </div>
+                                                </div><br /><br />
+                                                <div class="row">
+                                                    <div class="col-lg-3">
+                                                        <label>A scanned copy of your original HSSC I or final HSSC Marks Sheet</label>
+                                                    </div>
+                                                    <div class="col-lg-3">
+                                                        <input type="file" class="form-control" id="HSSCMarkSheet" size="1" name="HSSCMarkSheet" accept=".jpeg, .jpg" onchange="checkFileSize(this.id, 'errHSSC')">
+                                                        <span class="text-danger" id="errHSSC"></span>
+                                                    </div>
 
-                                </div><br /><br />
-                                <div class="row">
-                                    <div class="col-lg-3">
-                                        <label>A scanned copy of your B-Form or CNIC (If available)</label>
-                                    </div>
-                                    <div class="col-lg-3">
-                                        <input type="file" id="CNIC" class="form-control" size="1" name="CNIC" accept=".jpeg, .jpg" onchange="checkFileSize(this.id, 'errCNIC')">
-                                        <span class="text-danger" id="errCNIC"></span>
-                                    </div>
+                                                </div><br /><br />
+                                                <div class="row">
+                                                    <div class="col-lg-3">
+                                                        <label>A scanned copy of your B-Form or CNIC (If available)</label>
+                                                    </div>
+                                                    <div class="col-lg-3">
+                                                        <input type="file" id="CNIC" class="form-control" size="1" name="CNIC" accept=".jpeg, .jpg" onchange="checkFileSize(this.id, 'errCNIC')">
+                                                        <span class="text-danger" id="errCNIC"></span>
+                                                    </div>
 
-                                </div><br /><br />
-                                <div class="row">
-                                    <div class="col-lg-12">
-                                        <input class="savebtn global-btn-purple  float-right" type="button" onclick="submitDocuments('');" value="Next">
-                                    </div>
-                                </div>
-                            </form>
+                                                </div><br /><br />
+                                                <div class="row">
+                                                    <div class="col-lg-12">
+                                                        <input class="savebtn global-btn-purple  float-right" type="button" onclick="submitDocuments('');" value="Next">
+                                                    </div>
+                                                </div>
+</form>
                             <div id="Error">
                                 <ul></ul>
                             </div>
@@ -627,7 +759,6 @@
                             <div class="row">
                                 <div class="col-lg-3">
                                     <div class="form-group">
-                                        <input class="form-control" type="text" id="id" name="Id" maxlength="25" style="display:none;">
 
                                         <label for="currentLevel">To appear for HU TOPS Qualifying Round Test (Core Skills Test). Please choose a test date:<span class="text-danger">*:</span></label>
                                         <select class="form-control" id="TestDate" required>
@@ -666,7 +797,6 @@
                                 <h2>Declarations</h2>
                             </div>
                             <form method="post">
-                                <input class="form-control" type="text" id="id" name="Id" maxlength="25" style="display:none;">
 
                                 <div class="row">
                                     <div class="col-lg-12">
@@ -731,13 +861,14 @@
 </div>
 
 <script>
-    //$('#btnEducation').prop('disabled', true);
-    //$('#btnDocument').prop('disabled', true);
-    //$('#btnTest').prop('disabled', true);
-    //$('#btnDeclaration').prop('disabled', true);
+
 
     $('#errorBlock').hide();
     $('#divUniName').hide();
     LoadYear('startingYear');
     LoadYear('completionYear');
+
+    LoadDate('@Model.PersonalInfo.DateOfBirth', 'dob');
+    
+    LoadEducationalData(@Html.Raw(Json.Encode(Model)));
 </script>

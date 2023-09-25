@@ -11,10 +11,13 @@ namespace HUTOPS
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations.Schema;
+
     public partial class PersonalInformation
     {
         public int Id { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+
         public string HUTopId { get; set; }
         public Nullable<int> AppId { get; set; }
         public string FirstName { get; set; }

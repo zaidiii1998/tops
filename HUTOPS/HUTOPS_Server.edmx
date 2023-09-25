@@ -129,7 +129,7 @@ warning 6002: The table/view 'HUTOPS.dbo.EducationalSubjects' does not have a pr
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="HUTopId" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="HUTopId" Type="varchar" MaxLength="50" />
           <Property Name="AppId" Type="int" />
           <Property Name="FirstName" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="MiddleName" Type="varchar" MaxLength="50" />
@@ -286,6 +286,60 @@ warning 6002: The table/view 'HUTOPS.sys.database_firewall_rules' does not have 
           <Parameter Name="BoardName" Type="varchar" Mode="In" />
           <Parameter Name="Group" Type="varchar" Mode="In" />
           <Parameter Name="GroupName" Type="varchar" Mode="In" />
+          <Parameter Name="SSCSchoolName" Type="varchar" Mode="In" />
+          <Parameter Name="SSCSchoolAddress" Type="varchar" Mode="In" />
+          <Parameter Name="SSCPercentage" Type="varchar" Mode="In" />
+          <Parameter Name="UniversityName" Type="varchar" Mode="In" />
+          <Parameter Name="IntendedProgram" Type="varchar" Mode="In" />
+          <Parameter Name="HUSchoolName" Type="varchar" Mode="In" />
+          <Parameter Name="SubjectName" Type="varchar(max)" Mode="In" />
+          <Parameter Name="SubjectObtain" Type="varchar(max)" Mode="In" />
+        </Function>
+        <Function Name="SP_UpdateApplication" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Id" Type="int" Mode="In" />
+          <Parameter Name="FName" Type="varchar" Mode="In" />
+          <Parameter Name="MName" Type="varchar" Mode="In" />
+          <Parameter Name="LName" Type="varchar" Mode="In" />
+          <Parameter Name="FatherFName" Type="varchar" Mode="In" />
+          <Parameter Name="FatherMName" Type="varchar" Mode="In" />
+          <Parameter Name="FatherLName" Type="varchar" Mode="In" />
+          <Parameter Name="Gender" Type="varchar" Mode="In" />
+          <Parameter Name="HusbandName" Type="varchar" Mode="In" />
+          <Parameter Name="DOB" Type="varchar" Mode="In" />
+          <Parameter Name="CNIC" Type="varchar" Mode="In" />
+          <Parameter Name="Email" Type="varchar" Mode="In" />
+          <Parameter Name="AlterEmail" Type="varchar" Mode="In" />
+          <Parameter Name="CellPhone" Type="varchar" Mode="In" />
+          <Parameter Name="WhatsApp" Type="varchar" Mode="In" />
+          <Parameter Name="AltCellPhone" Type="varchar" Mode="In" />
+          <Parameter Name="HomeCellPhone" Type="varchar" Mode="In" />
+          <Parameter Name="AltLandline" Type="varchar" Mode="In" />
+          <Parameter Name="GuardianCellPhone" Type="varchar" Mode="In" />
+          <Parameter Name="GuardianEmail" Type="varchar" Mode="In" />
+          <Parameter Name="ResidentialAddress" Type="varchar" Mode="In" />
+          <Parameter Name="ResidentialCountry" Type="varchar" Mode="In" />
+          <Parameter Name="ResidentialProvince" Type="varchar" Mode="In" />
+          <Parameter Name="ResidentialCity" Type="varchar" Mode="In" />
+          <Parameter Name="ResidentialCityOther" Type="varchar" Mode="In" />
+          <Parameter Name="ResidentialPostalCode" Type="int" Mode="In" />
+          <Parameter Name="PermanentAddress" Type="varchar" Mode="In" />
+          <Parameter Name="PermanentCountry" Type="varchar" Mode="In" />
+          <Parameter Name="PermanentProvince" Type="varchar" Mode="In" />
+          <Parameter Name="PermanentCity" Type="varchar" Mode="In" />
+          <Parameter Name="PermanentCityOther" Type="varchar" Mode="In" />
+          <Parameter Name="PermanentPostalCode" Type="int" Mode="In" />
+          <Parameter Name="HearAboutHU" Type="varchar" Mode="In" />
+          <Parameter Name="HearAboutHUOther" Type="varchar" Mode="In" />
+          <Parameter Name="CurrentLevel" Type="varchar" Mode="In" />
+          <Parameter Name="HSSCSchoolName" Type="varchar" Mode="In" />
+          <Parameter Name="HSSCSchoolAddress" Type="varchar" Mode="In" />
+          <Parameter Name="HSSCStartDate" Type="varchar" Mode="In" />
+          <Parameter Name="HSSCCompletionDate" Type="varchar" Mode="In" />
+          <Parameter Name="HSSCPercentage" Type="varchar" Mode="In" />
+          <Parameter Name="HSSCBoardId" Type="varchar" Mode="In" />
+          <Parameter Name="HSSCBoardName" Type="varchar" Mode="In" />
+          <Parameter Name="HSSCGroupId" Type="varchar" Mode="In" />
+          <Parameter Name="HSSCGroupName" Type="varchar" Mode="In" />
           <Parameter Name="SSCSchoolName" Type="varchar" Mode="In" />
           <Parameter Name="SSCSchoolAddress" Type="varchar" Mode="In" />
           <Parameter Name="SSCPercentage" Type="varchar" Mode="In" />
@@ -563,7 +617,7 @@ warning 6002: The table/view 'HUTOPS.sys.database_firewall_rules' does not have 
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="HUTopId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="HUTopId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="AppId" Type="Int32" />
           <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="MiddleName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
@@ -812,7 +866,7 @@ warning 6002: The table/view 'HUTOPS.sys.database_firewall_rules' does not have 
             <Parameter Name="ListToPivot" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SP_GetStudentRecord" ReturnType="Collection(HUTOPSModel.SP_GetStudentRecord_Result)">
-            <Parameter Name="Id" Mode="In" Type="Int32" />
+          <Parameter Name="Id" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="SP_InsertApplication" ReturnType="Collection(HUTOPSModel.SP_InsertApplication_Result)">
             <Parameter Name="FName" Mode="In" Type="String" />
@@ -858,6 +912,60 @@ warning 6002: The table/view 'HUTOPS.sys.database_firewall_rules' does not have 
             <Parameter Name="BoardName" Mode="In" Type="String" />
             <Parameter Name="Group" Mode="In" Type="String" />
             <Parameter Name="GroupName" Mode="In" Type="String" />
+            <Parameter Name="SSCSchoolName" Mode="In" Type="String" />
+            <Parameter Name="SSCSchoolAddress" Mode="In" Type="String" />
+            <Parameter Name="SSCPercentage" Mode="In" Type="String" />
+            <Parameter Name="UniversityName" Mode="In" Type="String" />
+            <Parameter Name="IntendedProgram" Mode="In" Type="String" />
+            <Parameter Name="HUSchoolName" Mode="In" Type="String" />
+            <Parameter Name="SubjectName" Mode="In" Type="String" />
+            <Parameter Name="SubjectObtain" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_UpdateApplication" ReturnType="Collection(HUTOPSModel.SP_UpdateApplication_Result)">
+            <Parameter Name="Id" Mode="In" Type="Int32" />
+            <Parameter Name="FName" Mode="In" Type="String" />
+            <Parameter Name="MName" Mode="In" Type="String" />
+            <Parameter Name="LName" Mode="In" Type="String" />
+            <Parameter Name="FatherFName" Mode="In" Type="String" />
+            <Parameter Name="FatherMName" Mode="In" Type="String" />
+            <Parameter Name="FatherLName" Mode="In" Type="String" />
+            <Parameter Name="Gender" Mode="In" Type="String" />
+            <Parameter Name="HusbandName" Mode="In" Type="String" />
+            <Parameter Name="DOB" Mode="In" Type="String" />
+            <Parameter Name="CNIC" Mode="In" Type="String" />
+            <Parameter Name="Email" Mode="In" Type="String" />
+            <Parameter Name="AlterEmail" Mode="In" Type="String" />
+            <Parameter Name="CellPhone" Mode="In" Type="String" />
+            <Parameter Name="WhatsApp" Mode="In" Type="String" />
+            <Parameter Name="AltCellPhone" Mode="In" Type="String" />
+            <Parameter Name="HomeCellPhone" Mode="In" Type="String" />
+            <Parameter Name="AltLandline" Mode="In" Type="String" />
+            <Parameter Name="GuardianCellPhone" Mode="In" Type="String" />
+            <Parameter Name="GuardianEmail" Mode="In" Type="String" />
+            <Parameter Name="ResidentialAddress" Mode="In" Type="String" />
+            <Parameter Name="ResidentialCountry" Mode="In" Type="String" />
+            <Parameter Name="ResidentialProvince" Mode="In" Type="String" />
+            <Parameter Name="ResidentialCity" Mode="In" Type="String" />
+            <Parameter Name="ResidentialCityOther" Mode="In" Type="String" />
+            <Parameter Name="ResidentialPostalCode" Mode="In" Type="Int32" />
+            <Parameter Name="PermanentAddress" Mode="In" Type="String" />
+            <Parameter Name="PermanentCountry" Mode="In" Type="String" />
+            <Parameter Name="PermanentProvince" Mode="In" Type="String" />
+            <Parameter Name="PermanentCity" Mode="In" Type="String" />
+            <Parameter Name="PermanentCityOther" Mode="In" Type="String" />
+            <Parameter Name="PermanentPostalCode" Mode="In" Type="Int32" />
+            <Parameter Name="HearAboutHU" Mode="In" Type="String" />
+            <Parameter Name="HearAboutHUOther" Mode="In" Type="String" />
+            <Parameter Name="CurrentLevel" Mode="In" Type="String" />
+            <Parameter Name="HSSCSchoolName" Mode="In" Type="String" />
+            <Parameter Name="HSSCSchoolAddress" Mode="In" Type="String" />
+            <Parameter Name="HSSCStartDate" Mode="In" Type="String" />
+            <Parameter Name="HSSCCompletionDate" Mode="In" Type="String" />
+            <Parameter Name="HSSCPercentage" Mode="In" Type="String" />
+            <Parameter Name="HSSCBoardId" Mode="In" Type="String" />
+            <Parameter Name="HSSCBoardName" Mode="In" Type="String" />
+            <Parameter Name="HSSCGroupId" Mode="In" Type="String" />
+            <Parameter Name="HSSCGroupName" Mode="In" Type="String" />
             <Parameter Name="SSCSchoolName" Mode="In" Type="String" />
             <Parameter Name="SSCSchoolAddress" Mode="In" Type="String" />
             <Parameter Name="SSCPercentage" Mode="In" Type="String" />
@@ -1056,6 +1164,10 @@ warning 6002: The table/view 'HUTOPS.sys.database_firewall_rules' does not have 
           <Property Type="Int32" Name="ObtainMarks_4" Nullable="true" />
         </ComplexType>
         <ComplexType Name="SP_InsertApplication_Result">
+          <Property Type="Int32" Name="Response" Nullable="false" />
+          <Property Type="String" Name="Reason" Nullable="false" MaxLength="18" />
+        </ComplexType>
+        <ComplexType Name="SP_UpdateApplication_Result">
           <Property Type="Int32" Name="Response" Nullable="false" />
           <Property Type="String" Name="Reason" Nullable="false" MaxLength="18" />
         </ComplexType>
@@ -1484,6 +1596,14 @@ warning 6002: The table/view 'HUTOPS.sys.database_firewall_rules' does not have 
           <FunctionImportMapping FunctionImportName="SP_InsertApplication" FunctionName="HUTOPSModel.Store.SP_InsertApplication">
             <ResultMapping>
               <ComplexTypeMapping TypeName="HUTOPSModel.SP_InsertApplication_Result">
+                <ScalarProperty Name="Response" ColumnName="Response" />
+                <ScalarProperty Name="Reason" ColumnName="Reason" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_UpdateApplication" FunctionName="HUTOPSModel.Store.SP_UpdateApplication">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="HUTOPSModel.SP_UpdateApplication_Result">
                 <ScalarProperty Name="Response" ColumnName="Response" />
                 <ScalarProperty Name="Reason" ColumnName="Reason" />
               </ComplexTypeMapping>

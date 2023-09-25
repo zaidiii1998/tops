@@ -68,7 +68,101 @@ $("#expandSideBarBtn").click(function () {
 //    $(".adminDashboard").toggleClass("sidexpendBody");
 //});
 
-function increaseProgressBarWidth(percent) {
+function increaseProgressBarWidth() {
+    var percent = 0;
+    var isValidPersonalInfo = true;
+    $('#PersonalInfoForm input[required]').each(function () {
+
+        if ($(this).val().trim() === '') {
+            isValidPersonalInfo = false;
+            $(this).addClass("error");
+
+        } else {
+            $(this).removeClass("error");
+        }
+    });
+    $('#PersonalInfoForm select[required]').each(function () {
+
+        if (($(this).val() === '') || ($(this).val() === null)) {
+            isValidPersonalInfo = false;
+            $(this).addClass("error");
+
+        } else {
+            $(this).removeClass("error");
+        }
+    });
+    $('#PersonalInfoForm textarea[required]').each(function () {
+
+        if (($(this).val().trim() === '') || ($(this).val() === null)) {
+            isValidPersonalInfo = false;
+            $(this).addClass("error");
+
+        } else {
+            $(this).removeClass("error");
+        }
+    });
+    if (isValidPersonalInfo) { percent = percent + 35 }
+
+    var isValidEducation = true;
+    $('#EducationForm input[required]').each(function () {
+
+        if ($(this).val().trim() === '') {
+            isValidEducation = false;
+            $(this).addClass("error");
+
+        } else {
+            $(this).removeClass("error");
+        }
+    });
+    $('#EducationForm select[required]').each(function () {
+
+        if (($(this).val().trim() === '') || ($(this).val() === null)) {
+            isValidEducation = false;
+            $(this).addClass("error");
+
+        } else {
+            $(this).removeClass("error");
+        }
+    });
+    $('#EducationForm textarea[required]').each(function () {
+
+        if (($(this).val().trim() === '') || ($(this).val() === null)) {
+            isValidEducation = false;
+            $(this).addClass("error");
+
+        } else {
+            $(this).removeClass("error");
+        }
+    });
+
+    if ($('input[name="huSchool"]:checked').val() == "" || $('input[name="huSchool"]:checked').val() == null) {
+        isValidEducation = false;
+        $('#errHUSchool').html("Please select School Name");
+    } else {
+        $('#errHUSchool').html("");
+    }
+    if (isValidEducation) { percent = percent + 35 }
+
+    isValidDocument = true;
+    $('input[type="file"][required]').each(function () {
+
+        if ($(this).val().trim() === '') {
+            isValidDocument = false;
+            $(this).addClass("error");
+
+        } else {
+            $(this).removeClass("error");
+        }
+    });
+    if (isValidDocument) { percent = percent + 10}
+
+    if ($('#TestDate').val() != null && $('#TestDate').val() != "") { percent = percent + 10 }
+
+    var check1 = $('#validateLaw').is(':checked');
+    var check2 = $('#invalidInfo').is(':checked');
+    var check3 = $('#validInfo').is(':checked');
+    if (check1 == true && check2 == true && check3 == true) { percent = percent + 10 }
+
     let containerWidth = document.getElementById('barContainer').clientWidth;  // get the container width
     let amount = Math.round(containerWidth * percent / 100);      // get amount of pixels the bars width needs to increase
     let barWidth = document.getElementById('progressBar').offsetWidth;  // get the current bar width
@@ -442,7 +536,7 @@ function validatePersonalInfoForm() {
     
     if (isValid) {
         debugger
-        increaseProgressBarWidth(35);
+        increaseProgressBarWidth();
         $('#btnEducation').prop('disabled', false);
         $('#btnEducation').trigger('click');
     }
@@ -460,6 +554,8 @@ function LoadEducationalData(Model) {
     $('#completionYear').val(Model.Education.HSSCCompletionDate == null ? '' : Model.Education.HSSCCompletionDate.toString());
     $('#completionYear').trigger('change');
 
+    
+
     var program = Model.Education.IntendedProgram.toString();
     if (Model.Education.HUSchoolName.toString() === 'SE') {
         $('#dhananiSchool').click();
@@ -468,6 +564,8 @@ function LoadEducationalData(Model) {
     }
     $('#degreeProgram').val(Model.Education.IntendedProgram.toString());
     $('#degreeProgram').trigger('change');
+
+
 
 }
 
@@ -538,12 +636,14 @@ function GetSubjectListCallback(response) {
             newcontrol.className = "form-group";
 
             var input = document.createElement("input");
-            input.type = "text";
+            
             input.className = "form-control";
             if (i === 1) {
+                input.type = "text";
                 input.classList.add("SubjectName");
                 input.value = value.Name;
-            } else{
+            } else {
+                input.type = "number";
                 input.classList.add("SubjectObtain");
             } 
             newcontrol.appendChild(input);
@@ -566,11 +666,13 @@ function AddRow() {
         newcontrol.className = "form-group";
 
         var input = document.createElement("input");
-        input.type = "text";
+        
         input.className = "form-control";
         if (i === 1) {
+            input.type = "text";
             input.classList.add("SubjectName");
-        } else{
+        } else {
+            input.type = "number";
             input.classList.add("SubjectObtain");
         } 
         newcontrol.appendChild(input);
@@ -794,7 +896,7 @@ function SubmitEducation() {
 
         //    }
         //}
-        increaseProgressBarWidth(35);
+        increaseProgressBarWidth();
         $('#btnDocument').prop('disabled', false);
 
         $('#btnDocument').trigger('click');
@@ -874,7 +976,7 @@ function submitDocuments(sessionUserId) {
 
         //    }
         //});
-        increaseProgressBarWidth(10);
+        increaseProgressBarWidth();
         $('#btnTest').prop('disabled', false);
 
         $('#btnTest').trigger('click');
@@ -1006,72 +1108,72 @@ function submitDeclaration() {
     var check2 = $('#invalidInfo').is(':checked');
     var check3 = $('#validInfo').is(':checked');
     if (check1 == true && check2 == true && check3 == true && isValid == true) {
-        increaseProgressBarWidth(10);
+        increaseProgressBarWidth();
         var personalInfo = {
-            Id: $('#id').val(),
-            firstName: $('#firstName').val(),
-            middleName: $('#middleName').val(),
-            lastName: $('#lastName').val(),
-            fatherFirstName: $('#fatherFirstName').val(),
-            fatherMiddleName: $('#fatherMiddleName').val(),
-            fatherLastName: $('#fatherLastName').val(),
-            cnic: $('#cnic').val(),
-            emailAddress: $('#email').val(),
-            alterEmailAddress: $('#altEmail').val(),
-            gender: $("#gender").val(),
-            husbandName: $('#husbandName').val(),
-            dateofBirth: $('#dob').val(),
+            'PersonalInfo.Id': $('#id').val(),
+            'PersonalInfo.firstName': $('#firstName').val(),
+            'PersonalInfo.middleName': $('#middleName').val(),
+            'PersonalInfo.lastName': $('#lastName').val(),
+            'PersonalInfo.fatherFirstName': $('#fatherFirstName').val(),
+            'PersonalInfo.fatherMiddleName': $('#fatherMiddleName').val(),
+            'PersonalInfo.fatherLastName': $('#fatherLastName').val(),
+            'PersonalInfo.cnic': $('#cnic').val(),
+            'PersonalInfo.emailAddress': $('#email').val(),
+            'PersonalInfo.alterEmailAddress': $('#altEmail').val(),
+            'PersonalInfo.gender': $("#gender").val(),
+            'PersonalInfo.husbandName': $('#husbandName').val(),
+            'PersonalInfo.dateofBirth': $('#dob').val(),
             // Contact Info
-            cellPhoneNumber: $('#cellPhone').val(),
-            whatsAppNumber: $('#whatsappNumber').val(),
-            alternateCellPhoneNumber: $('#altCellPhone').val(),
-            homePhoneNumber: $('#homePhone').val(),
-            alternateLandline: $('#altLandline').val(),
-            guardianCellPhoneNumber: $('#guardianCellPhone').val(),
-            guardianEmailAddress: $('#guardianEmail').val(),
+            'PersonalInfo.cellPhoneNumber': $('#cellPhone').val(),
+            'PersonalInfo.whatsAppNumber': $('#whatsappNumber').val(),
+            'PersonalInfo.alternateCellPhoneNumber': $('#altCellPhone').val(),
+            'PersonalInfo.homePhoneNumber': $('#homePhone').val(),
+            'PersonalInfo.alternateLandline': $('#altLandline').val(),
+            'PersonalInfo.guardianCellPhoneNumber': $('#guardianCellPhone').val(),
+            'PersonalInfo.guardianEmailAddress': $('#guardianEmail').val(),
             // Address info
-            residentialAddress: $('#residentialAddress').val(),
-            residentialCountry: $('#residentialCountry :selected').text(),
-            residentialProvince: $('#residentialProvince :selected').text(),
-            residentialCity: $('#residentialCity :selected').text(),
-            residentialCityOther: $('#residentialCityOther').val(),
-            residentialPostalCode: $('#residentialPostalCode').val(),
+            'PersonalInfo.residentialAddress': $('#residentialAddress').val(),
+            'PersonalInfo.residentialCountry': $('#residentialCountry :selected').text(),
+            'PersonalInfo.residentialProvince': $('#residentialProvince :selected').text(),
+            'PersonalInfo.residentialCity': $('#residentialCity :selected').text(),
+            'PersonalInfo.residentialCityOther': $('#residentialCityOther').val(),
+            'PersonalInfo.residentialPostalCode': $('#residentialPostalCode').val(),
 
-            permanentAddress: $('#permanentAddress').val(),
-            permanentCountry: $('#permanentCountry :selected').text(),
-            permanentProvince: $('#permanentProvince :selected').text(),
-            permanentCity: $('#permanentCity :selected').text(),
-            permanentCityOther: $('#permanentCityOther').val(),
-            permanentPostalCode: $('#permanentPostalCode').val(),
+            'PersonalInfo.permanentAddress': $('#permanentAddress').val(),
+            'PersonalInfo.permanentCountry': $('#permanentCountry :selected').text(),
+            'PersonalInfo.permanentProvince': $('#permanentProvince :selected').text(),
+            'PersonalInfo.permanentCity': $('#permanentCity :selected').text(),
+            'PersonalInfo.permanentCityOther': $('#permanentCityOther').val(),
+            'PersonalInfo.permanentPostalCode': $('#permanentPostalCode').val(),
 
             // Hear About
-            HearAboutHU: $('#comboHearHU').val(),
-            HearAboutHUOther: $('#OtherHearHU').val(),
+            'PersonalInfo.HearAboutHU': $('#comboHearHU').val(),
+            'PersonalInfo.HearAboutHUOther': $('#OtherHearHU').val(),
 
             // Test Date
 
-            TestDate: $('#TestDate').val()
+            'PersonalInfo.TestDate': $('#TestDate').val()
 
         }
         var education = {
 
-            CurrentLevelOfEdu: $('#currentLevel').val(),
-            HSSCSchoolName: $('#collegeName').val(),
-            HSSCSchoolAddress: $('#collegeAddress').val(),
-            HSSCPercentage: $('#hsscPercentage').val(),
-            HSSCStartDate: $('#startingYear').val(),
-            HSSCCompletionDate: $('#completionYear').val(),
-            HSSCBoardId: $('#boardOfEducation').val(),
-            HSSCBoardName: $('#boardOfEducation :selected').text(),
+            'Education.CurrentLevelOfEdu': $('#currentLevel').val(),
+            'Education.HSSCSchoolName': $('#collegeName').val(),
+            'Education.HSSCSchoolAddress': $('#collegeAddress').val(),
+            'Education.HSSCPercentage': $('#hsscPercentage').val(),
+            'Education.HSSCStartDate': $('#startingYear').val(),
+            'Education.HSSCCompletionDate': $('#completionYear').val(),
+            'Education.HSSCBoardId': $('#boardOfEducation').val(),
+            'Education.HSSCBoardName': $('#boardOfEducation :selected').text(),
 
-            HSSCGroupId: $('#groupOfStudy').val(),
-            HSSCGroupName: $('#groupOfStudy :selected').text(),
-            SSCSchoolName: $('#secondarySchoolName').val(),
-            SSCSchoolAddress: $('#secondarySchoolAddress').val(),
-            SSCPercentage: $('#sscPercentage').val(),
-            UniversityName: $('#universityName').val(),
-            IntendedProgram: $('#degreeProgram').val(),
-            HUSchoolName: $('input[name="huSchool"]:checked').val(),
+            'Education.HSSCGroupId': $('#groupOfStudy').val(),
+            'Education.HSSCGroupName': $('#groupOfStudy :selected').text(),
+            'Education.SSCSchoolName': $('#secondarySchoolName').val(),
+            'Education.SSCSchoolAddress': $('#secondarySchoolAddress').val(),
+            'Education.SSCPercentage': $('#sscPercentage').val(),
+            'Education.UniversityName': $('#universityName').val(),
+            'Education.IntendedProgram': $('#degreeProgram').val(),
+            'Education.HUSchoolName': $('input[name="huSchool"]:checked').val(),
 
         }
         var document = {
@@ -1093,52 +1195,84 @@ function submitDeclaration() {
             Education: education,
             Document: document,
 
+            //Photograph: $('#Photograph').file(),
+            //CNIC: $('#CNIC').file(),
+            //SSCMarkSheet: $('#SSCMarkSheet').file(),
+            //HSSCMarkSheet: $('#HSSCMarkSheet').file(),
+
+
             SubjectName: SubjectName,
             SubjectObtain: SubjectObtain
             
         }
+
+        var data = new FormData();
+        data.append("Photograph", jQuery("#Photograph").get(0).files[0]);
+        data.append("CNIC", jQuery("#CNIC").get(0).files[0]);
+        data.append("SSCMarkSheet", jQuery("#SSCMarkSheet").get(0).files[0]);
+        data.append("HSSCMarkSheet", jQuery("#HSSCMarkSheet").get(0).files[0]);
+
+        Object.entries(personalInfo).forEach(([key, value]) => {
+            data.append(key, value);
+        });
+        Object.entries(education).forEach(([key, value]) => {
+            data.append(key, value);
+        });
+        Object.entries(document).forEach(([key, value]) => {
+            data.append(key, value);
+        });
+
+        data.append("SubjectName", SubjectName);
+        data.append("SubjectObtain", SubjectObtain);
+
+
+
+
+
+
         $('#mainLoader').show();
-        CallAsyncService("/Application/Submit", JSON.stringify(param), submitDeclarationCB)
+        CallFileAsyncService("/Application/Submit", data , submitDeclarationCB)
         function submitDeclarationCB(response) {
             $('#mainLoader').hide();
             if (response.status) {
                 $('#errorBlock').hide();
-            
-                var form = $('#fileUploadForm');
-                var formData = new FormData(form[0]);
-                formData.append("UserId", response.userId)
+                ShowDivSuccess(response.message);
+                //$('#id').val(response.userId);
+                //var form = $('#fileUploadForm');
+                //var formData = new FormData(form[0]);
+                //formData.append("UserId", $('#id').val())
 
-                $('#mainLoader').show();
-                $.ajax({
-                    url: '/Handler1.ashx', // Change the URL to your MVC controller's action
-                    type: 'POST',
-                    data: formData,
-                    processData: false,
-                    contentType: false,
-                    success: function (response) {
-                        $('#mainLoader').hide();
-                        debugger
-                        if (response.status) {
-                            ShowDivSuccess(response.message);
-                            setTimeout(location.reload(), 2000);
-                        }
-                        else {
-                            ShowDivError(response.message)
-                            console.log(response.error);
-                            var errstring = response.error.toString();
-                            var stringList = errstring.split(",");
-                            $.each(stringList, function (key, value) {
-                                $("#DocumentError ul").append('<li class="text-danger">' + value + '</li>');
-                            })
-                        }
+                //$('#mainLoader').show();
+                //$.ajax({
+                //    url: '/Uploader.ashx', // Change the URL to your MVC controller's action
+                //    type: 'POST',
+                //    data: formData,
+                //    processData: false,
+                //    contentType: false,
+                //    success: function (response) {
+                //        $('#mainLoader').hide();
+                //        debugger
+                //        if (response.status) {
+                //            ShowDivSuccess(response.message);
+                            
+                //        }
+                //        else {
+                //            ShowDivError(response.message)
+                //            console.log(response.error);
+                //            var errstring = response.error.toString();
+                //            var stringList = errstring.split(",");
+                //            $.each(stringList, function (key, value) {
+                //                $("#DocumentError ul").append('<li class="text-danger">' + value + '</li>');
+                //            })
+                //        }
 
-                    },
-                    error: function (xhr, status, error) {
-                        debugger
-                        ShowDivError(response.message);
+                //    },
+                //    error: function (xhr, status, error) {
+                //        debugger
+                //        ShowDivError(response.message);
 
-                    }
-                });
+                //    }
+                //});
 
             }
             else {
@@ -1177,7 +1311,7 @@ function SubmitTestDate() {
     debugger
 
     if (date != null && date != "") {
-        increaseProgressBarWidth(10);
+        increaseProgressBarWidth();
         $('#btnDeclaration').prop('disabled', false);
         $('#btnDeclaration').trigger('click');
         //$('#mainLoader').show();
