@@ -83,12 +83,9 @@
           <Property Name="IsCompleted" Type="int" />
           <Property Name="HUSchoolName" Type="varchar" MaxLength="50" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'HUTOPS.dbo.EducationalSubjects' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="EducationalSubjects">
           <Key>
             <PropertyRef Name="Id" />
-            <PropertyRef Name="EducationalId" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="50" />
@@ -129,7 +126,7 @@ warning 6002: The table/view 'HUTOPS.dbo.EducationalSubjects' does not have a pr
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="HUTopId" Type="varchar" MaxLength="50" />
+          <Property Name="HUTopId" Type="varchar" MaxLength="50" StoreGeneratedPattern="Computed" />
           <Property Name="AppId" Type="int" />
           <Property Name="FirstName" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="MiddleName" Type="varchar" MaxLength="50" />
@@ -186,9 +183,9 @@ warning 6002: The table/view 'HUTOPS.dbo.EducationalSubjects' does not have a pr
           <Property Name="HearAboutHU" Type="varchar" MaxLength="50" />
           <Property Name="HearAboutHUOther" Type="varchar" MaxLength="50" />
           <Property Name="CreatedDatetime" Type="datetime2" Precision="7" />
-          <Property Name="Declaration" Type="int" />
-          <Property Name="IsCompleted" Type="int" />
-          <Property Name="UserType" Type="int" />
+          <Property Name="Declaration" Type="int" StoreGeneratedPattern="Computed" />
+          <Property Name="IsCompleted" Type="int" StoreGeneratedPattern="Computed" />
+          <Property Name="UserType" Type="int" StoreGeneratedPattern="Computed" />
         </EntityType>
         <EntityType Name="State">
           <Key>
@@ -489,19 +486,12 @@ warning 6002: The table/view 'HUTOPS.sys.database_firewall_rules' does not have 
           <EntitySet Name="Country" EntityType="Self.Country" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Documents" EntityType="Self.Documents" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Educational" EntityType="Self.Educational" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EducationalSubjects" EntityType="Self.EducationalSubjects" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EmailTemplates" EntityType="Self.EmailTemplates" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="GroupSubjects" EntityType="Self.GroupSubjects" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Log" EntityType="Self.Log" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PersonalInformation" EntityType="Self.PersonalInformation" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="State" EntityType="Self.State" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="EducationalSubjects" EntityType="Self.EducationalSubjects" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [EducationalSubjects].[Id] AS [Id], 
-    [EducationalSubjects].[Name] AS [Name], 
-    [EducationalSubjects].[ObtainMarks] AS [ObtainMarks], 
-    [EducationalSubjects].[EducationalId] AS [EducationalId]
-    FROM [dbo].[EducationalSubjects] AS [EducationalSubjects]</DefiningQuery>
-          </EntitySet>
           <EntitySet Name="database_firewall_rules" EntityType="Self.database_firewall_rules" store:Type="Views" store:Schema="sys">
             <DefiningQuery>SELECT 
     [database_firewall_rules].[id] AS [id], 
@@ -617,7 +607,7 @@ warning 6002: The table/view 'HUTOPS.sys.database_firewall_rules' does not have 
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="HUTopId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="HUTopId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" annotation:StoreGeneratedPattern="Computed" />
           <Property Name="AppId" Type="Int32" />
           <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="MiddleName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
@@ -674,9 +664,9 @@ warning 6002: The table/view 'HUTOPS.sys.database_firewall_rules' does not have 
           <Property Name="HearAboutHU" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="HearAboutHUOther" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="CreatedDatetime" Type="DateTime" Precision="7" />
-          <Property Name="Declaration" Type="Int32" />
-          <Property Name="IsCompleted" Type="Int32" />
-          <Property Name="UserType" Type="Int32" />
+          <Property Name="Declaration" Type="Int32" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="IsCompleted" Type="Int32" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="UserType" Type="Int32" annotation:StoreGeneratedPattern="Computed" />
         </EntityType>
         <EntityType Name="State">
           <Key>
@@ -690,7 +680,6 @@ warning 6002: The table/view 'HUTOPS.sys.database_firewall_rules' does not have 
         <EntityType Name="EducationalSubject">
           <Key>
             <PropertyRef Name="Id" />
-            <PropertyRef Name="EducationalId" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />

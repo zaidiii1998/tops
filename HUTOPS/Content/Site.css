@@ -530,3 +530,20 @@ div#contentWrapperDashboard.contentWrapAdon .boxWraper {
 .progress-bar {
     background-color: #5c2568 !important;
 }
+
+[data-toggle="collapse"] {
+    text-align: left;
+}
+
+    [data-toggle="collapse"] span {
+        text-align: right;
+        margin-top: -20px
+    }
+
+    [data-toggle="collapse"] .fa-solid:before {
+        content: "\f139";
+    }
+
+    [data-toggle="collapse"].collapsed .fa-solid:before {
+        content: "\f13a";
+    }

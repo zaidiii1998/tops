@@ -44,6 +44,7 @@
 
 });
 
+
 function showLoader() {
     $('.overlay').show();
     $('.adminDashboard').removeClass('loaded');
@@ -168,13 +169,13 @@ function increaseProgressBarWidth() {
     let barWidth = document.getElementById('progressBar').offsetWidth;  // get the current bar width
 
     // if the bar width + amount of pixels to increase exceeds the container's width, reduce it accordingly
-    if (barWidth + amount > containerWidth) {
-        return false   // we reached 100% so clear the interval
-    }
+    //if (barWidth + amount > containerWidth) {
+    //    return false   // we reached 100% so clear the interval
+    //}
 
-    let totalPercent = Math.round((barWidth + amount) * 100 / containerWidth); // calculate the total percent finished
+    let totalPercent = Math.round((amount) * 100 / containerWidth); // calculate the total percent finished
 
-    document.getElementById('progressBar').style.width = barWidth + amount + "px";    // increase bar width
+    document.getElementById('progressBar').style.width = amount + "px";    // increase bar width
     document.getElementById('progressBar').innerHTML = totalPercent + "%";           // update the percentage text
 }
 
@@ -539,6 +540,7 @@ function validatePersonalInfoForm() {
         increaseProgressBarWidth();
         $('#btnEducation').prop('disabled', false);
         $('#btnEducation').trigger('click');
+        window.scrollTo(0, 100);
     }
     
 }
@@ -900,6 +902,7 @@ function SubmitEducation() {
         $('#btnDocument').prop('disabled', false);
 
         $('#btnDocument').trigger('click');
+        window.scrollTo(0, 200);
 
     }
 };
@@ -980,6 +983,7 @@ function submitDocuments(sessionUserId) {
         $('#btnTest').prop('disabled', false);
 
         $('#btnTest').trigger('click');
+        window.scrollTo(0, 300);
 
     }
 }
@@ -1277,7 +1281,10 @@ function submitDeclaration() {
             }
             else {
                 ShowDivError(response.message);
-            
+                $("#PersonalError ul").html('');
+                $("#EducationError ul").html('');
+                $("#DocumentError ul").html('');
+
                 var PersonalErrors = response.PersonalErrors.toString();
                 var PersonalErrorsList = PersonalErrors.split(",");
                 $.each(PersonalErrorsList, function (key, value) {
@@ -1289,6 +1296,12 @@ function submitDeclaration() {
                 var EducationErrorsList = EducationErrors.split(",");
                 $.each(EducationErrorsList, function (key, value) {
                     $("#EducationError ul").append('<li class="text-danger">' + value + '</li>');
+                })
+                var DocumentErrors = response.DocumentErrors.toString();
+
+                var DocumentErrorsList = DocumentErrors.split(",");
+                $.each(DocumentErrorsList, function (key, value) {
+                    $("#DocumentError ul").append('<li class="text-danger">' + value + '</li>');
                 })
             
             
@@ -1314,6 +1327,8 @@ function SubmitTestDate() {
         increaseProgressBarWidth();
         $('#btnDeclaration').prop('disabled', false);
         $('#btnDeclaration').trigger('click');
+        window.scrollTo(0, 500);
+        //document.body.scrollTop = 0;
         //$('#mainLoader').show();
         //CallAsyncService("/Home/SubmitTestDate?Date=" + date + "&UserId=" + $('#id').val(), null, SubmitActivityCB)
         //function SubmitActivityCB(response) {

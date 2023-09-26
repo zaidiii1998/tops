@@ -301,6 +301,7 @@
     <Content Include="Content\fonts\fa-regular-400.svg" />
     <Content Include="Content\fonts\fa-solid-900.svg" />
     <Content Include="Content\Images\bg_logo_large.jpg" />
+    <Content Include="Content\Images\email logo.png" />
     <Content Include="Content\Images\preloader.gif" />
     <Content Include="Content\Images\TOPS_logo_admin.png" />
     <Content Include="Content\img\CategoryMenu.png" />

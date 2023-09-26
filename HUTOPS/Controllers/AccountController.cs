@@ -41,7 +41,6 @@ namespace HUTOPS.Controllers
                         Utility.SetSession(admin);
                         Utility.SetSession(new PersonalInformation());
                         return RedirectToAction("Index", "Student");
-
                     }
                     else { Utility.SetSession(personalInformation); }
                     

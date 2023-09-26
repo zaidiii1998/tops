@@ -1,19 +1,26 @@
 ﻿@using HUTOPS.Models
+@using HUTOPS.Helper
 @model ApplicationModel
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+
+
 <div>
     <div class="accordion" id="accordionExample">
         <div class="card m-4">
-            <div class="card-header CollapseCard" id="headingOne"  onclick="document.getElementById('btnPersonalInfo').click()">
+            <div class="card-header CollapseCard" id="headingOne" onclick="document.getElementById('btnPersonalInfo').click();">
+
                 <h2 class="mb-0">
-                    <a class="btn btn-link" id="btnPersonalInfo" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    <a class="btn btn-link w-100" id="btnPersonalInfo" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                         Personal Information
+                        <span class="w-100"><i class="fa-solid" aria-hidden="true" style="color: white;font-size: 39px;"></i></span>
                     </a>
+
                 </h2>
+
             </div>
             <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
                 <div class="card-body">
@@ -431,8 +438,10 @@
         <div class="card m-4">
             <div class="card-header CollapseCard" id="headingTwo" onclick="document.getElementById('btnEducation').click();">
                 <h2 class="mb-0">
-                    <a class="btn btn-link collapsed" data-toggle="collapse" id="btnEducation" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                    <a class="btn btn-link collapsed w-100" data-toggle="collapse" id="btnEducation" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                         Educational Information
+                        <span class="w-100"><i class="fa-solid" aria-hidden="true" style="color: white;font-size: 39px;"></i></span>
+
                     </a>
                 </h2>
             </div>
@@ -658,11 +667,13 @@
             </div>
         </div>
 
-        <div class="card m-4" >
+        <div class="card m-4">
             <div class="card-header CollapseCard" id="headingThree" onclick="document.getElementById('btnDocument').click();">
                 <h2 class="mb-0">
-                    <a class="btn btn-link collapsed" id="btnDocument" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                    <a class="btn btn-link collapsed w-100" id="btnDocument" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
                         Documents
+                        <span class="w-100"><i class="fa-solid" aria-hidden="true" style="color: white;font-size: 39px;"></i></span>
+
                     </a>
                 </h2>
             </div>
@@ -679,7 +690,14 @@
                                         <label>A recent passport size photograph. Please do not use old photographs.*</label>
                                     </div>
                                     <div class="col-lg-3">
-                                        <input class="form-control" type="file" id="Photograph" size="1" name="Photograph" accept=".jpeg, .jpg" onchange="checkFileSize(this.id, 'errPhoto')" required>
+                                        @if (Utility.GetAdminFromSession().Id != 0)
+                                        {
+                                            <input class="form-control" type="file" id="Photograph" size="1" name="Photograph" accept=".jpeg, .jpg" value="@Model.Document.Photograph" onchange="checkFileSize(this.id, 'errPhoto')">
+                                        }
+                                        else
+                                        {
+                                            <input class="form-control" type="file" id="Photograph" size="1" name="Photograph" accept=".jpeg, .jpg" value="@Model.Document.Photograph" onchange="checkFileSize(this.id, 'errPhoto')" required>
+                                        }
                                         <span class="text-danger" id="errPhoto"></span>
                                         <!-- Other file input fields -->
                                     </div>
@@ -691,47 +709,54 @@
                                     </div>
 
                                 </div><br /><br />
-                                            <div class="row">
-                                                <div class="col-lg-3">
-                                                    <label>A scanned copy of your original SSC Final Marks Sheet *</label>
-                                                </div>
-                                                <div class="col-lg-3">
-                                                    <input type="file" class="form-control" id="SSCMarkSheet" size="1" name="SSCMarkSheet" accept=".jpeg, .jpg" onchange="checkFileSize(this.id, 'errSSC')" required>
-                                                    <span class="text-danger" id="errSSC"></span>
-                                                </div>
-                                                <div class="col-lg-3">
-                                                    @if (@Model.Document.SSCMarkSheet != null && @Model.Document.SSCMarkSheet != "")
-                                                    {
-                                                        <a href="/Documents/View?doc=2" target="_blank" class="btn btn-default form-control"><i class="fa-solid fa-eye" style="color: blue;"></i></a>
-                                                    }
-                                                </div>
-                                                </div><br /><br />
-                                                <div class="row">
-                                                    <div class="col-lg-3">
-                                                        <label>A scanned copy of your original HSSC I or final HSSC Marks Sheet</label>
-                                                    </div>
-                                                    <div class="col-lg-3">
-                                                        <input type="file" class="form-control" id="HSSCMarkSheet" size="1" name="HSSCMarkSheet" accept=".jpeg, .jpg" onchange="checkFileSize(this.id, 'errHSSC')">
-                                                        <span class="text-danger" id="errHSSC"></span>
-                                                    </div>
+                                <div class="row">
+                                    <div class="col-lg-3">
+                                        <label>A scanned copy of your original SSC Final Marks Sheet *</label>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        @if (Utility.GetAdminFromSession().Id != 0)
+                                        {
+                                            <input type="file" class="form-control" id="SSCMarkSheet" size="1" name="SSCMarkSheet" accept=".jpeg, .jpg" value="@Model.Document.SSCMarkSheet" onchange="checkFileSize(this.id, 'errSSC')">
+                                        }
+                                        else
+                                        {
+                                            <input type="file" class="form-control" id="SSCMarkSheet" size="1" name="SSCMarkSheet" accept=".jpeg, .jpg" value="@Model.Document.SSCMarkSheet" onchange="checkFileSize(this.id, 'errSSC')" required>
+                                        }
+                                        <span class="text-danger" id="errSSC"></span>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        @if (@Model.Document.SSCMarkSheet != null && @Model.Document.SSCMarkSheet != "")
+                                        {
+                                            <a href="/Documents/View?doc=2" target="_blank" class="btn btn-default form-control"><i class="fa-solid fa-eye" style="color: blue;"></i></a>
+                                        }
+                                    </div>
+                                </div><br /><br />
+                                <div class="row">
+                                    <div class="col-lg-3">
+                                        <label>A scanned copy of your original HSSC I or final HSSC Marks Sheet</label>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <input type="file" class="form-control" id="HSSCMarkSheet" size="1" name="HSSCMarkSheet" accept=".jpeg, .jpg" value="@Model.Document.HSSCMarkSheet" onchange="checkFileSize(this.id, 'errHSSC')">
+                                        <span class="text-danger" id="errHSSC"></span>
+                                    </div>
 
-                                                </div><br /><br />
-                                                <div class="row">
-                                                    <div class="col-lg-3">
-                                                        <label>A scanned copy of your B-Form or CNIC (If available)</label>
-                                                    </div>
-                                                    <div class="col-lg-3">
-                                                        <input type="file" id="CNIC" class="form-control" size="1" name="CNIC" accept=".jpeg, .jpg" onchange="checkFileSize(this.id, 'errCNIC')">
-                                                        <span class="text-danger" id="errCNIC"></span>
-                                                    </div>
+                                </div><br /><br />
+                                <div class="row">
+                                    <div class="col-lg-3">
+                                        <label>A scanned copy of your B-Form or CNIC (If available)</label>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <input type="file" id="CNIC" class="form-control" size="1" name="CNIC" accept=".jpeg, .jpg" value="@Model.Document.CNIC" onchange="checkFileSize(this.id, 'errCNIC')">
+                                        <span class="text-danger" id="errCNIC"></span>
+                                    </div>
 
-                                                </div><br /><br />
-                                                <div class="row">
-                                                    <div class="col-lg-12">
-                                                        <input class="savebtn global-btn-purple  float-right" type="button" onclick="submitDocuments('');" value="Next">
-                                                    </div>
-                                                </div>
-</form>
+                                </div><br /><br />
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <input class="savebtn global-btn-purple  float-right" type="button" onclick="submitDocuments('');" value="Next">
+                                    </div>
+                                </div>
+                            </form>
                             <div id="Error">
                                 <ul></ul>
                             </div>
@@ -742,10 +767,13 @@
         </div>
 
         <div class="card m-4">
-            <div class="card-header CollapseCard" id="headingThree"  onclick="document.getElementById('btnTest').click();">
+            <div class="card-header CollapseCard" id="headingThree" onclick="document.getElementById('btnTest').click();">
                 <h2 class="mb-0">
-                    <a class="btn btn-link collapsed" id="btnTest" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseThree">
+                    <a class="btn btn-link collapsed w-100" id="btnTest" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseThree">
                         Test Date
+                        <span class="w-100"><i class="fa-solid" aria-hidden="true" style="color: white;font-size: 39px;"></i></span>
+
+
                     </a>
                 </h2>
             </div>
@@ -772,7 +800,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-lg-12">
-                                        <input class="savebtn global-btn-purple  float-right" type="button" onclick="SubmitTestDate();" value="Next">
+                                    <input class="savebtn global-btn-purple  float-right" type="button" onclick="SubmitTestDate();" value="Next">
                                 </div>
                             </div>
                         </div>
@@ -782,10 +810,13 @@
         </div>
 
         <div class="card m-4">
-            <div class="card-header CollapseCard" id="headingThree"  onclick="document.getElementById('btnDeclaration').click();">
+            <div class="card-header CollapseCard" id="headingThree" onclick="document.getElementById('btnDeclaration').click();">
                 <h2 class="mb-0">
-                    <a class="btn btn-link collapsed" id="btnDeclaration" data-toggle="collapse" data-target="#collapseFive" aria-expanded="false" aria-controls="collapseThree">
+                    <a class="btn btn-link collapsed w-100" id="btnDeclaration" data-toggle="collapse" data-target="#collapseFive" aria-expanded="false" aria-controls="collapseThree">
                         Declarations
+
+                        <span class="w-100"><i class="fa-solid" aria-hidden="true" style="color: white;font-size: 39px;"></i></span>
+
                     </a>
                 </h2>
             </div>
@@ -825,7 +856,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-lg-12">
-                                            <input class="savebtn global-btn-purple  float-right" type="button" onclick="submitDeclaration();" value="Submit">
+                                        <input class="savebtn global-btn-purple  float-right" type="button" onclick="submitDeclaration();" value="Submit">
                                     </div>
                                 </div>
 
@@ -839,19 +870,19 @@
         </div>
     </div>
     <div class="row" id="errorBlock">
-        <div class="col-md-4 m-4">
+        <div class="col-md-3 m-4">
             <h6 class="form-control">Personal Information Errors</h6>
             <div id="PersonalError">
                 <ul></ul>
             </div>
         </div>
-        <div class="col-md-4 m-4">
+        <div class="col-md-3 m-4">
             <h6 class="form-control">Educational Information Errors</h6>
             <div id="EducationError">
                 <ul></ul>
             </div>
         </div>
-        <div class="col-md-4 m-4">
+        <div class="col-md-3 m-4">
             <h6 class="form-control">Document Errors</h6>
             <div id="DocumentError">
                 <ul></ul>
@@ -867,8 +898,13 @@
     $('#divUniName').hide();
     LoadYear('startingYear');
     LoadYear('completionYear');
+    // Load Personal Informations
+
+    $('#comboHearHU').val('@Model.PersonalInfo.HearAboutHU');
+    $('#comboHearHU').trigger('change');
 
     LoadDate('@Model.PersonalInfo.DateOfBirth', 'dob');
-    
+    LoadTestDate('@Model.PersonalInfo.TestDate');
+    // Load Educational Informaiton
     LoadEducationalData(@Html.Raw(Json.Encode(Model)));
 </script>

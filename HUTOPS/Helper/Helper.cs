@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Globalization;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
@@ -146,7 +147,21 @@ namespace HUTOPS.Helper
         }
         public static List<string> ValidatePersonalInfo(PersonalInformation personalInfo)
         {
+            HUTOPSEntities DB = new HUTOPSEntities();
             List<string> errors = new List<string>();
+
+            if(DB.PersonalInformations.ToList().Exists(x => x.EmailAddress == personalInfo.EmailAddress && x.Id != personalInfo.Id))
+            {
+                errors.Add("Email is already Exists");
+            }
+            if (DB.PersonalInformations.ToList().Exists(x => x.CNIC == personalInfo.CNIC && x.Id != personalInfo.Id))
+            {
+                errors.Add("CNIC is already Exists");
+            }
+            if (DB.PersonalInformations.ToList().Exists(x => x.CellPhoneNumber == personalInfo.CellPhoneNumber && x.Id != personalInfo.Id))
+            {
+                errors.Add("Phone number is already Exists");
+            }
             if (string.IsNullOrEmpty(personalInfo.FirstName))
             {
                 errors.Add("First Name is required");
@@ -189,7 +204,7 @@ namespace HUTOPS.Helper
             }
             if (!string.IsNullOrEmpty(personalInfo.GuardianEmailAddress) && !Helper.Utility.isValidEmail(personalInfo.GuardianEmailAddress))
             {
-                errors.Add("Provided Email Address is Invalid");
+                errors.Add("Provided Guardian Email Address is Invalid");
             }
             if (!string.IsNullOrEmpty(personalInfo.CellPhoneNumber) && !Helper.Utility.IsValidPhoneNumber(personalInfo.CellPhoneNumber))
             {
