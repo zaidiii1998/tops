@@ -7,6 +7,7 @@ using System.Data.Entity;
 using System.IO;
 using System.Web.Helpers;
 using System.Xml.Linq;
+using System;
 
 namespace HUTOPS.Controllers
 {
@@ -66,6 +67,11 @@ namespace HUTOPS.Controllers
 
                 if (Utility.GetAdminFromSession().Id != 0)
                 {
+                    var userId = Utility.GetUserFromSession().Id;
+                    if (userId != applicationModel.PersonalInfo.Id)
+                    {
+                        return Json(new { status = false, message = "Multi profile conflict occur while saving student record" });
+                    }
                     var PersonalInformationErrors = Utility.ValidatePersonalInfo(applicationModel.PersonalInfo);
                     var EducationalError = Utility.ValidateEducation(applicationModel.Education);
                     if (PersonalInformationErrors.Count > 0 || EducationalError.Count > 0)
@@ -399,6 +405,31 @@ namespace HUTOPS.Controllers
         public ActionResult Success()
         {
             return View();
+        }
+
+        public ActionResult View(int doc)
+        {
+            try
+            {
+                var personalInfo = Utility.GetUserFromSession();
+                var documents = DB.Documents.ToList().Where(x => x.UserId == personalInfo.Id).FirstOrDefault();
+                var url = "";
+                if (documents != null)
+                {
+                    if (doc == 1) { url = documents.Photograph == "" ? "" : documents.Photograph.Substring(documents.Photograph.IndexOf("Upload")); }
+                    else if (doc == 2) { url = documents.SSCMarkSheet == "" ? "" : documents.SSCMarkSheet.Substring(documents.SSCMarkSheet.IndexOf("Upload")); }
+                    else if (doc == 3) { url = documents.HSSCMarkSheet == "" ? "" : documents.HSSCMarkSheet.Substring(documents.HSSCMarkSheet.IndexOf("Upload")); }
+                    else if (doc == 4) { url = documents.CNIC == "" ? "" : documents.CNIC.Substring(documents.CNIC.IndexOf("Upload")); }
+                    else { url = ""; }
+                }
+                ViewBag.Url = '/' + url;
+                return View();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
     }
 }

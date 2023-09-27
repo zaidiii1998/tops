@@ -152,12 +152,9 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ApplicationController.cs" />
     <Compile Include="Controllers\CommonController.cs" />
-    <Compile Include="Controllers\DeclarationController.cs" />
-    <Compile Include="Controllers\DocumentsController.cs" />
-    <Compile Include="Controllers\EducationController.cs" />
     <Compile Include="Controllers\EmailController.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\StudentController.cs" />
+    <Compile Include="Controllers\TestDateController.cs" />
     <Compile Include="Country.cs">
       <DependentUpon>HUTOPS_Server.tt</DependentUpon>
     </Compile>
@@ -591,7 +588,6 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Shared\_LayoutAdminPanal.cshtml" />
     <Content Include="Views\Shared\_loginLayout.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper.js.map" />
@@ -602,20 +598,16 @@
     <Content Include="Scripts\umd\popper.js.flow" />
     <Content Include="Scripts\umd\popper.js.map" />
     <Content Include="Scripts\umd\popper.min.js.map" />
-    <Content Include="Views\Education\Index.cshtml" />
-    <Content Include="Views\Documents\Index.cshtml" />
-    <Content Include="Views\Declaration\Index.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
-    <Content Include="Views\Home\Activity.cshtml" />
-    <Content Include="Views\Home\TestDate.cshtml" />
-    <Content Include="Views\Documents\View.cshtml" />
     <Content Include="Views\Student\Index.cshtml" />
     <Content Include="Views\Account\ForgotPassword.cshtml" />
     <Content Include="Views\Email\Index.cshtml" />
     <Content Include="Views\Application\Index.cshtml" />
     <Content Include="Uploader.ashx" />
     <Content Include="Views\Application\Success.cshtml" />
+    <Content Include="Views\Application\View.cshtml" />
+    <Content Include="Views\TestDate\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Common\" />

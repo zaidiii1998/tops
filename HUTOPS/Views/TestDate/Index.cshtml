@@ -1,0 +1,214 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutAdminPanal.cshtml";
+}
+@model List<TestDate>
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-lg-12">
+            <div class="boxWraper">
+                <div class="headBox">
+                    <h2>All Test Dates</h2>
+                    <div class="btnWraper">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <input class="savebtn global-btn-purple  float-right m-1" type="button" onclick="ShowModal()" value="Add New">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @* table *@
+                <table class="ctmTable table table-responsive table-hover" id="main-datatables">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Value</th>
+                            <th>Text</th>
+                            <th>Visibility</th>
+                            <th>Deadline Date</th>
+                            <th>Admission Session</th>
+                            <th>Created By</th>
+                            <th>CreatedOn</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.Id</td>
+                                <td>@item.Value</td>
+                                <td>@item.Text</td>
+                                <td>@item.Visibility</td>
+                                <td>@item.DeadlineDate</td>
+                                <td>@item.AdmissionSession</td>
+                                <td>@item.CreatedBy</td>
+                                <td>@item.CreatedOn</td>
+                                <td><button id='btnEdit' type='button' class='btn btn-icon savebtn global-btn-purple'><i class='fa fa-edit'></i></button></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                @* table *@
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal For Add Edit-->
+<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Test Date</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="modalForm" enctype="multipart/form-data">
+                    <input type="text" id="txtId" hidden/>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label>Value</label>
+                                <input class="form-control" type="date" id="dateValue"  required/>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label>Text</label>
+                                <input class="form-control" type="text" id="txtText" required/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label>Admission Session</label>
+                                <select class="form-control" id="comboAdmissionSession" required>
+                                    <option>Select Admission Session</option>
+                                    <option value="2023-24">2023-2024</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label>DeadLine Date</label>
+                                <input class="form-control" type="date" id="dateDeadline" required />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <input type="checkbox" name="checkVisibility" id="checkVisibility" class="styled-checkbox">
+                            <label for="checkVisibility" class="checkbox-label" style="width: 75%;">Visibility</label>
+                            <br /><br />
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="savebtn global-btn-purple  float-right" onclick="AddUpdateTestDate()" style="margin:0;">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        LoadTestDateDatatable();
+    })
+
+   
+
+    function LoadTestDateDatatable() {
+        var mainTable = $('#main-datatables').DataTable({
+            dom: 'lrtip',
+            "processing": true,
+            "serverSide": false,
+            "pagingType": "full_numbers",
+            "paging": true,
+            "lengthMenu": [10, 25, 50, 75],
+            "ordering": false,
+            "language": {
+                "processing": "<image src='/Content/images/preloader.gif' />"
+            },
+            "columnDefs": [
+                {
+                    "targets": "_all",
+                    "className": "dt-center",
+                    "orderable": true
+                },
+                {
+                    "targets": [0],
+                    "visible": false,
+                    "searchable": false
+                }
+            ]
+
+        });
+
+        // Edit Transaction
+        $('#main-datatables tbody').on('click', '#btnEdit', function () {
+            debugger
+            var data = mainTable.row($(this).parents('tr')).data();
+            var modal = $('#modal');
+            console.log(data[3]);
+            modal.on('show.bs.modal', function () {
+                $('#txtId').val(data[0]);
+                LoadDate(data[1], 'dateValue');
+                $('#txtText').val(data[2]);
+                $('#comboAdmissionSession').val(data[5]);
+                LoadDate(data[4],'dateDeadline')
+                if (data[3] == '1') {$('#checkVisibility').prop('checked', true);
+                } else { $('#checkVisibility').prop('checked', false); }
+
+
+            });
+
+            modal.modal({ show: true })
+
+        });
+    }
+
+    function ShowModal() {
+        var modal = $('#modal');
+        modal.on('show.bs.modal', function () {
+            $('#txtId').val('');
+            $('#dateValue').val('');
+            $('#txtText').val('');
+            $('#comboAdmissionSession').val(null);
+            $('#dateDeadline').val('');
+            $('#checkVisibility').prop('checked', false);
+
+
+        });
+        modal.modal({ show: true })
+    }
+
+    function AddUpdateTestDate() {
+        var visible = '0';
+        if ($('#checkVisibility').prop('checked', true)) {
+            visible = '1';
+        }
+        var param = {
+            Id :$('#txtId').val(),
+            Value :$('#dateValue').val(),
+            Text:$('#txtText').val(),
+            AdmissionSession: $('#comboAdmissionSession').val(),
+            DeadlineDate: $('#dateDeadline').val(),
+            Visibility: visible
+        }
+        CallAsyncService("/TestDate/Submit", JSON.stringify(param), AddUpdateTestDateCB);
+        function AddUpdateTestDateCB(response) {
+            if (response.status) {
+                ShowDivSuccess(response.message);
+            } else {
+                ShowDivError(response.message);
+            }
+        }
+    }
+
+</script>
+

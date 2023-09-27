@@ -154,8 +154,8 @@
           <Property Name="PermanentCountry" Type="varchar" MaxLength="50" />
           <Property Name="PermanentPostalCode" Type="int" />
           <Property Name="CNIC" Type="varchar" MaxLength="15" Nullable="false" />
-          <Property Name="EmailAddress" Type="varchar" MaxLength="30" Nullable="false" />
-          <Property Name="AlterEmailAddress" Type="varchar" MaxLength="30" />
+          <Property Name="EmailAddress" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="AlterEmailAddress" Type="varchar" MaxLength="50" />
           <Property Name="Password" Type="varchar" MaxLength="50" />
           <Property Name="SaveDate" Type="datetime2" Precision="7" />
           <Property Name="UpdateDate" Type="datetime2" Precision="7" />
@@ -201,10 +201,13 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Value" Type="varchar" MaxLength="50" />
-          <Property Name="Text" Type="varchar" MaxLength="50" />
+          <Property Name="Value" Type="varchar" MaxLength="100" />
+          <Property Name="Text" Type="varchar" MaxLength="100" />
           <Property Name="CreatedBy" Type="varchar" MaxLength="50" />
           <Property Name="CreatedOn" Type="datetime2" Precision="7" />
+          <Property Name="Visibility" Type="tinyint" />
+          <Property Name="DeadlineDate" Type="datetime2" Precision="7" />
+          <Property Name="AdmissionSession" Type="varchar" MaxLength="50" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'HUTOPS.sys.database_firewall_rules' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -646,8 +649,8 @@ warning 6002: The table/view 'HUTOPS.sys.database_firewall_rules' does not have 
           <Property Name="PermanentCountry" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="PermanentPostalCode" Type="Int32" />
           <Property Name="CNIC" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="EmailAddress" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="AlterEmailAddress" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="EmailAddress" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="AlterEmailAddress" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Password" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
           <Property Name="SaveDate" Type="DateTime" Precision="7" />
           <Property Name="UpdateDate" Type="DateTime" Precision="7" />
@@ -1177,10 +1180,13 @@ warning 6002: The table/view 'HUTOPS.sys.database_firewall_rules' does not have 
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Value" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Text" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Value" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Text" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="CreatedOn" Type="DateTime" Precision="7" />
+          <Property Name="Visibility" Type="Byte" />
+          <Property Name="DeadlineDate" Type="DateTime" Precision="7" />
+          <Property Name="AdmissionSession" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1623,6 +1629,9 @@ warning 6002: The table/view 'HUTOPS.sys.database_firewall_rules' does not have 
           <EntitySetMapping Name="TestDates">
             <EntityTypeMapping TypeName="HUTOPSModel.TestDate">
               <MappingFragment StoreEntitySet="TestDate">
+                <ScalarProperty Name="AdmissionSession" ColumnName="AdmissionSession" />
+                <ScalarProperty Name="DeadlineDate" ColumnName="DeadlineDate" />
+                <ScalarProperty Name="Visibility" ColumnName="Visibility" />
                 <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="Text" ColumnName="Text" />

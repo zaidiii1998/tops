@@ -19,5 +19,8 @@ namespace HUTOPS
         public string Text { get; set; }
         public string CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedOn { get; set; }
+        public Nullable<byte> Visibility { get; set; }
+        public Nullable<System.DateTime> DeadlineDate { get; set; }
+        public string AdmissionSession { get; set; }
     }
 }
