@@ -25,6 +25,9 @@ namespace HUTOPS.Models
         public List<EducationalSubject> Subjects { get; set; }
         public List<Board> Boards { get; set; }
         public List<BoardGroup> Groups { get; set; }
+
+        // For Test Date Form
+        public List<TestDate> TestDate { get; set; }
         public ApplicationModel()
         {
             PersonalInfo = new PersonalInformation();

@@ -87,14 +87,14 @@
                                     <div class="col-lg-4">
                                         <div class="form-group">
                                             <label for="email">Email Address:</label>
-                                            <input class="form-control" type="email" id="email" name="EmailAddress" maxlength="25" value="@Model.PersonalInfo.EmailAddress" oninput="validateEmail(this.id,'emailError');" onchange="checkEmail(this.id);" required>
+                                            <input class="form-control" type="email" id="email" name="EmailAddress" maxlength="35" value="@Model.PersonalInfo.EmailAddress" oninput="validateEmail(this.id,'emailError');" onchange="checkEmail(this.id);" required>
                                             <span class="text-danger" id="emailError"></span>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="form-group">
                                             <label for="altEmail">Alternate Email Address:</label>
-                                            <input class="form-control" type="email" id="altEmail" name="AlterEmailAddress" value="@Model.PersonalInfo.AlterEmailAddress" maxlength="30" oninput="validateEmail(this.id,'errAltEmail');">
+                                            <input class="form-control" type="email" id="altEmail" name="AlterEmailAddress" value="@Model.PersonalInfo.AlterEmailAddress" maxlength="35" oninput="validateEmail(this.id,'errAltEmail');">
 
                                         </div>
                                     </div>
@@ -202,7 +202,7 @@
                                     <div class="col-lg-4">
                                         <div class="form-group">
                                             <label for="guardianEmail">Guardian Email Address:</label>
-                                            <input class="form-control" type="email" id="guardianEmail" value="@Model.PersonalInfo.GuardianEmailAddress" name="GuardianEmailAddress" oninput="validateEmail(this.id,'errGuardianEmail')" required>
+                                            <input class="form-control" type="email" maxlength="35" id="guardianEmail" value="@Model.PersonalInfo.GuardianEmailAddress" name="GuardianEmailAddress" oninput="validateEmail(this.id,'errGuardianEmail')" required>
                                         </div>
                                     </div>
                                 </div>
@@ -739,7 +739,12 @@
                                         <input type="file" class="form-control" id="HSSCMarkSheet" size="1" name="HSSCMarkSheet" accept=".jpeg, .jpg" value="@Model.Document.HSSCMarkSheet" onchange="checkFileSize(this.id, 'errHSSC')">
                                         <span class="text-danger" id="errHSSC"></span>
                                     </div>
-
+                                    <div class="col-lg-3">
+                                        @if (@Model.Document.HSSCMarkSheet != null && @Model.Document.HSSCMarkSheet != "")
+                                        {
+                                            <a href="/Documents/View?doc=3" target="_blank" class="btn btn-default form-control"><i class="fa-solid fa-eye" style="color: blue;"></i></a>
+                                        }
+                                    </div>
                                 </div><br /><br />
                                 <div class="row">
                                     <div class="col-lg-3">
@@ -749,7 +754,12 @@
                                         <input type="file" id="CNIC" class="form-control" size="1" name="CNIC" accept=".jpeg, .jpg" value="@Model.Document.CNIC" onchange="checkFileSize(this.id, 'errCNIC')">
                                         <span class="text-danger" id="errCNIC"></span>
                                     </div>
-
+                                    <div class="col-lg-3">
+                                        @if (@Model.Document.CNIC != null && @Model.Document.CNIC != "")
+                                        {
+                                            <a href="/Documents/View?doc=4" target="_blank" class="btn btn-default form-control"><i class="fa-solid fa-eye" style="color: blue;"></i></a>
+                                        }
+                                    </div>
                                 </div><br /><br />
                                 <div class="row">
                                     <div class="col-lg-12">
@@ -791,8 +801,17 @@
                                         <label for="currentLevel">To appear for HU TOPS Qualifying Round Test (Core Skills Test). Please choose a test date:<span class="text-danger">*:</span></label>
                                         <select class="form-control" id="TestDate" required>
                                             <option value="">Select Date </option>
-                                            <option value="23rd/24th/25th February 2023 [For Karachi/Sindh/Baluchistan Applicants]">23rd/24th/25th February 2023 [For Karachi/Sindh/Baluchistan Applicants]</option>
-                                            <option value="3rd/4th/5th March 2023 [For Islamabad/Punjab/GB/KPK/AJK Applicants]">3rd/4th/5th March 2023 [For Islamabad/Punjab/GB/KPK/AJK Applicants]</option>
+                                            @foreach (var item in Model.TestDate)
+                                            {
+                                                if (item.Value.ToString() == Model.PersonalInfo.TestDate)
+                                                {
+                                                    <option value="@item.Value" selected>@item.Text</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@item.Value">@item.Text</option>
+                                                }
+                                            }
                                         </select>
                                         <span class="text-danger" id="testdateError"></span>
                                     </div>
@@ -890,6 +909,8 @@
         </div>
     </div>
 </div>
+
+<a href="/Application/Success" id="redirectToSuccess" style="display:none;">success</a>
 
 <script>
 

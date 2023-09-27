@@ -46,8 +46,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CPD.Framework.Core">
-      <HintPath>..\..\..\..\..\Downloads\CPD.Framework.Core.dll</HintPath>
+    <Reference Include="CPD.Framework.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>App_Data\CPD.Framework.Core.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
@@ -255,6 +256,9 @@
     <Compile Include="sysdiagram.cs">
       <DependentUpon>HUTOPS.tt</DependentUpon>
     </Compile>
+    <Compile Include="TestDate.cs">
+      <DependentUpon>HUTOPS_Server.tt</DependentUpon>
+    </Compile>
     <Compile Include="Uploader.ashx.cs">
       <DependentUpon>Uploader.ashx</DependentUpon>
     </Compile>
@@ -278,6 +282,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\CPD.Framework.Core.dll" />
     <Content Include="App_Data\HUCryptography.dll" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
@@ -610,6 +615,7 @@
     <Content Include="Views\Email\Index.cshtml" />
     <Content Include="Views\Application\Index.cshtml" />
     <Content Include="Uploader.ashx" />
+    <Content Include="Views\Application\Success.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Common\" />

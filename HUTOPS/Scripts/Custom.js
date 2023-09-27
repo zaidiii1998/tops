@@ -1240,44 +1240,9 @@ function submitDeclaration() {
             $('#mainLoader').hide();
             if (response.status) {
                 $('#errorBlock').hide();
+                $('#redirectToSuccess')[0].click();
                 ShowDivSuccess(response.message);
-                //$('#id').val(response.userId);
-                //var form = $('#fileUploadForm');
-                //var formData = new FormData(form[0]);
-                //formData.append("UserId", $('#id').val())
-
-                //$('#mainLoader').show();
-                //$.ajax({
-                //    url: '/Uploader.ashx', // Change the URL to your MVC controller's action
-                //    type: 'POST',
-                //    data: formData,
-                //    processData: false,
-                //    contentType: false,
-                //    success: function (response) {
-                //        $('#mainLoader').hide();
-                //        debugger
-                //        if (response.status) {
-                //            ShowDivSuccess(response.message);
-                            
-                //        }
-                //        else {
-                //            ShowDivError(response.message)
-                //            console.log(response.error);
-                //            var errstring = response.error.toString();
-                //            var stringList = errstring.split(",");
-                //            $.each(stringList, function (key, value) {
-                //                $("#DocumentError ul").append('<li class="text-danger">' + value + '</li>');
-                //            })
-                //        }
-
-                //    },
-                //    error: function (xhr, status, error) {
-                //        debugger
-                //        ShowDivError(response.message);
-
-                //    }
-                //});
-
+                
             }
             else {
                 ShowDivError(response.message);

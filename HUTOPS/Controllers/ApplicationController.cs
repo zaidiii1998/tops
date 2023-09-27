@@ -30,6 +30,7 @@ namespace HUTOPS.Controllers
             List<Board> Boards = DB.Boards.ToList();
             List<BoardGroup> Groups = DB.BoardGroups.ToList();
             List<EducationalSubject> subjects = new List<EducationalSubject>();
+            List<TestDate> testDate = DB.TestDates.ToList();
             if (Education != null)
             {
                 subjects = DB.EducationalSubjects.ToList().FindAll(x => x.EducationalId == (Education == null ? 0 : Education.Id)).ToList();
@@ -49,7 +50,9 @@ namespace HUTOPS.Controllers
                 // Required for Education Form
                 Boards = Boards,
                 Groups = Groups,
-                Subjects = subjects
+                Subjects = subjects,
+                // Required for TestDate
+                TestDate = testDate
                  
         };
 
@@ -184,9 +187,11 @@ namespace HUTOPS.Controllers
                             if (applicationModel.CNIC != null)
                             {
                                 CnicPath = Path.Combine(UserDirectory, "CNIC" + Path.GetExtension(applicationModel.CNIC.FileName));
+                                
                                 applicationModel.CNIC.SaveAs(CnicPath);
                                 var doc = DB.Documents.ToList().Where(x => x.UserId == applicationModel.PersonalInfo.Id).FirstOrDefault();
-                                doc.CNIC = CnicPath;
+                                doc.CNIC = Path.Combine(System.Configuration.ConfigurationManager.AppSettings["BaseURL"], CnicPath.Substring(CnicPath.IndexOf("Upload")));
+                                
                                 DB.SaveChanges();
                             }
                             if (applicationModel.SSCMarkSheet != null)
@@ -194,7 +199,7 @@ namespace HUTOPS.Controllers
                                 SSCPath = Path.Combine(UserDirectory, "SSC Mark Sheet" + Path.GetExtension(applicationModel.SSCMarkSheet.FileName));
                                 applicationModel.SSCMarkSheet.SaveAs(SSCPath);
                                 var doc = DB.Documents.ToList().Where(x => x.UserId == applicationModel.PersonalInfo.Id).FirstOrDefault();
-                                doc.SSCMarkSheet = SSCPath;
+                                doc.SSCMarkSheet = Path.Combine(System.Configuration.ConfigurationManager.AppSettings["BaseURL"], SSCPath.Substring(SSCPath.IndexOf("Upload"))); ;
                                 DB.SaveChanges();
                             }
                             if (applicationModel.HSSCMarkSheet != null)
@@ -202,7 +207,7 @@ namespace HUTOPS.Controllers
                                 HSSCPath = Path.Combine(UserDirectory, "HSSC Mark Sheet" + Path.GetExtension(applicationModel.HSSCMarkSheet.FileName));
                                 applicationModel.HSSCMarkSheet.SaveAs(HSSCPath);
                                 var doc = DB.Documents.ToList().Where(x => x.UserId == applicationModel.PersonalInfo.Id).FirstOrDefault();
-                                doc.HSSCMarkSheet = HSSCPath;
+                                doc.HSSCMarkSheet = Path.Combine(System.Configuration.ConfigurationManager.AppSettings["BaseURL"], HSSCPath.Substring(HSSCPath.IndexOf("Upload"))); ;
                                 DB.SaveChanges();
                             }
                             if (applicationModel.Photograph != null)
@@ -210,7 +215,7 @@ namespace HUTOPS.Controllers
                                 PhotographPath = Path.Combine(UserDirectory, "Photo" + Path.GetExtension(applicationModel.Photograph.FileName));
                                 applicationModel.Photograph.SaveAs(PhotographPath);
                                 var doc = DB.Documents.ToList().Where(x => x.UserId == applicationModel.PersonalInfo.Id).FirstOrDefault();
-                                doc.Photograph = PhotographPath;
+                                doc.Photograph = Path.Combine(System.Configuration.ConfigurationManager.AppSettings["BaseURL"], PhotographPath.Substring(PhotographPath.IndexOf("Upload"))); ;
                                 DB.SaveChanges();
                             }
 
@@ -250,6 +255,7 @@ namespace HUTOPS.Controllers
                         
                         try
                         {
+                            applicationModel.PersonalInfo.Declaration = 1;
                             DB.PersonalInformations.Add(applicationModel.PersonalInfo);
                             DB.SaveChanges();
                             
@@ -297,10 +303,10 @@ namespace HUTOPS.Controllers
                                 DB.Documents.Add(new Document
                                 {
                                     UserId = applicationModel.PersonalInfo.Id,
-                                    CNIC = CnicPath,
-                                    Photograph = PhotographPath,
-                                    SSCMarkSheet = SSCPath,
-                                    HSSCMarkSheet = HSSCPath,
+                                    CNIC = CnicPath == ""?"": Path.Combine(System.Configuration.ConfigurationManager.AppSettings["BaseURL"], CnicPath.Substring(CnicPath.IndexOf("Upload"))),
+                                    Photograph = PhotographPath == "" ? "" : Path.Combine(System.Configuration.ConfigurationManager.AppSettings["BaseURL"], PhotographPath.Substring(PhotographPath.IndexOf("Upload"))),
+                                    SSCMarkSheet = SSCPath == "" ? "" : Path.Combine(System.Configuration.ConfigurationManager.AppSettings["BaseURL"], SSCPath.Substring(SSCPath.IndexOf("Upload"))),
+                                    HSSCMarkSheet = HSSCPath == "" ? "" : Path.Combine(System.Configuration.ConfigurationManager.AppSettings["BaseURL"], HSSCPath.Substring(HSSCPath.IndexOf("Upload"))),
                                     IsCompleted = 1
                                 });
                                 DB.SaveChanges();
@@ -388,6 +394,11 @@ namespace HUTOPS.Controllers
             }
 
 
+        }
+
+        public ActionResult Success()
+        {
+            return View();
         }
     }
 }

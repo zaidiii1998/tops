@@ -196,6 +196,16 @@
           <Property Name="CountryId" Type="tinyint" />
           <Property Name="Status" Type="tinyint" />
         </EntityType>
+        <EntityType Name="TestDate">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Value" Type="varchar" MaxLength="50" />
+          <Property Name="Text" Type="varchar" MaxLength="50" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="50" />
+          <Property Name="CreatedOn" Type="datetime2" Precision="7" />
+        </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'HUTOPS.sys.database_firewall_rules' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="database_firewall_rules">
@@ -492,6 +502,7 @@ warning 6002: The table/view 'HUTOPS.sys.database_firewall_rules' does not have 
           <EntitySet Name="Log" EntityType="Self.Log" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PersonalInformation" EntityType="Self.PersonalInformation" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="State" EntityType="Self.State" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TestDate" EntityType="Self.TestDate" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="database_firewall_rules" EntityType="Self.database_firewall_rules" store:Type="Views" store:Schema="sys">
             <DefiningQuery>SELECT 
     [database_firewall_rules].[id] AS [id], 
@@ -964,6 +975,7 @@ warning 6002: The table/view 'HUTOPS.sys.database_firewall_rules' does not have 
             <Parameter Name="SubjectName" Mode="In" Type="String" />
             <Parameter Name="SubjectObtain" Mode="In" Type="String" />
           </FunctionImport>
+          <EntitySet Name="TestDates" EntityType="HUTOPSModel.TestDate" />
         </EntityContainer>
         <ComplexType Name="WEB_UserLogin_Result">
           <Property Type="Int32" Name="Response" Nullable="false" />
@@ -1160,6 +1172,16 @@ warning 6002: The table/view 'HUTOPS.sys.database_firewall_rules' does not have 
           <Property Type="Int32" Name="Response" Nullable="false" />
           <Property Type="String" Name="Reason" Nullable="false" MaxLength="18" />
         </ComplexType>
+        <EntityType Name="TestDate">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Value" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Text" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedOn" Type="DateTime" Precision="7" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1598,6 +1620,17 @@ warning 6002: The table/view 'HUTOPS.sys.database_firewall_rules' does not have 
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="TestDates">
+            <EntityTypeMapping TypeName="HUTOPSModel.TestDate">
+              <MappingFragment StoreEntitySet="TestDate">
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
