@@ -12,15 +12,17 @@ namespace HUTOPS
     using System;
     using System.Collections.Generic;
     
-    public partial class Document
+    public partial class BatchUpload
     {
         public int Id { get; set; }
-        public Nullable<int> UserId { get; set; }
-        public string Photograph { get; set; }
-        public string SSCMarkSheet { get; set; }
-        public string HSSCMarkSheet { get; set; }
-        public string CNIC { get; set; }
-        public Nullable<int> IsCompleted { get; set; }
-        public string AdmitCard { get; set; }
+        public Nullable<System.DateTime> TestDate { get; set; }
+        public string Shift { get; set; }
+        public string Venue { get; set; }
+        public string HUTOPSIdsFile { get; set; }
+        public string CreatedBy { get; set; }
+        public Nullable<System.DateTime> CreatedOn { get; set; }
+        public Nullable<byte> IsStatusEmailSent { get; set; }
+        public Nullable<System.DateTime> EmailSentOn { get; set; }
+        public Nullable<byte> Status { get; set; }
     }
 }

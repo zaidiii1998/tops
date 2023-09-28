@@ -15,6 +15,21 @@
           <Property Name="Duration" Type="varchar" MaxLength="50" />
           <Property Name="CreatedDatetime" Type="datetime2" Precision="7" />
         </EntityType>
+        <EntityType Name="BatchUploads">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TestDate" Type="date" />
+          <Property Name="Shift" Type="varchar" MaxLength="50" />
+          <Property Name="Venue" Type="varchar" MaxLength="50" />
+          <Property Name="HUTOPSIdsFile" Type="varchar" MaxLength="100" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="50" />
+          <Property Name="CreatedOn" Type="datetime2" Precision="7" StoreGeneratedPattern="Computed" />
+          <Property Name="IsStatusEmailSent" Type="tinyint" />
+          <Property Name="EmailSentOn" Type="datetime2" Precision="7" />
+          <Property Name="Status" Type="tinyint" StoreGeneratedPattern="Computed" />
+        </EntityType>
         <EntityType Name="Board">
           <Key>
             <PropertyRef Name="Id" />
@@ -57,6 +72,7 @@
           <Property Name="SSCMarkSheet" Type="varchar" MaxLength="100" />
           <Property Name="HSSCMarkSheet" Type="varchar" MaxLength="100" />
           <Property Name="CNIC" Type="varchar" MaxLength="100" />
+          <Property Name="AdmitCard" Type="varchar" MaxLength="100" />
           <Property Name="IsCompleted" Type="int" />
         </EntityType>
         <EntityType Name="Educational">
@@ -186,6 +202,10 @@
           <Property Name="Declaration" Type="int" StoreGeneratedPattern="Computed" />
           <Property Name="IsCompleted" Type="int" StoreGeneratedPattern="Computed" />
           <Property Name="UserType" Type="int" StoreGeneratedPattern="Computed" />
+          <Property Name="IsAdmitCardGenerated" Type="tinyint" />
+          <Property Name="AdmitCardGeneratedOn" Type="datetime2" Precision="7" />
+          <Property Name="IsAdmitCardSent" Type="tinyint" />
+          <Property Name="AdmitCardSentOn" Type="datetime2" Precision="7" />
         </EntityType>
         <EntityType Name="State">
           <Key>
@@ -493,6 +513,7 @@ warning 6002: The table/view 'HUTOPS.sys.database_firewall_rules' does not have 
         </Function>
         <EntityContainer Name="HUTOPSModelStoreContainer">
           <EntitySet Name="Activity" EntityType="Self.Activity" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BatchUploads" EntityType="Self.BatchUploads" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Board" EntityType="Self.Board" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BoardGroups" EntityType="Self.BoardGroups" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="City" EntityType="Self.City" Schema="dbo" store:Type="Tables" />
@@ -574,6 +595,7 @@ warning 6002: The table/view 'HUTOPS.sys.database_firewall_rules' does not have 
           <Property Name="HSSCMarkSheet" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="CNIC" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="IsCompleted" Type="Int32" />
+          <Property Name="AdmitCard" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Educational">
           <Key>
@@ -681,6 +703,10 @@ warning 6002: The table/view 'HUTOPS.sys.database_firewall_rules' does not have 
           <Property Name="Declaration" Type="Int32" annotation:StoreGeneratedPattern="Computed" />
           <Property Name="IsCompleted" Type="Int32" annotation:StoreGeneratedPattern="Computed" />
           <Property Name="UserType" Type="Int32" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="IsAdmitCardGenerated" Type="Byte" />
+          <Property Name="AdmitCardGeneratedOn" Type="DateTime" Precision="7" />
+          <Property Name="IsAdmitCardSent" Type="Byte" />
+          <Property Name="AdmitCardSentOn" Type="DateTime" Precision="7" />
         </EntityType>
         <EntityType Name="State">
           <Key>
@@ -979,6 +1005,7 @@ warning 6002: The table/view 'HUTOPS.sys.database_firewall_rules' does not have 
             <Parameter Name="SubjectObtain" Mode="In" Type="String" />
           </FunctionImport>
           <EntitySet Name="TestDates" EntityType="HUTOPSModel.TestDate" />
+          <EntitySet Name="BatchUploads" EntityType="HUTOPSModel.BatchUpload" />
         </EntityContainer>
         <ComplexType Name="WEB_UserLogin_Result">
           <Property Type="Int32" Name="Response" Nullable="false" />
@@ -1188,6 +1215,21 @@ warning 6002: The table/view 'HUTOPS.sys.database_firewall_rules' does not have 
           <Property Name="DeadlineDate" Type="DateTime" Precision="7" />
           <Property Name="AdmissionSession" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="BatchUpload">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TestDate" Type="DateTime" Precision="0" />
+          <Property Name="Shift" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Venue" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="HUTOPSIdsFile" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedOn" Type="DateTime" Precision="7" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="IsStatusEmailSent" Type="Byte" />
+          <Property Name="EmailSentOn" Type="DateTime" Precision="7" />
+          <Property Name="Status" Type="Byte" annotation:StoreGeneratedPattern="Computed" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1244,6 +1286,7 @@ warning 6002: The table/view 'HUTOPS.sys.database_firewall_rules' does not have 
           <EntitySetMapping Name="Documents">
             <EntityTypeMapping TypeName="HUTOPSModel.Document">
               <MappingFragment StoreEntitySet="Documents">
+                <ScalarProperty Name="AdmitCard" ColumnName="AdmitCard" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="Photograph" ColumnName="Photograph" />
@@ -1301,6 +1344,10 @@ warning 6002: The table/view 'HUTOPS.sys.database_firewall_rules' does not have 
           <EntitySetMapping Name="PersonalInformations">
             <EntityTypeMapping TypeName="HUTOPSModel.PersonalInformation">
               <MappingFragment StoreEntitySet="PersonalInformation">
+                <ScalarProperty Name="AdmitCardSentOn" ColumnName="AdmitCardSentOn" />
+                <ScalarProperty Name="IsAdmitCardSent" ColumnName="IsAdmitCardSent" />
+                <ScalarProperty Name="AdmitCardGeneratedOn" ColumnName="AdmitCardGeneratedOn" />
+                <ScalarProperty Name="IsAdmitCardGenerated" ColumnName="IsAdmitCardGenerated" />
                 <ScalarProperty Name="UserType" ColumnName="UserType" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="HUTopId" ColumnName="HUTopId" />
@@ -1636,6 +1683,22 @@ warning 6002: The table/view 'HUTOPS.sys.database_firewall_rules' does not have 
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="Text" ColumnName="Text" />
                 <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BatchUploads">
+            <EntityTypeMapping TypeName="HUTOPSModel.BatchUpload">
+              <MappingFragment StoreEntitySet="BatchUploads">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="EmailSentOn" ColumnName="EmailSentOn" />
+                <ScalarProperty Name="IsStatusEmailSent" ColumnName="IsStatusEmailSent" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="HUTOPSIdsFile" ColumnName="HUTOPSIdsFile" />
+                <ScalarProperty Name="Venue" ColumnName="Venue" />
+                <ScalarProperty Name="Shift" ColumnName="Shift" />
+                <ScalarProperty Name="TestDate" ColumnName="TestDate" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

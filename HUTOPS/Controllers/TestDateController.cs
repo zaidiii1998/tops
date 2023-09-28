@@ -10,6 +10,7 @@ using System.Xml.Linq;
 
 namespace HUTOPS.Controllers
 {
+    [SessionValidatorActionFilter]
     public class TestDateController : Controller
     {
         // GET: TestDate

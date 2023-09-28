@@ -1,0 +1,91 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutAdminPanal.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-lg-12">
+            <div class="boxWraper">
+                <div class="headBox">
+                    <h2>Manage Admit Card</h2>
+                    <div class="btnWraper">
+                        <div class="row">
+                            <div class="col-lg-12">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <form id="modalForm" enctype="multipart/form-data">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <label>Test Date:</label>
+                                        <input class="form-control" type="date" id="testDate" required />
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <label>Shift:</label>
+                                        <select class="form-control" id="comboShift" required>
+                                            <option>Select Shift</option>
+                                            <option value="1">First</option>
+                                            <option value="2">Second</option>
+                                            <option value="3">Third</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <label>Vanue: </label><br />
+                                        <input type="radio" name="vanue" id="radioKarachi" value="Karachi" />
+                                        <label for="radioKarachi"> Karachi </label>
+                                        <input type="radio" name="vanue" id="radioIslamabad" value="Islamabad" />
+                                        <label for="radioIslamabad">Islamabad</label>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <label>HUTOPS Ids File:</label>
+                                        <input class="form-control" type="file" id="HUTOPSIdsFile" required />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <button type="button" class="savebtn global-btn-purple  float-right" onclick="SubmitAdmitCardBatch()">Generate Admit Cards</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    function SubmitAdmitCardBatch() {
+        var data = new FormData();
+        data.append("HUTOPSIdsFile", jQuery("#HUTOPSIdsFile").get(0).files[0]);
+        data.append("TestDate", $('#testDate').val());
+        data.append("Shift", $('#comboShift').val());
+        data.append("Vanue", $("input[name='vanue']:checked").val());
+
+        CallFileAsyncService("/AdmitCard/Submit", data, SubmitAdmitCardBatchCB);
+        function SubmitAdmitCardBatchCB(response) {
+            if (response.status) {
+                ShowDivSuccess(response.message);
+            } else {
+                ShowDivError(response.message);
+            }
+        }
+
+    }
+</script>

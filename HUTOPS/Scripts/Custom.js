@@ -1193,23 +1193,6 @@ function submitDeclaration() {
         $(".SubjectObtain").each(function () {
             SubjectObtain.push($(this).val());
         });
-        var param = {
-            // Personal Info
-            PersonalInfo: personalInfo,
-            Education: education,
-            Document: document,
-
-            //Photograph: $('#Photograph').file(),
-            //CNIC: $('#CNIC').file(),
-            //SSCMarkSheet: $('#SSCMarkSheet').file(),
-            //HSSCMarkSheet: $('#HSSCMarkSheet').file(),
-
-
-            SubjectName: SubjectName,
-            SubjectObtain: SubjectObtain
-            
-        }
-
         var data = new FormData();
         data.append("Photograph", jQuery("#Photograph").get(0).files[0]);
         data.append("CNIC", jQuery("#CNIC").get(0).files[0]);
@@ -1461,4 +1444,97 @@ function AddNewEmailTemplate() {
     $('#btnAddNewEmail').prop('disabled', true);
     $('#btnAddNewEmail').css("background-color", "#6c757d");
     $('#btnAddNewEmail').unbind("mouseenter mouseleave");
+}
+
+
+// Test Date Section
+
+
+function LoadTestDateDatatable() {
+    var mainTable = $('#main-datatables').DataTable({
+        dom: 'lrtip',
+        "processing": true,
+        "serverSide": false,
+        "pagingType": "full_numbers",
+        "paging": true,
+        "lengthMenu": [10, 25, 50, 75],
+        "ordering": false,
+        "language": {
+            "processing": "<image src='/Content/images/preloader.gif' />"
+        },
+        "columnDefs": [
+            {
+                "targets": "_all",
+                "className": "dt-center",
+                "orderable": true
+            },
+            {
+                "targets": [0],
+                "visible": false,
+                "searchable": false
+            }
+        ]
+
+    });
+
+    // Edit Transaction
+    $('#main-datatables tbody').on('click', '#btnEdit', function () {
+        debugger
+        var data = mainTable.row($(this).parents('tr')).data();
+        var modal = $('#modal');
+        console.log(data[3]);
+        modal.on('show.bs.modal', function () {
+            $('#txtId').val(data[0]);
+            LoadDate(data[1], 'dateValue');
+            $('#txtText').val(data[2]);
+            $('#comboAdmissionSession').val(data[5]);
+            LoadDate(data[4], 'dateDeadline')
+            if (data[3] == '1') {
+                $('#checkVisibility').prop('checked', true);
+            } else { $('#checkVisibility').prop('checked', false); }
+
+
+        });
+
+        modal.modal({ show: true })
+
+    });
+}
+
+function ShowModal() {
+    var modal = $('#modal');
+    modal.on('show.bs.modal', function () {
+        $('#txtId').val('');
+        $('#dateValue').val('');
+        $('#txtText').val('');
+        $('#comboAdmissionSession').val(null);
+        $('#dateDeadline').val('');
+        $('#checkVisibility').prop('checked', false);
+
+
+    });
+    modal.modal({ show: true })
+}
+
+function AddUpdateTestDate() {
+    var visible = '0';
+    if ($('#checkVisibility').prop('checked', true)) {
+        visible = '1';
+    }
+    var param = {
+        Id: $('#txtId').val(),
+        Value: $('#dateValue').val(),
+        Text: $('#txtText').val(),
+        AdmissionSession: $('#comboAdmissionSession').val(),
+        DeadlineDate: $('#dateDeadline').val(),
+        Visibility: visible
+    }
+    CallAsyncService("/TestDate/Submit", JSON.stringify(param), AddUpdateTestDateCB);
+    function AddUpdateTestDateCB(response) {
+        if (response.status) {
+            ShowDivSuccess(response.message);
+        } else {
+            ShowDivError(response.message);
+        }
+    }
 }

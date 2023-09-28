@@ -56,6 +56,9 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="ExcelDataReader, Version=3.6.0.0, Culture=neutral, PublicKeyToken=93517dbe6a4012fa, processorArchitecture=MSIL">
+      <HintPath>..\packages\ExcelDataReader.3.6.0\lib\net45\ExcelDataReader.dll</HintPath>
+    </Reference>
     <Reference Include="HUCryptography, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>App_Data\HUCryptography.dll</HintPath>
@@ -64,6 +67,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
@@ -140,6 +144,9 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="BatchUpload.cs">
+      <DependentUpon>HUTOPS_Server.tt</DependentUpon>
+    </Compile>
     <Compile Include="Board.cs">
       <DependentUpon>HUTOPS_Server.tt</DependentUpon>
     </Compile>
@@ -150,6 +157,7 @@
       <DependentUpon>HUTOPS_Server.tt</DependentUpon>
     </Compile>
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AdmitCardController.cs" />
     <Compile Include="Controllers\ApplicationController.cs" />
     <Compile Include="Controllers\CommonController.cs" />
     <Compile Include="Controllers\EmailController.cs" />
@@ -221,6 +229,7 @@
       <DependentUpon>HUTOPS_Server.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Admin.cs" />
+    <Compile Include="Models\AdmitCard.cs" />
     <Compile Include="Models\ApplicationModel.cs" />
     <Compile Include="Models\DataTableRequest.cs" />
     <Compile Include="Models\PersonalInfoPageModel.cs" />
@@ -281,6 +290,7 @@
   <ItemGroup>
     <Content Include="App_Data\CPD.Framework.Core.dll" />
     <Content Include="App_Data\HUCryptography.dll" />
+    <Content Include="App_Data\HU_HTML_TO_PDF.dll" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-grid.rtl.css" />
@@ -608,6 +618,7 @@
     <Content Include="Views\Application\Success.cshtml" />
     <Content Include="Views\Application\View.cshtml" />
     <Content Include="Views\TestDate\Index.cshtml" />
+    <Content Include="Views\AdmitCard\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Common\" />
