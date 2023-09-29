@@ -218,14 +218,14 @@ namespace HUTOPS.Helper
             {
                 errors.Add("Alternate Cell Phone Number is Invalid");
             }
-            if (!string.IsNullOrEmpty(personalInfo.GuardianCellPhoneNumber) && !Helper.Utility.IsValidPhoneNumber(personalInfo.GuardianCellPhoneNumber))
-            {
-                errors.Add("Guardian Cell Phone Number is Invalid");
-            }
-            if (string.IsNullOrEmpty(personalInfo.GuardianCellPhoneNumber))
-            {
-                errors.Add("Phone Number is Required");
-            }
+            //if (!string.IsNullOrEmpty(personalInfo.GuardianCellPhoneNumber) && !Helper.Utility.IsValidPhoneNumber(personalInfo.GuardianCellPhoneNumber))
+            //{
+            //    errors.Add("Guardian Cell Phone Number is Invalid");
+            //}
+            //if (string.IsNullOrEmpty(personalInfo.GuardianCellPhoneNumber))
+            //{
+            //    errors.Add("Phone Number is Required");
+            //}
             if (string.IsNullOrEmpty(personalInfo.HomePhoneNumber))
             {
                 errors.Add("Phone Number is Required");
@@ -237,6 +237,22 @@ namespace HUTOPS.Helper
             if (personalInfo.HearAboutHU == "Other" && string.IsNullOrEmpty(personalInfo.HearAboutHUOther))
             {
                 errors.Add("Hear About HU Other Value is required");
+            }
+            if (string.IsNullOrEmpty(personalInfo.ResidentialAddress))
+            {
+                errors.Add("Residential Address Field is required");
+            }
+            if (string.IsNullOrEmpty(personalInfo.ResidentialCountry))
+            {
+                errors.Add("Residential Country Field is required");
+            }
+            if (string.IsNullOrEmpty(personalInfo.ResidentialProvince))
+            {
+                errors.Add("Residential Province Field is required");
+            }
+            if (string.IsNullOrEmpty(personalInfo.ResidentialCity))
+            {
+                errors.Add("Residential City Field is required");
             }
 
             return errors;

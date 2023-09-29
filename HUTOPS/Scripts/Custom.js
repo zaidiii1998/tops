@@ -40,7 +40,6 @@
             
 
     });
-    tinymce.activeEditor.setContent('');
 
 });
 
@@ -63,11 +62,6 @@ $("#expandSideBarBtn").click(function () {
 });
 
 
-//$("#expandSideBarBtn, #sidebarDashboard").on("click hover", function () {
-//    $("#sidebarDashboard").toggleClass("expandedSidebar");
-//    $("#contentWrapperDashboard").toggleClass("contentWrapAdon");
-//    $(".adminDashboard").toggleClass("sidexpendBody");
-//});
 
 function increaseProgressBarWidth() {
     var percent = 0;
@@ -405,7 +399,12 @@ function updateCities(comboProvinceId, ComboCityId) {
         $('#' + ComboCityId).html('');
         $('#' + ComboCityId).append(new Option("Select City", "", false, false));
         $.each(response, function (key, value) {
-            $('#' + ComboCityId).append(new Option(value.Name, value.Id, false, false));
+
+            if (value.Name == "Karachi") {
+                $('#' + ComboCityId).append(new Option(value.Name, value.Id, true, true));
+            } else {
+                $('#' + ComboCityId).append(new Option(value.Name, value.Id, false, false));
+            }
         })
         $('#' + ComboCityId).append(new Option("Other", "other", false, false));
 
@@ -494,6 +493,19 @@ function LoadDate(stringDate, DateId) {
     var date = new Date(stringDate);
     var newDate = date.getFullYear() + '-' + (date.getMonth() + 1).toString().padStart(2, '0') + '-' + date.getDate().toString().padStart(2, '0');
     $('#' + DateId).val(newDate);
+    debugger
+    // For Load Combos For Day Month Year
+    if (stringDate != "") {
+        var day = date.getDate().toString().padStart(2, '0');
+        var month = (date.getMonth() + 1).toString().padStart(2, '0');
+        var year = date.getFullYear();
+        $('#dobDay').val(day.toString());
+        $('#dobDay').trigger('change');
+        $('#dobMonth').val(month.toString());
+        $('#dobMonth').trigger('change');
+        $('#dobYear').val(year.toString());
+        $('#dobYear').trigger('change');
+    }
 }
 
 function validatePersonalInfoForm() {
@@ -557,6 +569,9 @@ function LoadEducationalData(Model) {
     $('#completionYear').trigger('change');
 
     
+    
+    
+    
 
     var program = Model.Education.IntendedProgram.toString();
     if (Model.Education.HUSchoolName.toString() === 'SE') {
@@ -585,14 +600,22 @@ function LoadYear(selectId) {
     var comboYear = document.getElementById(selectId);
     var option = document.createElement("option");
     option.value = "";
-    option.text = "Select Year";
+    option.text = "Year";
+    option.selected = true;
     comboYear.appendChild(option);
+    if (selectId == "completionYear") {
+        var option = document.createElement("option");
+        option.value = "2024";
+        option.text = "2024";
+        comboYear.appendChild(option);
+    }
     for (var j = 2023; j > 1950; j--) {
         var option = document.createElement("option");
         option.value = j;
         option.text = j;
         comboYear.appendChild(option);
     }
+    
 }
 
 function GetBoardList() {
@@ -605,6 +628,185 @@ function GetBoardListCallback(response) {
         $('#boardOfEducation').append(new Option(value.Name, value.Id, false, false));
 
     })
+}
+
+function GetGroupListFromObj(BoardId) {
+    const selectBox = document.getElementById('groupOfStudy');
+    selectBox.innerHTML = ''; // Clear previous options
+    debugger
+
+    if (BoardId === '1') {
+        const groups = ['Pre-Medical', 'Pre-Engineering', 'Computer Science/General Science', 'Commerce', 'Arts/Humanities/Home Economics'];
+        const defaultOption = document.createElement('option');
+        defaultOption.text = 'Select Group';
+        defaultOption.value = "";
+        selectBox.add(defaultOption);
+        groups.forEach(groups => {
+            const option = document.createElement('option');
+            option.value = groups;
+            option.text = groups;
+            selectBox.add(option);
+        });
+    } else if (BoardId === '2') {
+        const groups = ['Pre-Medical', 'Pre-Engineering', 'Computer Science/General Science', 'Commerce', 'Arts/Humanities/Home Economics'];
+        const defaultOption = document.createElement('option');
+        defaultOption.text = 'Select Group';
+        defaultOption.value = "";
+        selectBox.add(defaultOption);
+        groups.forEach(groups => {
+            const option = document.createElement('option');
+            option.value = groups;
+            option.text = groups;
+            selectBox.add(option);
+        });
+    } else if (BoardId === '3') {
+        const groups = ['Pre-Medical', 'Pre-Engineering', 'Commerce', 'Arts/Humanities/Home Economics'];
+        const defaultOption = document.createElement('option');
+        defaultOption.text = 'Select Group';
+        defaultOption.value = "";
+        selectBox.add(defaultOption);
+        groups.forEach(groups => {
+            const option = document.createElement('option');
+            option.value = groups;
+            option.text = groups;
+            selectBox.add(option);
+        });
+
+    } else {
+        const defaultOption = document.createElement('option');
+        defaultOption.text = 'Select Group';
+        selectBox.add(defaultOption);
+    }
+}
+function GetSubjects(GroupName) {
+    $('#divSubjects').html('');
+    
+
+    if (GroupName === 'Pre-Medical') {
+        const subjects = ['Physics', 'Chemistry', 'Biology'];
+
+        subjects.forEach(subject => {
+            var newRow = document.createElement("div");
+            newRow.className = "row";
+
+            var newCol = document.createElement("div");
+            newCol.className = "col-lg-3";
+            var newcontrol = document.createElement("div");
+            newcontrol.className = "form-group";
+
+            var input = document.createElement("input");
+            input.className = "form-control";
+            input.type = "text";
+            input.classList.add("SubjectName");
+            input.value = subject;
+
+            newcontrol.appendChild(input);
+            newCol.appendChild(newcontrol);
+            newRow.appendChild(newCol);
+
+            $('#divSubjects').append(newRow);
+        });
+    }
+    else if (GroupName === 'Pre-Engineering') {
+        const subjects = ['Physics', 'Chemistry', 'Mathematics'];
+
+        subjects.forEach(subject => {
+            var newRow = document.createElement("div");
+            newRow.className = "row";
+
+            var newCol = document.createElement("div");
+            newCol.className = "col-lg-3";
+            var newcontrol = document.createElement("div");
+            newcontrol.className = "form-group";
+
+            var input = document.createElement("input");
+            input.className = "form-control";
+            input.type = "text";
+            input.classList.add("SubjectName");
+            input.value = subject;
+
+            newcontrol.appendChild(input);
+            newCol.appendChild(newcontrol);
+            newRow.appendChild(newCol);
+
+            $('#divSubjects').append(newRow);
+        });
+    }
+    else if (GroupName === 'Computer Science/General Science') {
+        const subjects = ['Physics', 'Chemistry', 'Computer Science/Computer Studies'];
+
+        subjects.forEach(subject => {
+            var newRow = document.createElement("div");
+            newRow.className = "row";
+
+            var newCol = document.createElement("div");
+            newCol.className = "col-lg-3";
+            var newcontrol = document.createElement("div");
+            newcontrol.className = "form-group";
+
+            var input = document.createElement("input");
+            input.className = "form-control";
+            input.type = "text";
+            input.classList.add("SubjectName");
+            input.value = subject;
+
+            newcontrol.appendChild(input);
+            newCol.appendChild(newcontrol);
+            newRow.appendChild(newCol);
+
+            $('#divSubjects').append(newRow);
+        });
+    }
+    else if (GroupName === 'Commerce') {
+        const subjects = ['', '', '', ''];
+
+        subjects.forEach(subject => {
+            var newRow = document.createElement("div");
+            newRow.className = "row";
+
+            var newCol = document.createElement("div");
+            newCol.className = "col-lg-3";
+            var newcontrol = document.createElement("div");
+            newcontrol.className = "form-group";
+
+            var input = document.createElement("input");
+            input.className = "form-control";
+            input.type = "text";
+            input.classList.add("SubjectName");
+            input.value = subject;
+
+            newcontrol.appendChild(input);
+            newCol.appendChild(newcontrol);
+            newRow.appendChild(newCol);
+
+            $('#divSubjects').append(newRow);
+        });
+    }
+    else if (GroupName === 'Arts/Humanities/Home Economics') {
+        const subjects = ['', '', '', ''];
+
+        subjects.forEach(subject => {
+            var newRow = document.createElement("div");
+            newRow.className = "row";
+
+            var newCol = document.createElement("div");
+            newCol.className = "col-lg-3";
+            var newcontrol = document.createElement("div");
+            newcontrol.className = "form-group";
+
+            var input = document.createElement("input");
+            input.className = "form-control";
+            input.type = "text";
+            input.classList.add("SubjectName");
+            input.value = subject;
+
+            newcontrol.appendChild(input);
+            newCol.appendChild(newcontrol);
+            newRow.appendChild(newCol);
+
+            $('#divSubjects').append(newRow);
+        });
+    }
 }
 
 function GetGroupList(BoardId) {
@@ -661,27 +863,21 @@ function AddRow() {
     var newRow = document.createElement("div");
     newRow.className = "row";
 
-    for (let i = 1; i <= 2; i++) {
-        var newCol = document.createElement("div");
-        newCol.className = "col-lg-3";
-        var newcontrol = document.createElement("div");
-        newcontrol.className = "form-group";
+    var newCol = document.createElement("div");
+    newCol.className = "col-lg-3";
+    var newcontrol = document.createElement("div");
+    newcontrol.className = "form-group";
 
-        var input = document.createElement("input");
+    var input = document.createElement("input");
         
-        input.className = "form-control";
-        if (i === 1) {
-            input.type = "text";
-            input.classList.add("SubjectName");
-        } else {
-            input.type = "number";
-            input.classList.add("SubjectObtain");
-        } 
-        newcontrol.appendChild(input);
-        newCol.appendChild(newcontrol);
-        newRow.appendChild(newCol);
-    }
-
+    input.className = "form-control";
+        input.type = "text";
+        input.classList.add("SubjectName");
+        
+    newcontrol.appendChild(input);
+    newCol.appendChild(newcontrol);
+    newRow.appendChild(newCol);
+    
     $('#divSubjects').append(newRow);
 }
 function loadPrograms(radioValue) {
@@ -719,6 +915,21 @@ function loadPrograms(radioValue) {
     }
 }
 
+function ValidateProgram(ProgramValue) {
+    if (ProgramValue == "BS Electrical Engineering" && $('#groupOfStudy').val() != "Pre-Engineering") {
+        $('#errDegreeProgram').html("Students who have Studied Physics, chemistry, Mathematics in HSSC can only apply for Habib University's BS Electrical Engineering degree program.");
+        return false;
+    } else if (ProgramValue == "BS Computer Science" && $('#groupOfStudy').val() != "Pre-Engineering") {
+        $('#errDegreeProgram').html("Students who have Studied Physics, chemistry, Mathematics in HSSC can only apply for Habib University's BS Computer Science degree program.");
+        return false;
+    } else if (ProgramValue == "BS Computer Engineering" && $('#groupOfStudy').val() != "Pre-Engineering") {
+        $('#errDegreeProgram').html("Students who have Studied Physics, chemistry, Mathematics in HSSC can only apply for Habib University's BS Computer Engineering degree program.");
+        return false;
+    } else {
+        $('#errDegreeProgram').html('');
+        return true;
+    }
+}
 function SaveEducation() {
     var SubjectName = [];
     var SubjectObtain = [];
@@ -823,7 +1034,7 @@ function SubmitEducation() {
         $('#errHUSchool').html("");
     }
 
-    if (isValid)
+    if (isValid && ValidateProgram($('#degreeProgram').val()))
         {
         //var SubjectName = [];
         //var SubjectObtain = [];
@@ -1111,8 +1322,15 @@ function submitDeclaration() {
     var check1 = $('#validateLaw').is(':checked');
     var check2 = $('#invalidInfo').is(':checked');
     var check3 = $('#validInfo').is(':checked');
-    if (check1 == true && check2 == true && check3 == true && isValid == true) {
+    var isProgramValid = ValidateProgram($('#degreeProgram').val());
+    debugger
+    if (check1 == true && check2 == true && check3 == true && isValid == true && isProgramValid == true) {
         increaseProgressBarWidth();
+        const day = $('#dobDay').val();
+        const month = $('#dobMonth').val();
+        const year = $('#dobYear').val();
+        // Create a new Date object using the selected values
+        var dob = `${year}-${month}-${day}`;
         var personalInfo = {
             'PersonalInfo.Id': $('#id').val(),
             'PersonalInfo.firstName': $('#firstName').val(),
@@ -1126,7 +1344,7 @@ function submitDeclaration() {
             'PersonalInfo.alterEmailAddress': $('#altEmail').val(),
             'PersonalInfo.gender': $("#gender").val(),
             'PersonalInfo.husbandName': $('#husbandName').val(),
-            'PersonalInfo.dateofBirth': $('#dob').val(),
+            'PersonalInfo.dateOfBirth': dob,
             // Contact Info
             'PersonalInfo.cellPhoneNumber': $('#cellPhone').val(),
             'PersonalInfo.whatsAppNumber': $('#whatsappNumber').val(),
@@ -1474,6 +1692,8 @@ function LoadTestDateDatatable() {
                 "searchable": false
             }
         ]
+        
+        
 
     });
 
@@ -1518,7 +1738,7 @@ function ShowModal() {
 
 function AddUpdateTestDate() {
     var visible = '0';
-    if ($('#checkVisibility').prop('checked', true)) {
+    if ($('#checkVisibility').prop('checked') == true) {
         visible = '1';
     }
     var param = {
@@ -1531,6 +1751,7 @@ function AddUpdateTestDate() {
     }
     CallAsyncService("/TestDate/Submit", JSON.stringify(param), AddUpdateTestDateCB);
     function AddUpdateTestDateCB(response) {
+        $('#modal').modal('hide');
         if (response.status) {
             ShowDivSuccess(response.message);
         } else {

@@ -79,7 +79,7 @@
                                 <div class="row">
                                     <div class="col-lg-4">
                                         <div class="form-group">
-                                            <label for="cnic">CNIC:</label>
+                                            <label for="cnic">CNIC / B-Form Number:</label>
                                             <input class="form-control cnic" type="text" id="cnic" name="CNIC" placeholder="12345-1234567-1" value="@Model.PersonalInfo.CNIC" maxlength="15" onchange="checkCNIC(this.id);" required>
                                             <span class="text-danger" id="cnicError"></span>
                                         </div>
@@ -141,7 +141,62 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="dob">Date of Birth:</label>
-                                            <input type="date" class="form-control" id="dob" name="DateOfBirth" required />
+                                            @*<input type="date" class="form-control" id="dob" name="DateOfBirth" required />*@
+                                            <div class="col-lg-12 d-flex m-0 p-0">
+                                                <select class="form-control mr-2" id="dobDay" style="max-width: 100px;" name="dobDay" required>
+                                                    <option value="" selected>Day</option>
+                                                    <option value="01">01</option>
+                                                    <option value="02">02</option>
+                                                    <option value="03">03</option>
+                                                    <option value="04">04</option>
+                                                    <option value="05">05</option>
+                                                    <option value="06">06</option>
+                                                    <option value="07">07</option>
+                                                    <option value="08">08</option>
+                                                    <option value="09">09</option>
+                                                    <option value="10">10</option>
+                                                    <option value="11">11</option>
+                                                    <option value="12">12</option>
+                                                    <option value="13">13</option>
+                                                    <option value="14">14</option>
+                                                    <option value="15">15</option>
+                                                    <option value="16">16</option>
+                                                    <option value="17">17</option>
+                                                    <option value="18">18</option>
+                                                    <option value="19">19</option>
+                                                    <option value="20">20</option>
+                                                    <option value="21">21</option>
+                                                    <option value="22">22</option>
+                                                    <option value="23">23</option>
+                                                    <option value="24">24</option>
+                                                    <option value="25">25</option>
+                                                    <option value="26">26</option>
+                                                    <option value="27">27</option>
+                                                    <option value="28">28</option>
+                                                    <option value="29">29</option>
+                                                    <option value="30">30</option>
+                                                    <option value="31">31</option>
+                                                </select>
+                                                <select class="form-control mr-2" id="dobMonth" style="max-width: 100px;" name="dobMonth" required>
+                                                    <option value="" selected>Month</option>
+                                                    <option value="01">January</option>
+                                                    <option value="02">February</option>
+                                                    <option value="03">March</option>
+                                                    <option value="04">April</option>
+                                                    <option value="05">May</option>
+                                                    <option value="06">June</option>
+                                                    <option value="07">July</option>
+                                                    <option value="08">Augest</option>
+                                                    <option value="09">September</option>
+                                                    <option value="10">Octuber</option>
+                                                    <option value="11">November</option>
+                                                    <option value="12">December</option>
+                                                </select>
+                                                <select class="form-control mr-2" id="dobYear" style="max-width: 100px;" name="dobYear" required >
+                                                    <!-- Add options for years as needed -->
+                                                </select>
+
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -175,7 +230,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-4" hidden>
                                         <div class="form-group">
                                             <label for="altCellPhone">Alternate Cell Phone Number:</label>
                                             <input class="form-control number" type="tel" id="altCellPhone" value="@Model.PersonalInfo.AlternateCellPhoneNumber" name="AlternateCellPhoneNumber" maxlength="15" placeholder="0333-3333333">
@@ -187,21 +242,21 @@
                                             <input class="form-control" type="tel" id="homePhone" value="@Model.PersonalInfo.HomePhoneNumber" name="HomePhoneNumber" oninput="validateNumber(this)" placeholder="1234567890" maxlength="15" required>
                                         </div>
                                     </div>
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-4" hidden>
                                         <div class="form-group">
                                             <label for="altLandline">Alternate Landline Number:</label>
                                             <input class="form-control" type="tel" id="altLandline" value="@Model.PersonalInfo.AlternateLandline" name="AlternateLandline" oninput="validateNumber(this)" maxlength="15" placeholder="1234567890">
                                         </div>
                                     </div>
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-4" hidden>
                                         <div class="form-group">
-                                            <label for="guardianCellPhone">Guardian Cell Phone Number:</label>
-                                            <input class="form-control number" type="tel" id="guardianCellPhone" value="@Model.PersonalInfo.GuardianCellPhoneNumber" name="GuardianCellPhoneNumber" maxlength="15" placeholder="1234567890" required>
+                                            <label for="guardianCellPhone">Parents/Guardian Cell Phone Number:</label>
+                                            <input class="form-control number" type="tel" id="guardianCellPhone" value="@Model.PersonalInfo.GuardianCellPhoneNumber" name="GuardianCellPhoneNumber" maxlength="15" placeholder="1234567890">
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="form-group">
-                                            <label for="guardianEmail">Guardian Email Address:</label>
+                                            <label for="guardianEmail">Parents/Guardian Email Address:</label>
                                             <input class="form-control" type="email" maxlength="35" id="guardianEmail" value="@Model.PersonalInfo.GuardianEmailAddress" name="GuardianEmailAddress" oninput="validateEmail(this.id,'errGuardianEmail')" required>
                                         </div>
                                     </div>
@@ -221,7 +276,7 @@
                                                 <option value="" selected disabled>Select Country</option>
                                                 @foreach (var item in Model.Country)
                                                 {
-                                                    if (item.Name == Model.PersonalInfo.ResidentialCountry)
+                                                    if (item.Name == Model.PersonalInfo.ResidentialCountry || item.Name == "Pakistan")
                                                     {
                                                         <option value="@item.Id" selected>@item.Name</option>
                                                     }
@@ -237,7 +292,7 @@
                                         <div class="form-group">
                                             <label for="residentialProvince">Select Province/State:</label>
                                             <select class="form-control" id="residentialProvince" onchange="updateCities(this.id,'residentialCity');" required>
-                                                <option value="" selected disabled>Select Provience</option>
+                                                <option value="" selected disabled>Select Province</option>
                                                 @foreach (var item in Model.Province)
                                                 {
                                                     if (item.Name == Model.PersonalInfo.ResidentialProvince)
@@ -281,10 +336,10 @@
                                             <input class="form-control" type="text" id="residentialCityOther" value="@Model.PersonalInfo.ResidentialCityOther" name="ResidentialCityOther"><br><br>
                                         </div>
                                     </div>
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-4" hidden>
                                         <div class="form-group">
                                             <label for="residentialPostalCode">Residential Postal Code:</label>
-                                            <input class="form-control" type="text" id="residentialPostalCode" value="@Model.PersonalInfo.ResidentialPostalCode" oninput="validateNumber(this)" name="ResidentialPostalCode" maxlength="6" required><br><br>
+                                            <input class="form-control" type="text" id="residentialPostalCode" value="@Model.PersonalInfo.ResidentialPostalCode" oninput="validateNumber(this)" name="ResidentialPostalCode" maxlength="6"><br><br>
                                         </div>
                                     </div>
                                 </div>
@@ -371,7 +426,7 @@
                                                 <input class="form-control" type="text" id="permanentCityOther" name="PermanentCityOther" value="@Model.PersonalInfo.PermanentCityOther"><br><br>
                                             </div>
                                         </div>
-                                        <div class="col-lg-4">
+                                        <div class="col-lg-4" hidden>
                                             <div class="form-group">
                                                 <label for="permanentPostalCode">Permanent Postal Code:</label>
                                                 <input class="form-control" type="text" id="permanentPostalCode" value="@Model.PersonalInfo.PermanentPostalCode" oninput="validateNumber(this)" maxlength="6" name="PermanentPostalCode">
@@ -478,38 +533,82 @@
                                     <div class="col-lg-3">
                                         <div class="form-group">
                                             <label for="boardOfEducation">Board Of Education:</label>
-                                            <select class="form-control" id="boardOfEducation" name="boardOfEducation" onchange="GetGroupList(this.value)" required>
+                                            <select class="form-control" id="boardOfEducation" name="boardOfEducation" onchange="GetGroupListFromObj(this.value);" required>
                                                 <option value="" selected>Select Board</option>
-                                                @foreach (var item in Model.Boards)
+                                                @if ("Board Of Intermediate" == Model.Education.HSSCBoardName)
                                                 {
-                                                    if (item.Id.ToString() == Model.Education.HSSCBoardId)
-                                                    {
-                                                        <option value="@item.Id" selected>@item.Name</option>
-                                                    }
-                                                    else
-                                                    {
-                                                        <option value="@item.Id">@item.Name</option>
-                                                    }
+                                                    <option value="1" selected>Board Of Intermediate</option>
                                                 }
+                                                else
+                                                {
+                                                    <option value="1">Board Of Intermediate</option>
+                                                }
+                                                @if ("Federal Board" == Model.Education.HSSCBoardName)
+                                                {
+                                                    <option value="2" selected>Federal Board</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="2">Federal Board</option>
+                                                }
+                                                @if ("Aga Khan University Examination Board" == Model.Education.HSSCBoardName)
+                                                {
+                                                    <option value="3" selected>Aga Khan University Examination Board</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="3">Aga Khan University Examination Board</option>
+                                                }
+
                                             </select>
                                         </div>
                                     </div>
                                     <div class="col-lg-3">
                                         <div class="form-group">
                                             <label for="groupOfStudy">Group Of Studies</label>
-                                            <select class="form-control" id="groupOfStudy" name="groupOfStudy" onchange="GetSubjectList(this.id)" required>
+                                            <select class="form-control" id="groupOfStudy" name="groupOfStudy" onchange="GetSubjects(this.value)" required>
                                                 <option value="">Select Group</option>
-                                                @foreach (var item in Model.Groups)
+                                                @if ("Pre-Medical" == Model.Education.HSSCGroupName)
                                                 {
-                                                    if (item.Id.ToString() == Model.Education.HSSCGroupId)
-                                                    {
-                                                        <option value="@item.Id" selected>@item.Name</option>
-                                                    }
-                                                    else
-                                                    {
-                                                        <option value="@item.Id">@item.Name</option>
-                                                    }
+                                                    <option value="Pre-Medical" selected>Pre-Medical</option>
                                                 }
+                                                else
+                                                {
+                                                    <option value="Pre-Medical">Pre-Medical</option>
+                                                }
+                                                @if ("Pre-Engineering" == Model.Education.HSSCGroupName)
+                                                {
+                                                    <option value="Pre-Engineering" selected>Pre-Engineering</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="Pre-Engineering">Pre-Engineering</option>
+                                                }
+                                                @if ("Computer Science/General Science" == Model.Education.HSSCGroupName)
+                                                {
+                                                    <option value="Computer Science/General Science" selected>Computer Science/General Science</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="Computer Science/General Science">Computer Science/General Science</option>
+                                                }
+                                                @if ("Commerce" == Model.Education.HSSCGroupName)
+                                                {
+                                                    <option value="Commerce"selected>Commerce</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="Commerce">Commerce</option>
+                                                }
+                                                @if ("Arts/Humanities/Home Economics" == Model.Education.HSSCGroupName)
+                                                {
+                                                    <option value="Arts/Humanities/Home Economics" selected>Arts/Humanities/Home Economics</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="Arts/Humanities/Home Economics">Arts/Humanities/Home Economics</option>
+                                                }
+
                                             </select>
                                         </div>
                                     </div>
@@ -597,10 +696,12 @@
                                             <label>Which Degree Program you are planning to pursue at Habib University?</label><br>
                                             <!-- This section will be updated based on the selection in the previous question -->
                                             <!-- You can use JavaScript to update the options based on the selection -->
-                                            <select class="form-control" id="degreeProgram" name="degreeProgram" required>
+                                            <select class="form-control" id="degreeProgram" name="degreeProgram" onchange="ValidateProgram(this.value);" required>
                                                 <option value="">Select Program</option>
                                             </select>
+
                                         </div>
+                                        <span class="text-danger" id="errDegreeProgram"></span>
                                     </div>
 
                                 </div>
@@ -608,17 +709,12 @@
 
                                 <section>
                                     <div class="headBox">
-                                        <h2>Subjects Information</h2>
+                                        <h2>Your Optional/Elective Subjects in HSSC:</h2>
                                     </div>
                                     <div class="row">
                                         <div class="col-lg-3">
                                             <div class="form-group">
-                                                <label>Subject</label>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-3">
-                                            <div class="form-group">
-                                                <label>Obtain Marks</label>
+                                                <label>Subject Name:</label>
                                             </div>
                                         </div>
                                     </div>
@@ -631,11 +727,6 @@
                                                         <div class="col-lg-3">
                                                             <div class="form-group">
                                                                 <input type="text" class="form-control SubjectName" value="@item.Name">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-lg-3">
-                                                            <div class="form-group">
-                                                                <input type="text" class="form-control SubjectObtain" value="@item.ObtainMarks">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -655,8 +746,6 @@
                                         <input class="savebtn global-btn-purple  float-right m-1" type="button" onclick="SubmitEducation();" value="Next">
                                     </div>
                                 </div>
-
-
                             </form>
                             <div id="Error">
                                 <ul></ul>
@@ -914,11 +1003,12 @@
 
 <script>
 
-
     $('#errorBlock').hide();
     $('#divUniName').hide();
     LoadYear('startingYear');
     LoadYear('completionYear');
+
+    LoadYear('dobYear');
     // Load Personal Informations
 
     $('#comboHearHU').val('@Model.PersonalInfo.HearAboutHU');

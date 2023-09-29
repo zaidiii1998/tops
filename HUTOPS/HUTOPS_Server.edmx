@@ -23,7 +23,7 @@
           <Property Name="TestDate" Type="date" />
           <Property Name="Shift" Type="varchar" MaxLength="50" />
           <Property Name="Venue" Type="varchar" MaxLength="50" />
-          <Property Name="HUTOPSIdsFile" Type="varchar" MaxLength="100" />
+          <Property Name="HUTOPSIdsFile" Type="varchar(max)" />
           <Property Name="CreatedBy" Type="varchar" MaxLength="50" />
           <Property Name="CreatedOn" Type="datetime2" Precision="7" StoreGeneratedPattern="Computed" />
           <Property Name="IsStatusEmailSent" Type="tinyint" />
@@ -221,7 +221,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Value" Type="varchar" MaxLength="100" />
+          <Property Name="Value" Type="date" />
           <Property Name="Text" Type="varchar" MaxLength="100" />
           <Property Name="CreatedBy" Type="varchar" MaxLength="50" />
           <Property Name="CreatedOn" Type="datetime2" Precision="7" />
@@ -1207,8 +1207,8 @@ warning 6002: The table/view 'HUTOPS.sys.database_firewall_rules' does not have 
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Value" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Text" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Value" Type="DateTime" Nullable="true" Precision="0" />
+          <Property Name="Text" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
           <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="CreatedOn" Type="DateTime" Precision="7" />
           <Property Name="Visibility" Type="Byte" />
@@ -1223,7 +1223,7 @@ warning 6002: The table/view 'HUTOPS.sys.database_firewall_rules' does not have 
           <Property Name="TestDate" Type="DateTime" Precision="0" />
           <Property Name="Shift" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Venue" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="HUTOPSIdsFile" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="HUTOPSIdsFile" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="CreatedOn" Type="DateTime" Precision="7" annotation:StoreGeneratedPattern="Computed" />
           <Property Name="IsStatusEmailSent" Type="Byte" />

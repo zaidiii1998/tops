@@ -28,10 +28,8 @@ namespace HUTOPS.Controllers
                 var UserProvince = province.Where(x => x.Name == LoginUser.ResidentialProvince).FirstOrDefault();
                 city = DB.Cities.ToList().Where(x => x.StateId == (UserProvince == null ? 0 : UserProvince.Id)).ToList();
             }
-            List<Board> Boards = DB.Boards.ToList();
-            List<BoardGroup> Groups = DB.BoardGroups.ToList();
             List<EducationalSubject> subjects = new List<EducationalSubject>();
-            List<TestDate> testDate = DB.TestDates.ToList();
+            List<TestDate> testDate = DB.TestDates.ToList().Where(x => x.Visibility == 1 && x.DeadlineDate > DateTime.Now).ToList();
             if (Education != null)
             {
                 subjects = DB.EducationalSubjects.ToList().FindAll(x => x.EducationalId == (Education == null ? 0 : Education.Id)).ToList();
@@ -49,8 +47,6 @@ namespace HUTOPS.Controllers
                 Province = province,
 
                 // Required for Education Form
-                Boards = Boards,
-                Groups = Groups,
                 Subjects = subjects,
                 // Required for TestDate
                 TestDate = testDate
@@ -125,6 +121,8 @@ namespace HUTOPS.Controllers
                                 person.HearAboutHU = applicationModel.PersonalInfo.HearAboutHU;
                                 person.HearAboutHUOther = applicationModel.PersonalInfo.HearAboutHUOther;
 
+                                person.TestDate = applicationModel.PersonalInfo.TestDate;
+
                                 DB.SaveChanges();
                             }
                             // Update Educational Information
@@ -164,8 +162,7 @@ namespace HUTOPS.Controllers
                                 DB.EducationalSubjects.Add(new EducationalSubject()
                                 {
                                     EducationalId = applicationModel.Education.Id,
-                                    Name = applicationModel.SubjectName[0].ToString().Split(',')[i],
-                                    ObtainMarks = int.Parse(applicationModel.SubjectObtain[0].ToString().Split(',')[i])
+                                    Name = applicationModel.SubjectName[0].ToString().Split(',')[i]
                                 });
                                 DB.SaveChanges();
                             }
@@ -334,8 +331,7 @@ namespace HUTOPS.Controllers
                                 DB.EducationalSubjects.Add(new EducationalSubject()
                                 {
                                     EducationalId = applicationModel.Education.Id,
-                                    Name = applicationModel.SubjectName[0].ToString().Split(',')[i],
-                                    ObtainMarks = int.Parse(applicationModel.SubjectObtain[0].ToString().Split(',')[i])
+                                    Name = applicationModel.SubjectName[0].ToString().Split(',')[i]
                                 });
                                 DB.SaveChanges();
                             }
