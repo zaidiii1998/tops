@@ -20,7 +20,7 @@ namespace HUTOPS
         public string SSCMarkSheet { get; set; }
         public string HSSCMarkSheet { get; set; }
         public string CNIC { get; set; }
-        public Nullable<int> IsCompleted { get; set; }
         public string AdmitCard { get; set; }
+        public Nullable<int> IsCompleted { get; set; }
     }
 }

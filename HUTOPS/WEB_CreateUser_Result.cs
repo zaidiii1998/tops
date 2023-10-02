@@ -11,7 +11,7 @@ namespace HUTOPS
 {
     using System;
     
-    public partial class WEB_InsertEducation_Result
+    public partial class WEB_CreateUser_Result
     {
         public int Response { get; set; }
         public string Reason { get; set; }

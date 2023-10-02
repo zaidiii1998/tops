@@ -139,22 +139,22 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Activity.cs">
-      <DependentUpon>HUTOPS_Server.tt</DependentUpon>
+      <DependentUpon>HUTOPS.tt</DependentUpon>
     </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="BatchUpload.cs">
-      <DependentUpon>HUTOPS_Server.tt</DependentUpon>
+      <DependentUpon>HUTOPS.tt</DependentUpon>
     </Compile>
     <Compile Include="Board.cs">
-      <DependentUpon>HUTOPS_Server.tt</DependentUpon>
+      <DependentUpon>HUTOPS.tt</DependentUpon>
     </Compile>
     <Compile Include="BoardGroup.cs">
-      <DependentUpon>HUTOPS_Server.tt</DependentUpon>
+      <DependentUpon>HUTOPS.tt</DependentUpon>
     </Compile>
     <Compile Include="City.cs">
-      <DependentUpon>HUTOPS_Server.tt</DependentUpon>
+      <DependentUpon>HUTOPS.tt</DependentUpon>
     </Compile>
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdmitCardController.cs" />
@@ -164,28 +164,25 @@
     <Compile Include="Controllers\StudentController.cs" />
     <Compile Include="Controllers\TestDateController.cs" />
     <Compile Include="Country.cs">
-      <DependentUpon>HUTOPS_Server.tt</DependentUpon>
-    </Compile>
-    <Compile Include="database_firewall_rules.cs">
-      <DependentUpon>HUTOPS_Server.tt</DependentUpon>
+      <DependentUpon>HUTOPS.tt</DependentUpon>
     </Compile>
     <Compile Include="Document.cs">
-      <DependentUpon>HUTOPS_Server.tt</DependentUpon>
+      <DependentUpon>HUTOPS.tt</DependentUpon>
     </Compile>
     <Compile Include="Educational.cs">
-      <DependentUpon>HUTOPS_Server.tt</DependentUpon>
+      <DependentUpon>HUTOPS.tt</DependentUpon>
     </Compile>
     <Compile Include="EducationalSubject.cs">
-      <DependentUpon>HUTOPS_Server.tt</DependentUpon>
+      <DependentUpon>HUTOPS.tt</DependentUpon>
     </Compile>
     <Compile Include="EmailTemplate.cs">
-      <DependentUpon>HUTOPS_Server.tt</DependentUpon>
+      <DependentUpon>HUTOPS.tt</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="GroupSubject.cs">
-      <DependentUpon>HUTOPS_Server.tt</DependentUpon>
+      <DependentUpon>HUTOPS.tt</DependentUpon>
     </Compile>
     <Compile Include="Helper\Constants.cs" />
     <Compile Include="Helper\Extension.cs" />
@@ -205,28 +202,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>HUTOPS.edmx</DependentUpon>
     </Compile>
-    <Compile Include="HUTOPS1.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>HUTOPS.tt</DependentUpon>
-    </Compile>
-    <Compile Include="HUTOPS_Server.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>HUTOPS_Server.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="HUTOPS_Server.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>HUTOPS_Server.tt</DependentUpon>
-    </Compile>
-    <Compile Include="HUTOPS_Server.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>HUTOPS_Server.edmx</DependentUpon>
-    </Compile>
     <Compile Include="Log.cs">
-      <DependentUpon>HUTOPS_Server.tt</DependentUpon>
+      <DependentUpon>HUTOPS.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Admin.cs" />
     <Compile Include="Models\AdmitCard.cs" />
@@ -235,38 +212,35 @@
     <Compile Include="Models\PersonalInfoPageModel.cs" />
     <Compile Include="Models\EducationPageModel.cs" />
     <Compile Include="PersonalInformation.cs">
-      <DependentUpon>HUTOPS_Server.tt</DependentUpon>
+      <DependentUpon>HUTOPS.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SP_GetStudentRecord_Result.cs">
-      <DependentUpon>HUTOPS_Server.tt</DependentUpon>
-    </Compile>
-    <Compile Include="SP_GetStudents_Result.cs">
-      <DependentUpon>HUTOPS_Server.tt</DependentUpon>
-    </Compile>
-    <Compile Include="sp_helpdiagramdefinition_Result.cs">
       <DependentUpon>HUTOPS.tt</DependentUpon>
     </Compile>
-    <Compile Include="sp_helpdiagrams_Result.cs">
+    <Compile Include="SP_GetStudents_Result.cs">
       <DependentUpon>HUTOPS.tt</DependentUpon>
     </Compile>
     <Compile Include="SP_InsertApplication_Result.cs">
-      <DependentUpon>HUTOPS_Server.tt</DependentUpon>
+      <DependentUpon>HUTOPS.tt</DependentUpon>
     </Compile>
     <Compile Include="SP_UpdateApplication_Result.cs">
-      <DependentUpon>HUTOPS_Server.tt</DependentUpon>
+      <DependentUpon>HUTOPS.tt</DependentUpon>
     </Compile>
     <Compile Include="State.cs">
-      <DependentUpon>HUTOPS_Server.tt</DependentUpon>
-    </Compile>
-    <Compile Include="sysdiagram.cs">
       <DependentUpon>HUTOPS.tt</DependentUpon>
     </Compile>
     <Compile Include="TestDate.cs">
-      <DependentUpon>HUTOPS_Server.tt</DependentUpon>
+      <DependentUpon>HUTOPS.tt</DependentUpon>
     </Compile>
     <Compile Include="Uploader.ashx.cs">
       <DependentUpon>Uploader.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="WEB_CheckPersonalInfo_Result.cs">
+      <DependentUpon>HUTOPS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="WEB_CreateUser_Result.cs">
+      <DependentUpon>HUTOPS.tt</DependentUpon>
     </Compile>
     <Compile Include="WEB_GetAll_Result.cs">
       <DependentUpon>HUTOPS.tt</DependentUpon>
@@ -280,11 +254,8 @@
     <Compile Include="WEB_GetSubjects_Result.cs">
       <DependentUpon>HUTOPS.tt</DependentUpon>
     </Compile>
-    <Compile Include="WEB_InsertEducation_Result.cs">
-      <DependentUpon>HUTOPS.tt</DependentUpon>
-    </Compile>
     <Compile Include="WEB_UserLogin_Result.cs">
-      <DependentUpon>HUTOPS_Server.tt</DependentUpon>
+      <DependentUpon>HUTOPS.tt</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -422,17 +393,7 @@
     <Content Include="HUTOPS.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>HUTOPS.edmx</DependentUpon>
-      <LastGenOutput>HUTOPS1.cs</LastGenOutput>
-    </Content>
-    <Content Include="HUTOPS_Server.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>HUTOPS_Server.edmx</DependentUpon>
-      <LastGenOutput>HUTOPS_Server.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="HUTOPS_Server.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>HUTOPS_Server.edmx</DependentUpon>
-      <LastGenOutput>HUTOPS_Server.cs</LastGenOutput>
+      <LastGenOutput>HUTOPS.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\Custom.js" />
     <Content Include="Content\Custom\HomeForm.css" />
@@ -482,13 +443,6 @@
     </EntityDeploy>
     <Content Include="HUTOPS.edmx.diagram">
       <DependentUpon>HUTOPS.edmx</DependentUpon>
-    </Content>
-    <EntityDeploy Include="HUTOPS_Server.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>HUTOPS_Server.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="HUTOPS_Server.edmx.diagram">
-      <DependentUpon>HUTOPS_Server.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\esm\popper-utils.js" />

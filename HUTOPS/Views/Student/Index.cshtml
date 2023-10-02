@@ -52,7 +52,8 @@
                     </div>
                 </div>
             </div>
-            <div class="boxWraper">
+            <div class="boxWraper" style="overflow-y:auto;">
+                <input type="text" id="txtSelectedIds" />
                 <div class="headBox">
                     <h2>All Applicants</h2>
                     <div class="btnWraper">
@@ -63,10 +64,13 @@
                         </div>
                     </div>
                 </div>
+                <input class="savebtn  float-right m-1" type="button" value="Generate Admit Card" style="height: 40px;border: 1px solid;" id="btnGenerateAdmitCard" onclick="ShowAdmitCardModal()">
+
                 @* table *@
                 <table class="ctmTable table table-responsive table-hover" id="main-datatables">
                     <thead>
                         <tr>
+                            <th><input type="checkbox" onclick="CheckAll()" /></th>
                             <th>Id</th>
                             <th>HUTOPS Id</th>
                             <th>First Name</th>
@@ -74,6 +78,10 @@
                             <th>Cell Phone Number</th>
                             <th>Email Address</th>
                             <th>CNIC/B-Form</th>
+                            <th>Admit Card Generated</th>
+                            <th>Admit Card Generated On</th>
+                            <th>Admit Card Sent</th>
+                            <th>Admit Card Sent On</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -88,8 +96,65 @@
 </div>
 <a href="@Url.Action("Index","Application")" id="redirectToStudent" target="_blank" style="display:none;"> </a>
 
+
+<div class="modal fade" id="modalAdmitCard" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Generate Admit Card</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="modalForm" enctype="multipart/form-data">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <label>Test Date:</label>
+                                        <input class="form-control" type="date" id="testDate" required />
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <label>Shift:</label>
+                                        <select class="form-control" id="comboShift" required>
+                                            <option>Select Shift</option>
+                                            <option value="1">First</option>
+                                            <option value="2">Second</option>
+                                            <option value="3">Third</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <label>Vanue: </label><br />
+                                        <input type="radio" name="vanue" id="radioKarachi" value="Karachi" />
+                                        <label for="radioKarachi"> Karachi </label>
+                                        <input type="radio" name="vanue" id="radioIslamabad" value="Islamabad" />
+                                        <label for="radioIslamabad">Islamabad</label>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="savebtn global-btn-purple  float-right" onclick="" style="margin:0;">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
     $(document).ready(function () {
+        $('#btnGenerateAdmitCard').hide();
         LoadStudentDatatable();
     })
     

@@ -44,7 +44,7 @@ namespace HUTOPS
         public string CNIC { get; set; }
         public string EmailAddress { get; set; }
         public string AlterEmailAddress { get; set; }
-        public byte[] Password { get; set; }
+        public string Password { get; set; }
         public Nullable<System.DateTime> SaveDate { get; set; }
         public Nullable<System.DateTime> UpdateDate { get; set; }
         public Nullable<int> AppStatus { get; set; }
@@ -58,10 +58,7 @@ namespace HUTOPS
         public string CurrentQualificationOther { get; set; }
         public string AlternateLandline { get; set; }
         public Nullable<int> UserId { get; set; }
-        public string ModeOfStudy { get; set; }
-        public string BoardOfEducation { get; set; }
-        public string IntendedProgram { get; set; }
-        public Nullable<System.DateTime> TestDate { get; set; }
+        public string TestDate { get; set; }
         public Nullable<System.DateTime> SubmissionDate { get; set; }
         public Nullable<int> Retake { get; set; }
         public Nullable<int> IsAppliedBefore { get; set; }
@@ -75,5 +72,11 @@ namespace HUTOPS
         public string HearAboutHUOther { get; set; }
         public Nullable<System.DateTime> CreatedDatetime { get; set; }
         public Nullable<int> Declaration { get; set; }
+        public Nullable<int> IsCompleted { get; set; }
+        public Nullable<int> UserType { get; set; }
+        public Nullable<byte> IsAdmitCardGenerated { get; set; }
+        public Nullable<System.DateTime> AdmitCardGeneratedOn { get; set; }
+        public Nullable<byte> IsAdmitCardSent { get; set; }
+        public Nullable<System.DateTime> AdmitCardSentOn { get; set; }
     }
 }

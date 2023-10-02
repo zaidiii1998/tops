@@ -73,6 +73,11 @@ namespace HUTOPS
         public Nullable<System.DateTime> CreatedDatetime { get; set; }
         public Nullable<int> Declaration { get; set; }
         public Nullable<int> IsCompleted { get; set; }
+        public Nullable<int> UserType { get; set; }
+        public Nullable<byte> IsAdmitCardGenerated { get; set; }
+        public Nullable<System.DateTime> AdmitCardGeneratedOn { get; set; }
+        public Nullable<byte> IsAdmitCardSent { get; set; }
+        public Nullable<System.DateTime> AdmitCardSentOn { get; set; }
         public Nullable<int> Count { get; set; }
     }
 }

@@ -5,9 +5,8 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.IO;
-using System.Web.Helpers;
-using System.Xml.Linq;
 using System;
+using Newtonsoft.Json;
 
 namespace HUTOPS.Controllers
 {
@@ -63,15 +62,20 @@ namespace HUTOPS.Controllers
 
                 if (Utility.GetAdminFromSession().Id != 0)
                 {
+                    Utility.AddLog(Constants.LogType.ActivityLog, $"Admin request to Update User Application Details: {JsonConvert.SerializeObject(applicationModel.PersonalInfo)} {JsonConvert.SerializeObject(applicationModel.Education)} {JsonConvert.SerializeObject(applicationModel.Document)}");
+
+
                     var userId = Utility.GetUserFromSession().Id;
                     if (userId != applicationModel.PersonalInfo.Id)
                     {
+                        Utility.AddLog(Constants.LogType.ActivityLog, $"Multi Profile Error Occured while admit Updating Applicaiton");
                         return Json(new { status = false, message = "Multi profile conflict occur while saving student record" });
                     }
                     var PersonalInformationErrors = Utility.ValidatePersonalInfo(applicationModel.PersonalInfo);
                     var EducationalError = Utility.ValidateEducation(applicationModel.Education);
                     if (PersonalInformationErrors.Count > 0 || EducationalError.Count > 0)
                     {
+                        Utility.AddLog(Constants.LogType.ActivityLog, $"Validation Failed while admit try to Update applicant record Details: {PersonalInformationErrors}{EducationalError}");
                         return Json(new { status = false, message = "Error Occured while validating your data", PersonalErrors = PersonalInformationErrors, EducationErrors = EducationalError, DocumentErrors = new List<string>() });
                     }
                     using (DbContextTransaction Transaction = DB.Database.BeginTransaction())
@@ -125,6 +129,7 @@ namespace HUTOPS.Controllers
 
                                 DB.SaveChanges();
                             }
+                            Utility.AddLog(Constants.LogType.ActivityLog, $"Personal Information Updated by {Utility.GetAdminFromSession().Name} Against Applicant: {person}");
                             // Update Educational Information
                             var education = DB.Educationals.ToList().Where(x => x.UserId == applicationModel.PersonalInfo.Id).FirstOrDefault();
                             if (education != null)
@@ -153,6 +158,8 @@ namespace HUTOPS.Controllers
 
                                 DB.SaveChanges();
                             }
+                            Utility.AddLog(Constants.LogType.ActivityLog, $"Educational Information Updated by {Utility.GetAdminFromSession().Name} Against Educational Info: {education}");
+
                             // Delete Previous Educational Subjects
                             DB.EducationalSubjects.RemoveRange(DB.EducationalSubjects.ToList().Where(x => x.EducationalId == applicationModel.Education.Id));
                             DB.SaveChanges();
@@ -166,6 +173,8 @@ namespace HUTOPS.Controllers
                                 });
                                 DB.SaveChanges();
                             }
+                            Utility.AddLog(Constants.LogType.ActivityLog, $"Remove and Insert updated Educational Subjects Updated by {Utility.GetAdminFromSession().Name} Against Educational Id: {education.Id}");
+
 
                             string uploadDirectory = HttpContext.Server.MapPath("~/UploadedFiles");
                             string UserDirectory = Path.Combine(HttpContext.Server.MapPath("~/UploadedFiles/"), applicationModel.PersonalInfo.Id.ToString());
@@ -189,6 +198,7 @@ namespace HUTOPS.Controllers
                             // Update Files and save into DB
                             if (applicationModel.CNIC != null)
                             {
+
                                 CnicPath = Path.Combine(UserDirectory, "CNIC" + Path.GetExtension(applicationModel.CNIC.FileName));
                                 
                                 applicationModel.CNIC.SaveAs(CnicPath);
@@ -196,6 +206,7 @@ namespace HUTOPS.Controllers
                                 doc.CNIC = Path.Combine(System.Configuration.ConfigurationManager.AppSettings["BaseURL"], CnicPath.Substring(CnicPath.IndexOf("Upload")));
                                 
                                 DB.SaveChanges();
+                                Utility.AddLog(Constants.LogType.ActivityLog, $"CNIC/B-Form updated by {Utility.GetAdminFromSession().Name} Against applicant {applicationModel.PersonalInfo.Id}");
                             }
                             if (applicationModel.SSCMarkSheet != null)
                             {
@@ -204,6 +215,8 @@ namespace HUTOPS.Controllers
                                 var doc = DB.Documents.ToList().Where(x => x.UserId == applicationModel.PersonalInfo.Id).FirstOrDefault();
                                 doc.SSCMarkSheet = Path.Combine(System.Configuration.ConfigurationManager.AppSettings["BaseURL"], SSCPath.Substring(SSCPath.IndexOf("Upload"))); ;
                                 DB.SaveChanges();
+                                Utility.AddLog(Constants.LogType.ActivityLog, $"SSC Mark sheet updated by {Utility.GetAdminFromSession().Name} Against applicant {applicationModel.PersonalInfo.Id}");
+
                             }
                             if (applicationModel.HSSCMarkSheet != null)
                             {
@@ -212,6 +225,8 @@ namespace HUTOPS.Controllers
                                 var doc = DB.Documents.ToList().Where(x => x.UserId == applicationModel.PersonalInfo.Id).FirstOrDefault();
                                 doc.HSSCMarkSheet = Path.Combine(System.Configuration.ConfigurationManager.AppSettings["BaseURL"], HSSCPath.Substring(HSSCPath.IndexOf("Upload"))); ;
                                 DB.SaveChanges();
+                                Utility.AddLog(Constants.LogType.ActivityLog, $"HSSC Mark sheet updated by {Utility.GetAdminFromSession().Name} Against applicant {applicationModel.PersonalInfo.Id}");
+
                             }
                             if (applicationModel.Photograph != null)
                             {
@@ -220,14 +235,19 @@ namespace HUTOPS.Controllers
                                 var doc = DB.Documents.ToList().Where(x => x.UserId == applicationModel.PersonalInfo.Id).FirstOrDefault();
                                 doc.Photograph = Path.Combine(System.Configuration.ConfigurationManager.AppSettings["BaseURL"], PhotographPath.Substring(PhotographPath.IndexOf("Upload"))); ;
                                 DB.SaveChanges();
+                                Utility.AddLog(Constants.LogType.ActivityLog, $"Photograph updated by {Utility.GetAdminFromSession().Name} Against applicant {applicationModel.PersonalInfo.Id}");
+
                             }
 
                             Transaction.Commit();
+                            Utility.AddLog(Constants.LogType.ActivityLog, $"Transaction Commited by {Utility.GetAdminFromSession().Name} Against applicant {JsonConvert.SerializeObject(applicationModel.PersonalInfo)}");
                             return Json(new { status = true, message = "Application Updated Successfully" });
                         }
                         catch (System.Exception ex)
                         {
                             Transaction.Rollback();
+                            Utility.AddLog(Constants.LogType.Exception, $"Exception Occured while Updating Application by {Utility.GetAdminFromSession().Name} Error Details: {ex.Message}");
+
                             return Json(new { status = false, message = "Form Submittion Failed " + ex.Message });
 
                         }
@@ -235,19 +255,23 @@ namespace HUTOPS.Controllers
                     }
                 }
 
+                Utility.AddLog(Constants.LogType.ActivityLog, $"Applicant request to Submit Application Details: {JsonConvert.SerializeObject(applicationModel.PersonalInfo)} {JsonConvert.SerializeObject(applicationModel.Education)} {JsonConvert.SerializeObject(applicationModel.Document)}");
 
                 var PersonalInfoErrors = Utility.ValidatePersonalInfo(applicationModel.PersonalInfo);
                 var EducationError = Utility.ValidateEducation(applicationModel.Education);
 
                 List<string> DocumentError = new List<string>();
-                if (applicationModel.SSCMarkSheet == null && applicationModel.Photograph == null)
+                if (applicationModel.SSCMarkSheet == null || applicationModel.Photograph == null)
                 {
                     DocumentError.Add("SSC Mark sheet: is required");
                     DocumentError.Add("Passport size Photograph: is required");
+                    Utility.AddLog(Constants.LogType.ActivityLog, $"Error Occured while validating Documents: SSC Mark sheet = {applicationModel.SSCMarkSheet}, Photograph = {applicationModel.Photograph} ");
+
                 }
 
                 if (PersonalInfoErrors.Count > 0 || EducationError.Count > 0 || DocumentError.Count > 0)
                 {
+                    Utility.AddLog(Constants.LogType.ActivityLog, $"Validation Failed Details: {PersonalInfoErrors}{EducationError} {DocumentError}");
                     return Json(new { status = false, message = "Error Occured while validating your data", PersonalErrors = PersonalInfoErrors, EducationErrors = EducationError, DocumentErrors  = DocumentError });
                 }
                 else
@@ -261,7 +285,10 @@ namespace HUTOPS.Controllers
                             applicationModel.PersonalInfo.Declaration = 1;
                             DB.PersonalInformations.Add(applicationModel.PersonalInfo);
                             DB.SaveChanges();
-                            
+                            Utility.AddLog(Constants.LogType.ActivityLog, $"Personal Information Table record Inserted : {JsonConvert.SerializeObject(applicationModel.PersonalInfo)}");
+
+
+
                             string CnicPath = "";
                             string SSCPath = "";
                             string HSSCPath = "";
@@ -286,23 +313,29 @@ namespace HUTOPS.Controllers
                                 {
                                     CnicPath = Path.Combine(UserDirectory, "CNIC" + Path.GetExtension(applicationModel.CNIC.FileName));
                                     applicationModel.CNIC.SaveAs(CnicPath);
+                                    Utility.AddLog(Constants.LogType.ActivityLog, $"CNIC File uploaded to the server CNIC Path: {CnicPath}");
+
                                 }
                                 if (applicationModel.SSCMarkSheet != null)
                                 {
                                     SSCPath = Path.Combine(UserDirectory, "SSC Mark Sheet" + Path.GetExtension(applicationModel.SSCMarkSheet.FileName));
                                     applicationModel.SSCMarkSheet.SaveAs(SSCPath);
+                                    Utility.AddLog(Constants.LogType.ActivityLog, $"SSC Mark sheet File uploaded to the server Path: {SSCPath}");
                                 }
                                 if (applicationModel.HSSCMarkSheet != null)
                                 {
                                     HSSCPath = Path.Combine(UserDirectory, "HSSC Mark Sheet" + Path.GetExtension(applicationModel.HSSCMarkSheet.FileName));
                                     applicationModel.HSSCMarkSheet.SaveAs(HSSCPath);
+                                    Utility.AddLog(Constants.LogType.ActivityLog, $"HSSC Mark sheet File uploaded to the server Path: {HSSCPath}");
+
                                 }
                                 if (applicationModel.Photograph != null)
                                 {
                                     PhotographPath = Path.Combine(UserDirectory, "Photo" + Path.GetExtension(applicationModel.Photograph.FileName));
                                     applicationModel.Photograph.SaveAs(PhotographPath);
+                                    Utility.AddLog(Constants.LogType.ActivityLog, $"Photograph File uploaded to the server Path: {PhotographPath}");
                                 }
-                                
+
                                 DB.Documents.Add(new Document
                                 {
                                     UserId = applicationModel.PersonalInfo.Id,
@@ -313,32 +346,44 @@ namespace HUTOPS.Controllers
                                     IsCompleted = 1
                                 });
                                 DB.SaveChanges();
-                                Utility.AddLog(Constants.LogType.ActivityLog, $"User successfully submited Documents.");
+                                Utility.AddLog(Constants.LogType.ActivityLog, $"Document Record inserted against applicant: {JsonConvert.SerializeObject(applicationModel.PersonalInfo)}");
 }
                             else
                             {
                                 DocumentError.Add("SSC Mark sheet: is required");
                                 DocumentError.Add("Passport size Photograph: is required");
+                                Utility.AddLog(Constants.LogType.ActivityLog, $"Required Documents not provided by applicant: {JsonConvert.SerializeObject(applicationModel.PersonalInfo)}");
+
                             }
-                            
+
                             applicationModel.Education.UserId = applicationModel.PersonalInfo.Id;
                             DB.Educationals.Add(applicationModel.Education);
                             DB.SaveChanges();
+                            Utility.AddLog(Constants.LogType.ActivityLog, $"Educational Table record Inserted Detials: {JsonConvert.SerializeObject(applicationModel.Education)}");
 
 
                             for (var i = 0; i < applicationModel.SubjectName[0].ToString().Split(',').Length; i++)
                             {
-                                DB.EducationalSubjects.Add(new EducationalSubject()
-                                {
-                                    EducationalId = applicationModel.Education.Id,
-                                    Name = applicationModel.SubjectName[0].ToString().Split(',')[i]
-                                });
-                                DB.SaveChanges();
+                                if (!string.IsNullOrEmpty(applicationModel.SubjectName[0].ToString().Split(',')[i])) { 
+                                    DB.EducationalSubjects.Add(new EducationalSubject()
+                                    {
+                                        EducationalId = applicationModel.Education.Id,
+                                        Name = applicationModel.SubjectName[0].ToString().Split(',')[i]
+                                    });
+                                    DB.SaveChanges();
+                                }
                             }
-                            
+                            Utility.AddLog(Constants.LogType.ActivityLog, $"Educational Subjects Inserted against EducationalId: {JsonConvert.SerializeObject(applicationModel.Education.Id)}");
+
 
                             Transaction.Commit();
+
+                            Utility.AddLog(Constants.LogType.ActivityLog, $"Transaction Commited against Applicant: {JsonConvert.SerializeObject(applicationModel.PersonalInfo)}");
+
                             var EmailTemplate = DB.EmailTemplates.ToList().Where(x => x.Id == 2).FirstOrDefault();
+
+                            Utility.AddLog(Constants.LogType.ActivityLog, $"Get Email Template for Submition Eamil");
+
                             string EmailBody = EmailTemplate.Body;
 
                             EmailBody = EmailBody.Replace("{{Photo}}", applicationModel.Document.Photograph);
@@ -372,6 +417,7 @@ namespace HUTOPS.Controllers
 
                             CPD.Framework.Core.EmailService.SendEmail(applicationModel.PersonalInfo.EmailAddress, null, EmailTemplate.Subject, EmailBody);
 
+                            Utility.AddLog(Constants.LogType.ActivityLog, $"Email has been sent to applicant User Details: {JsonConvert.SerializeObject(applicationModel.PersonalInfo)}");
 
 
                             return Json(new { status = true, message = "Application Submited Successfully"});
@@ -380,8 +426,12 @@ namespace HUTOPS.Controllers
                         }
                         catch (System.Exception ex)
                         {
+                            Utility.AddLog(Constants.LogType.Exception, $"Error Occured while Submitting Application Details: {ex.Message}");
+
                             Transaction.Rollback();
                             Directory.Delete(UserDirectory, true);
+                            Utility.AddLog(Constants.LogType.Exception, $"Transaction Rollback and Documents has been removed from the server");
+
                             return Json(new { status = false, message = "Form Submittion Failed" + ex.Message });
 
                         }
@@ -390,7 +440,7 @@ namespace HUTOPS.Controllers
             }
             catch (System.Exception ex)
             {
-
+                Utility.AddLog(Constants.LogType.Exception, $"Application Submition Failed Details: {ex.Message}");
                 return Json(new { status = false, message = "Form Submittion Failed" + ex.Message });
 
             }
@@ -409,6 +459,7 @@ namespace HUTOPS.Controllers
             {
                 var personalInfo = Utility.GetUserFromSession();
                 var documents = DB.Documents.ToList().Where(x => x.UserId == personalInfo.Id).FirstOrDefault();
+
                 var url = "";
                 if (documents != null)
                 {

@@ -70,22 +70,4 @@
 </div>
 
 
-<script>
-    function SubmitAdmitCardBatch() {
-        var data = new FormData();
-        data.append("HUTOPSIdsFile", jQuery("#HUTOPSIdsFile").get(0).files[0]);
-        data.append("TestDate", $('#testDate').val());
-        data.append("Shift", $('#comboShift').val());
-        data.append("Vanue", $("input[name='vanue']:checked").val());
 
-        CallFileAsyncService("/AdmitCard/Submit", data, SubmitAdmitCardBatchCB);
-        function SubmitAdmitCardBatchCB(response) {
-            if (response.status) {
-                ShowDivSuccess(response.message);
-            } else {
-                ShowDivError(response.message);
-            }
-        }
-
-    }
-</script>

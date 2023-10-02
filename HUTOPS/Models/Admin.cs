@@ -1,4 +1,6 @@
-﻿namespace HUTOPS.Models
+﻿using System;
+
+namespace HUTOPS.Models
 {
     public class Admin
     {

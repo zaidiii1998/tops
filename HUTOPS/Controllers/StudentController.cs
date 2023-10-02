@@ -47,7 +47,11 @@ namespace HUTOPS.Controllers
                             LastName = rec.LastName,
                             CellPhoneNumber = rec.CellPhoneNumber,
                             EmailAddress = rec.EmailAddress,
-                            CNIC = rec.CNIC
+                            CNIC = rec.CNIC,
+                            IsAdmitCardGenerated = rec.IsAdmitCardGenerated,
+                            AdmitCardGeneratedOn = rec.AdmitCardGeneratedOn,
+                            IsAdmitCardSent = rec.IsAdmitCardSent,
+                            AdmitCardSentOn = rec.AdmitCardSentOn
                         });
                     }
                     Total = Records.Count;
@@ -65,9 +69,12 @@ namespace HUTOPS.Controllers
         }
         public ActionResult UpdateSession(int? Id)
         {
+
             var currentSession = Utility.GetUserFromSession();
             if(currentSession.Id != 0)
             {
+                Utility.AddLog(Constants.LogType.ActivityLog, $"Admin {Utility.GetAdminFromSession().Name} has already open an applicant profile");
+
                 return Json(new { status = false, message = "you have already open Student Profile. Kindly close the profile first" });
             }
 
@@ -75,7 +82,7 @@ namespace HUTOPS.Controllers
             var education = DB.Educationals.ToList().Where(x => x.UserId == personalInformation.Id).FirstOrDefault();
             var document = DB.Documents.ToList().Where(x => x.UserId == personalInformation.Id).FirstOrDefault();
 
-            Utility.AddLog(Constants.LogType.ActivityLog, $"Admin Request to get Student Access For Updation. Student Details: {JsonConvert.SerializeObject(personalInformation)}");
+            Utility.AddLog(Constants.LogType.ActivityLog, $"Admin {Utility.GetAdminFromSession().Name} Request to get Student Access For Updation. Student Details: {JsonConvert.SerializeObject(personalInformation)}");
 
 
             Utility.SetSession(personalInformation == null ? new PersonalInformation() : personalInformation);
@@ -86,11 +93,12 @@ namespace HUTOPS.Controllers
         public ActionResult CloseSession()
         {
 
-            Utility.AddLog(Constants.LogType.ActivityLog, $"Admin Request to close Current Student profile.");
+            Utility.AddLog(Constants.LogType.ActivityLog, $"Admin {Utility.GetAdminFromSession().Name} Request to close Current Student profile.");
 
             Utility.SetSession( new PersonalInformation());
             Utility.SetSession( new Educational());
             Utility.SetSession( new Document());
+
             return Json(new { status = true, message = "Student Profile Closed Successfully" });
         }
     }

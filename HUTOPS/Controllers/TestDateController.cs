@@ -28,6 +28,8 @@ namespace HUTOPS.Controllers
             {
                 if (testDate.Id != 0)
                 {
+                    Utility.AddLog(Constants.LogType.ActivityLog, $"Admin {Utility.GetAdminFromSession().Name} Request to Update Test Date.");
+
                     // Update Record
                     var date = DB.TestDates.ToList().Where(x => x.Id == testDate.Id).FirstOrDefault();
                     if (date != null)
@@ -38,22 +40,34 @@ namespace HUTOPS.Controllers
                         date.DeadlineDate = testDate.DeadlineDate;
                         date.Visibility = testDate.Visibility;
                         DB.SaveChanges();
+                        Utility.AddLog(Constants.LogType.ActivityLog, $"Test Date Updated Successfully by Admin ({Utility.GetAdminFromSession().Name}).");
+
                         return Json(new { status = true, message = "Test Date Updated Successfully" });
                     }
+
+                    Utility.AddLog(Constants.LogType.ActivityLog, $"Test Date Updation Failed requested by Admin ({Utility.GetAdminFromSession().Name}).");
                     return Json(new { status = false, message = "Record not Found" });
+
                 }
                 else
                 {
+                    Utility.AddLog(Constants.LogType.ActivityLog, $"Admin {Utility.GetAdminFromSession().Name} Request to Add new Test Date.");
+
                     // Add new record
                     testDate.CreatedBy = Utility.GetAdminFromSession().Name;
                     testDate.CreatedOn = DateTime.Now;
                     DB.TestDates.Add(testDate);
                     DB.SaveChanges();
+
+                    Utility.AddLog(Constants.LogType.ActivityLog, $"Test Date Inserted Successfully by Admin ({Utility.GetAdminFromSession().Name}).");
+
                     return Json(new { status = true, message = "Test Date Inserted Successfully" });
                 }
             }
             catch (Exception ex)
             {
+                Utility.AddLog(Constants.LogType.ActivityLog, $"Error Occur while saving Test Date record by Admin ({Utility.GetAdminFromSession().Name}).");
+
                 return Json(new { status = false, message = "Error Occur while saving record " + ex.Message });
             }
             

@@ -70,30 +70,18 @@ function increaseProgressBarWidth() {
 
         if ($(this).val().trim() === '') {
             isValidPersonalInfo = false;
-            $(this).addClass("error");
-
-        } else {
-            $(this).removeClass("error");
         }
     });
     $('#PersonalInfoForm select[required]').each(function () {
 
         if (($(this).val() === '') || ($(this).val() === null)) {
             isValidPersonalInfo = false;
-            $(this).addClass("error");
-
-        } else {
-            $(this).removeClass("error");
         }
     });
     $('#PersonalInfoForm textarea[required]').each(function () {
 
         if (($(this).val().trim() === '') || ($(this).val() === null)) {
             isValidPersonalInfo = false;
-            $(this).addClass("error");
-
-        } else {
-            $(this).removeClass("error");
         }
     });
     if (isValidPersonalInfo) { percent = percent + 35 }
@@ -103,30 +91,18 @@ function increaseProgressBarWidth() {
 
         if ($(this).val().trim() === '') {
             isValidEducation = false;
-            $(this).addClass("error");
-
-        } else {
-            $(this).removeClass("error");
         }
     });
     $('#EducationForm select[required]').each(function () {
 
         if (($(this).val().trim() === '') || ($(this).val() === null)) {
             isValidEducation = false;
-            $(this).addClass("error");
-
-        } else {
-            $(this).removeClass("error");
         }
     });
     $('#EducationForm textarea[required]').each(function () {
 
         if (($(this).val().trim() === '') || ($(this).val() === null)) {
             isValidEducation = false;
-            $(this).addClass("error");
-
-        } else {
-            $(this).removeClass("error");
         }
     });
 
@@ -143,10 +119,6 @@ function increaseProgressBarWidth() {
 
         if ($(this).val().trim() === '') {
             isValidDocument = false;
-            $(this).addClass("error");
-
-        } else {
-            $(this).removeClass("error");
         }
     });
     if (isValidDocument) { percent = percent + 10}
@@ -1520,7 +1492,7 @@ function SubmitTestDate() {
 
 function LoadStudentDatatable() {
     var mainTable = $('#main-datatables').DataTable({
-        dom: 'lrtip',
+        dom: 'Blrtip',
         "processing": true,
         "serverSide": true,
         "pagingType": "full_numbers",
@@ -1530,6 +1502,14 @@ function LoadStudentDatatable() {
         "language": {
             "processing": "<image src='/Content/images/preloader.gif' />"
         },
+        buttons: [
+            {
+                text: 'My button',
+                action: function (e, dt, node, config) {
+                    alert('Button activated');
+                }
+            }
+        ],
         "ajax": {
             "type": "POST",
             "url": '/Student/Get',
@@ -1539,6 +1519,10 @@ function LoadStudentDatatable() {
             }
         },
         "columns": [
+            {
+                "data": null,
+                "defaultContent": "<input type='checkbox' class='checkbox'  />"
+            },
             { "data": "Id" },
             { "data": "HUTopId" },
             { "data": "FirstName" },
@@ -1546,6 +1530,51 @@ function LoadStudentDatatable() {
             { "data": "CellPhoneNumber" },
             { "data": "EmailAddress" },
             { "data": "CNIC" },
+            {
+                "data": "IsAdmitCardGenerated",
+                render: function (data) {
+                    if (data == 1) {
+
+                        return ('<i class="fa fa-check text-success" style="font-size: 35px;">');
+                    } else {
+                        return ('<i class="fa fa-xmark text-danger" style="font-size: 35px;">');
+                    }
+                }    
+            },
+            {
+                "data": "AdmitCardGeneratedOn",
+                render: function (data) {
+                    if (data != null) {
+                        var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                        return new Date(parseInt(/-?\d+/.exec(data)[0])).toLocaleDateString("en-US", options);
+                    }else
+                    {
+                        return(data);
+                    }
+                }
+            },
+            {
+                "data": "IsAdmitCardSent",
+                render: function (data) {
+                    if (data == 1) {
+
+                        return ('<i class="fa fa-check text-success" style="font-size: 35px;">');
+                    } else {
+                        return ('<i class="fa fa-xmark text-danger" style="font-size: 35px;">');
+                    }
+                }   
+            },
+            {
+                "data": "AdmitCardSentOn",
+                render: function (data) {
+                    if (data != null) {
+                        var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                        return new Date(parseInt(/-?\d+/.exec(data)[0])).toLocaleDateString("en-US", options);
+                    } else {
+                        return (data);
+                    }
+                }
+            },
             {
                 "data": null,
                 "defaultContent": "<button data-v-aa799a9e='' id='btnEdit' type='button' class='btn btn-icon savebtn global-btn-purple'><i class='fa fa-edit'></i></button> "
@@ -1558,7 +1587,7 @@ function LoadStudentDatatable() {
                 "orderable": true
             },
             {
-                "targets": [0],
+                "targets": [1],
                 "visible": false,
                 "searchable": false
             }
@@ -1602,6 +1631,31 @@ function LoadStudentDatatable() {
         }
 
     });
+
+    $('#main-datatables tbody').on('click', '.checkbox', function () {
+        debugger
+        var data = mainTable.row($(this).parents('tr')).data();
+        if ($(this).prop('checked') == true) {
+            if (data.IsAdmitCardGenerated == 0) {
+                $('#txtSelectedIds').val($('#txtSelectedIds').val() + ',' + data.Id)
+            }
+        } else {
+            if (data.IsAdmitCardGenerated == 0) {
+                var ids = $('#txtSelectedIds').val().toString();
+                ids = ids.replace(','+data.Id, "");
+                $('#txtSelectedIds').val(ids)
+            }
+        }
+        var Ids = $('#txtSelectedIds').val().toString();
+        Ids = Ids.replace(Ids.charAt(0),"")
+        if (Ids == "") {
+            $('#btnGenerateAdmitCard').hide();
+        } else {
+            $('#btnGenerateAdmitCard').show();
+        }
+        
+        
+    })
 }
 
 function closeStudentProfile(){
@@ -1616,6 +1670,28 @@ function closeStudentProfile(){
     }
 }
 
+function ShowAdmitCardModal() {
+    var modal = $('#modalAdmitCard');
+    modal.modal({ show: true })
+}
+
+function SubmitAdmitCard() {
+    var data = new FormData();
+    data.append("HUTOPSIds", $('#').val());
+    data.append("TestDate", $('#testDate').val());
+    data.append("Shift", $('#comboShift').val());
+    data.append("Vanue", $("input[name='vanue']:checked").val());
+
+    CallFileAsyncService("/AdmitCard/Submit", data, SubmitAdmitCardBatchCB);
+    function SubmitAdmitCardBatchCB(response) {
+        if (response.status) {
+            ShowDivSuccess(response.message);
+        } else {
+            ShowDivError(response.message);
+        }
+    }
+
+}
 
 // Email Tab
 
@@ -1759,3 +1835,23 @@ function AddUpdateTestDate() {
         }
     }
 }
+
+// Admit card Managment 
+function SubmitAdmitCardBatch() {
+    var data = new FormData();
+    data.append("HUTOPSIdsFile", jQuery("#HUTOPSIdsFile").get(0).files[0]);
+    data.append("TestDate", $('#testDate').val());
+    data.append("Shift", $('#comboShift').val());
+    data.append("Vanue", $("input[name='vanue']:checked").val());
+
+    CallFileAsyncService("/AdmitCard/Submit", data, SubmitAdmitCardBatchCB);
+    function SubmitAdmitCardBatchCB(response) {
+        if (response.status) {
+            ShowDivSuccess(response.message);
+        } else {
+            ShowDivError(response.message);
+        }
+    }
+
+}
+

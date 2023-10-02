@@ -23,6 +23,7 @@ namespace HUTOPS.Controllers
             string filePath = "";
             try
             {
+                Utility.AddLog(Constants.LogType.ActivityLog, $"Admin {Utility.GetAdminFromSession().Name} Requested to Add Batch File for generate Admit Card :");
 
                 string uploadDirectory = HttpContext.Server.MapPath("~/UploadedFiles");
                 string BatchDirectory = Path.Combine(HttpContext.Server.MapPath("~/UploadedFiles/"), "AdmitCardBatch");
@@ -38,6 +39,9 @@ namespace HUTOPS.Controllers
                 {
                     filePath = Path.Combine(BatchDirectory, DateTime.Now.ToString("yyyyMMddHHmmss") + Path.GetExtension(admitCardBatchModel.HUTOPSIdsFile.FileName));
                     admitCardBatchModel.HUTOPSIdsFile.SaveAs(filePath);
+
+                    Utility.AddLog(Constants.LogType.ActivityLog, $"Upload Admit card batch file to server by {Utility.GetAdminFromSession().Name} :");
+
 
                     List<string> IdsFound = new List<string>();
                     List<string> IdsNotFound = new List<string>();
@@ -72,12 +76,17 @@ namespace HUTOPS.Controllers
                         CreatedBy = Utility.GetAdminFromSession().Name
                     });
                     DB.SaveChanges();
-                    return Json(new { status = true, message = "Your File Uploaded Successfully and the response will sent on your email address:" });
+                    Utility.AddLog(Constants.LogType.ActivityLog, $"Insert Admit card batch Record to  by {Utility.GetAdminFromSession().Name} :");
+
+
+                    return Json(new { status = true, message = "Your File Uploaded Successfully and the response will be sent on your email address:" });
                     
 
                 }
                 else
                 {
+                    Utility.AddLog(Constants.LogType.ActivityLog, $"HUTOPS Ids File not provided by: {Utility.GetAdminFromSession().Name}");
+
                     return Json(new { status = false, message = "HUTOPS Ids File not provided" });
                 }
 

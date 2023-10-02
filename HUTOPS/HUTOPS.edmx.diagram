@@ -4,20 +4,22 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="3ec6848cb03a4170915e86c4b92c19c8" Name="Diagram1" ZoomLevel="57">
-        <EntityTypeShape EntityType="HU_TOPSModel.Board" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="HU_TOPSModel.BoardGroup" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="HU_TOPSModel.Document" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="HU_TOPSModel.Educational" Width="1.5" PointX="2.75" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="HU_TOPSModel.GroupSubject" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="HU_TOPSModel.PersonalInformation" Width="1.5" PointX="4.75" PointY="3.75" IsExpanded="false" />
-        <EntityTypeShape EntityType="HU_TOPSModel.sysdiagram" Width="1.5" PointX="6.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="HU_TOPSModel.EducationalSubject" Width="1.5" PointX="6.75" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="HU_TOPSModel.Log" Width="1.5" PointX="7.375" PointY="6.75" />
-        <EntityTypeShape EntityType="HU_TOPSModel.City" Width="1.5" PointX="0.75" PointY="8.75" />
-        <EntityTypeShape EntityType="HU_TOPSModel.Country" Width="1.5" PointX="9.75" PointY="0.75" />
-        <EntityTypeShape EntityType="HU_TOPSModel.State" Width="1.5" PointX="9.75" PointY="3.75" />
-        <EntityTypeShape EntityType="HU_TOPSModel.Activity" Width="1.5" PointX="3.375" PointY="9.75" />
+      <Diagram DiagramId="5cb54fbd03e34359bb44a5906f109584" Name="Diagram1">
+        <EntityTypeShape EntityType="HUTOPSModel.Activity" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HUTOPSModel.BatchUpload" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HUTOPSModel.Board" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HUTOPSModel.BoardGroup" Width="1.5" PointX="0.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HUTOPSModel.City" Width="1.5" PointX="2.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HUTOPSModel.Country" Width="1.5" PointX="4.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HUTOPSModel.Document" Width="1.5" PointX="6.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HUTOPSModel.Educational" Width="1.5" PointX="6.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HUTOPSModel.EducationalSubject" Width="1.5" PointX="0.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HUTOPSModel.EmailTemplate" Width="1.5" PointX="2.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HUTOPSModel.GroupSubject" Width="1.5" PointX="8.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HUTOPSModel.Log" Width="1.5" PointX="8.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HUTOPSModel.PersonalInformation" Width="1.5" PointX="8.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HUTOPSModel.State" Width="1.5" PointX="10.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HUTOPSModel.TestDate" Width="1.5" PointX="10.75" PointY="3.75" IsExpanded="true" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
