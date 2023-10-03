@@ -8,6 +8,8 @@ namespace HUTOPS.Models
         public DateTime TestDate { get; set; }
         public string Shift { get; set; }
         public string Vanue { get; set; }
+        public byte Type { get; set; }
+        public byte Result { get; set; }
         public HttpPostedFileBase HUTOPSIdsFile { get; set; }
     }
     public class ExcelData

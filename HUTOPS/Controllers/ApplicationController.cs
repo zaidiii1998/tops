@@ -444,8 +444,6 @@ namespace HUTOPS.Controllers
                 return Json(new { status = false, message = "Form Submittion Failed" + ex.Message });
 
             }
-
-
         }
 
         public ActionResult Success()

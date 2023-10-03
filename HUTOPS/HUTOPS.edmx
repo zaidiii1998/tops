@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="HUTOPSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="HUTOPSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Activity">
           <Key>
             <PropertyRef Name="Id" />
@@ -25,10 +25,12 @@
           <Property Name="Venue" Type="varchar" MaxLength="50" />
           <Property Name="HUTOPSIdsFile" Type="varchar(max)" />
           <Property Name="CreatedBy" Type="varchar" MaxLength="50" />
-          <Property Name="CreatedOn" Type="datetime2" Precision="7" />
+          <Property Name="CreatedOn" Type="datetime2" Precision="7" StoreGeneratedPattern="Computed" />
           <Property Name="IsStatusEmailSent" Type="tinyint" />
           <Property Name="EmailSentOn" Type="datetime2" Precision="7" />
           <Property Name="Status" Type="tinyint" StoreGeneratedPattern="Computed" />
+          <Property Name="Type" Type="tinyint" />
+          <Property Name="Result" Type="tinyint" />
         </EntityType>
         <EntityType Name="Board">
           <Key>
@@ -206,6 +208,7 @@
           <Property Name="AdmitCardGeneratedOn" Type="datetime2" Precision="7" />
           <Property Name="IsAdmitCardSent" Type="tinyint" />
           <Property Name="AdmitCardSentOn" Type="datetime2" Precision="7" />
+          <Property Name="Result" Type="tinyint" />
         </EntityType>
         <EntityType Name="State">
           <Key>
@@ -510,8 +513,7 @@
           <EntitySet Name="State" EntityType="Self.State" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TestDate" EntityType="Self.TestDate" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="HUTOPSModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -535,10 +537,12 @@
           <Property Name="Venue" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="HUTOPSIdsFile" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="CreatedOn" Type="DateTime" Precision="7" />
+          <Property Name="CreatedOn" Type="DateTime" Precision="7" annotation:StoreGeneratedPattern="Computed" />
           <Property Name="IsStatusEmailSent" Type="Byte" />
           <Property Name="EmailSentOn" Type="DateTime" Precision="7" />
           <Property Name="Status" Type="Byte" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="Type" Type="Byte" />
+          <Property Name="Result" Type="Byte" />
         </EntityType>
         <EntityType Name="Board">
           <Key>
@@ -716,6 +720,7 @@
           <Property Name="AdmitCardGeneratedOn" Type="DateTime" Precision="7" />
           <Property Name="IsAdmitCardSent" Type="Byte" />
           <Property Name="AdmitCardSentOn" Type="DateTime" Precision="7" />
+          <Property Name="Result" Type="Byte" />
         </EntityType>
         <EntityType Name="State">
           <Key>
@@ -768,7 +773,7 @@
             <Parameter Name="GroupId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="SP_GetStudentRecord" ReturnType="Collection(HUTOPSModel.SP_GetStudentRecord_Result)">
-            <Parameter Name="Id" Mode="In" Type="Int32" />
+          <Parameter Name="Id" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="SP_GetStudents" ReturnType="Collection(HUTOPSModel.SP_GetStudents_Result)">
             <Parameter Name="PageIndex" Mode="In" Type="Int32" />
@@ -887,7 +892,7 @@
             <Parameter Name="SubjectObtain" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="WEB_CheckPersonalInfo" ReturnType="Collection(HUTOPSModel.WEB_CheckPersonalInfo_Result)">
-            <Parameter Name="Id" Mode="In" Type="Int32" />
+          <Parameter Name="Id" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="WEB_CreateUser" ReturnType="Collection(HUTOPSModel.WEB_CreateUser_Result)">
             <Parameter Name="FirstName" Mode="In" Type="String" />
@@ -903,10 +908,10 @@
           <FunctionImport Name="WEB_GetAll" ReturnType="Collection(HUTOPSModel.WEB_GetAll_Result)" />
           <FunctionImport Name="WEB_GetBoards" ReturnType="Collection(HUTOPSModel.WEB_GetBoards_Result)" />
           <FunctionImport Name="WEB_GetGroups" ReturnType="Collection(HUTOPSModel.WEB_GetGroups_Result)">
-            <Parameter Name="BoardId" Mode="In" Type="Int32" />
+          <Parameter Name="BoardId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="WEB_GetSubjects" ReturnType="Collection(HUTOPSModel.WEB_GetSubjects_Result)">
-            <Parameter Name="GroupId" Mode="In" Type="Int32" />
+          <Parameter Name="GroupId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="WEB_InsertEducation">
             <Parameter Name="UserId" Mode="In" Type="Int32" />
@@ -1300,6 +1305,8 @@
           <EntitySetMapping Name="BatchUploads">
             <EntityTypeMapping TypeName="HUTOPSModel.BatchUpload">
               <MappingFragment StoreEntitySet="BatchUploads">
+                <ScalarProperty Name="Result" ColumnName="Result" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="TestDate" ColumnName="TestDate" />
                 <ScalarProperty Name="Shift" ColumnName="Shift" />
@@ -1433,6 +1440,7 @@
           <EntitySetMapping Name="PersonalInformations">
             <EntityTypeMapping TypeName="HUTOPSModel.PersonalInformation">
               <MappingFragment StoreEntitySet="PersonalInformation">
+                <ScalarProperty Name="Result" ColumnName="Result" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="HUTopId" ColumnName="HUTopId" />
                 <ScalarProperty Name="AppId" ColumnName="AppId" />

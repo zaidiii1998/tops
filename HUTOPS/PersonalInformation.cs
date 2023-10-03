@@ -79,5 +79,6 @@ namespace HUTOPS
         public Nullable<System.DateTime> AdmitCardGeneratedOn { get; set; }
         public Nullable<byte> IsAdmitCardSent { get; set; }
         public Nullable<System.DateTime> AdmitCardSentOn { get; set; }
+        public Nullable<byte> Result { get; set; }
     }
 }

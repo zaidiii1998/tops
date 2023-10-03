@@ -1,6 +1,6 @@
 ﻿$(document).ready(function () {
     //document.addEventListener('scroll', handleScroll, true);
-    $('.number').inputmask("0399-9999999");
+    $('.number').inputmask("\\92399-9999999");
     $('.cnic').inputmask("99999-9999999-9");
     $('.Percentage').inputmask("99.99%");
 
@@ -482,11 +482,14 @@ function LoadDate(stringDate, DateId) {
 
 function validatePersonalInfoForm() {
     var isValid = true;
+    
+
     $('#PersonalInfoForm input[required]').each(function () {
 
             if ($(this).val().trim() === '') {
                 isValid = false;
                 $(this).addClass("error");
+                $(this).focus();
 
             } else {
                 $(this).removeClass("error");
@@ -497,6 +500,7 @@ function validatePersonalInfoForm() {
         if (($(this).val() === '') || ($(this).val() === null)) {
             isValid = false;
             $(this).addClass("error");
+            $(this).focus();
 
         } else {
             $(this).removeClass("error");
@@ -507,17 +511,39 @@ function validatePersonalInfoForm() {
         if (($(this).val().trim() === '') || ($(this).val() === null)) {
             isValid = false;
             $(this).addClass("error");
+            $(this).focus();
 
         } else {
             $(this).removeClass("error");
         }
     });
 
+    debugger
+    checkCNIC('cnic');
+    checkEmail('email');
+    checkPhoneNumber('cellPhone');
+
+    if ($('#emailError').html() != "") {
+        isValid = false;
+        $('#email').addClass('error');
+        $('#email').focus();
+    }
+    if ($('#cnicError').html() != "") {
+        isValid = false;
+        $('#cnic').addClass('error');
+        $('#cnic').focus();
+    }
+    if ($('#numberError').html() != "") {
+        isValid = false;
+        $('#cellPhone').addClass('error');
+        $('#cellPhone').focus();
+    }
 
     if ($('#comboHearHU').val() == 'Other' && $('#OtherHearHU').val() == '') {
         $('#hearAboutHUOther').html('Please Enter Other Value');
         isValid = false;
     }
+
     
     if (isValid) {
         debugger
@@ -890,12 +916,15 @@ function loadPrograms(radioValue) {
 function ValidateProgram(ProgramValue) {
     if (ProgramValue == "BS Electrical Engineering" && $('#groupOfStudy').val() != "Pre-Engineering") {
         $('#errDegreeProgram').html("Students who have Studied Physics, chemistry, Mathematics in HSSC can only apply for Habib University's BS Electrical Engineering degree program.");
+        $('#degreeProgram').focus();
         return false;
     } else if (ProgramValue == "BS Computer Science" && $('#groupOfStudy').val() != "Pre-Engineering") {
         $('#errDegreeProgram').html("Students who have Studied Physics, chemistry, Mathematics in HSSC can only apply for Habib University's BS Computer Science degree program.");
+        $('#degreeProgram').focus();
         return false;
     } else if (ProgramValue == "BS Computer Engineering" && $('#groupOfStudy').val() != "Pre-Engineering") {
         $('#errDegreeProgram').html("Students who have Studied Physics, chemistry, Mathematics in HSSC can only apply for Habib University's BS Computer Engineering degree program.");
+        $('#degreeProgram').focus();
         return false;
     } else {
         $('#errDegreeProgram').html('');
@@ -973,6 +1002,7 @@ function SubmitEducation() {
         if ($(this).val().trim() === '') {
             isValid = false;
             $(this).addClass("error");
+            $(this).focus();
             
         } else {
             $(this).removeClass("error");
@@ -983,6 +1013,7 @@ function SubmitEducation() {
         if (($(this).val().trim() === '') || ($(this).val() === null)) {
             isValid = false;
             $(this).addClass("error");
+            $(this).focus();
 
         } else {
             $(this).removeClass("error");
@@ -993,6 +1024,7 @@ function SubmitEducation() {
         if (($(this).val().trim() === '') || ($(this).val() === null)) {
             isValid = false;
             $(this).addClass("error");
+            $(this).focus();
 
         } else {
             $(this).removeClass("error");
@@ -1008,79 +1040,6 @@ function SubmitEducation() {
 
     if (isValid && ValidateProgram($('#degreeProgram').val()))
         {
-        //var SubjectName = [];
-        //var SubjectObtain = [];
-        //var SubjectTotal = [];
-        //var SubjectGrade = [];
-
-        //// Iterate over input elements with the class "my-input"
-        //$(".SubjectName").each(function () {
-        //    SubjectName.push($(this).val());
-        //});
-        //$(".SubjectObtain").each(function () {
-        //    SubjectObtain.push($(this).val());
-        //});
-        //$(".SubjectTotal").each(function () {
-        //    SubjectTotal.push($(this).val());
-        //});
-        //$(".SubjectGrade").each(function () {
-        //    SubjectGrade.push($(this).val());
-        //});
-
-
-
-        //var param = {
-        //    UserId: $('#id'),
-        //    CurrentLevelOfEdu: $('#currentLevel').val(),
-        //    HSSCSchoolName: $('#collegeName').val(),
-        //    HSSCSchoolAddress: $('#collegeAddress').val(),
-        //    HSSCPercentage: $('#hsscPercentage').val(),
-        //    HSSCStartDate: $('#startingYear').val(),
-        //    HSSCCompletionDate: $('#completionYear').val(),
-        //    HSSCBoardId: $('#boardOfEducation').val(),
-        //    HSSCBoardName: $('#boardOfEducation').text(),
-
-        //    HSSCGroupId: $('#groupOfStudy').val(),
-        //    HSSCGroupName: $('#groupOfStudy').text(),
-        //    SSCSchoolName: $('#secondarySchoolName').val(),
-        //    SSCSchoolAddress: $('#secondarySchoolAddress').val(),
-        //    SSCPercentage: $('#sscPercentage').val(),
-        //    UniversityName: $('#universityName').val(),
-        //    IntendedProgram: $('#degreeProgram').val(),
-        //    HUSchoolName: $('input[name="huSchool"]:checked').val(),
-
-        //    SubjectName: SubjectName,
-        //    SubjectObtain: SubjectObtain,
-        //    SubjectTotal: SubjectTotal,
-        //    SubjectGrade: SubjectGrade
-        //};
-        //$('#mainLoader').show();
-        //CallAsyncService('/Education/Submit', JSON.stringify(param), editEducationCallback);
-
-        //function editEducationCallback(response) {
-        //    $('#mainLoader').hide();
-        //    debugger
-        //    if (response.status) {
-        //        ShowDivSuccess(response.message);
-        //        setTimeout(function () {
-        //            document.getElementById("redirectLnk").click();
-        //        }, 2000);
-
-
-        //    }
-        //    else {
-        //        debugger
-        //        ShowDivError(response.message)
-        //        console.log(response.error);
-        //        var errstring = response.error.toString();
-        //        var stringList = errstring.split(",");
-        //        $.each(stringList, function (key, value) {
-        //            $("#Error ul").append('<li class="text-danger">'+ value +'</li>');
-        //        })
-
-
-        //    }
-        //}
         increaseProgressBarWidth();
         $('#btnDocument').prop('disabled', false);
 
@@ -1114,54 +1073,13 @@ function submitDocuments(sessionUserId) {
         if ($(this).val().trim() === '') {
             isValid = false;
             $(this).addClass("error");
+            $(this).focus();
 
         } else {
             $(this).removeClass("error");
         }
     });
     if (isValid) {
-        //var form = $('#fileUploadForm');
-        //var formData = new FormData(form[0]);
-        //formData.append("UserId", sessionUserId)
-        //if ($('#id').val() != sessionUserId) {
-        //    ShowDivError('Multi profile conflict occur while saving student record');
-        //    return false;
-        //}
-
-
-        //$('#mainLoader').show();
-        //$.ajax({
-        //    url: '/Handler1.ashx', // Change the URL to your MVC controller's action
-        //    type: 'POST',
-        //    data: formData,
-        //    processData: false,
-        //    contentType: false,
-        //    success: function (response) {
-        //        $('#mainLoader').hide();
-        //        debugger
-        //        if (response.status) {
-        //            ShowDivSuccess(response.message);
-        //            setTimeout(function () {
-        //                document.getElementById("redirectToActivity").click();
-        //            }, 2000);
-        //        }
-        //        else {
-        //            ShowDivError(response.message)
-        //            console.log(response.error);
-        //            var errstring = response.error.toString();
-        //            var stringList = errstring.split(",");
-        //            $.each(stringList, function (key, value) {
-        //                $("#Error ul").append('<li class="text-danger">' + value + '</li>');
-        //            })
-        //        }
-
-        //    },
-        //    error: function (xhr, status, error) {
-        //        debugger
-        //        ShowDivError(response.message);
-
-        //    }
-        //});
         increaseProgressBarWidth();
         $('#btnTest').prop('disabled', false);
 
@@ -1259,6 +1177,7 @@ function submitDeclaration() {
         if ($(this).val().trim() === '') {
             isValid = false;
             $(this).addClass("error");
+            $(this).focus();
 
         } else {
             $(this).removeClass("error");
@@ -1269,6 +1188,7 @@ function submitDeclaration() {
         if (($(this).val() === '') || ($(this).val() === null)) {
             isValid = false;
             $(this).addClass("error");
+            $(this).focus();
 
         } else {
             $(this).removeClass("error");
@@ -1279,6 +1199,7 @@ function submitDeclaration() {
         if (($(this).val().trim() === '') || ($(this).val() === null)) {
             isValid = false;
             $(this).addClass("error");
+            $(this).focus();
 
         } else {
             $(this).removeClass("error");
@@ -1577,7 +1498,9 @@ function LoadStudentDatatable() {
             },
             {
                 "data": null,
-                "defaultContent": "<button data-v-aa799a9e='' id='btnEdit' type='button' class='btn btn-icon savebtn global-btn-purple'><i class='fa fa-edit'></i></button> "
+                //"defaultContent": "<button data-v-aa799a9e='' id='btnEdit' type='button' class='btn btn-icon savebtn global-btn-purple'><i class='fa fa-edit'></i></button> "
+                //"defaultContent": "<div style='min-width: 150px;'><button id='btnEdit' type='button'><i class='fa fa-edit' style='font-size: 30px; color:#5d2468;'></i></button> <button id='btnAdmitCard' type='button'><i class='fa-solid fa-file-pdf' style='font-size: 30px;color:#5d2468;'></i></button> <button id='btnSend' type='button'><i class='fa-regular fa-paper-plane' style='font-size: 30px;color:#5d2468;'></i></button></div>"
+                "defaultContent": "<li class='logoutDropWrap'><div class= 'nameWrapper'><i class='fa-solid fa-list-ul'></i></div ><ul class='logoutDrop'><li class='global-btn-purple'>Edit</li><li class='global-btn-purple'>Edit</li><li class='global-btn-purple'>Edit</li></ul></li > "
             }
         ],
         "columnDefs": [
@@ -1742,8 +1665,6 @@ function AddNewEmailTemplate() {
 
 
 // Test Date Section
-
-
 function LoadTestDateDatatable() {
     var mainTable = $('#main-datatables').DataTable({
         dom: 'lrtip',
@@ -1825,8 +1746,10 @@ function AddUpdateTestDate() {
         DeadlineDate: $('#dateDeadline').val(),
         Visibility: visible
     }
+    $('#mainLoader').show();
     CallAsyncService("/TestDate/Submit", JSON.stringify(param), AddUpdateTestDateCB);
     function AddUpdateTestDateCB(response) {
+        $('#mainLoader').hide();
         $('#modal').modal('hide');
         if (response.status) {
             ShowDivSuccess(response.message);
@@ -1838,20 +1761,134 @@ function AddUpdateTestDate() {
 
 // Admit card Managment 
 function SubmitAdmitCardBatch() {
-    var data = new FormData();
-    data.append("HUTOPSIdsFile", jQuery("#HUTOPSIdsFile").get(0).files[0]);
-    data.append("TestDate", $('#testDate').val());
-    data.append("Shift", $('#comboShift').val());
-    data.append("Vanue", $("input[name='vanue']:checked").val());
+    debugger
+    var isValid = true; 
+    if ($("input[name='type']:checked").val() != null) {
+        if ($("input[name='type']:checked").val() == 2) {
+            if ($("#HUTOPSIdsFile").get(0).files[0] == null) {
+                isValid = false;
+                $("#HUTOPSIdsFile").addClass("error");
+                $("#HUTOPSIdsFile").focus();
 
-    CallFileAsyncService("/AdmitCard/Submit", data, SubmitAdmitCardBatchCB);
-    function SubmitAdmitCardBatchCB(response) {
-        if (response.status) {
-            ShowDivSuccess(response.message);
+            }
         } else {
-            ShowDivError(response.message);
+            $('input[required]').each(function () {
+
+                if ($(this).val().trim() === '') {
+                    isValid = false;
+                    $(this).addClass("error");
+                    $(this).focus();
+
+                } else {
+                    $(this).removeClass("error");
+                }
+            });
+            $('select[required]').each(function () {
+
+                if (($(this).val() === '') || ($(this).val() === null)) {
+                    isValid = false;
+                    $(this).addClass("error");
+                    $(this).focus();
+
+                } else {
+                    $(this).removeClass("error");
+                }
+            });
+
+            $("input[name=vanue]").each(function () {
+                
+                var checked = $("input[name=vanue]:checked");
+                debugger
+                if (checked.length == 0) {
+                    $('#errVenue').html('Please select Venue');
+                } else {
+                    $('#errVenue').html('');
+                }
+            });
         }
+    } else {
+        isValid = false;
+        ShowDivError("Please Select Action Radio");
+        return false;
     }
+
+
+    if (isValid) {
+        var data = new FormData();
+        data.append("HUTOPSIdsFile", jQuery("#HUTOPSIdsFile").get(0).files[0]);
+        data.append("TestDate", $('#testDate').val());
+        data.append("Shift", $('#comboShift').val());
+        data.append("Vanue", $("input[name='vanue']:checked").val());
+        data.append("Type", $("input[name='type']:checked").val());
+
+        $('#mainLoader').show();
+        CallFileAsyncService("/AdmitCard/Submit", data, SubmitAdmitCardBatchCB);
+        function SubmitAdmitCardBatchCB(response) {
+            $('#mainLoader').hide();
+            if (response.status) {
+                ShowDivSuccess(response.message);
+            } else {
+                ShowDivError(response.message);
+            }
+        }
+    } else {
+        ShowDivError("Please enter in all required fields");
+    }
+
+   
+
+}
+
+// Upload Result
+
+function SubmitResultBatch() {
+
+    var isValid = true;
+    $('input[required]').each(function () {
+
+        if ($(this).val().trim() === '') {
+            isValid = false;
+            $(this).addClass("error");
+            $(this).focus();
+
+        } else {
+            $(this).removeClass("error");
+        }
+    });
+
+    $("input[name=result]").each(function () {
+
+        var checked = $("input[name=result]:checked");
+        debugger
+        if (checked.length == 0) {
+            $('#errResult').html('Please select Result Value');
+        } else {
+            $('#errResult').html('');
+        }
+    });
+
+
+
+    if (isValid) {
+        var data = new FormData();
+        data.append("HUTOPSIdsFile", jQuery("#HUTOPSIdsFile").get(0).files[0]);
+        data.append("Result", $("input[name='result']:checked").val());
+        data.append("Type", 4);
+
+        $('#mainLoader').show();
+        CallFileAsyncService("/AdmitCard/Submit", data, SubmitAdmitCardBatchCB);
+        function SubmitAdmitCardBatchCB(response) {
+            $('#mainLoader').hide();
+            if (response.status) {
+                ShowDivSuccess(response.message);
+            } else {
+                ShowDivError(response.message);
+            }
+        }
+    } else {
+        ShowDivError("Please enter in all required fields");
+    }
+   
 
 }
 

@@ -72,11 +72,13 @@ namespace HUTOPS.Controllers
                         TestDate = admitCardBatchModel.TestDate,
                         Shift = admitCardBatchModel.Shift,
                         Venue = admitCardBatchModel.Vanue,
+                        Type = admitCardBatchModel.Type,
+                        Result = admitCardBatchModel.Result,
                         HUTOPSIdsFile = filePath,
                         CreatedBy = Utility.GetAdminFromSession().Name
-                    });
+                    }); ;
                     DB.SaveChanges();
-                    Utility.AddLog(Constants.LogType.ActivityLog, $"Insert Admit card batch Record to  by {Utility.GetAdminFromSession().Name} :");
+                    Utility.AddLog(Constants.LogType.ActivityLog, $"Insert Admit card batch Record by {Utility.GetAdminFromSession().Name} :");
 
 
                     return Json(new { status = true, message = "Your File Uploaded Successfully and the response will be sent on your email address:" });

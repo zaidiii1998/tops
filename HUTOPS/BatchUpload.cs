@@ -24,5 +24,7 @@ namespace HUTOPS
         public Nullable<byte> IsStatusEmailSent { get; set; }
         public Nullable<System.DateTime> EmailSentOn { get; set; }
         public Nullable<byte> Status { get; set; }
+        public Nullable<byte> Type { get; set; }
+        public Nullable<byte> Result { get; set; }
     }
 }

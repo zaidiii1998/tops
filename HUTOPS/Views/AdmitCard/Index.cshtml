@@ -31,7 +31,7 @@
                                     <div class="form-group">
                                         <label>Shift:</label>
                                         <select class="form-control" id="comboShift" required>
-                                            <option>Select Shift</option>
+                                            <option value="">Select Shift</option>
                                             <option value="1">First</option>
                                             <option value="2">Second</option>
                                             <option value="3">Third</option>
@@ -42,11 +42,23 @@
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="form-group">
-                                        <label>Vanue: </label><br />
-                                        <input type="radio" name="vanue" id="radioKarachi" value="Karachi" />
+                                        <label>Venue: </label><br />
+                                        <input type="radio" name="vanue" id="radioKarachi" value="Karachi" required/>
                                         <label for="radioKarachi"> Karachi </label>
-                                        <input type="radio" name="vanue" id="radioIslamabad" value="Islamabad" />
+                                        <input type="radio" name="vanue" id="radioIslamabad" value="Islamabad"required />
                                         <label for="radioIslamabad">Islamabad</label>
+                                        <span class="text-danger" id="errVenue"></span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <label>Action: </label><br />
+                                        <input type="radio" name="type" id="radioAdmitCard" value="1" required />
+                                        <label for="radioAdmitCard"> Generate Admit Card </label> <br />
+                                        <input type="radio" name="type" id="radioSendEmail" value="2" required />
+                                        <label for="radioSendEmail">Send Admit Card</label><br />
+                                        <input type="radio" name="type" id="radioGenrateSend" value="3" required />
+                                        <label for="radioGenrateSend">Generate & Send Admit Card</label><br />
                                     </div>
                                 </div>
                                 <div class="col-lg-12">

@@ -1,0 +1,53 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutAdminPanal.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-lg-12">
+            <div class="boxWraper">
+                <div class="headBox">
+                    <h2>Manage Result</h2>
+                    <div class="btnWraper">
+                        <div class="row">
+                            <div class="col-lg-12">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <form id="modalForm" enctype="multipart/form-data">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <label>Result: </label><br />
+                                        <input type="radio" name="result" id="radioFail" value="1" />
+                                        <label for="radioFail">Fail</label>
+                                        <input type="radio" name="result" id="radioPass" value="2" />
+                                        <label for="radioPass">Pass</label>
+                                        <span class="text-danger" id="errResult"></span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <label>HUTOPS Ids File:</label>
+                                        <input class="form-control" type="file" id="HUTOPSIdsFile" required />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <button type="button" class="savebtn global-btn-purple  float-right" onclick="SubmitResultBatch()">Upload Result</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
