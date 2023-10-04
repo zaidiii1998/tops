@@ -201,6 +201,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="AppData\CPD.Framework.Core.dll" />
+    <Content Include="AppData\HU_HTML_TO_PDF.dll" />
     <Content Include="HUTOPS.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>HUTOPS.Context.cs</LastGenOutput>

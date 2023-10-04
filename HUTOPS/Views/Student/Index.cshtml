@@ -53,7 +53,6 @@
                 </div>
             </div>
             <div class="boxWraper" style="overflow-y:auto;">
-                <input type="text" id="txtSelectedIds" />
                 <div class="headBox">
                     <h2>All Applicants</h2>
                     <div class="btnWraper">
@@ -64,13 +63,10 @@
                         </div>
                     </div>
                 </div>
-                <input class="savebtn  float-right m-1" type="button" value="Generate Admit Card" style="height: 40px;border: 1px solid;" id="btnGenerateAdmitCard" onclick="ShowAdmitCardModal()">
-
                 @* table *@
                 <table class="ctmTable table table-responsive table-hover" id="main-datatables">
                     <thead>
                         <tr>
-                            <th><input type="checkbox" onclick="CheckAll()" /></th>
                             <th>Id</th>
                             <th>HUTOPS Id</th>
                             <th>First Name</th>
@@ -94,10 +90,10 @@
         </div>
     </div>
 </div>
-<a href="@Url.Action("Index","Application")" id="redirectToStudent" target="_blank" style="display:none;"> </a>
+<a href="@Url.Action("Index","Application")" id="redirectToStudent" target="_blank"  style="display:none;"> </a>
 
 
-<div class="modal fade" id="modalAdmitCard" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="modalAdmitCard" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -108,6 +104,7 @@
             </div>
             <div class="modal-body">
                 <form id="modalForm" enctype="multipart/form-data">
+                    <input type="text" id="applicantId" hidden/>
                     <div class="row">
                         <div class="col-md-6">
                             <div class="row">
@@ -121,7 +118,7 @@
                                     <div class="form-group">
                                         <label>Shift:</label>
                                         <select class="form-control" id="comboShift" required>
-                                            <option>Select Shift</option>
+                                            <option value="">Select Shift</option>
                                             <option value="1">First</option>
                                             <option value="2">Second</option>
                                             <option value="3">Third</option>
@@ -132,11 +129,12 @@
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="form-group">
-                                        <label>Vanue: </label><br />
-                                        <input type="radio" name="vanue" id="radioKarachi" value="Karachi" />
+                                        <label>Venue: </label><br />
+                                        <input type="radio" name="venue" id="radioKarachi" value="Karachi" />
                                         <label for="radioKarachi"> Karachi </label>
-                                        <input type="radio" name="vanue" id="radioIslamabad" value="Islamabad" />
+                                        <input type="radio" name="venue" id="radioIslamabad" value="Islamabad" />
                                         <label for="radioIslamabad">Islamabad</label>
+                                        <span class="text-danger" id="errVenue"></span>
                                     </div>
                                 </div>
                             </div>
@@ -146,7 +144,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="savebtn global-btn-purple  float-right" onclick="" style="margin:0;">Save changes</button>
+                <button type="button" class="savebtn global-btn-purple  float-right" onclick="SubmitAdmitCard()" style="margin:0;">Save changes</button>
             </div>
         </div>
     </div>
@@ -154,7 +152,6 @@
 
 <script>
     $(document).ready(function () {
-        $('#btnGenerateAdmitCard').hide();
         LoadStudentDatatable();
     })
     

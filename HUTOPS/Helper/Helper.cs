@@ -140,7 +140,7 @@ namespace HUTOPS.Helper
         public static bool IsValidPhoneNumber(string phoneNumber)
         {
             // Define a regular expression pattern for a US phone number (10 digits)
-            string pattern = @"^\d{4}-\d{7}$";
+            string pattern = @"^\d{5}-\d{7}$";
 
             // Use Regex.IsMatch to check if the input matches the pattern
             return Regex.IsMatch(phoneNumber, pattern);
@@ -194,7 +194,7 @@ namespace HUTOPS.Helper
             {
                 errors.Add("Father Last Name length must be greater than 3 and less than 25 characters");
             }
-            if (!string.IsNullOrEmpty(personalInfo.AlterEmailAddress) && !Helper.Utility.isValidEmail(personalInfo.AlterEmailAddress))
+            if (!string.IsNullOrEmpty(personalInfo.AlterEmailAddress) && !isValidEmail(personalInfo.AlterEmailAddress))
             {
                 errors.Add("Provided Email Address is Invalid");
             }
@@ -202,19 +202,19 @@ namespace HUTOPS.Helper
             {
                 errors.Add("Guardian Email Address is Required");
             }
-            if (!string.IsNullOrEmpty(personalInfo.GuardianEmailAddress) && !Helper.Utility.isValidEmail(personalInfo.GuardianEmailAddress))
+            if (!string.IsNullOrEmpty(personalInfo.GuardianEmailAddress) && !isValidEmail(personalInfo.GuardianEmailAddress))
             {
                 errors.Add("Provided Guardian Email Address is Invalid");
             }
-            if (!string.IsNullOrEmpty(personalInfo.CellPhoneNumber) && !Helper.Utility.IsValidPhoneNumber(personalInfo.CellPhoneNumber))
+            if (!string.IsNullOrEmpty(personalInfo.CellPhoneNumber) && ! IsValidPhoneNumber(personalInfo.CellPhoneNumber))
             {
                 errors.Add("Cell Phone Number is Invalid");
             }
-            if (!string.IsNullOrEmpty(personalInfo.WhatsAppNumber) && !Helper.Utility.IsValidPhoneNumber(personalInfo.WhatsAppNumber))
+            if (!string.IsNullOrEmpty(personalInfo.WhatsAppNumber) && !IsValidPhoneNumber(personalInfo.WhatsAppNumber))
             {
                 errors.Add("WhatsApp Number Number is Invalid");
             }
-            if (!string.IsNullOrEmpty(personalInfo.AlternateCellPhoneNumber) && !Helper.Utility.IsValidPhoneNumber(personalInfo.AlternateCellPhoneNumber))
+            if (!string.IsNullOrEmpty(personalInfo.AlternateCellPhoneNumber) && !IsValidPhoneNumber(personalInfo.AlternateCellPhoneNumber))
             {
                 errors.Add("Alternate Cell Phone Number is Invalid");
             }

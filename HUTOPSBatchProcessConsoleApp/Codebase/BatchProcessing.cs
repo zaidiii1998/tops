@@ -25,14 +25,14 @@ namespace HUTOPSBatchProcessConsoleApp.Codebase
 
                         var personalInformation = DB.PersonalInformations.ToList().Where(x => x.HUTopId.Trim() == record.HUTOPSIds.Trim()).FirstOrDefault();
                         var document = new Document();
-                        var ProfileEducation = new Educational();
+                        var EducationalInfo = new Educational();
                         var EmailTemplate = DB.EmailTemplates.ToList().Where(x => x.Id == 3).FirstOrDefault();
                         string EmailBody = EmailTemplate.Body;
 
                         if (personalInformation != null)
                         {
                             document = DB.Documents.ToList().Where(x => x.UserId == personalInformation.Id).FirstOrDefault() == null? new Document() : DB.Documents.ToList().Where(x => x.UserId == personalInformation.Id).FirstOrDefault();
-                            ProfileEducation = DB.Educationals.ToList().Where(x => x.UserId == personalInformation.Id).FirstOrDefault() == null? new Educational(): DB.Educationals.ToList().Where(x => x.UserId == personalInformation.Id).FirstOrDefault();
+                            EducationalInfo = DB.Educationals.ToList().Where(x => x.UserId == personalInformation.Id).FirstOrDefault() == null? new Educational(): DB.Educationals.ToList().Where(x => x.UserId == personalInformation.Id).FirstOrDefault();
 
                             EmailBody = EmailBody.Replace("{{HUTOPSId}}", personalInformation.HUTopId);
                             EmailBody = EmailBody.Replace("{{Name}}", personalInformation.FirstName + " " + personalInformation.MiddleName + " " + personalInformation.LastName);
@@ -43,9 +43,9 @@ namespace HUTOPSBatchProcessConsoleApp.Codebase
                             record.Status = "Record not found "; isValid = false;
                             Helper.AddLog(Constants.LogType.ActivityLog, $"Personal Information Record not found against HUTOPS Id: {record.HUTOPSIds}");
                         }
-                        if (ProfileEducation.Id != 0)
+                        if (EducationalInfo.Id != 0)
                         {
-                            EmailBody = EmailBody.Replace("{{HUSchool}}", ProfileEducation.HUSchoolName == "SE" ? Constants.SchoolName.SE : Constants.SchoolName.SA);
+                            EmailBody = EmailBody.Replace("{{HUSchool}}", EducationalInfo.HUSchoolName == "SE" ? Constants.SchoolName.SE : Constants.SchoolName.SA);
                         }
                         else
                         {
@@ -201,7 +201,7 @@ namespace HUTOPSBatchProcessConsoleApp.Codebase
 
                         var personalInformation = DB.PersonalInformations.ToList().Where(x => x.HUTopId.Trim() == record.HUTOPSIds.Trim()).FirstOrDefault();
                         var document = new Document();
-                        var ProfileEducation = new Educational();
+                        var EducationalInfo = new Educational();
                         var AdmmitCardEmailTemplate = DB.EmailTemplates.ToList().Where(x => x.Id == 3).FirstOrDefault();
                         var EmailTemplate = DB.EmailTemplates.ToList().Where(x => x.Id == 4).FirstOrDefault();
                         string EmailBody = AdmmitCardEmailTemplate.Body;
@@ -209,7 +209,7 @@ namespace HUTOPSBatchProcessConsoleApp.Codebase
                         if (personalInformation != null)
                         {
                             document = DB.Documents.ToList().Where(x => x.UserId == personalInformation.Id).FirstOrDefault() == null ? new Document() : DB.Documents.ToList().Where(x => x.UserId == personalInformation.Id).FirstOrDefault();
-                            ProfileEducation = DB.Educationals.ToList().Where(x => x.UserId == personalInformation.Id).FirstOrDefault() == null ? new Educational() : DB.Educationals.ToList().Where(x => x.UserId == personalInformation.Id).FirstOrDefault();
+                            EducationalInfo = DB.Educationals.ToList().Where(x => x.UserId == personalInformation.Id).FirstOrDefault() == null ? new Educational() : DB.Educationals.ToList().Where(x => x.UserId == personalInformation.Id).FirstOrDefault();
 
                             EmailBody = EmailBody.Replace("{{HUTOPSId}}", personalInformation.HUTopId);
                             EmailBody = EmailBody.Replace("{{Name}}", personalInformation.FirstName + " " + personalInformation.MiddleName + " " + personalInformation.LastName);
@@ -220,9 +220,9 @@ namespace HUTOPSBatchProcessConsoleApp.Codebase
                             record.Status = "Record not found "; isValid = false;
                             Helper.AddLog(Constants.LogType.ActivityLog, $"Personal Information Record not found against HUTOPS Id: {record.HUTOPSIds}");
                         }
-                        if (ProfileEducation.Id != 0)
+                        if (EducationalInfo.Id != 0)
                         {
-                            EmailBody = EmailBody.Replace("{{HUSchool}}", ProfileEducation.HUSchoolName == "SE" ? Constants.SchoolName.SE : Constants.SchoolName.SA);
+                            EmailBody = EmailBody.Replace("{{HUSchool}}", EducationalInfo.HUSchoolName == "SE" ? Constants.SchoolName.SE : Constants.SchoolName.SA);
                         }
                         else
                         {

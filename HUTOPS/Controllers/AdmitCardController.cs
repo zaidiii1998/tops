@@ -71,7 +71,7 @@ namespace HUTOPS.Controllers
                     {
                         TestDate = admitCardBatchModel.TestDate,
                         Shift = admitCardBatchModel.Shift,
-                        Venue = admitCardBatchModel.Vanue,
+                        Venue = admitCardBatchModel.Venue,
                         Type = admitCardBatchModel.Type,
                         Result = admitCardBatchModel.Result,
                         HUTOPSIdsFile = filePath,

@@ -1368,6 +1368,7 @@ function submitDeclaration() {
         }
 
     } else {
+        $('input[required]').filter(':first').focus();
         ShowDivError("Please check all sections and enter in all required fields");
     }
 
@@ -1440,10 +1441,6 @@ function LoadStudentDatatable() {
             }
         },
         "columns": [
-            {
-                "data": null,
-                "defaultContent": "<input type='checkbox' class='checkbox'  />"
-            },
             { "data": "Id" },
             { "data": "HUTopId" },
             { "data": "FirstName" },
@@ -1497,10 +1494,15 @@ function LoadStudentDatatable() {
                 }
             },
             {
-                "data": null,
+                "data": "Id",
                 //"defaultContent": "<button data-v-aa799a9e='' id='btnEdit' type='button' class='btn btn-icon savebtn global-btn-purple'><i class='fa fa-edit'></i></button> "
                 //"defaultContent": "<div style='min-width: 150px;'><button id='btnEdit' type='button'><i class='fa fa-edit' style='font-size: 30px; color:#5d2468;'></i></button> <button id='btnAdmitCard' type='button'><i class='fa-solid fa-file-pdf' style='font-size: 30px;color:#5d2468;'></i></button> <button id='btnSend' type='button'><i class='fa-regular fa-paper-plane' style='font-size: 30px;color:#5d2468;'></i></button></div>"
-                "defaultContent": "<li class='logoutDropWrap'><div class= 'nameWrapper'><i class='fa-solid fa-list-ul'></i></div ><ul class='logoutDrop'><li class='global-btn-purple'>Edit</li><li class='global-btn-purple'>Edit</li><li class='global-btn-purple'>Edit</li></ul></li > "
+                //render: function (data) {
+                //    return "<li class='actionDropWrap' onclick='ToggleShow($(this))'><div class= 'nameWrapper'><i class='fa-solid fa-list-ul'></i></div ><ul class='logoutDrop'><li class='global-btn-purple w-100' id='btnEdit'>Edit</li><li class='global-btn-purple w-100' onclick='ShowAdmitCardModal(" + data + ")'>Generate Admit Card</li><li onclick='sendAdmitCard(" + data + ")' class='global-btn-purple w-100'>Send Admit Card</li></ul></li > "
+                //}
+                render: function (data) {
+                    return "<li class='actionDropWrap' id='" + data + "' onclick='ToggleShow(this.id)'><div class= 'nameWrapper'><i class='fa-solid fa-list-ul'></i></div ><ul class='actionDrop'><li class='global-btn-purple w-100' id='btnEdit'>Edit</li><li class='global-btn-purple w-100' onclick='ShowAdmitCardModal(" + data + ")'>Generate Admit Card</li><li onclick='sendAdmitCard(" + data + ")' class='global-btn-purple w-100'>Send Admit Card</li></ul></li > "
+                }
             }
         ],
         "columnDefs": [
@@ -1510,7 +1512,7 @@ function LoadStudentDatatable() {
                 "orderable": true
             },
             {
-                "targets": [1],
+                "targets": [0],
                 "visible": false,
                 "searchable": false
             }
@@ -1579,6 +1581,7 @@ function LoadStudentDatatable() {
         
         
     })
+
 }
 
 function closeStudentProfile(){
@@ -1593,28 +1596,92 @@ function closeStudentProfile(){
     }
 }
 
-function ShowAdmitCardModal() {
+function ShowAdmitCardModal(applicantId) {
+    debugger
     var modal = $('#modalAdmitCard');
+    $('#applicantId').val(applicantId);
     modal.modal({ show: true })
 }
 
 function SubmitAdmitCard() {
-    var data = new FormData();
-    data.append("HUTOPSIds", $('#').val());
-    data.append("TestDate", $('#testDate').val());
-    data.append("Shift", $('#comboShift').val());
-    data.append("Vanue", $("input[name='vanue']:checked").val());
+    var isValid = true;
+    $('input[required]').each(function () {
 
-    CallFileAsyncService("/AdmitCard/Submit", data, SubmitAdmitCardBatchCB);
+        if ($(this).val().trim() === '') {
+            isValid = false;
+            $(this).addClass("error");
+            $(this).focus();
+
+        } else {
+            $(this).removeClass("error");
+        }
+    });
+    $('select[required]').each(function () {
+
+        if (($(this).val() === '') || ($(this).val() === null)) {
+            isValid = false;
+            $(this).addClass("error");
+            $(this).focus();
+
+        } else {
+            $(this).removeClass("error");
+        }
+    });
+    $("input[name=venue]").each(function () {
+
+        var checked = $("input[name=venue]:checked");
+        debugger
+        if (checked.length == 0) {
+            isValid = false;
+            $('#errVenue').html('Please select Venue');
+        } else {
+            $('#errVenue').html('');
+        }
+    });
+    if (isValid) {
+        var param = {
+            'Id': $('#applicantId').val(),
+            'TestDate': $('#testDate').val(),
+            'Shift': $('#comboShift').val(),
+            'Venue': $("input[name='venue']:checked").val()
+        };
+        $('#modalAdmitCard').modal('hide');
+        $('#mainLoader').show();
+        CallAsyncService("/Student/GenerateAdmitCard", JSON.stringify(param), SubmitAdmitCardBatchCB);
+        function SubmitAdmitCardBatchCB(response) {
+            $('#mainLoader').hide();
+
+            if (response.status) {
+                ShowDivSuccess(response.message);
+            } else {
+                ShowDivError(response.message);
+            }
+        }
+    } else {
+        return false;
+    }
+    
+
+}
+
+function ToggleShow(Id) {
+    $('#' + Id).children('ul').toggleClass("dropdown-show");
+}
+
+function sendAdmitCard(applicantId) {
+    
+    $('#mainLoader').show();
+    CallFileAsyncService("/Student/SendAdmitCard?Id=" + applicantId, null, SubmitAdmitCardBatchCB);
     function SubmitAdmitCardBatchCB(response) {
+        $('#mainLoader').hide();
         if (response.status) {
             ShowDivSuccess(response.message);
         } else {
             ShowDivError(response.message);
         }
     }
-
 }
+
 
 // Email Tab
 
@@ -1734,29 +1801,57 @@ function ShowModal() {
 }
 
 function AddUpdateTestDate() {
-    var visible = '0';
-    if ($('#checkVisibility').prop('checked') == true) {
-        visible = '1';
-    }
-    var param = {
-        Id: $('#txtId').val(),
-        Value: $('#dateValue').val(),
-        Text: $('#txtText').val(),
-        AdmissionSession: $('#comboAdmissionSession').val(),
-        DeadlineDate: $('#dateDeadline').val(),
-        Visibility: visible
-    }
-    $('#mainLoader').show();
-    CallAsyncService("/TestDate/Submit", JSON.stringify(param), AddUpdateTestDateCB);
-    function AddUpdateTestDateCB(response) {
-        $('#mainLoader').hide();
-        $('#modal').modal('hide');
-        if (response.status) {
-            ShowDivSuccess(response.message);
+
+    var isValid = true;
+    $('input[required]').each(function () {
+
+        if ($(this).val().trim() === '') {
+            isValid = false;
+            $(this).addClass("error");
+            $(this).focus();
+
         } else {
-            ShowDivError(response.message);
+            $(this).removeClass("error");
         }
-    }
+    });
+    $('select[required]').each(function () {
+
+        if (($(this).val() === '') || ($(this).val() === null)) {
+            isValid = false;
+            $(this).addClass("error");
+            $(this).focus();
+
+        } else {
+            $(this).removeClass("error");
+        }
+    });
+    if (isValid) {
+        var visible = '0';
+        if ($('#checkVisibility').prop('checked') == true) {
+            visible = '1';
+        }
+        var param = {
+            Id: $('#txtId').val(),
+            Value: $('#dateValue').val(),
+            Text: $('#txtText').val(),
+            AdmissionSession: $('#comboAdmissionSession').val(),
+            DeadlineDate: $('#dateDeadline').val(),
+            Visibility: visible
+        }
+        $('#modal').modal('hide');
+        $('#mainLoader').show();
+        CallAsyncService("/TestDate/Submit", JSON.stringify(param), AddUpdateTestDateCB);
+        function AddUpdateTestDateCB(response) {
+            $('#mainLoader').hide();
+
+            if (response.status) {
+                ShowDivSuccess(response.message);
+            } else {
+                ShowDivError(response.message);
+            }
+        }
+    } else { return false; }
+    
 }
 
 // Admit card Managment 

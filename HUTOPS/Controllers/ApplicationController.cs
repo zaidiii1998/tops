@@ -283,6 +283,14 @@ namespace HUTOPS.Controllers
                         try
                         {
                             applicationModel.PersonalInfo.Declaration = 1;
+
+                            applicationModel.PersonalInfo.FirstName = Utility.ToCamelCase(applicationModel.PersonalInfo.FirstName);
+                            applicationModel.PersonalInfo.MiddleName = Utility.ToCamelCase(applicationModel.PersonalInfo.MiddleName);
+                            applicationModel.PersonalInfo.LastName = Utility.ToCamelCase(applicationModel.PersonalInfo.LastName);
+                            applicationModel.PersonalInfo.FatherFirstName = Utility.ToCamelCase(applicationModel.PersonalInfo.FatherFirstName);
+                            applicationModel.PersonalInfo.FatherMiddleName = Utility.ToCamelCase(applicationModel.PersonalInfo.FatherMiddleName);
+                            applicationModel.PersonalInfo.FatherLastName = Utility.ToCamelCase(applicationModel.PersonalInfo.FatherLastName);
+
                             DB.PersonalInformations.Add(applicationModel.PersonalInfo);
                             DB.SaveChanges();
                             Utility.AddLog(Constants.LogType.ActivityLog, $"Personal Information Table record Inserted : {JsonConvert.SerializeObject(applicationModel.PersonalInfo)}");
@@ -357,6 +365,9 @@ namespace HUTOPS.Controllers
                             }
 
                             applicationModel.Education.UserId = applicationModel.PersonalInfo.Id;
+                            applicationModel.Education.SSCSchoolName = Utility.ToCamelCase(applicationModel.Education.SSCSchoolName);
+                            applicationModel.Education.HSSCSchoolName = Utility.ToCamelCase(applicationModel.Education.HSSCSchoolName);
+
                             DB.Educationals.Add(applicationModel.Education);
                             DB.SaveChanges();
                             Utility.AddLog(Constants.LogType.ActivityLog, $"Educational Table record Inserted Detials: {JsonConvert.SerializeObject(applicationModel.Education)}");
