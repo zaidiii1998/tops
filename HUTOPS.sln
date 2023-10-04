@@ -5,7 +5,7 @@ VisualStudioVersion = 17.7.34018.315
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HUTOPS", "HUTOPS\HUTOPS.csproj", "{45463DFB-6427-4BC4-8380-DC85D78EDB67}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HUTOPSBatchProcessConsoleApp", "..\HUTOPSBatchProcess\HUTOPSBatchProcessConsoleApp\HUTOPSBatchProcessConsoleApp\HUTOPSBatchProcessConsoleApp.csproj", "{87AE60B4-FE25-4121-BE03-226630A35AAE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HUTOPSBatchProcessConsoleApp", "HUTOPSBatchProcessConsoleApp\HUTOPSBatchProcessConsoleApp.csproj", "{87AE60B4-FE25-4121-BE03-226630A35AAE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
