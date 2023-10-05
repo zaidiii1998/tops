@@ -23,6 +23,27 @@ namespace HUTOPS.Controllers
             string filePath = "";
             try
             {
+                if(admitCardBatchModel.Type == 0)
+                {
+                    return Json(new { status = false, message = "Please Select Action First" });
+                }
+                if((admitCardBatchModel.Type != 0 && admitCardBatchModel.Type == 2) && admitCardBatchModel.HUTOPSIdsFile == null) 
+                {
+                    return Json(new { status = false, message = "Please Select HUTOPS Ids File to send Emails" });
+                }
+                else if(admitCardBatchModel.Type != 0 &&(admitCardBatchModel.Type == 1 || admitCardBatchModel.Type == 3))
+                {
+                    if (!ModelState.IsValid)
+                    {
+                        return Json(new { status = false, message = "Provided Information is not Valid" });
+                    }
+                }
+                else if ((admitCardBatchModel.Type != 0 && admitCardBatchModel.Type == 4) && admitCardBatchModel.HUTOPSIdsFile == null || admitCardBatchModel.Result == 0)
+                {
+                    return Json(new { status = false, message = "Please enter in all reqired fields to Update Result" });
+                }
+
+
                 Utility.AddLog(Constants.LogType.ActivityLog, $"Admin {Utility.GetAdminFromSession().Name} Requested to Add Batch File for generate Admit Card :");
 
                 string uploadDirectory = HttpContext.Server.MapPath("~/UploadedFiles");
@@ -98,7 +119,7 @@ namespace HUTOPS.Controllers
             {
                 if (System.IO.File.Exists(filePath)) { System.IO.File.Delete(filePath); }
                 
-                return Json(new { status = false, message = "Error Occur while processing you request" + ex.Message});
+                return Json(new { status = false, message = "Error Occur while processing you request " + ex.Message});
             }
         }
     }

@@ -5,7 +5,6 @@ using System;
 using System.Data;
 using System.IO;
 using System.Linq;
-using System.Web.Helpers;
 using System.Web.Mvc;
 
 namespace HUTOPS.Controllers
@@ -109,75 +108,91 @@ namespace HUTOPS.Controllers
         {
             try
             {
-                var personalInformation = DB.PersonalInformations.ToList().Where(x => x.Id == model.Id).FirstOrDefault();
-                var document = new Document();
-                var Educational = new Educational();
-                var EmailTemplate = DB.EmailTemplates.ToList().Where(x => x.Id == 3).FirstOrDefault();
-                string EmailBody = EmailTemplate.Body;
+                Utility.AddLog(Constants.LogType.ActivityLog, $"Admin request to Generate Admit Card Details: {JsonConvert.SerializeObject(model)}");
 
-                if (personalInformation != null)
+                if (ModelState.IsValid)
                 {
-                    document = DB.Documents.ToList().Where(x => x.UserId == personalInformation.Id).FirstOrDefault() == null ? new Document() : DB.Documents.ToList().Where(x => x.UserId == personalInformation.Id).FirstOrDefault();
-                    Educational = DB.Educationals.ToList().Where(x => x.UserId == personalInformation.Id).FirstOrDefault() == null ? new Educational() : DB.Educationals.ToList().Where(x => x.UserId == personalInformation.Id).FirstOrDefault();
+                    Utility.AddLog(Constants.LogType.ActivityLog, $"Given model is valid");
+                    var personalInformation = DB.PersonalInformations.ToList().Where(x => x.Id == model.Id).FirstOrDefault();
+                    var document = new Document();
+                    var Educational = new Educational();
+                    var EmailTemplate = DB.EmailTemplates.ToList().Where(x => x.Id == 3).FirstOrDefault();
+                    string EmailBody = EmailTemplate.Body;
 
-                    EmailBody = EmailBody.Replace("{{HUTOPSId}}", personalInformation.HUTopId);
-                    EmailBody = EmailBody.Replace("{{Name}}", personalInformation.FirstName + " " + personalInformation.MiddleName + " " + personalInformation.LastName);
-                    EmailBody = EmailBody.Replace("{{CNIC}}", personalInformation.CNIC);
-                }
-                else
-                {
-                    return Json(new { status = false, message = "Record not found" });
-                }
-                if (Educational.Id != 0)
-                {
-                    EmailBody = EmailBody.Replace("{{HUSchool}}", Educational.HUSchoolName == "SE" ? Constants.SchoolName.SE : Constants.SchoolName.SA);
-                }
-                else
-                {
-                    return Json(new { status = false, message = "Educational Information not Found" });
-                }
-                if (document.Id != 0)
-                {
-                    EmailBody = EmailBody.Replace("{{Photo}}", document.Photograph);
-                }
-                else
-                {
-                    return Json(new { status = false, message = $"Documents not found against this HUTOPS Id {personalInformation.HUTopId}" });
-                }
-                EmailBody = EmailBody.Replace("{{TestDate}}", model.TestDate.ToString());
-                EmailBody = EmailBody.Replace("{{ApproxDatetime}}", model.Shift == "1" ? Constants.Shift.FirstShift : model.Shift == "2" ? Constants.Shift.SecondShift : Constants.Shift.ThirtShift);
-                EmailBody = EmailBody.Replace("{{ReportingTime}}", model.Shift == "1" ? Constants.ReportingTime.FirstShift : model.Shift == "2" ? Constants.ReportingTime.SecondShift : Constants.ReportingTime.ThirtShift);
-                EmailBody = EmailBody.Replace("{{Vanue}}", model.Venue == "Karachi" ? Constants.Vanue.Karachi : Constants.Vanue.Islamabad);
+                    if (personalInformation != null)
+                    {
+                        Utility.AddLog(Constants.LogType.ActivityLog, $"Applicant record found for Admit Card Details: {JsonConvert.SerializeObject(personalInformation)}");
+                        document = DB.Documents.ToList().Where(x => x.UserId == personalInformation.Id).FirstOrDefault() == null ? new Document() : DB.Documents.ToList().Where(x => x.UserId == personalInformation.Id).FirstOrDefault();
+                        Educational = DB.Educationals.ToList().Where(x => x.UserId == personalInformation.Id).FirstOrDefault() == null ? new Educational() : DB.Educationals.ToList().Where(x => x.UserId == personalInformation.Id).FirstOrDefault();
 
-                // Save File to server
-                Utility.AddLog(Constants.LogType.ActivityLog, $"Fetched user Inforation and mapped against HUTOPSId: {personalInformation.HUTopId}");
-                string uploadDirectory = HttpContext.Server.MapPath("~/UploadedFiles");
-                string UserDirectory = Path.Combine(HttpContext.Server.MapPath("~/UploadedFiles/"), personalInformation.Id.ToString());
+                        EmailBody = EmailBody.Replace("{{HUTOPSId}}", personalInformation.HUTopId);
+                        EmailBody = EmailBody.Replace("{{Name}}", personalInformation.FirstName + " " + personalInformation.MiddleName + " " + personalInformation.LastName);
+                        EmailBody = EmailBody.Replace("{{CNIC}}", personalInformation.CNIC);
+                    }
+                    else
+                    {
+                        Utility.AddLog(Constants.LogType.ActivityLog, $"Applicant record not found for Admit Card");
+                        return Json(new { status = false, message = "Record not found" });
+                    }
+                    if (Educational.Id != 0)
+                    {
+                        Utility.AddLog(Constants.LogType.ActivityLog, $"Educational Information found against personal Information: {JsonConvert.SerializeObject(personalInformation)}");
+                        EmailBody = EmailBody.Replace("{{HUSchool}}", Educational.HUSchoolName == "SE" ? Constants.SchoolName.SE : Constants.SchoolName.SA);
+                    }
+                    else
+                    {
+                        Utility.AddLog(Constants.LogType.ActivityLog, $"Educational Information not found against personal Information: {JsonConvert.SerializeObject(personalInformation)}");
+                        return Json(new { status = false, message = "Educational Information not Found" });
+                    }
+                    if (document.Id != 0)
+                    {
+                        Utility.AddLog(Constants.LogType.ActivityLog, $"Documents record found against personal Information: {JsonConvert.SerializeObject(personalInformation)}");
+                        EmailBody = EmailBody.Replace("{{Photo}}", document.Photograph);
+                    }
+                    else
+                    {
+                        Utility.AddLog(Constants.LogType.ActivityLog, $"Document record not found against personal Information: {JsonConvert.SerializeObject(personalInformation)}");
+                        return Json(new { status = false, message = $"Documents not found against this HUTOPS Id {personalInformation.HUTopId}" });
+                    }
+                    EmailBody = EmailBody.Replace("{{TestDate}}", model.TestDate.ToString());
+                    EmailBody = EmailBody.Replace("{{ApproxDatetime}}", model.Shift == "1" ? Constants.Shift.FirstShift : model.Shift == "2" ? Constants.Shift.SecondShift : Constants.Shift.ThirtShift);
+                    EmailBody = EmailBody.Replace("{{ReportingTime}}", model.Shift == "1" ? Constants.ReportingTime.FirstShift : model.Shift == "2" ? Constants.ReportingTime.SecondShift : Constants.ReportingTime.ThirtShift);
+                    EmailBody = EmailBody.Replace("{{Vanue}}", model.Venue == "Karachi" ? Constants.Vanue.Karachi : Constants.Vanue.Islamabad);
 
-                var filePath = HU_HTML_TO_PDF.Converter.ConvertHTML_TO_PDF(EmailBody, UserDirectory, "A4", "Portrait");
-                // Update Admit Card Status in perssonal Info Table
+                    // Save File to server
+                    Utility.AddLog(Constants.LogType.ActivityLog, $"Fetched user Inforation and mapped against HUTOPSId: {personalInformation.HUTopId}");
+                    string uploadDirectory = HttpContext.Server.MapPath("~/UploadedFiles");
+                    string UserDirectory = Path.Combine(HttpContext.Server.MapPath("~/UploadedFiles/"), personalInformation.Id.ToString());
 
-                Utility.AddLog(Constants.LogType.ActivityLog, $"Admit Card genrated against HUTOPSId : {personalInformation.HUTopId}");
+                    var filePath = HU_HTML_TO_PDF.Converter.ConvertHTML_TO_PDF(EmailBody, UserDirectory, "A4", "Portrait");
+                    // Update Admit Card Status in perssonal Info Table
 
-                using (HUTOPSEntities tempDB = new HUTOPSEntities())
-                {
-                    var personalInfo = tempDB.PersonalInformations.ToList().Where(x => x.Id == personalInformation.Id).FirstOrDefault();
-                    personalInfo.IsAdmitCardGenerated = 1;
-                    personalInfo.AdmitCardGeneratedOn = DateTime.Now;
-                    tempDB.SaveChanges();
+                    Utility.AddLog(Constants.LogType.ActivityLog, $"Admit Card genrated against HUTOPSId : {personalInformation.HUTopId}");
+
+                    using (HUTOPSEntities tempDB = new HUTOPSEntities())
+                    {
+                        var personalInfo = tempDB.PersonalInformations.ToList().Where(x => x.Id == personalInformation.Id).FirstOrDefault();
+                        personalInfo.IsAdmitCardGenerated = 1;
+                        personalInfo.AdmitCardGeneratedOn = DateTime.Now;
+                        tempDB.SaveChanges();
+                    }
+                    Utility.AddLog(Constants.LogType.ActivityLog, $"Update Admit Card Status in the personal Information Table Against HUTOPSId : {personalInformation.HUTopId}");
+                    // Update Admit Card Path in Documents Table
+                    using (HUTOPSEntities tempDB = new HUTOPSEntities())
+                    {
+                        var documents = tempDB.Documents.ToList().Where(x => x.Id == document.Id).FirstOrDefault();
+                        documents.AdmitCard = filePath;
+                        tempDB.SaveChanges();
+                    }
+                    Utility.AddLog(Constants.LogType.ActivityLog, $"Update Admit card Path in the documents table against HUTOPSId : {personalInformation.HUTopId}");
+                    // Send Email
+
+                    return Json(new { status = true, message = "Admit Card Genrated Successfully" });
                 }
-                Utility.AddLog(Constants.LogType.ActivityLog, $"Update Admit Card Status in the personal Information Table Against HUTOPSId : {personalInformation.HUTopId}");
-                // Update Admit Card Path in Documents Table
-                using (HUTOPSEntities tempDB = new HUTOPSEntities())
-                {
-                    var documents = tempDB.Documents.ToList().Where(x => x.Id == document.Id).FirstOrDefault();
-                    documents.AdmitCard = filePath;
-                    tempDB.SaveChanges();
+                else {
+                    return Json(new { status = false, message = $"Please Enter in all required fields" });
                 }
-                Utility.AddLog(Constants.LogType.ActivityLog, $"Update Admit card Path in the documents table against HUTOPSId : {personalInformation.HUTopId}");
-                // Send Email
-
-                return Json(new { status = true, message = "Admit Card Genrated Successfully" });
+                
             
             }
             catch (Exception)

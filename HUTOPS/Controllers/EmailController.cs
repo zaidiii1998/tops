@@ -22,6 +22,11 @@ namespace HUTOPS.Controllers
             {
                 if(emailTemplate.Id != 0)
                 {
+                    if (string.IsNullOrEmpty(emailTemplate.Subject) || string.IsNullOrEmpty(emailTemplate.Body))
+                    {
+                        return Json(new { status = false, message = "Please Enter in all required fields" });
+                    }
+
                     Utility.AddLog(Constants.LogType.ActivityLog, $"Admin Request to Update Email Template. Template Details: {JsonConvert.SerializeObject(emailTemplate)}");
                     var email = DB.EmailTemplates.Where(x => x.Id == emailTemplate.Id).FirstOrDefault();
                     email.Subject = emailTemplate.Subject;
@@ -32,14 +37,18 @@ namespace HUTOPS.Controllers
 
                     return Json(new { status = true, message = "Email Template Updated Successfully" });
                 }
-                return Json(new { status = true, message = "Error occured while saving Email Template" });
+                else
+                {
+                    Utility.AddLog(Constants.LogType.ActivityLog, $"Email Template not Found.");
+                    return Json(new { status = false, message = "Email Template not Found" });
+                }
 
             }
             catch (Exception ex)
             {
                 Utility.AddLog(Constants.LogType.Exception, "Exception occurred during Saving Email Template." + ((ex.InnerException != null) ? ex.InnerException.Message : "") + "Model Details: " + JsonConvert.SerializeObject(emailTemplate));
 
-                return Json(new { status = true, message = "Error occured while saving Email Template" });
+                return Json(new { status = false, message = "Error occured while saving Email Template" });
             }
         }
     }

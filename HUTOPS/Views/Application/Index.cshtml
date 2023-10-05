@@ -43,7 +43,8 @@
                                     <div class="col-lg-4">
                                         <div class="form-group">
                                             <label for="middleName">Middle Name:</label>
-                                            <input class="form-control" type="text" id="middleName" name="MiddleName" maxlength="25" value="@Model.PersonalInfo.MiddleName" oninput="validateText(this);">
+                                            <input class="form-control" type="text" id="middleName" name="MiddleName" maxlength="25" value="@Model.PersonalInfo.MiddleName" oninput="validateText(this); validateName(this.id, 'errMiddleName');">
+                                            <span class="text-danger" id="errMiddleName"></span>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
@@ -65,7 +66,8 @@
                                     <div class="col-lg-4">
                                         <div class="form-group">
                                             <label for="fatherMiddleName">Father's Middle Name:</label>
-                                            <input class="form-control" type="text" id="fatherMiddleName" maxlength="25" name="FatherMiddleName" value="@Model.PersonalInfo.FatherMiddleName" oninput="validateText(this);">
+                                            <input class="form-control" type="text" id="fatherMiddleName" maxlength="25" name="FatherMiddleName" value="@Model.PersonalInfo.FatherMiddleName" oninput="validateText(this); validateName(this.id,'errFatherMName')">
+                                            <span class="text-danger" id="errFatherMName"></span>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
@@ -144,7 +146,7 @@
                                             @*<input type="date" class="form-control" id="dob" name="DateOfBirth" required />*@
                                             <div class="col-lg-12 d-flex m-0 p-0">
                                                 <select class="form-control mr-2" id="dobDay" style="max-width: 100px;" name="dobDay" required>
-                                                    <option value="" selected>Day</option>
+                                                    <option value="" selected disabled>Day</option>
                                                     <option value="01">01</option>
                                                     <option value="02">02</option>
                                                     <option value="03">03</option>
@@ -178,7 +180,7 @@
                                                     <option value="31">31</option>
                                                 </select>
                                                 <select class="form-control mr-2" id="dobMonth" style="max-width: 100px;" name="dobMonth" required>
-                                                    <option value="" selected>Month</option>
+                                                    <option value="" selected disabled>Month</option>
                                                     <option value="01">January</option>
                                                     <option value="02">February</option>
                                                     <option value="03">March</option>
@@ -516,7 +518,7 @@
                                         <div class="form-group">
                                             <label for="currentLevel">Your Current Level of Study:</label>
                                             <select class="form-control" id="currentLevel" name="currentLevel" onchange="ShowHideField('divUniName','currentLevel','Already enrolled in a University')" required>
-                                                <option value="">Select Value </option>
+                                                <option value="" selected disabled>Select Value </option>
                                                 <option value="HSSC II in progress">HSSC II in progress</option>
                                                 <option value="HSSC II Completed">HSSC II Completed</option>
                                                 <option value="Already enrolled in a University">Already enrolled in a University</option>
@@ -534,7 +536,7 @@
                                         <div class="form-group">
                                             <label for="boardOfEducation">Board Of Education:</label>
                                             <select class="form-control" id="boardOfEducation" name="boardOfEducation" onchange="GetGroupListFromObj(this.value);" required>
-                                                <option value="" selected>Select Board</option>
+                                                <option value="" selected disabled>Select Board</option>
                                                 @if ("Board Of Intermediate" == Model.Education.HSSCBoardName)
                                                 {
                                                     <option value="1" selected>Board Of Intermediate</option>
@@ -567,7 +569,7 @@
                                         <div class="form-group">
                                             <label for="groupOfStudy">Group Of Studies</label>
                                             <select class="form-control" id="groupOfStudy" name="groupOfStudy" onchange="GetSubjects(this.value)" required>
-                                                <option value="">Select Group</option>
+                                                <option value="" selected disabled>Select Group</option>
                                                 @if ("Pre-Medical" == Model.Education.HSSCGroupName)
                                                 {
                                                     <option value="Pre-Medical" selected>Pre-Medical</option>

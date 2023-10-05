@@ -600,6 +600,7 @@ function LoadYear(selectId) {
     option.value = "";
     option.text = "Year";
     option.selected = true;
+    option.disabled = true;
     comboYear.appendChild(option);
     if (selectId == "completionYear") {
         var option = document.createElement("option");
@@ -1422,7 +1423,7 @@ function LoadStudentDatatable() {
         "lengthMenu": [10, 25, 50, 75],
         "ordering": false,
         "language": {
-            "processing": "<image src='/Content/images/preloader.gif' />"
+            "processing": "<div class='loader' id='mainLoader'><img src = '/Content/Images/preloader.gif' /></div >"
         },
         buttons: [
             {
@@ -1523,7 +1524,7 @@ function LoadStudentDatatable() {
         mainTable.column(1).search($("#txtFilterHUTOPSId").val());
         mainTable.column(2).search($("#txtFilterName").val());
         mainTable.column(3).search($("#txtFilterCNIC").val());
-        mainTable.column(4).search($("#txtFilterPhone").val());
+        mainTable.column(4).search($("#txtFilterPhoneNumber").val());
         mainTable.column(5).search($("#txtFilterEmail").val());
 
         mainTable.draw();
@@ -1535,7 +1536,7 @@ function LoadStudentDatatable() {
         $("#txtFilterHUTOPSId").val('');
         $("#txtFilterName").val('');
         $("#txtFilterCNIC").val('');
-        $("#txtFilterPhone").val('');
+        $("#txtFilterPhoneNumber").val('');
         $("#txtFilterEmail").val('');
         $('#btnSearch').trigger('click');
     })
@@ -1650,7 +1651,7 @@ function SubmitAdmitCard() {
         CallAsyncService("/Student/GenerateAdmitCard", JSON.stringify(param), SubmitAdmitCardBatchCB);
         function SubmitAdmitCardBatchCB(response) {
             $('#mainLoader').hide();
-
+            setInterval(function () { location.reload() }, 3000);
             if (response.status) {
                 ShowDivSuccess(response.message);
             } else {
@@ -1696,12 +1697,8 @@ function LoadEmailTemplate(Id, model) {
 }
 
 function SaveEmailTemplate() {
-    var Id = 0;
-    if (!$('#btnAddNewEmail').prop('disabled')) {
-        Id = $('#comboEmailTemp').val();
-    }
     var param = {
-        Id: Id,
+        Id: $('#comboEmailTemp').val(),
         Subject: $('#txtSubject').val(),
         Body: tinymce.get("textAreaEmailTemp").getContent()
     }
@@ -1709,14 +1706,12 @@ function SaveEmailTemplate() {
     CallAsyncService("/Email/Save", JSON.stringify(param), SaveEmailTemplateCB);
     function SaveEmailTemplateCB(response) {
         $('#mainLoader').hide();
-        
+        setInterval(function () { location.reload() }, 3000);
         if (response.status) {
             ShowDivSuccess(response.message);
-            setInterval(location.reload(), 2000);
         }
         else {
             ShowDivError(response.message);
-            setInterval(location.reload(), 2000);
         }
     }
 }
@@ -1732,8 +1727,9 @@ function AddNewEmailTemplate() {
 
 
 // Test Date Section
+
 function LoadTestDateDatatable() {
-    var mainTable = $('#main-datatables').DataTable({
+    var TestDateTable = $('#main-datatables').DataTable({
         dom: 'lrtip',
         "processing": true,
         "serverSide": false,
@@ -1742,7 +1738,7 @@ function LoadTestDateDatatable() {
         "lengthMenu": [10, 25, 50, 75],
         "ordering": false,
         "language": {
-            "processing": "<image src='/Content/images/preloader.gif' />"
+            "processing": "<div class='loader' id='mainLoader'><img src = '/Content/Images/preloader.gif' /></div > "
         },
         "columnDefs": [
             {
@@ -1764,7 +1760,7 @@ function LoadTestDateDatatable() {
     // Edit Transaction
     $('#main-datatables tbody').on('click', '#btnEdit', function () {
         debugger
-        var data = mainTable.row($(this).parents('tr')).data();
+        var data = TestDateTable.row($(this).parents('tr')).data();
         var modal = $('#modal');
         console.log(data[3]);
         modal.on('show.bs.modal', function () {
@@ -1843,7 +1839,7 @@ function AddUpdateTestDate() {
         CallAsyncService("/TestDate/Submit", JSON.stringify(param), AddUpdateTestDateCB);
         function AddUpdateTestDateCB(response) {
             $('#mainLoader').hide();
-
+            setTimeout(function () { location.reload() }, 3000)
             if (response.status) {
                 ShowDivSuccess(response.message);
             } else {
@@ -1860,6 +1856,13 @@ function SubmitAdmitCardBatch() {
     var isValid = true; 
     if ($("input[name='type']:checked").val() != null) {
         if ($("input[name='type']:checked").val() == 2) {
+            $('#errVenue').html('');
+            $('input[required]').each(function () {
+                $(this).removeClass("error");
+            });
+            $('select[required]').each(function () {
+                $(this).removeClass("error");
+            });
             if ($("#HUTOPSIdsFile").get(0).files[0] == null) {
                 isValid = false;
                 $("#HUTOPSIdsFile").addClass("error");
@@ -1913,7 +1916,7 @@ function SubmitAdmitCardBatch() {
         data.append("HUTOPSIdsFile", jQuery("#HUTOPSIdsFile").get(0).files[0]);
         data.append("TestDate", $('#testDate').val());
         data.append("Shift", $('#comboShift').val());
-        data.append("Vanue", $("input[name='vanue']:checked").val());
+        data.append("Venue", $("input[name='vanue']:checked").val());
         data.append("Type", $("input[name='type']:checked").val());
 
         $('#mainLoader').show();

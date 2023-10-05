@@ -116,7 +116,7 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Description" Type="text" Nullable="false" />
-          <Property Name="Subject" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Subject" Type="varchar(max)" />
           <Property Name="Body" Type="text" />
           <Property Name="CreatedOn" Type="datetime2" Precision="7" />
           <Property Name="UpdatedOn" Type="datetime2" Precision="7" />
@@ -159,13 +159,13 @@
           <Property Name="CellPhoneNumber" Type="varchar" MaxLength="15" Nullable="false" />
           <Property Name="AlternateCellPhoneNumber" Type="varchar" MaxLength="15" />
           <Property Name="TellUs" Type="varchar" MaxLength="50" />
-          <Property Name="ResidentialAddress" Type="varchar" MaxLength="100" />
+          <Property Name="ResidentialAddress" Type="varchar(max)" />
           <Property Name="ResidentialCity" Type="varchar" MaxLength="50" />
           <Property Name="ResidentialCityOther" Type="varchar" MaxLength="50" />
           <Property Name="ResidentialProvince" Type="varchar" MaxLength="50" />
           <Property Name="ResidentialCountry" Type="varchar" MaxLength="50" />
           <Property Name="ResidentialPostalCode" Type="int" />
-          <Property Name="PermanentAddress" Type="varchar" MaxLength="100" />
+          <Property Name="PermanentAddress" Type="varchar(max)" />
           <Property Name="PermanentCity" Type="varchar" MaxLength="50" />
           <Property Name="PermanentCityOther" Type="varchar" MaxLength="50" />
           <Property Name="PermanentProvince" Type="varchar" MaxLength="50" />
@@ -628,7 +628,7 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Subject" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Subject" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="Body" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="CreatedOn" Type="DateTime" Precision="7" />
           <Property Name="UpdatedOn" Type="DateTime" Precision="7" />
@@ -671,13 +671,13 @@
           <Property Name="CellPhoneNumber" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="AlternateCellPhoneNumber" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
           <Property Name="TellUs" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="ResidentialAddress" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ResidentialAddress" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="ResidentialCity" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="ResidentialCityOther" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="ResidentialProvince" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="ResidentialCountry" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="ResidentialPostalCode" Type="Int32" />
-          <Property Name="PermanentAddress" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="PermanentAddress" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="PermanentCity" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="PermanentCityOther" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="PermanentProvince" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
