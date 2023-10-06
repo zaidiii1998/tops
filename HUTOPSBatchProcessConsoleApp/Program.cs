@@ -21,7 +21,7 @@ namespace HUTOPSBatchProcessConsoleApp
             HUTOPSEntities DB = new HUTOPSEntities();
             try
             {
-                Helper.AddLog(Constants.LogType.ActivityLog, "Admit card Batch service started");
+                Helper.AddLog(Constants.LogType.ActivityLog, "Batch service started");
 
                 List<BatchUpload> Batch = DB.BatchUploads.ToList().Where(x => x.Status == 0).ToList();
 

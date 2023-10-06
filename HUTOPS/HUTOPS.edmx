@@ -193,10 +193,11 @@
           <Property Name="Retake" Type="int" />
           <Property Name="IsAppliedBefore" Type="int" />
           <Property Name="AppliedBeforeMonth" Type="int" />
+          <Property Name="AppliedBeforeId" Type="varchar" MaxLength="50" />
           <Property Name="AppliedBeforeYear" Type="int" />
           <Property Name="HomePhoneNumber" Type="varchar" MaxLength="15" />
           <Property Name="WhatsAppNumber" Type="varchar" MaxLength="15" />
-          <Property Name="GuardianCellPhoneNumber" Type="varchar" MaxLength="12" />
+          <Property Name="GuardianCellPhoneNumber" Type="varchar" MaxLength="15" />
           <Property Name="GuardianEmailAddress" Type="varchar" MaxLength="50" />
           <Property Name="HearAboutHU" Type="varchar" MaxLength="50" />
           <Property Name="HearAboutHUOther" Type="varchar" MaxLength="50" />
@@ -705,10 +706,10 @@
           <Property Name="Retake" Type="Int32" />
           <Property Name="IsAppliedBefore" Type="Int32" />
           <Property Name="AppliedBeforeMonth" Type="Int32" />
-          <Property Name="AppliedBeforeYear" Type="Int32" />
+          <Property Name="AppliedBeforeYear" Type="Int32" Nullable="true" />
           <Property Name="HomePhoneNumber" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
           <Property Name="WhatsAppNumber" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="GuardianCellPhoneNumber" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="GuardianCellPhoneNumber" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
           <Property Name="GuardianEmailAddress" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="HearAboutHU" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="HearAboutHUOther" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
@@ -721,6 +722,7 @@
           <Property Name="IsAdmitCardSent" Type="Byte" />
           <Property Name="AdmitCardSentOn" Type="DateTime" Precision="7" />
           <Property Name="Result" Type="Byte" />
+          <Property Name="AppliedBeforeId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="true" />
         </EntityType>
         <EntityType Name="State">
           <Key>
@@ -1440,6 +1442,7 @@
           <EntitySetMapping Name="PersonalInformations">
             <EntityTypeMapping TypeName="HUTOPSModel.PersonalInformation">
               <MappingFragment StoreEntitySet="PersonalInformation">
+                <ScalarProperty Name="AppliedBeforeId" ColumnName="AppliedBeforeId" />
                 <ScalarProperty Name="Result" ColumnName="Result" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="HUTopId" ColumnName="HUTopId" />

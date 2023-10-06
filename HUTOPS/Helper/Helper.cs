@@ -170,10 +170,6 @@ namespace HUTOPS.Helper
             {
                 errors.Add("First Name length must be greater than 3 and less than 25 characters");
             }
-            if (string.IsNullOrEmpty(personalInfo.MiddleName))
-            {
-                errors.Add("Middle Name is required");
-            }
             if (!string.IsNullOrEmpty(personalInfo.MiddleName) && (personalInfo.MiddleName.Length < 3 || personalInfo.MiddleName.Length > 25))
             {
                 errors.Add("Middle Name length must be greater than 3 and less than 25 characters");
@@ -193,10 +189,6 @@ namespace HUTOPS.Helper
             if (!string.IsNullOrEmpty(personalInfo.FatherFirstName) && (personalInfo.FatherFirstName.Length < 3 || personalInfo.FatherFirstName.Length > 25))
             {
                 errors.Add("Father First Name length must be greater than 3 and less than 25 characters");
-            }
-            if (string.IsNullOrEmpty(personalInfo.FatherMiddleName))
-            {
-                errors.Add("Father Middle Name is required");
             }
             if (!string.IsNullOrEmpty(personalInfo.FatherMiddleName) && (personalInfo.FatherMiddleName.Length < 3 || personalInfo.FatherMiddleName.Length > 25))
             {
@@ -278,6 +270,16 @@ namespace HUTOPS.Helper
             {
                 errors.Add("Residential City Field is required");
             }
+
+            if (personalInfo.IsAppliedBefore == 1 && personalInfo.AppliedBeforeYear == 0)
+            {
+                errors.Add("Applied Before Year is required");
+            }
+            if (personalInfo.IsAppliedBefore == 1 && string.IsNullOrEmpty(personalInfo.AppliedBeforeId))
+            {
+                errors.Add("Applied Before Id is required");
+            }
+
 
             return errors;
         }

@@ -15,8 +15,10 @@ namespace HUTOPS.Controllers
         {
             try
             {
-                var result = DB.PersonalInformations.ToList();
-                var res = result.Exists(x => x.CellPhoneNumber == number);
+                var personalInfo = Utility.GetUserFromSession();
+                var PersonalInformation = DB.PersonalInformations.ToList();
+
+                var res = PersonalInformation.Exists(x => x.CellPhoneNumber == number && x.Id != personalInfo.Id);
                 if (!res)
                 {
                     return Json(new { status = true });
@@ -35,8 +37,9 @@ namespace HUTOPS.Controllers
         {
             try
             {
-                var result = DB.PersonalInformations.ToList();
-                var res = result.Exists(x => x.EmailAddress == email);
+                var personalInfo = Utility.GetUserFromSession();
+                var PersonalInformation = DB.PersonalInformations.ToList();
+                var res = PersonalInformation.Exists(x => x.EmailAddress == email && x.Id != personalInfo.Id);
                 if (!res)
                 {
                     return Json(new { status = true });
@@ -55,8 +58,9 @@ namespace HUTOPS.Controllers
         {
             try
             {
-                var result = DB.PersonalInformations.ToList();
-                var res = result.Exists(x => x.CNIC == cnic);
+                var personalInfo = Utility.GetUserFromSession();
+                var PersonalInformation = DB.PersonalInformations.ToList();
+                var res = PersonalInformation.Exists(x => x.CNIC == cnic && x.Id != personalInfo.Id);
                 if (!res)
                 {
                     return Json(new { status = true });

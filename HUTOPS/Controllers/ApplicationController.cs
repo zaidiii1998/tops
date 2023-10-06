@@ -7,6 +7,7 @@ using System.Data.Entity;
 using System.IO;
 using System;
 using Newtonsoft.Json;
+using System.Data.Entity.Validation;
 
 namespace HUTOPS.Controllers
 {
@@ -104,8 +105,8 @@ namespace HUTOPS.Controllers
                                 person.WhatsAppNumber = applicationModel.PersonalInfo.WhatsAppNumber;
                                 person.AlternateCellPhoneNumber = applicationModel.PersonalInfo.AlternateCellPhoneNumber;
                                 person.HomePhoneNumber = applicationModel.PersonalInfo.HomePhoneNumber;
-                                person.AlternateLandline = applicationModel.PersonalInfo.AlternateLandline;
-                                person.GuardianCellPhoneNumber = applicationModel.PersonalInfo.GuardianCellPhoneNumber;
+                                //person.AlternateLandline = applicationModel.PersonalInfo.AlternateLandline;
+                                //person.GuardianCellPhoneNumber = applicationModel.PersonalInfo.GuardianCellPhoneNumber;
                                 person.GuardianEmailAddress = applicationModel.PersonalInfo.GuardianEmailAddress;
 
                                 person.ResidentialAddress = applicationModel.PersonalInfo.ResidentialAddress;
@@ -121,6 +122,10 @@ namespace HUTOPS.Controllers
                                 person.PermanentCity = applicationModel.PersonalInfo.PermanentCity;
                                 person.PermanentCityOther = applicationModel.PersonalInfo.PermanentCityOther;
                                 person.PermanentPostalCode = applicationModel.PersonalInfo.PermanentPostalCode;
+
+                                person.IsAppliedBefore = applicationModel.PersonalInfo.IsAppliedBefore;
+                                person.AppliedBeforeYear = applicationModel.PersonalInfo.AppliedBeforeYear;
+                                person.AppliedBeforeId = applicationModel.PersonalInfo.AppliedBeforeId;
 
                                 person.HearAboutHU = applicationModel.PersonalInfo.HearAboutHU;
                                 person.HearAboutHUOther = applicationModel.PersonalInfo.HearAboutHUOther;
@@ -243,8 +248,18 @@ namespace HUTOPS.Controllers
                             Utility.AddLog(Constants.LogType.ActivityLog, $"Transaction Commited by {Utility.GetAdminFromSession().Name} Against applicant {JsonConvert.SerializeObject(applicationModel.PersonalInfo)}");
                             return Json(new { status = true, message = "Application Updated Successfully" });
                         }
-                        catch (System.Exception ex)
+                        catch (DbEntityValidationException ex)
                         {
+                            foreach (var eve in ex.EntityValidationErrors)
+                            {
+                                Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+                                    eve.Entry.Entity.GetType().Name, eve.Entry.State);
+                                foreach (var ve in eve.ValidationErrors)
+                                {
+                                    Console.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
+                                        ve.PropertyName, ve.ErrorMessage);
+                                }
+                            }
                             Transaction.Rollback();
                             Utility.AddLog(Constants.LogType.Exception, $"Exception Occured while Updating Application by {Utility.GetAdminFromSession().Name} Error Details: {ex.Message}");
 

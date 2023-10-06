@@ -1,5 +1,5 @@
 ﻿$(document).ready(function () {
-    $('.number').inputmask("0399-9999999");
+    $('.number').inputmask("\\92399-9999999");
     $('.cnic').inputmask("99999-9999999-9");
 });
 function CallAsyncService(url, Param, CallbackFunction) {

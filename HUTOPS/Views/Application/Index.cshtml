@@ -472,6 +472,50 @@
                                     </div>
                                 </div>
                                 <div class="row">
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <label>Have you ever applied at Habib University?</label>
+                                            @if (Model.PersonalInfo.IsAppliedBefore == 1)
+                                            {
+                                                <input type="radio" name="IsAppliedBefore" id="AppliedBeforeYes" onclick="toggleFormSection('AppliedBeforeSection', this.id)" value="1" checked />
+                                            }
+                                            else
+                                            {
+                                                <input type="radio" name="IsAppliedBefore" id="AppliedBeforeYes" onclick="toggleFormSection('AppliedBeforeSection', this.id)" value="1" />
+                                            }
+                                            <label for="AppliedBeforeYes">Yes</label>
+                                            @if (Model.PersonalInfo.IsAppliedBefore == 0)
+                                            {
+                                                <input type="radio" name="IsAppliedBefore" id="AppliedBeforeNo" onclick="toggleFormSection('AppliedBeforeSection', 'AppliedBeforeYes')" value="0" checked />
+                                            }
+                                            else
+                                            {
+                                                <input type="radio" name="IsAppliedBefore" id="AppliedBeforeNo" onclick="toggleFormSection('AppliedBeforeSection', 'AppliedBeforeYes')" value="0" />
+                                            }
+                                            <label for="AppliedBeforeNo">No</label><br />
+                                            <span class="text-danger" id="errAppliedBefore"></span>
+                                        </div>
+                                        
+                                    </div>
+                                    <div class="col-lg-8" id="AppliedBeforeSection">
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label>E-Application ID or HU TOPS Application ID</label>
+                                                    <input class="form-control" type="text" id="AppliedBeforeId" value="@Model.PersonalInfo.AppliedBeforeId" />
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label>Year applied in</label>
+                                                    <select class="form-control" id="AppliedBeforeYear">
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
                                     <div class="col-lg-12">
                                         <input class="savebtn global-btn-purple  float-right m-1" type="button" onclick="validatePersonalInfoForm();" value="Next">
                                     </div>
@@ -1006,16 +1050,24 @@
 
 <script>
 
+    if ('@Model.PersonalInfo.IsAppliedBefore' != '1') {
+        $('#AppliedBeforeSection').hide();
+    }
+    
     $('#errorBlock').hide();
     $('#divUniName').hide();
     LoadYear('startingYear');
     LoadYear('completionYear');
+    LoadYear('AppliedBeforeYear');
 
     LoadYear('dobYear');
     // Load Personal Informations
 
     $('#comboHearHU').val('@Model.PersonalInfo.HearAboutHU');
     $('#comboHearHU').trigger('change');
+
+    $('#AppliedBeforeYear').val('@Model.PersonalInfo.AppliedBeforeYear');
+    $('#AppliedBeforeYear').trigger('change');
 
     LoadDate('@Model.PersonalInfo.DateOfBirth', 'dob');
     LoadTestDate('@Model.PersonalInfo.TestDate');

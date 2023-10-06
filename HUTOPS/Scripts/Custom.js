@@ -84,6 +84,30 @@ function increaseProgressBarWidth() {
             isValidPersonalInfo = false;
         }
     });
+
+    $("input[name=IsAppliedBefore]").each(function () {
+        var checked = $("input[name=IsAppliedBefore]:checked");
+        if (checked.length == 0) {
+            isValidPersonalInfo = false;
+            $('#errAppliedBefore').html('field is required');
+        } else {
+            $('#errAppliedBefore').html('');
+        }
+    });
+    if ($("input[name='IsAppliedBefore']:checked").val() === '1') {
+        if (($('#AppliedBeforeId').val().trim() == '')) {
+            $('#AppliedBeforeId').addClass('error');
+            $('#AppliedBeforeId').focus();
+            isValidPersonalInfo = false;
+        } else { $('#AppliedBeforeId').removeClass('error'); }
+        if ($('#AppliedBeforeYear :selected').val() === "") {
+            $('#AppliedBeforeYear').addClass('error');
+            $('#AppliedBeforeYear').focus();
+            isValidPersonalInfo = false;
+        } else { $('#AppliedBeforeYear').removeClass('error'); }
+    }
+
+
     if (isValidPersonalInfo) { percent = percent + 35 }
 
     var isValidEducation = true;
@@ -94,8 +118,8 @@ function increaseProgressBarWidth() {
         }
     });
     $('#EducationForm select[required]').each(function () {
-
-        if (($(this).val().trim() === '') || ($(this).val() === null)) {
+        
+        if (($(this).val() === '') || ($(this).val() === null)) {
             isValidEducation = false;
         }
     });
@@ -518,7 +542,6 @@ function validatePersonalInfoForm() {
         }
     });
 
-    debugger
     checkCNIC('cnic');
     checkEmail('email');
     checkPhoneNumber('cellPhone');
@@ -544,6 +567,27 @@ function validatePersonalInfoForm() {
         isValid = false;
     }
 
+    $("input[name=IsAppliedBefore]").each(function () {
+        var checked = $("input[name=IsAppliedBefore]:checked");
+        if (checked.length == 0) {
+            isValid = false;
+            $('#errAppliedBefore').html('field is required');
+        } else {
+            $('#errAppliedBefore').html('');
+        }
+    });
+    if ($("input[name='IsAppliedBefore']:checked").val() === '1') {
+        if (($('#AppliedBeforeId').val().trim() == '')) {
+            $('#AppliedBeforeId').addClass('error');
+            $('#AppliedBeforeId').focus();
+            isValid = false;
+        } else { $('#AppliedBeforeId').removeClass('error'); }
+        if ($('#AppliedBeforeYear :selected').val() === "") {
+            $('#AppliedBeforeYear').addClass('error');
+            $('#AppliedBeforeYear').focus();
+            isValid = false;
+        } else { $('#AppliedBeforeYear').removeClass('error'); }
+    }
     
     if (isValid) {
         debugger
@@ -559,29 +603,28 @@ function validatePersonalInfoForm() {
 
 
 function LoadEducationalData(Model) {
-    $('#currentLevel').val(Model.Education.CurrentLevelOfEdu == null ? '' : Model.Education.CurrentLevelOfEdu.toString());
-    $('#currentLevel').trigger('change');
-    $('#startingYear').val(Model.Education.HSSCStartDate == null ? '' : Model.Education.HSSCStartDate.toString());
-    $('#startingYear').trigger('change');
-    $('#completionYear').val(Model.Education.HSSCCompletionDate == null ? '' : Model.Education.HSSCCompletionDate.toString());
-    $('#completionYear').trigger('change');
+    debugger
+    if (Model.Education != null) {
+        $('#currentLevel').val(Model.Education.CurrentLevelOfEdu == null ? '' : Model.Education.CurrentLevelOfEdu.toString());
+        $('#currentLevel').trigger('change');
+        $('#startingYear').val(Model.Education.HSSCStartDate == null ? '' : Model.Education.HSSCStartDate.toString());
+        $('#startingYear').trigger('change');
+        $('#completionYear').val(Model.Education.HSSCCompletionDate == null ? '' : Model.Education.HSSCCompletionDate.toString());
+        $('#completionYear').trigger('change');
 
     
+        if (Model.Education.HUSchoolName != null) {
     
-    
-    
+            if (Model.Education.HUSchoolName.toString() === 'SE') {
+                $('#dhananiSchool').click();
+            } else {
+                $('#artsSchool').click();
+            }
+            $('#degreeProgram').val(Model.Education.IntendedProgram.toString());
+            $('#degreeProgram').trigger('change');
 
-    var program = Model.Education.IntendedProgram.toString();
-    if (Model.Education.HUSchoolName.toString() === 'SE') {
-        $('#dhananiSchool').click();
-    } else {
-        $('#artsSchool').click();
+        }
     }
-    $('#degreeProgram').val(Model.Education.IntendedProgram.toString());
-    $('#degreeProgram').trigger('change');
-
-
-
 }
 
 
@@ -888,6 +931,7 @@ function loadPrograms(radioValue) {
         const defaultOption = document.createElement('option');
         defaultOption.text = 'Select Program';
         defaultOption.value = "";
+        defaultOption.selected = true;
         selectBox.add(defaultOption);
         programs.forEach(programs => {
             const option = document.createElement('option');
@@ -1213,6 +1257,29 @@ function submitDeclaration() {
         isValid = false;
     }
 
+
+    $("input[name=IsAppliedBefore]").each(function () {
+        var checked = $("input[name=IsAppliedBefore]:checked");
+        if (checked.length == 0) {
+            isValid = false;
+            $('#errAppliedBefore').html('field is required');
+        } else {
+            $('#errAppliedBefore').html('');
+        }
+    });
+    if ($("input[name='IsAppliedBefore']:checked").val() === '1') {
+        if (($('#AppliedBeforeId').val().trim() == '')) {
+            $('#AppliedBeforeId').addClass('error');
+            $('#AppliedBeforeId').focus();
+            isValid = false;
+        } else { $('#AppliedBeforeId').removeClass('error'); }
+        if ($('#AppliedBeforeYear :selected').val() === "") {
+            $('#AppliedBeforeYear').addClass('error');
+            $('#AppliedBeforeYear').focus();
+            isValid = false;
+        } else { $('#AppliedBeforeYear').removeClass('error'); }
+    }
+
     var check1 = $('#validateLaw').is(':checked');
     var check2 = $('#invalidInfo').is(':checked');
     var check3 = $('#validInfo').is(':checked');
@@ -1261,6 +1328,10 @@ function submitDeclaration() {
             'PersonalInfo.permanentCity': $('#permanentCity :selected').text(),
             'PersonalInfo.permanentCityOther': $('#permanentCityOther').val(),
             'PersonalInfo.permanentPostalCode': $('#permanentPostalCode').val(),
+
+            'PersonalInfo.IsAppliedBefore': $("input[name='IsAppliedBefore']:checked").val(),
+            'PersonalInfo.AppliedBeforeYear': $('#AppliedBeforeYear').val(),
+            'PersonalInfo.AppliedBeforeId': $('#AppliedBeforeId').val(),
 
             // Hear About
             'PersonalInfo.HearAboutHU': $('#comboHearHU').val(),

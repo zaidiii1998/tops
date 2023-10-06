@@ -44,7 +44,7 @@ namespace HUTOPS.Controllers
                     }
                     else { Utility.SetSession(personalInformation); }
                     
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Student");
                 }
                 else
                 {
@@ -208,7 +208,7 @@ namespace HUTOPS.Controllers
                             Utility.SetSession(currentUser);
                             Utility.SetSession(education);
                             Utility.SetSession(document);
-                            return RedirectToAction("Index", "Home");
+                            return RedirectToAction("Index", "Student");
                         }
                         else
                         {

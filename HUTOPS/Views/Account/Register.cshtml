@@ -101,7 +101,7 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label class="float-left" for="number"><b>Phone Number</b></label>
-                                            <input class="input input100 number" type="tel" placeholder="Enter Phone Number" id="number" onchange="checkPhoneNumber(this.id);" value="@Model.CellPhoneNumber" name="CellPhoneNumber" maxlength="12" required>
+                                            <input class="input input100 number" type="tel" placeholder="Enter Phone Number" id="number" onchange="checkPhoneNumber(this.id);" value="@Model.CellPhoneNumber" name="CellPhoneNumber" maxlength="13" required>
                                             @Html.ValidationMessageFor(model => model.CellPhoneNumber, "", new { @class = "text-danger", id = "numberError" })
                                         </div>
                                     </div>
