@@ -16,6 +16,11 @@ namespace HUTOPS.Controllers
         // GET: Application
 
         HUTOPSEntities DB = new HUTOPSEntities();
+
+        public ActionResult TermAndConditions()
+        {
+            return View();
+        }
         public ActionResult Index()
         {
             var LoginUser = Utility.GetUserFromSession();

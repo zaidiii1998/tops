@@ -582,6 +582,7 @@
     <Content Include="Views\TestDate\Index.cshtml" />
     <Content Include="Views\AdmitCard\Index.cshtml" />
     <Content Include="Views\Result\Index.cshtml" />
+    <Content Include="Views\Application\TermAndConditions.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Common\" />

@@ -279,6 +279,11 @@ namespace HUTOPS.Helper
             {
                 errors.Add("Applied Before Id is required");
             }
+            if (!string.IsNullOrEmpty(personalInfo.AppliedBeforeId) && personalInfo.AppliedBeforeId.Length > 25)
+            {
+                errors.Add("Applied Before Id length must be less than 25 characters");
+            }
+
 
 
             return errors;
