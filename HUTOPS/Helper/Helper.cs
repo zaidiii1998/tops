@@ -154,7 +154,7 @@ namespace HUTOPS.Helper
             {
                 errors.Add("Email is already Exists");
             }
-            if (DB.PersonalInformations.ToList().Exists(x => x.CNIC == personalInfo.CNIC && x.Id != personalInfo.Id))
+            if (!string.IsNullOrEmpty(personalInfo.CNIC) && DB.PersonalInformations.ToList().Exists(x => x.CNIC == personalInfo.CNIC && x.Id != personalInfo.Id))
             {
                 errors.Add("CNIC is already Exists");
             }
@@ -222,18 +222,22 @@ namespace HUTOPS.Helper
             {
                 errors.Add("WhatsApp Number Number is Invalid");
             }
+            if (string.IsNullOrEmpty(personalInfo.AlternateCellPhoneNumber))
+            {
+                errors.Add("Alternate Cell Phone Number is required");
+            }
             if (!string.IsNullOrEmpty(personalInfo.AlternateCellPhoneNumber) && !IsValidPhoneNumber(personalInfo.AlternateCellPhoneNumber))
             {
                 errors.Add("Alternate Cell Phone Number is Invalid");
             }
-            //if (!string.IsNullOrEmpty(personalInfo.GuardianCellPhoneNumber) && !Helper.Utility.IsValidPhoneNumber(personalInfo.GuardianCellPhoneNumber))
-            //{
-            //    errors.Add("Guardian Cell Phone Number is Invalid");
-            //}
-            //if (string.IsNullOrEmpty(personalInfo.GuardianCellPhoneNumber))
-            //{
-            //    errors.Add("Phone Number is Required");
-            //}
+            if (!string.IsNullOrEmpty(personalInfo.GuardianCellPhoneNumber) && !Helper.Utility.IsValidPhoneNumber(personalInfo.GuardianCellPhoneNumber))
+            {
+                errors.Add("Guardian Cell Phone Number is Invalid");
+            }
+            if (string.IsNullOrEmpty(personalInfo.GuardianCellPhoneNumber))
+            {
+                errors.Add("Phone Number is Required");
+            }
             if (string.IsNullOrEmpty(personalInfo.HomePhoneNumber))
             {
                 errors.Add("Home Phone Number is Required");
@@ -296,6 +300,10 @@ namespace HUTOPS.Helper
             {
                 errors.Add("Your Current Level of Study: is required");
             }
+            if(educational.CurrentLevelOfEdu == "Already enrolled in a University" && string.IsNullOrEmpty(educational.UniversityName))
+            {
+                errors.Add("University Name: is required");
+            }
             if (string.IsNullOrEmpty(educational.HSSCStartDate.ToString()))
             {
                 errors.Add("Starting Year: is required");
@@ -308,17 +316,17 @@ namespace HUTOPS.Helper
             {
                 errors.Add("Current College/Last College Name: is required");
             }
-            if (string.IsNullOrEmpty(educational.HSSCSchoolAddress))
-            {
-                errors.Add("College Address with City Name: is required");
-            }
+            //if (string.IsNullOrEmpty(educational.HSSCSchoolAddress))
+            //{
+            //    errors.Add("College Address with City Name: is required");
+            //}
             if (string.IsNullOrEmpty(educational.HSSCBoardId))
             {
                 errors.Add("Board Of Education: is required");
             }
             if (string.IsNullOrEmpty(educational.HSSCGroupId))
             {
-                errors.Add("Group Of Studies: is required");
+                errors.Add("Group Of Study: is required");
             }
             if (string.IsNullOrEmpty(educational.HSSCPercentage))
             {
@@ -328,10 +336,10 @@ namespace HUTOPS.Helper
             {
                 errors.Add("Secondary Education School Name: is required");
             }
-            if (string.IsNullOrEmpty(educational.SSCSchoolAddress))
-            {
-                errors.Add("Secondary Education School Address with City Name: is required");
-            }
+            //if (string.IsNullOrEmpty(educational.SSCSchoolAddress))
+            //{
+            //    errors.Add("Secondary Education School Address with City Name: is required");
+            //}
             if (string.IsNullOrEmpty(educational.SSCPercentage))
             {
                 errors.Add("Overall SSC Percentage: is required");

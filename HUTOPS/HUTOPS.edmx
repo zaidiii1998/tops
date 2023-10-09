@@ -171,7 +171,7 @@
           <Property Name="PermanentProvince" Type="varchar" MaxLength="50" />
           <Property Name="PermanentCountry" Type="varchar" MaxLength="50" />
           <Property Name="PermanentPostalCode" Type="int" />
-          <Property Name="CNIC" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="CNIC" Type="varchar" MaxLength="15" />
           <Property Name="EmailAddress" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="AlterEmailAddress" Type="varchar" MaxLength="50" />
           <Property Name="Password" Type="varchar" MaxLength="50" />
@@ -203,8 +203,8 @@
           <Property Name="HearAboutHUOther" Type="varchar" MaxLength="50" />
           <Property Name="CreatedDatetime" Type="datetime2" Precision="7" StoreGeneratedPattern="Computed" />
           <Property Name="Declaration" Type="int" />
-          <Property Name="IsCompleted" Type="int" />
-          <Property Name="UserType" Type="int" />
+          <Property Name="IsCompleted" Type="int" StoreGeneratedPattern="Computed" />
+          <Property Name="UserType" Type="int" StoreGeneratedPattern="Computed" />
           <Property Name="IsAdmitCardGenerated" Type="tinyint" />
           <Property Name="AdmitCardGeneratedOn" Type="datetime2" Precision="7" />
           <Property Name="IsAdmitCardSent" Type="tinyint" />
@@ -684,7 +684,7 @@
           <Property Name="PermanentProvince" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="PermanentCountry" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="PermanentPostalCode" Type="Int32" />
-          <Property Name="CNIC" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CNIC" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="true" />
           <Property Name="EmailAddress" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="AlterEmailAddress" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
@@ -715,8 +715,8 @@
           <Property Name="HearAboutHUOther" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="CreatedDatetime" Type="DateTime" Precision="7" annotation:StoreGeneratedPattern="Computed" />
           <Property Name="Declaration" Type="Int32" />
-          <Property Name="IsCompleted" Type="Int32" />
-          <Property Name="UserType" Type="Int32" />
+          <Property Name="IsCompleted" Type="Int32" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="UserType" Type="Int32" annotation:StoreGeneratedPattern="Computed" />
           <Property Name="IsAdmitCardGenerated" Type="Byte" />
           <Property Name="AdmitCardGeneratedOn" Type="DateTime" Precision="7" />
           <Property Name="IsAdmitCardSent" Type="Byte" />

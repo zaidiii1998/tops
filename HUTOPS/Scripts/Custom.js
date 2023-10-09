@@ -136,6 +136,13 @@ function increaseProgressBarWidth() {
     } else {
         $('#errHUSchool').html("");
     }
+    if ($('#currentLevel').val() == 'Already enrolled in a University' && $('#universityName').val() == '') {
+        isValidEducation = false;
+        $('#errUniversityName').html('University Name is required');
+    } else {
+        $('#errUniversityName').html('');
+    }
+
     if (isValidEducation) { percent = percent + 35 }
 
     isValidDocument = true;
@@ -639,6 +646,7 @@ function ShowHideField(divId, selectId, value) {
 
 function LoadYear(selectId) {
     var comboYear = document.getElementById(selectId);
+    comboYear.innerHTML = '';
     var option = document.createElement("option");
     option.value = "";
     option.text = "Year";
@@ -650,14 +658,30 @@ function LoadYear(selectId) {
         option.value = "2024";
         option.text = "2024";
         comboYear.appendChild(option);
+        for (var j = 2023; j > 1950; j--) {
+            var option = document.createElement("option");
+            option.value = j;
+            option.text = j;
+            comboYear.appendChild(option);
+        }
+    } else if (selectId == 'startingYear' && $('#currentLevel').val() == 'HSSC II Completed') {
+
+        for (var j = 2021; j > 1950; j--) {
+            var option = document.createElement("option");
+            option.value = j;
+            option.text = j;
+            comboYear.appendChild(option);
+        }
     }
-    for (var j = 2023; j > 1950; j--) {
-        var option = document.createElement("option");
-        option.value = j;
-        option.text = j;
-        comboYear.appendChild(option);
+    else
+    {
+        for (var j = 2023; j > 1950; j--) {
+            var option = document.createElement("option");
+            option.value = j;
+            option.text = j;
+            comboYear.appendChild(option);
+        }
     }
-    
 }
 
 function GetBoardList() {
@@ -678,7 +702,7 @@ function GetGroupListFromObj(BoardId) {
     debugger
 
     if (BoardId === '1') {
-        const groups = ['Pre-Medical', 'Pre-Engineering', 'Computer Science/General Science', 'Commerce', 'Arts/Humanities/Home Economics'];
+        const groups = ['Pre-Engineering', 'Pre-Medical', 'General Science/Computer Science', 'Commerce', 'Arts/Humanities', 'Home Economics'];
         const defaultOption = document.createElement('option');
         defaultOption.text = 'Select Group';
         defaultOption.value = "";
@@ -690,7 +714,7 @@ function GetGroupListFromObj(BoardId) {
             selectBox.add(option);
         });
     } else if (BoardId === '2') {
-        const groups = ['Pre-Medical', 'Pre-Engineering', 'Computer Science/General Science', 'Commerce', 'Arts/Humanities/Home Economics'];
+        const groups = ['Pre-Engineering', 'Pre-Medical', 'General Science/Computer Science', 'Commerce', 'Arts/Humanities', 'Home Economics'];
         const defaultOption = document.createElement('option');
         defaultOption.text = 'Select Group';
         defaultOption.value = "";
@@ -702,7 +726,7 @@ function GetGroupListFromObj(BoardId) {
             selectBox.add(option);
         });
     } else if (BoardId === '3') {
-        const groups = ['Pre-Medical', 'Pre-Engineering', 'Commerce', 'Arts/Humanities/Home Economics'];
+        const groups = ['Pre-Medical', 'Pre-Engineering', 'Commerce', 'Arts/Humanities','Home Economics'];
         const defaultOption = document.createElement('option');
         defaultOption.text = 'Select Group';
         defaultOption.value = "";
@@ -824,7 +848,32 @@ function GetSubjects(GroupName) {
             $('#divSubjects').append(newRow);
         });
     }
-    else if (GroupName === 'Arts/Humanities/Home Economics') {
+    else if (GroupName === 'Arts/Humanities') {
+        const subjects = ['', '', '', ''];
+
+        subjects.forEach(subject => {
+            var newRow = document.createElement("div");
+            newRow.className = "row";
+
+            var newCol = document.createElement("div");
+            newCol.className = "col-lg-3";
+            var newcontrol = document.createElement("div");
+            newcontrol.className = "form-group";
+
+            var input = document.createElement("input");
+            input.className = "form-control";
+            input.type = "text";
+            input.classList.add("SubjectName");
+            input.value = subject;
+
+            newcontrol.appendChild(input);
+            newCol.appendChild(newcontrol);
+            newRow.appendChild(newCol);
+
+            $('#divSubjects').append(newRow);
+        });
+    }
+    else if (GroupName === 'Home Economics') {
         const subjects = ['', '', '', ''];
 
         subjects.forEach(subject => {
@@ -932,6 +981,7 @@ function loadPrograms(radioValue) {
         defaultOption.text = 'Select Program';
         defaultOption.value = "";
         defaultOption.selected = true;
+        defaultOption.disabled = true;
         selectBox.add(defaultOption);
         programs.forEach(programs => {
             const option = document.createElement('option');
@@ -959,16 +1009,16 @@ function loadPrograms(radioValue) {
 }
 
 function ValidateProgram(ProgramValue) {
-    if (ProgramValue == "BS Electrical Engineering" && $('#groupOfStudy').val() != "Pre-Engineering") {
-        $('#errDegreeProgram').html("Students who have Studied Physics, chemistry, Mathematics in HSSC can only apply for Habib University's BS Electrical Engineering degree program.");
+    if (ProgramValue == "BS Electrical Engineering" && $('#groupOfStudy').val() != "Pre-Engineering" && $('#groupOfStudy').val() != 'Computer Science/General Science') {
+        $('#errDegreeProgram').html("Students who have studied Physics,Mathematics, Chemistry or Computer Science / Computer Studies in HSSC can only apply for Habib University’s BS Electrical Engineering program.");
         $('#degreeProgram').focus();
         return false;
-    } else if (ProgramValue == "BS Computer Science" && $('#groupOfStudy').val() != "Pre-Engineering") {
-        $('#errDegreeProgram').html("Students who have Studied Physics, chemistry, Mathematics in HSSC can only apply for Habib University's BS Computer Science degree program.");
+    } else if (ProgramValue == "BS Computer Science" && $('#groupOfStudy').val() != "Pre-Engineering" && $('#groupOfStudy').val() != 'Computer Science/General Science') {
+        $('#errDegreeProgram').html("Students who have studied Mathematics in HSSC can only apply for Habib University’s Computer Science program.");
         $('#degreeProgram').focus();
         return false;
-    } else if (ProgramValue == "BS Computer Engineering" && $('#groupOfStudy').val() != "Pre-Engineering") {
-        $('#errDegreeProgram').html("Students who have Studied Physics, chemistry, Mathematics in HSSC can only apply for Habib University's BS Computer Engineering degree program.");
+    } else if (ProgramValue == "BS Computer Engineering" && $('#groupOfStudy').val() != "Pre-Engineering" && $('#groupOfStudy').val() != 'Computer Science/General Science') {
+        $('#errDegreeProgram').html("Students who have studied Physics,Mathematics, Chemistry or Computer Science/Computer Studies in HSSC can only apply for Habib University’s BS Electrical Engineering program.");
         $('#degreeProgram').focus();
         return false;
     } else {
@@ -1055,7 +1105,7 @@ function SubmitEducation() {
     });
     $('#EducationForm select[required]').each(function () {
 
-        if (($(this).val().trim() === '') || ($(this).val() === null)) {
+        if (($(this).val() === '') || ($(this).val() === null)) {
             isValid = false;
             $(this).addClass("error");
             $(this).focus();
@@ -1081,6 +1131,14 @@ function SubmitEducation() {
         $('#errHUSchool').html("Please select School Name");
     } else {
         $('#errHUSchool').html("");
+    }
+
+    if ($('#currentLevel').val() == 'Already enrolled in a University' && $('#universityName').val() == '') {
+        isValid = false;
+        $('#errUniversityName').html('University Name is required');
+        $('#universityName').focus();
+    } else {
+        $('#errUniversityName').html('');
     }
 
     if (isValid && ValidateProgram($('#degreeProgram').val()))
