@@ -307,6 +307,8 @@
     <Content Include="Content\img\dashboard-icons\manage-transcript.svg" />
     <Content Include="Content\img\dashboard-icons\positions.svg" />
     <Content Include="Content\img\dashboard-icons\users-stats.svg" />
+    <Content Include="Content\img\fav.png" />
+    <Content Include="Content\img\fav.svg" />
     <Content Include="Content\img\HUTOPS-logo.png" />
     <Content Include="Content\img\image-content.jpg" />
     <Content Include="Content\img\mct-logo.svg" />

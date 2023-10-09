@@ -1133,13 +1133,13 @@ function SubmitEducation() {
         $('#errHUSchool').html("");
     }
 
-    if ($('#currentLevel').val() == 'Already enrolled in a University' && $('#universityName').val() == '') {
-        isValid = false;
-        $('#errUniversityName').html('University Name is required');
-        $('#universityName').focus();
-    } else {
-        $('#errUniversityName').html('');
-    }
+    //if ($('#currentLevel').val() == 'Already enrolled in a University' && $('#universityName').val() == '') {
+    //    isValid = false;
+    //    $('#errUniversityName').html('University Name is required');
+    //    $('#universityName').focus();
+    //} else {
+    //    $('#errUniversityName').html('');
+    //}
 
     if (isValid && ValidateProgram($('#degreeProgram').val()))
         {
