@@ -455,6 +455,7 @@
     <Content Include="HUTOPS.edmx.diagram">
       <DependentUpon>HUTOPS.edmx</DependentUpon>
     </Content>
+    <Content Include="Content\HUTOPS Ids Demo File.xlsx" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\esm\popper-utils.js" />
     <Content Include="Scripts\esm\popper-utils.min.js" />

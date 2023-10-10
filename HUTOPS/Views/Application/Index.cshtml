@@ -589,27 +589,27 @@
                                                 <option value="" selected disabled>Select Board</option>
                                                 @if ("Board Of Intermediate" == Model.Education.HSSCBoardName)
                                                 {
-                                                    <option value="1" selected>Board Of Intermediate</option>
+                                                    <option value="IB" selected>Board Of Intermediate</option>
                                                 }
                                                 else
                                                 {
-                                                    <option value="1">Board Of Intermediate</option>
+                                                    <option value="IB">Board Of Intermediate</option>
                                                 }
                                                 @if ("Federal Board" == Model.Education.HSSCBoardName)
                                                 {
-                                                    <option value="2" selected>Federal Board</option>
+                                                    <option value="FB" selected>Federal Board</option>
                                                 }
                                                 else
                                                 {
-                                                    <option value="2">Federal Board</option>
+                                                    <option value="FB">Federal Board</option>
                                                 }
                                                 @if ("Aga Khan University Examination Board" == Model.Education.HSSCBoardName)
                                                 {
-                                                    <option value="3" selected>Aga Khan University Examination Board</option>
+                                                    <option value="AKUB" selected>Aga Khan University Examination Board</option>
                                                 }
                                                 else
                                                 {
-                                                    <option value="3">Aga Khan University Examination Board</option>
+                                                    <option value="AKUB">Aga Khan University Examination Board</option>
                                                 }
 
                                             </select>
@@ -758,7 +758,7 @@
                                             <!-- This section will be updated based on the selection in the previous question -->
                                             <!-- You can use JavaScript to update the options based on the selection -->
                                             <select class="form-control" id="degreeProgram" name="degreeProgram" onchange="ValidateProgram(this.value);" required>
-                                                <option value="" selected disabled>Select Program</option>
+                                                <option value="" selected disabled>Select Bachelor's Program</option>
                                             </select>
 
                                         </div>

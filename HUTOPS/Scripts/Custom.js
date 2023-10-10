@@ -701,7 +701,7 @@ function GetGroupListFromObj(BoardId) {
     selectBox.innerHTML = ''; // Clear previous options
     debugger
 
-    if (BoardId === '1') {
+    if (BoardId === 'IB') {
         const groups = ['Pre-Engineering', 'Pre-Medical', 'General Science/Computer Science', 'Commerce', 'Arts/Humanities', 'Home Economics'];
         const defaultOption = document.createElement('option');
         defaultOption.text = 'Select Group';
@@ -713,7 +713,7 @@ function GetGroupListFromObj(BoardId) {
             option.text = groups;
             selectBox.add(option);
         });
-    } else if (BoardId === '2') {
+    } else if (BoardId === 'FB') {
         const groups = ['Pre-Engineering', 'Pre-Medical', 'General Science/Computer Science', 'Commerce', 'Arts/Humanities', 'Home Economics'];
         const defaultOption = document.createElement('option');
         defaultOption.text = 'Select Group';
@@ -725,7 +725,7 @@ function GetGroupListFromObj(BoardId) {
             option.text = groups;
             selectBox.add(option);
         });
-    } else if (BoardId === '3') {
+    } else if (BoardId === 'AKUB') {
         const groups = ['Pre-Medical', 'Pre-Engineering', 'Commerce', 'Arts/Humanities','Home Economics'];
         const defaultOption = document.createElement('option');
         defaultOption.text = 'Select Group';
@@ -976,9 +976,9 @@ function loadPrograms(radioValue) {
     selectBox.innerHTML = ''; // Clear previous options
 
     if (radioValue === 'SE') {
-        const programs = ['BS Electrical Engineering', 'BS Computer Science', 'BS Computer Engineering'];
+        const programs = ['Electrical Engineering', 'Computer Science', 'Computer Engineering'];
         const defaultOption = document.createElement('option');
-        defaultOption.text = 'Select Program';
+        defaultOption.text = 'Select Bachelor\'s Program';
         defaultOption.value = "";
         defaultOption.selected = true;
         defaultOption.disabled = true;
@@ -990,9 +990,9 @@ function loadPrograms(radioValue) {
             selectBox.add(option);
         });
     } else if (radioValue === 'SA') {
-        const programs = ['BA (Honours) Communication and Design', 'BSc (Honours) Social Development and Policy', 'BA (Honors) Comparative Humanities'];
+        const programs = ['Communication and Design', 'Social Development Policy', 'Comparative Humanities'];
         const defaultOption = document.createElement('option');
-        defaultOption.text = 'Select Program';
+        defaultOption.text = 'Select Bachelor\'s Program';
         defaultOption.value = "";
         selectBox.add(defaultOption);
         programs.forEach(programs => {
@@ -1409,7 +1409,7 @@ function submitDeclaration() {
             'Education.HSSCStartDate': $('#startingYear').val(),
             'Education.HSSCCompletionDate': $('#completionYear').val(),
             'Education.HSSCBoardId': $('#boardOfEducation').val(),
-            'Education.HSSCBoardName': $('#boardOfEducation :selected').text(),
+            'Education.HSSCBoardName': $('#boardOfEducation :selected').val(),
 
             'Education.HSSCGroupId': $('#groupOfStudy').val(),
             'Education.HSSCGroupName': $('#groupOfStudy :selected').text(),
@@ -2119,3 +2119,45 @@ function SubmitResultBatch() {
 
 }
 
+// Upload Batch to shift records to E-Application
+
+function SubmitRecordsToEApp() {
+    var isValid = true;
+    $('#EAppForm input[type="file"][required]').each(function () {
+
+        if ($(this).val().trim() === '') {
+            isValid = false;
+            $(this).addClass("error");
+            $(this).focus();
+
+        } else {
+            $(this).removeClass("error");
+        }
+    });
+
+
+
+    if (isValid) {
+        var data = new FormData();
+        data.append("HUTOPSIdsFile", jQuery("#eAppHUTOPSIdsFile").get(0).files[0]);
+        data.append("Type", 5);
+
+        $('#mainLoader').show();
+        debugger
+        CallFileAsyncService("/AdmitCard/Submit", data, SubmitAdmitCardBatchCB);
+        function SubmitAdmitCardBatchCB(response) {
+            $('#mainLoader').hide();
+            if (response.status) {
+                ShowDivSuccess(response.message);
+            } else {
+                ShowDivError(response.message);
+            }
+        }
+    } else {
+        ShowDivError("Please enter in all required fields");
+        $('#eAppHUTOPSIdsFile').addClass('error');
+        $('#eAppHUTOPSIdsFile').focus();
+    }
+
+
+}

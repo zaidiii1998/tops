@@ -81,5 +81,6 @@ namespace HUTOPS
         public Nullable<System.DateTime> AdmitCardSentOn { get; set; }
         public Nullable<byte> Result { get; set; }
         public string AppliedBeforeId { get; set; }
+        public Nullable<byte> IsRecordMoveToEApp { get; set; }
     }
 }

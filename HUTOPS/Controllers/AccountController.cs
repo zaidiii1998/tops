@@ -61,10 +61,11 @@ namespace HUTOPS.Controllers
             }
             
         }
+        [SessionValidatorActionFilter]
         public ActionResult Register()
         {
-            Utility.AddLog(Constants.LogType.ActivityLog, "User has navigated to the registration page.");
-            return View(new PersonalInformation());
+                Utility.AddLog(Constants.LogType.ActivityLog, "User has navigated to the registration page.");
+                return View(new PersonalInformation());
         }
         [HttpPost, ValidateAntiForgeryToken]
         public ActionResult Register(FormCollection model)

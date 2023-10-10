@@ -38,10 +38,16 @@ namespace HUTOPS.Controllers
                         return Json(new { status = false, message = "Provided Information is not Valid" });
                     }
                 }
-                else if ((admitCardBatchModel.Type != 0 && admitCardBatchModel.Type == 4) && admitCardBatchModel.HUTOPSIdsFile == null || admitCardBatchModel.Result == 0)
+                else if ((admitCardBatchModel.Type != 0 && admitCardBatchModel.Type == 5) && admitCardBatchModel.HUTOPSIdsFile == null)
+                {
+                    return Json(new { status = false, message = "Please Select HUTOPS Ids File to Shift Records to E-Applicaiton" });
+                }
+                else if (admitCardBatchModel.Type != 0 && admitCardBatchModel.Type == 4 && (admitCardBatchModel.HUTOPSIdsFile == null || admitCardBatchModel.Result == 0))
                 {
                     return Json(new { status = false, message = "Please enter in all reqired fields to Update Result" });
                 }
+
+
 
 
                 Utility.AddLog(Constants.LogType.ActivityLog, $"Admin {Utility.GetAdminFromSession().Name} Requested to Add Batch File for generate Admit Card :");
@@ -95,6 +101,7 @@ namespace HUTOPS.Controllers
                         Venue = admitCardBatchModel.Venue,
                         Type = admitCardBatchModel.Type,
                         Result = admitCardBatchModel.Result,
+                        IsRecordSendToEApp = admitCardBatchModel.IsRecordSendToEApp,
                         HUTOPSIdsFile = filePath,
                         CreatedBy = Utility.GetAdminFromSession().Name
                     }); ;

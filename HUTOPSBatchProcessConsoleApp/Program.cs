@@ -6,11 +6,8 @@ using System.Linq;
 using ExcelDataReader;
 using HUTOPSBatchProcessConsoleApp.Model;
 using OfficeOpenXml;
-using CPD.Framework.Core;
 using Newtonsoft.Json;
-using System.Text.RegularExpressions;
 using HUTOPSBatchProcessConsoleApp.Codebase;
-using System.Configuration;
 
 namespace HUTOPSBatchProcessConsoleApp
 {

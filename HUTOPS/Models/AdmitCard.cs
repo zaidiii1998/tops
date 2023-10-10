@@ -16,6 +16,7 @@ namespace HUTOPS.Models
         public byte Type { get; set; }
         public byte Result { get; set; }
         public HttpPostedFileBase HUTOPSIdsFile { get; set; }
+        public byte IsRecordSendToEApp { get; set; }
     }
     public class AdmitCardModel
     {

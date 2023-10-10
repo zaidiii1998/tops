@@ -26,5 +26,6 @@ namespace HUTOPS
         public Nullable<byte> Status { get; set; }
         public Nullable<byte> Type { get; set; }
         public Nullable<byte> Result { get; set; }
+        public Nullable<byte> IsRecordSendToEApp { get; set; }
     }
 }

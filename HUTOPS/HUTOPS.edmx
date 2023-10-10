@@ -31,6 +31,7 @@
           <Property Name="Status" Type="tinyint" StoreGeneratedPattern="Computed" />
           <Property Name="Type" Type="tinyint" />
           <Property Name="Result" Type="tinyint" />
+          <Property Name="IsRecordSendToEApp" Type="tinyint" />
         </EntityType>
         <EntityType Name="Board">
           <Key>
@@ -210,6 +211,7 @@
           <Property Name="IsAdmitCardSent" Type="tinyint" />
           <Property Name="AdmitCardSentOn" Type="datetime2" Precision="7" />
           <Property Name="Result" Type="tinyint" />
+          <Property Name="IsRecordMoveToEApp" Type="tinyint" />
         </EntityType>
         <EntityType Name="State">
           <Key>
@@ -544,6 +546,7 @@
           <Property Name="Status" Type="Byte" annotation:StoreGeneratedPattern="Computed" />
           <Property Name="Type" Type="Byte" />
           <Property Name="Result" Type="Byte" />
+          <Property Name="IsRecordSendToEApp" Type="Byte" />
         </EntityType>
         <EntityType Name="Board">
           <Key>
@@ -723,6 +726,7 @@
           <Property Name="AdmitCardSentOn" Type="DateTime" Precision="7" />
           <Property Name="Result" Type="Byte" />
           <Property Name="AppliedBeforeId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="true" />
+          <Property Name="IsRecordMoveToEApp" Type="Byte" />
         </EntityType>
         <EntityType Name="State">
           <Key>
@@ -1307,6 +1311,7 @@
           <EntitySetMapping Name="BatchUploads">
             <EntityTypeMapping TypeName="HUTOPSModel.BatchUpload">
               <MappingFragment StoreEntitySet="BatchUploads">
+                <ScalarProperty Name="IsRecordSendToEApp" ColumnName="IsRecordSendToEApp" />
                 <ScalarProperty Name="Result" ColumnName="Result" />
                 <ScalarProperty Name="Type" ColumnName="Type" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
@@ -1442,6 +1447,7 @@
           <EntitySetMapping Name="PersonalInformations">
             <EntityTypeMapping TypeName="HUTOPSModel.PersonalInformation">
               <MappingFragment StoreEntitySet="PersonalInformation">
+                <ScalarProperty Name="IsRecordMoveToEApp" ColumnName="IsRecordMoveToEApp" />
                 <ScalarProperty Name="AppliedBeforeId" ColumnName="AppliedBeforeId" />
                 <ScalarProperty Name="Result" ColumnName="Result" />
                 <ScalarProperty Name="Id" ColumnName="Id" />

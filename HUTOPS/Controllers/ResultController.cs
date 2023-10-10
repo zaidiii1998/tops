@@ -1,7 +1,9 @@
-﻿using System.Web.Mvc;
+﻿using HUTOPS.Helper;
+using System.Web.Mvc;
 
 namespace HUTOPS.Controllers
 {
+    [SessionValidatorActionFilter]
     public class ResultController : Controller
     {
         // GET: Result
