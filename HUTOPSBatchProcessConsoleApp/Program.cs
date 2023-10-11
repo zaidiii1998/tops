@@ -62,7 +62,10 @@ namespace HUTOPSBatchProcessConsoleApp
                             break;
 
                             case 4:
-                                Result = BatchProcessing.UpdateResult(records, batch.Result);
+                                Result = BatchProcessing.UpdateResult(records, batch.Result, batch.IsRecordSendToEApp);
+                                break;
+                            case 5:
+                                Result = BatchProcessing.ShiftRecordToEApp(records);
                                 break;
 
                         }

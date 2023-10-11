@@ -31,6 +31,7 @@
           <Property Name="Status" Type="tinyint" />
           <Property Name="Type" Type="tinyint" />
           <Property Name="Result" Type="tinyint" />
+          <Property Name="IsRecordSendToEApp" Type="tinyint" />
         </EntityType>
         <EntityType Name="Board">
           <Key>
@@ -116,7 +117,7 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Description" Type="text" Nullable="false" />
-          <Property Name="Subject" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Subject" Type="varchar(max)" />
           <Property Name="Body" Type="text" />
           <Property Name="CreatedOn" Type="datetime2" Precision="7" />
           <Property Name="UpdatedOn" Type="datetime2" Precision="7" />
@@ -159,19 +160,19 @@
           <Property Name="CellPhoneNumber" Type="varchar" MaxLength="15" Nullable="false" />
           <Property Name="AlternateCellPhoneNumber" Type="varchar" MaxLength="15" />
           <Property Name="TellUs" Type="varchar" MaxLength="50" />
-          <Property Name="ResidentialAddress" Type="varchar" MaxLength="100" />
+          <Property Name="ResidentialAddress" Type="varchar(max)" />
           <Property Name="ResidentialCity" Type="varchar" MaxLength="50" />
           <Property Name="ResidentialCityOther" Type="varchar" MaxLength="50" />
           <Property Name="ResidentialProvince" Type="varchar" MaxLength="50" />
           <Property Name="ResidentialCountry" Type="varchar" MaxLength="50" />
           <Property Name="ResidentialPostalCode" Type="int" />
-          <Property Name="PermanentAddress" Type="varchar" MaxLength="100" />
+          <Property Name="PermanentAddress" Type="varchar(max)" />
           <Property Name="PermanentCity" Type="varchar" MaxLength="50" />
           <Property Name="PermanentCityOther" Type="varchar" MaxLength="50" />
           <Property Name="PermanentProvince" Type="varchar" MaxLength="50" />
           <Property Name="PermanentCountry" Type="varchar" MaxLength="50" />
           <Property Name="PermanentPostalCode" Type="int" />
-          <Property Name="CNIC" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="CNIC" Type="varchar" MaxLength="15" />
           <Property Name="EmailAddress" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="AlterEmailAddress" Type="varchar" MaxLength="50" />
           <Property Name="Password" Type="varchar" MaxLength="50" />
@@ -193,10 +194,11 @@
           <Property Name="Retake" Type="int" />
           <Property Name="IsAppliedBefore" Type="int" />
           <Property Name="AppliedBeforeMonth" Type="int" />
+          <Property Name="AppliedBeforeId" Type="varchar" MaxLength="50" />
           <Property Name="AppliedBeforeYear" Type="int" />
           <Property Name="HomePhoneNumber" Type="varchar" MaxLength="15" />
           <Property Name="WhatsAppNumber" Type="varchar" MaxLength="15" />
-          <Property Name="GuardianCellPhoneNumber" Type="varchar" MaxLength="12" />
+          <Property Name="GuardianCellPhoneNumber" Type="varchar" MaxLength="15" />
           <Property Name="GuardianEmailAddress" Type="varchar" MaxLength="50" />
           <Property Name="HearAboutHU" Type="varchar" MaxLength="50" />
           <Property Name="HearAboutHUOther" Type="varchar" MaxLength="50" />
@@ -209,6 +211,7 @@
           <Property Name="IsAdmitCardSent" Type="tinyint" />
           <Property Name="AdmitCardSentOn" Type="datetime2" Precision="7" />
           <Property Name="Result" Type="tinyint" />
+          <Property Name="IsRecordMoveToEApp" Type="tinyint" />
         </EntityType>
         <EntityType Name="State">
           <Key>
@@ -363,6 +366,9 @@
           <Parameter Name="HUSchoolName" Type="varchar" Mode="In" />
           <Parameter Name="SubjectName" Type="varchar(max)" Mode="In" />
           <Parameter Name="SubjectObtain" Type="varchar(max)" Mode="In" />
+        </Function>
+        <Function Name="SP_UserShiftToEApplication" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Id" Type="int" Mode="In" />
         </Function>
         <Function Name="WEB_CheckPersonalInfo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Id" Type="int" Mode="In" />
@@ -543,6 +549,7 @@
           <Property Name="Status" Type="Byte" />
           <Property Name="Type" Type="Byte" />
           <Property Name="Result" Type="Byte" />
+          <Property Name="IsRecordSendToEApp" Type="Byte" />
         </EntityType>
         <EntityType Name="Board">
           <Key>
@@ -628,7 +635,7 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Subject" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Subject" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="Body" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="CreatedOn" Type="DateTime" Precision="7" />
           <Property Name="UpdatedOn" Type="DateTime" Precision="7" />
@@ -671,19 +678,19 @@
           <Property Name="CellPhoneNumber" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="AlternateCellPhoneNumber" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
           <Property Name="TellUs" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="ResidentialAddress" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ResidentialAddress" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="ResidentialCity" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="ResidentialCityOther" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="ResidentialProvince" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="ResidentialCountry" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="ResidentialPostalCode" Type="Int32" />
-          <Property Name="PermanentAddress" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="PermanentAddress" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="PermanentCity" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="PermanentCityOther" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="PermanentProvince" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="PermanentCountry" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="PermanentPostalCode" Type="Int32" />
-          <Property Name="CNIC" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CNIC" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
           <Property Name="EmailAddress" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="AlterEmailAddress" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
@@ -708,7 +715,7 @@
           <Property Name="AppliedBeforeYear" Type="Int32" />
           <Property Name="HomePhoneNumber" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
           <Property Name="WhatsAppNumber" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="GuardianCellPhoneNumber" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="GuardianCellPhoneNumber" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
           <Property Name="GuardianEmailAddress" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="HearAboutHU" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="HearAboutHUOther" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
@@ -721,6 +728,8 @@
           <Property Name="IsAdmitCardSent" Type="Byte" />
           <Property Name="AdmitCardSentOn" Type="DateTime" Precision="7" />
           <Property Name="Result" Type="Byte" />
+          <Property Name="AppliedBeforeId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IsRecordMoveToEApp" Type="Byte" />
         </EntityType>
         <EntityType Name="State">
           <Key>
@@ -736,7 +745,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Value" Type="DateTime" />
+          <Property Name="Value" Type="DateTime" Precision="0" />
           <Property Name="Text" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="CreatedOn" Type="DateTime" Precision="7" />
@@ -1022,6 +1031,9 @@
           <FunctionImport Name="WEB_UserLogin" ReturnType="Collection(HUTOPSModel.WEB_UserLogin_Result)">
             <Parameter Name="Email" Mode="In" Type="String" />
             <Parameter Name="Password" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_UserShiftToEApplication">
+            <Parameter Name="Id" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="SP_GetStudentRecord_Result">
@@ -1309,6 +1321,7 @@
           <EntitySetMapping Name="BatchUploads">
             <EntityTypeMapping TypeName="HUTOPSModel.BatchUpload">
               <MappingFragment StoreEntitySet="BatchUploads">
+                <ScalarProperty Name="IsRecordSendToEApp" ColumnName="IsRecordSendToEApp" />
                 <ScalarProperty Name="Result" ColumnName="Result" />
                 <ScalarProperty Name="Type" ColumnName="Type" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
@@ -1444,6 +1457,8 @@
           <EntitySetMapping Name="PersonalInformations">
             <EntityTypeMapping TypeName="HUTOPSModel.PersonalInformation">
               <MappingFragment StoreEntitySet="PersonalInformation">
+                <ScalarProperty Name="IsRecordMoveToEApp" ColumnName="IsRecordMoveToEApp" />
+                <ScalarProperty Name="AppliedBeforeId" ColumnName="AppliedBeforeId" />
                 <ScalarProperty Name="Result" ColumnName="Result" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="HUTopId" ColumnName="HUTopId" />
@@ -1858,6 +1873,7 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_UserShiftToEApplication" FunctionName="HUTOPSModel.Store.SP_UserShiftToEApplication" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

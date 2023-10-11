@@ -79,10 +79,11 @@ namespace HUTOPS.Controllers
                     }
                     var PersonalInformationErrors = Utility.ValidatePersonalInfo(applicationModel.PersonalInfo);
                     var EducationalError = Utility.ValidateEducation(applicationModel.Education);
-                    if (PersonalInformationErrors.Count > 0 || EducationalError.Count > 0)
+                    var DocumentErrors = Utility.ValidateDocuments(applicationModel.CNIC, applicationModel.Photograph, applicationModel.SSCMarkSheet, applicationModel.HSSCMarkSheet);
+                    if (PersonalInformationErrors.Count > 0 || EducationalError.Count > 0 || DocumentErrors.Count > 0)
                     {
                         Utility.AddLog(Constants.LogType.ActivityLog, $"Validation Failed while admit try to Update applicant record Details: {PersonalInformationErrors}{EducationalError}");
-                        return Json(new { status = false, message = "Error Occured while validating your data", PersonalErrors = PersonalInformationErrors, EducationErrors = EducationalError, DocumentErrors = new List<string>() });
+                        return Json(new { status = false, message = "Error Occured while validating your data", PersonalErrors = PersonalInformationErrors, EducationErrors = EducationalError, DocumentErrors = DocumentErrors });
                     }
                     using (DbContextTransaction Transaction = DB.Database.BeginTransaction())
                     {
@@ -280,13 +281,16 @@ namespace HUTOPS.Controllers
                 var PersonalInfoErrors = Utility.ValidatePersonalInfo(applicationModel.PersonalInfo);
                 var EducationError = Utility.ValidateEducation(applicationModel.Education);
 
-                List<string> DocumentError = new List<string>();
-                if (applicationModel.SSCMarkSheet == null || applicationModel.Photograph == null)
+                List<string> DocumentError = Utility.ValidateDocuments(applicationModel.CNIC, applicationModel.Photograph, applicationModel.SSCMarkSheet, applicationModel.HSSCMarkSheet);
+                if (applicationModel.SSCMarkSheet == null)
                 {
                     DocumentError.Add("SSC Mark sheet: is required");
+                    Utility.AddLog(Constants.LogType.ActivityLog, $"Error Occured while validating Documents: SSC Mark sheet = {applicationModel.SSCMarkSheet}");
+                }
+                if (applicationModel.Photograph == null)
+                {
                     DocumentError.Add("Passport size Photograph: is required");
-                    Utility.AddLog(Constants.LogType.ActivityLog, $"Error Occured while validating Documents: SSC Mark sheet = {applicationModel.SSCMarkSheet}, Photograph = {applicationModel.Photograph} ");
-
+                    Utility.AddLog(Constants.LogType.ActivityLog, $"Error Occured while validating Documents: Photograph = {applicationModel.Photograph}");
                 }
 
                 if (PersonalInfoErrors.Count > 0 || EducationError.Count > 0 || DocumentError.Count > 0)

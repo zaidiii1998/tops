@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -350,6 +351,46 @@ namespace HUTOPS.Helper
             }
 
             return errors;
+        }
+
+        public static List<string> ValidateDocuments(HttpPostedFileBase CNIC, HttpPostedFileBase Photo, HttpPostedFileBase SSC, HttpPostedFileBase HSSC)
+        {
+            List<string> errors = new List<string>();
+            if (CNIC != null) { 
+                if (Path.GetExtension(CNIC.FileName) != ".pdf" &&  !IsImageFile(Path.GetExtension(CNIC.FileName)))
+                {
+                    errors.Add("CNIC File is not Valid");
+                }
+            }
+            if (Photo != null)
+            {
+                if (Path.GetExtension(Photo.FileName) != ".pdf" && !IsImageFile(Path.GetExtension(Photo.FileName)))
+                {
+                    errors.Add("Photograph File is not Valid");
+                }
+            }
+            if (SSC != null)
+            {
+                if (Path.GetExtension(SSC.FileName) != ".pdf" && !IsImageFile(Path.GetExtension(SSC.FileName)))
+                {
+                    errors.Add("SSC Mark Sheet File is not Valid");
+                }
+            }
+            if (HSSC != null)
+            {
+                if (Path.GetExtension(HSSC.FileName) != ".pdf" && !IsImageFile(Path.GetExtension(HSSC.FileName)))
+                {
+                    errors.Add("HSSC Mark sheet File is not Valid");
+                }
+            }
+
+            return errors;
+            
+        }
+        private static bool IsImageFile(string fileExtension)
+        {
+            string[] allowedImageExtensions = { ".jpg", ".jpeg", ".png", ".gif" /* Add more if needed */ };
+            return allowedImageExtensions.Contains(fileExtension);
         }
     }
 }

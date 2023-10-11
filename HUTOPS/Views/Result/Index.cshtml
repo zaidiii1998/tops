@@ -24,7 +24,7 @@
                     </li>
                     <li class="nav-item">
                         <a href="#eApp" role="tab" data-toggle="tab"
-                           class="nav-link"> Record Shift To E-Application </a>
+                           class="nav-link"> Move records to E-Application </a>
                     </li>
                 </ul>
                 <div class="tab-content">
@@ -36,12 +36,9 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="row">
-                                            <div class="col-lg-6 text-info">
-                                                Download <a href="~/Content/HUTOPS Ids Demo File.xlsx">HUTOPS Ids Demo File</a>
-                                            </div><br /><br />
                                             <div class="col-lg-12">
                                                 <div class="form-group">
-                                                    <label>Result: </label><br />
+                                                    <label>Result: </label>
                                                     <input type="radio" name="result" id="radioFail" onclick="toggleFormSection('divShiftData', 'radioPass');" value="1" />
                                                     <label for="radioFail">Fail</label>
                                                     <input type="radio" name="result" id="radioPass" onclick="toggleFormSection('divShiftData', 'radioPass');" value="2" />
@@ -51,16 +48,22 @@
                                             </div>
                                             <div class="col-lg-12" id="divShiftData">
                                                 <div class="form-group">
-                                                    <label>Is Record Shift to E-Application</label>
+                                                    <label>Move records to E-Application: </label>
                                                     <input type="radio" name="shift" id="radioYes" value="1" />
                                                     <label for="radioYes">Yes</label>
                                                     <input type="radio" name="shift" id="radioNo" value="0" />
                                                     <label for="radioNo">No</label>
+                                                    <span class="text-danger" id="errShift"></span>
                                                 </div>
                                             </div>
                                             <div class="col-lg-12">
                                                 <div class="form-group">
-                                                    <label>HUTOPS Ids File:</label>
+                                                    <label>
+                                                        HUTOPS Ids File: (Select only Excel File having extension .xlsx or .xls)
+                                                        <br />
+                                                        <a href="~/Content/HUTOPS Ids Demo File.xlsx" class="text-info">Download Demo File</a>
+                                                        <br />
+                                                    </label>
                                                     <input class="form-control" type="file" id="HUTOPSIdsFile" required />
                                                 </div>
                                             </div>
@@ -82,13 +85,14 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="row">
-                                        <div class="col-lg-6 text-info">
-                                            Download <a href="~/Content/HUTOPS Ids Demo File.xlsx">HUTOPS Ids Demo File</a>
-                                        </div><br /><br />
-
                                         <div class="col-lg-12">
                                             <div class="form-group">
-                                                <label>HUTOPS Ids File:</label>
+                                                <label>
+                                                    HUTOPS Ids File: (Select only Excel File having extension .xlsx or .xls)
+                                                    <br />
+                                                    <a href="~/Content/HUTOPS Ids Demo File.xlsx" class="text-info">Download Demo File</a>
+                                                    <br />
+                                                </label>
                                                 <input class="form-control" type="file" id="eAppHUTOPSIdsFile" required />
                                             </div>
                                         </div>

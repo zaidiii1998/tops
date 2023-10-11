@@ -798,7 +798,7 @@ function GetSubjects(GroupName) {
             $('#divSubjects').append(newRow);
         });
     }
-    else if (GroupName === 'Computer Science/General Science') {
+    else if (GroupName === 'General Science/Computer Science') {
         const subjects = ['Physics', 'Chemistry', 'Computer Science/Computer Studies'];
 
         subjects.forEach(subject => {
@@ -1009,15 +1009,15 @@ function loadPrograms(radioValue) {
 }
 
 function ValidateProgram(ProgramValue) {
-    if (ProgramValue == "BS Electrical Engineering" && $('#groupOfStudy').val() != "Pre-Engineering" && $('#groupOfStudy').val() != 'Computer Science/General Science') {
+    if (ProgramValue == "Electrical Engineering" && $('#groupOfStudy').val() != "Pre-Engineering" && $('#groupOfStudy').val() != 'General Science/Computer Science') {
         $('#errDegreeProgram').html("Students who have studied Physics,Mathematics, Chemistry or Computer Science / Computer Studies in HSSC can only apply for Habib University’s BS Electrical Engineering program.");
         $('#degreeProgram').focus();
         return false;
-    } else if (ProgramValue == "BS Computer Science" && $('#groupOfStudy').val() != "Pre-Engineering" && $('#groupOfStudy').val() != 'Computer Science/General Science') {
+    } else if (ProgramValue == "Computer Science" && $('#groupOfStudy').val() != "Pre-Engineering" && $('#groupOfStudy').val() != 'General Science/Computer Science') {
         $('#errDegreeProgram').html("Students who have studied Mathematics in HSSC can only apply for Habib University’s Computer Science program.");
         $('#degreeProgram').focus();
         return false;
-    } else if (ProgramValue == "BS Computer Engineering" && $('#groupOfStudy').val() != "Pre-Engineering" && $('#groupOfStudy').val() != 'Computer Science/General Science') {
+    } else if (ProgramValue == "Computer Engineering" && $('#groupOfStudy').val() != "Pre-Engineering" && $('#groupOfStudy').val() != 'General Science/Computer Science') {
         $('#errDegreeProgram').html("Students who have studied Physics,Mathematics, Chemistry or Computer Science/Computer Studies in HSSC can only apply for Habib University’s BS Electrical Engineering program.");
         $('#degreeProgram').focus();
         return false;
@@ -1342,7 +1342,6 @@ function submitDeclaration() {
     var check2 = $('#invalidInfo').is(':checked');
     var check3 = $('#validInfo').is(':checked');
     var isProgramValid = ValidateProgram($('#degreeProgram').val());
-    debugger
     if (check1 == true && check2 == true && check3 == true && isValid == true && isProgramValid == true) {
         increaseProgressBarWidth();
         const day = $('#dobDay').val();
@@ -1350,6 +1349,8 @@ function submitDeclaration() {
         const year = $('#dobYear').val();
         // Create a new Date object using the selected values
         var dob = `${year}-${month}-${day}`;
+
+        
         var personalInfo = {
             'PersonalInfo.Id': $('#id').val(),
             'PersonalInfo.firstName': $('#firstName').val(),
@@ -1380,12 +1381,12 @@ function submitDeclaration() {
             'PersonalInfo.residentialCityOther': $('#residentialCityOther').val(),
             'PersonalInfo.residentialPostalCode': $('#residentialPostalCode').val(),
 
-            'PersonalInfo.permanentAddress': $('#permanentAddress').val(),
-            'PersonalInfo.permanentCountry': $('#permanentCountry :selected').text(),
-            'PersonalInfo.permanentProvince': $('#permanentProvince :selected').text(),
-            'PersonalInfo.permanentCity': $('#permanentCity :selected').text(),
-            'PersonalInfo.permanentCityOther': $('#permanentCityOther').val(),
-            'PersonalInfo.permanentPostalCode': $('#permanentPostalCode').val(),
+            //'PersonalInfo.permanentAddress': $('#permanentAddress').val(),
+            //'PersonalInfo.permanentCountry': $('#permanentCountry :selected').text(),
+            //'PersonalInfo.permanentProvince': $('#permanentProvince :selected').text(),
+            //'PersonalInfo.permanentCity': $('#permanentCity :selected').text(),
+            //'PersonalInfo.permanentCityOther': $('#permanentCityOther').val(),
+            //'PersonalInfo.permanentPostalCode': $('#permanentPostalCode').val(),
 
             'PersonalInfo.IsAppliedBefore': $("input[name='IsAppliedBefore']:checked").val(),
             'PersonalInfo.AppliedBeforeYear': $('#AppliedBeforeYear').val(),
@@ -1443,6 +1444,23 @@ function submitDeclaration() {
         Object.entries(personalInfo).forEach(([key, value]) => {
             data.append(key, value);
         });
+        debugger
+        if (!$('#permanentDifferent').prop('checked')) {
+            data.append('PersonalInfo.permanentAddress', $('#residentialAddress').val());
+            data.append('PersonalInfo.permanentCountry', $('#residentialCountry :selected').text());
+            data.append('PersonalInfo.permanentProvince', $('#residentialProvince :selected').text());
+            data.append('PersonalInfo.permanentCity', $('#residentialCity :selected').text());
+            data.append('PersonalInfo.permanentCityOther', $('#residentialCityOther').val());
+            data.append('PersonalInfo.permanentPostalCode', $('#residentialPostalCode').val());
+        } else {
+            data.append('PersonalInfo.permanentAddress', $('#permanentAddress').val());
+            data.append('PersonalInfo.permanentCountry', $('#permanentCountry :selected').text());
+            data.append('PersonalInfo.permanentProvince', $('#permanentProvince :selected').text());
+            data.append('PersonalInfo.permanentCity', $('#permanentCity :selected').text());
+            data.append('PersonalInfo.permanentCityOther', $('#permanentCityOther').val());
+            data.append('PersonalInfo.permanentPostalCode', $('#permanentPostalCode').val());
+        }
+
         Object.entries(education).forEach(([key, value]) => {
             data.append(key, value);
         });
@@ -1579,6 +1597,28 @@ function LoadStudentDatatable() {
             { "data": "EmailAddress" },
             { "data": "CNIC" },
             {
+                "data": "Result",
+                render: function (data) {
+                    if (data == 1) {
+                        return "<span class='badge badge-pill badge-danger'>FAILED</span>";
+                    } else if (data == 2) {
+                        return "<span class='badge badge-pill badge-success'>Passed</span>";
+                    } else {
+                        return "<span class='badge badge-pill badge-info'>Pending</span>";
+                    }
+                }
+            },
+            {
+                "data": "IsRecordMoveToEApp",
+                render: function (data) {
+                    if (data == 1) {
+                        return "<span class='badge badge-pill badge-success'>MOVED</span>";
+                    } else {
+                        return "<span class='badge badge-pill badge-info'>Pending</span>";
+                    }
+                }
+            },
+            {
                 "data": "IsAdmitCardGenerated",
                 render: function (data) {
                     if (data == 1) {
@@ -1631,7 +1671,7 @@ function LoadStudentDatatable() {
                 //    return "<li class='actionDropWrap' onclick='ToggleShow($(this))'><div class= 'nameWrapper'><i class='fa-solid fa-list-ul'></i></div ><ul class='logoutDrop'><li class='global-btn-purple w-100' id='btnEdit'>Edit</li><li class='global-btn-purple w-100' onclick='ShowAdmitCardModal(" + data + ")'>Generate Admit Card</li><li onclick='sendAdmitCard(" + data + ")' class='global-btn-purple w-100'>Send Admit Card</li></ul></li > "
                 //}
                 render: function (data) {
-                    return "<li class='actionDropWrap' id='" + data + "' onclick='ToggleShow(this.id)'><div class= 'nameWrapper'><i class='fa-solid fa-list-ul'></i></div ><ul class='actionDrop'><li class='global-btn-purple w-100' id='btnEdit'>Edit</li><li class='global-btn-purple w-100' onclick='ShowAdmitCardModal(" + data + ")'>Generate Admit Card</li><li onclick='sendAdmitCard(" + data + ")' class='global-btn-purple w-100'>Send Admit Card</li></ul></li > "
+                    return "<li class='actionDropWrap' id='" + data + "' onclick='ToggleShow(this.id)'><div class= 'nameWrapper'><i class='fa-solid fa-list-ul'></i></div ><ul class='actionDrop'><li class='global-btn-purple w-100' id='btnEdit'><a>Edit</a></li><li class='global-btn-purple w-100' onclick='ShowAdmitCardModal(" + data + ")'><a>Generate Admit Card</a></li><li onclick='sendAdmitCard(" + data + ")' class='global-btn-purple w-100'><a>Send Admit Card</a></li><li onclick='moveRecordToEApp(" + data + ")' class='global-btn-purple w-100'><a>Move Record To E-App</a></li></ul></li > "
                 }
             }
         ],
@@ -1802,6 +1842,20 @@ function sendAdmitCard(applicantId) {
     
     $('#mainLoader').show();
     CallFileAsyncService("/Student/SendAdmitCard?Id=" + applicantId, null, SubmitAdmitCardBatchCB);
+    function SubmitAdmitCardBatchCB(response) {
+        $('#mainLoader').hide();
+        if (response.status) {
+            ShowDivSuccess(response.message);
+        } else {
+            ShowDivError(response.message);
+        }
+    }
+}
+
+function moveRecordToEApp(applicantId) {
+
+    $('#mainLoader').show();
+    CallFileAsyncService("/Student/RecordMoveToEApp?Id=" + applicantId, null, SubmitAdmitCardBatchCB);
     function SubmitAdmitCardBatchCB(response) {
         $('#mainLoader').hide();
         if (response.status) {
@@ -2071,7 +2125,7 @@ function SubmitAdmitCardBatch() {
 function SubmitResultBatch() {
 
     var isValid = true;
-    $('input[required]').each(function () {
+    $('#modalForm input[required]').each(function () {
 
         if ($(this).val().trim() === '') {
             isValid = false;
@@ -2083,7 +2137,7 @@ function SubmitResultBatch() {
         }
     });
 
-    $("input[name=result]").each(function () {
+    $("#modalForm input[name=result]").each(function () {
 
         var checked = $("input[name=result]:checked");
         debugger
@@ -2093,7 +2147,12 @@ function SubmitResultBatch() {
             $('#errResult').html('');
         }
     });
-
+    if ($("input[name='result']:checked").val() == '2' && $("input[name=shift]:checked").length == 0) {
+        isValid = false;
+        $('#errShift').html(' Please select Value');
+    } else {
+        $('#errShift').html('');
+    }
 
 
     if (isValid) {
@@ -2101,12 +2160,16 @@ function SubmitResultBatch() {
         data.append("HUTOPSIdsFile", jQuery("#HUTOPSIdsFile").get(0).files[0]);
         data.append("Result", $("input[name='result']:checked").val());
         data.append("Type", 4);
+        data.append("IsRecordSendToEApp", $("input[name='shift']:checked").val())
 
         $('#mainLoader').show();
+        
         CallFileAsyncService("/AdmitCard/Submit", data, SubmitAdmitCardBatchCB);
         function SubmitAdmitCardBatchCB(response) {
             $('#mainLoader').hide();
+            
             if (response.status) {
+                $('#modalForm')[0].reset();
                 ShowDivSuccess(response.message);
             } else {
                 ShowDivError(response.message);

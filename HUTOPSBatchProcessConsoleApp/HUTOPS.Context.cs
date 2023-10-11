@@ -1042,5 +1042,14 @@ namespace HUTOPSBatchProcessConsoleApp
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<WEB_UserLogin_Result>("WEB_UserLogin", emailParameter, passwordParameter);
         }
+    
+        public virtual int SP_UserShiftToEApplication(Nullable<int> id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("Id", id) :
+                new ObjectParameter("Id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_UserShiftToEApplication", idParameter);
+        }
     }
 }

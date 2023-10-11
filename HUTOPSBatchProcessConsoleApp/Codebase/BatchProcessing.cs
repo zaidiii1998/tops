@@ -302,7 +302,77 @@ namespace HUTOPSBatchProcessConsoleApp.Codebase
             }
         }
 
-        public static List<ExcelData> UpdateResult(List<ExcelData> records, byte? result)
+        public static List<ExcelData> UpdateResult(List<ExcelData> records, byte? result, byte? IsRecordSendToEApp)
+        {
+            try
+            {
+                foreach (var record in records)
+                {
+                    try
+                    {
+                        Helper.AddLog(Constants.LogType.ActivityLog, $"Service request to fetch record against HUTOPSId : {record.HUTOPSIds}");
+
+                        var personalInformation = DB.PersonalInformations.ToList().Where(x => x.HUTopId.Trim() == record.HUTOPSIds.Trim()).FirstOrDefault();
+                        if (personalInformation != null)
+                        {
+                            personalInformation.Result = result;
+                            DB.SaveChanges();
+                            record.Status = "Result Updated Successfully";
+                            Helper.AddLog(Constants.LogType.ActivityLog, $"Personal Information Result Updated against HUTOPS Id: {record.HUTOPSIds}");
+                            
+                            if(IsRecordSendToEApp == 1)
+                            {
+                                if (personalInformation.IsRecordMoveToEApp != 1)
+                                {
+                                    if (personalInformation.Result == 2)
+                                    {
+                                        DB.SP_UserShiftToEApplication(personalInformation.Id);
+                                        personalInformation.IsRecordMoveToEApp = 1;
+                                        DB.SaveChanges();
+
+                                        record.Status = " Result Updated and Record Move to E-Application Successfully";
+                                        Helper.AddLog(Constants.LogType.ActivityLog, $"Personal Information Result Updated and Record Move to E-Application against HUTOPS Id: {record.HUTOPSIds}");
+
+                                    }
+                                    else
+                                    {
+                                        record.Status = "Record Mark as Failed";
+                                        Helper.AddLog(Constants.LogType.ActivityLog, $"Personal Information Record already move to E-Application against HUTOPS Id: {record.HUTOPSIds}");
+                                    }
+
+                                }
+                                else
+                                {
+                                    record.Status = "Record already move to E-Application";
+                                    Helper.AddLog(Constants.LogType.ActivityLog, $"Personal Information Record already move to E-Application against HUTOPS Id: {record.HUTOPSIds}");
+                                }
+                            }
+
+
+
+                        }
+                        else
+                        {
+                            record.Status = "Record not found ";
+                            Helper.AddLog(Constants.LogType.ActivityLog, $"Personal Information Record not found against HUTOPS Id: {record.HUTOPSIds}");
+                        }
+
+                    }
+                    catch (Exception ex)
+                    {
+                        Helper.AddLog(Constants.LogType.Exception, $"Error Occured while processing Batch Record against HUTOPSId : {record.HUTOPSIds} Error Details: {ex.Message}");
+                        record.Status = "Failed" + ex.Message;
+                    }
+
+                }
+                return records;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        public static List<ExcelData> ShiftRecordToEApp(List<ExcelData> records)
         {
             try
             {
@@ -316,10 +386,30 @@ namespace HUTOPSBatchProcessConsoleApp.Codebase
                         var personalInformation = DB.PersonalInformations.ToList().Where(x => x.HUTopId.Trim() == record.HUTOPSIds.Trim()).FirstOrDefault();
                         if (personalInformation != null)
                         {
-                            personalInformation.Result = result;
-                            DB.SaveChanges();
-                            record.Status = "Result Updated Successfully";
-                            Helper.AddLog(Constants.LogType.ActivityLog, $"Personal Information Result Updated against HUTOPS Id: {record.HUTOPSIds}");
+                            if(personalInformation.IsRecordMoveToEApp != 1)
+                            {
+                                if (personalInformation.Result == 2)
+                                {
+                                    DB.SP_UserShiftToEApplication(personalInformation.Id);
+                                    personalInformation.IsRecordMoveToEApp = 1;
+                                    DB.SaveChanges();
+
+                                    record.Status = "Record Move to E-Application Successfully";
+                                    Helper.AddLog(Constants.LogType.ActivityLog, $"Personal Information Record Move to E-Application against HUTOPS Id: {record.HUTOPSIds}");
+
+                                }
+                                else
+                                {
+                                    record.Status = "Record Mark as Failed";
+                                    Helper.AddLog(Constants.LogType.ActivityLog, $"Personal Information Record already move to E-Application against HUTOPS Id: {record.HUTOPSIds}");
+                                }
+
+                            }
+                            else
+                            {
+                                record.Status = "Record already move to E-Application";
+                                Helper.AddLog(Constants.LogType.ActivityLog, $"Personal Information Record already move to E-Application against HUTOPS Id: {record.HUTOPSIds}");
+                            }
 
                         }
                         else

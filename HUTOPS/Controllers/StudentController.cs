@@ -52,7 +52,9 @@ namespace HUTOPS.Controllers
                             IsAdmitCardGenerated = rec.IsAdmitCardGenerated,
                             AdmitCardGeneratedOn = rec.AdmitCardGeneratedOn,
                             IsAdmitCardSent = rec.IsAdmitCardSent,
-                            AdmitCardSentOn = rec.AdmitCardSentOn
+                            AdmitCardSentOn = rec.AdmitCardSentOn,
+                            Result = rec.Result,
+                            IsRecordMoveToEApp = rec.IsRecordMoveToEApp
                         });
                     }
                     Total = Records.Count;
@@ -252,6 +254,54 @@ namespace HUTOPS.Controllers
             {
                 Utility.AddLog(Constants.LogType.Exception, $"Error Occured while sending Admit Card Error Details: {ex.Message}");
                 return Json(new { status = false, message = "Admit Card not found" });
+            }
+        }
+        public ActionResult RecordMoveToEApp(int Id)
+        {
+            try
+            {
+                Utility.AddLog(Constants.LogType.ActivityLog, $"Admin request to move record to E-Application against Id : {Id}");
+
+
+                var personalInformation = DB.PersonalInformations.ToList().Where(x => x.Id == Id).FirstOrDefault();
+                if (personalInformation != null)
+                {
+                    if (personalInformation.IsRecordMoveToEApp != 1)
+                    {
+                        if (personalInformation.Result == 2)
+                        {
+                            DB.SP_UserShiftToEApplication(personalInformation.Id);
+                            personalInformation.IsRecordMoveToEApp = 1;
+                            DB.SaveChanges();
+
+                            Utility.AddLog(Constants.LogType.ActivityLog, $"Personal Information Record Move to E-Application against HUTOPS Id: {personalInformation.HUTopId}");
+                            return Json(new { status = true, message = "Record Move to E-Application Successfully" });
+                        }
+                        else
+                        {
+                            Utility.AddLog(Constants.LogType.ActivityLog, $"Personal Information Record already move to E-Application against HUTOPS Id: {personalInformation.HUTopId}");
+                            return Json(new { status = false, message = "Record Mark as Failed" });
+                        }
+
+                    }
+                    else
+                    {
+                        Utility.AddLog(Constants.LogType.ActivityLog, $"Personal Information Record already move to E-Application against HUTOPS Id: {personalInformation.HUTopId}");
+                        return Json(new { status = false, message = "Record already move to E-Application" });
+                    }
+
+                }
+                else
+                {
+                    Utility.AddLog(Constants.LogType.ActivityLog, $"Personal Information Record not found against HUTOPS Id: {personalInformation.HUTopId}");
+                    return Json(new { status = false, message = "Record not found " });
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Utility.AddLog(Constants.LogType.Exception, $"Error Occured while Moving Record against PersonalInformation Id : {Id} Error Details: {ex.Message}");
+                return Json(new { status = false, message = "Error Occured while Moving Record To E-Application" + ex.Message });
             }
         }
     }

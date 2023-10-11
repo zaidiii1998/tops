@@ -210,8 +210,8 @@
           <Property Name="AdmitCardGeneratedOn" Type="datetime2" Precision="7" />
           <Property Name="IsAdmitCardSent" Type="tinyint" />
           <Property Name="AdmitCardSentOn" Type="datetime2" Precision="7" />
-          <Property Name="Result" Type="tinyint" />
-          <Property Name="IsRecordMoveToEApp" Type="tinyint" />
+          <Property Name="Result" Type="tinyint" StoreGeneratedPattern="Computed" />
+          <Property Name="IsRecordMoveToEApp" Type="tinyint" StoreGeneratedPattern="Computed" />
         </EntityType>
         <EntityType Name="State">
           <Key>
@@ -366,6 +366,9 @@
           <Parameter Name="HUSchoolName" Type="varchar" Mode="In" />
           <Parameter Name="SubjectName" Type="varchar(max)" Mode="In" />
           <Parameter Name="SubjectObtain" Type="varchar(max)" Mode="In" />
+        </Function>
+        <Function Name="SP_UserShiftToEApplication" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Id" Type="int" Mode="In" />
         </Function>
         <Function Name="WEB_CheckPersonalInfo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Id" Type="int" Mode="In" />
@@ -724,9 +727,9 @@
           <Property Name="AdmitCardGeneratedOn" Type="DateTime" Precision="7" />
           <Property Name="IsAdmitCardSent" Type="Byte" />
           <Property Name="AdmitCardSentOn" Type="DateTime" Precision="7" />
-          <Property Name="Result" Type="Byte" />
+          <Property Name="Result" Type="Byte" annotation:StoreGeneratedPattern="Computed" />
           <Property Name="AppliedBeforeId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="true" />
-          <Property Name="IsRecordMoveToEApp" Type="Byte" />
+          <Property Name="IsRecordMoveToEApp" Type="Byte" annotation:StoreGeneratedPattern="Computed" />
         </EntityType>
         <EntityType Name="State">
           <Key>
@@ -1029,6 +1032,9 @@
             <Parameter Name="Email" Mode="In" Type="String" />
             <Parameter Name="Password" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="SP_UserShiftToEApplication">
+            <Parameter Name="Id" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="SP_GetStudentRecord_Result">
           <Property Type="Int32" Name="Id" Nullable="false" />
@@ -1189,6 +1195,8 @@
           <Property Type="Byte" Name="IsAdmitCardSent" Nullable="true" />
           <Property Type="DateTime" Name="AdmitCardSentOn" Nullable="true" />
           <Property Type="Int32" Name="Count" Nullable="true" />
+          <Property Type="Byte" Name="Result" Nullable="true" />
+          <Property Type="Byte" Name="IsRecordMoveToEApp" Nullable="true" />
         </ComplexType>
         <ComplexType Name="SP_InsertApplication_Result">
           <Property Type="Int32" Name="Response" Nullable="false" />
@@ -1856,6 +1864,7 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_UserShiftToEApplication" FunctionName="HUTOPSModel.Store.SP_UserShiftToEApplication" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
