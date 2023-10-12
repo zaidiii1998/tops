@@ -23,26 +23,26 @@ namespace HUTOPS.Controllers
             string filePath = "";
             try
             {
-                if(admitCardBatchModel.Type == 0)
+                if(admitCardBatchModel.Type == byte.Parse(BatchType.GenerateAdmitCard.ToString()))
                 {
                     return Json(new { status = false, message = "Please Select Action First" });
                 }
-                if((admitCardBatchModel.Type != 0 && admitCardBatchModel.Type == 2) && admitCardBatchModel.HUTOPSIdsFile == null) 
+                if((admitCardBatchModel.Type != 0 && admitCardBatchModel.Type == BatchType.SendAdmitCard.GetHashCode()) && admitCardBatchModel.HUTOPSIdsFile == null) 
                 {
                     return Json(new { status = false, message = "Please Select HUTOPS Ids File to send Emails" });
                 }
-                else if(admitCardBatchModel.Type != 0 &&(admitCardBatchModel.Type == 1 || admitCardBatchModel.Type == 3))
+                else if(admitCardBatchModel.Type != 0 &&(admitCardBatchModel.Type == BatchType.GenerateAdmitCard.GetHashCode()) || admitCardBatchModel.Type == BatchType.GenerateAndSendAdmitCard.GetHashCode())
                 {
                     if (!ModelState.IsValid)
                     {
                         return Json(new { status = false, message = "Provided Information is not Valid" });
                     }
                 }
-                else if ((admitCardBatchModel.Type != 0 && admitCardBatchModel.Type == 5) && admitCardBatchModel.HUTOPSIdsFile == null)
+                else if ((admitCardBatchModel.Type != 0 && admitCardBatchModel.Type == BatchType.MoveRecordToEApp.GetHashCode()) && admitCardBatchModel.HUTOPSIdsFile == null)
                 {
                     return Json(new { status = false, message = "Please Select HUTOPS Ids File to Shift Records to E-Applicaiton" });
                 }
-                else if (admitCardBatchModel.Type != 0 && admitCardBatchModel.Type == 4 && (admitCardBatchModel.HUTOPSIdsFile == null || admitCardBatchModel.Result == 0))
+                else if (admitCardBatchModel.Type != 0 && admitCardBatchModel.Type == BatchType.Result.GetHashCode() && (admitCardBatchModel.HUTOPSIdsFile == null || admitCardBatchModel.Result == 0))
                 {
                     return Json(new { status = false, message = "Please enter in all reqired fields to Update Result" });
                 }
@@ -64,6 +64,10 @@ namespace HUTOPS.Controllers
                 }
                 if (admitCardBatchModel.HUTOPSIdsFile != null)
                 {
+                    if(Path.GetExtension(admitCardBatchModel.HUTOPSIdsFile.FileName) != ".xlsx" && Path.GetExtension(admitCardBatchModel.HUTOPSIdsFile.FileName) != ".xls")
+                    {
+                        return Json(new { status = false, message = "HUTOPS Ids file is not Valid (only excel file accepted)" });
+                    }
                     filePath = Path.Combine(BatchDirectory, DateTime.Now.ToString("yyyyMMddHHmmss") + Path.GetExtension(admitCardBatchModel.HUTOPSIdsFile.FileName));
                     admitCardBatchModel.HUTOPSIdsFile.SaveAs(filePath);
 

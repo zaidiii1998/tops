@@ -13,6 +13,14 @@ using static HUTOPS.Helper.Constants;
 
 namespace HUTOPS.Helper
 {
+    enum BatchType
+    {
+        GenerateAdmitCard = 1,
+        SendAdmitCard = 2,
+        GenerateAndSendAdmitCard = 3,
+        Result = 4,
+        MoveRecordToEApp = 5
+    }
     public class Utility
     {
         public static string ToCamelCase(string input)
