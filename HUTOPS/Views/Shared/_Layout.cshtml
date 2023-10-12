@@ -49,12 +49,12 @@
     <div class="loader" id="mainLoader">
         <img src="~/Content/Images/preloader.gif" />
     </div>
-    <header class="dashboardHeader" style="position: fixed;z-index: 1; background-color:white;">
+    <header class="dashboardHeader" style="z-index: 1; background-color:#451051;">
         <div class="container-fluid">
             <div class="row align-items-center">
                 <div class="col-xl-12">
                     <div class="LogoWraper d-flex justify-content-center">
-                        <img src="~/Content/Images/TOPS_logo_admin.png" style="max-width: 13%;" alt="Alternate Text" />
+                        <img src="~/Content/Images/TOPS_logo_admin.png" alt="Alternate Text" />
                     </div>
                 </div>
             </div>
@@ -67,13 +67,13 @@
             </div>
         </div>
     </header>
-    <div class="body-content" id="bodyContent">
+    <div class="body-content container" id="bodyContent">
         @RenderBody()
     </div>
     <footer>
         <div class="container-fluid">
             <div class="row justify-content-center">
-                <div class="col-lg-6">
+                <div class="col-lg-8">
                     <ul>
                         <li><a class="hoverUnderLine" href="mailto:tops@habib.edu.pk">tops@habib.edu.pk</a></li>
                         <li>&copy; @DateTime.Now.Year - <a class="hoverUnderLine" href="#">© Habib University</a></li>

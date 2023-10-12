@@ -10,29 +10,29 @@
 
 <div>
     <div class="accordion" id="accordionExample">
-        <h6 class="m-4">
+        <p class="m-4" style="margin-top:0px !important;">
             Note: Fields marked with an <span class="text-danger h-6" style="font-size: 1.1rem;">*</span> are
             mandatory.
-        </h6>
+        </p>
         <div class="card m-4">
             <div class="card-header CollapseCard" id="headingOne" onclick="document.getElementById('btnPersonalInfo').click();">
 
-                <h2 class="mb-0">
+              
                     <a class="btn btn-link w-100" id="btnPersonalInfo" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                         Personal Information
                         <span class="w-100"><i class="fa-solid" aria-hidden="true" style="color: white;font-size: 39px;"></i></span>
                     </a>
 
-                </h2>
+               
 
             </div>
             <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
                 <div class="card-body">
                     <div class="container-fluid">
                         <div class="boxWraper infoBox">
-                            <div class="headBox">
+                           <!-- <div class="headBox">
                                 <h2>Personal Information</h2>
-                            </div>
+                            </div>-->
                             <form id="PersonalInfoForm">
                                 <input class="form-control" type="text" id="id" name="Id" maxlength="25" style="display:none;" value="@Model.PersonalInfo.Id">
 
@@ -208,9 +208,9 @@
                                 </div>
 
                                 <!-- Contact Details Section -->
-                                <div class="headBox">
-                                    <h2>Contact Details</h2>
-                                </div>
+                               
+                                    <h5>Contact Details</h5>
+                               
                                 <div class="row">
                                     <div class="col-lg-4">
                                         <div class="form-group">
@@ -272,7 +272,7 @@
                                     <div class="col-lg-4">
                                         <div class="form-group">
                                             <label for="residentialAddress">Residential Address<span class="text-danger h-6" style="font-size: 1.1rem;">*</span>:</label>
-                                            <textarea class="form-control" id="residentialAddress" name="ResidentialAddress" rows="2" cols="100" maxlength="100" required> @Model.PersonalInfo.ResidentialAddress</textarea><br><br>
+                                            <textarea class="form-control" id="residentialAddress" name="ResidentialAddress" rows="2" cols="100" maxlength="100" required> @Model.PersonalInfo.ResidentialAddress</textarea>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
@@ -445,7 +445,7 @@
                                         <div class="form-group">
                                             <label>How did you first hear about Habib University?<span class="text-danger h-6" style="font-size: 1.1rem;">*</span></label>
                                             <select class="form-control" id="comboHearHU" name="HearAboutHU" style="padding:0;" onchange="ShowHideField('divOtherHearHU','comboHearHU','Other')" required>
-                                                <option value="" selected disabled>How did you first hear about Habib University?</option>
+                                                <option value="" selected disabled>Please select</option>
                                                 <option value="College/School visit by HU TOPS team">College/School visit by HU TOPS team</option>
                                                 <option value="HU TOPS/Habib University Website">HU TOPS/Habib University Website</option>
                                                 <option value="HU TOPS/Habib University Facebook page">HU TOPS/Habib University Facebook page</option>
@@ -476,7 +476,7 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-6">
                                         <div class="form-group">
                                             <label>Have you ever applied at Habib University?<span class="text-danger h-6" style="font-size: 1.1rem;">*</span></label>
                                             @if (Model.PersonalInfo.IsAppliedBefore == 1)
@@ -554,15 +554,15 @@
                 <div class="card-body">
                     <div class="container-fluid">
                         <div class="boxWraper infoBox">
-                            <div class="headBox">
+                           <!-- <div class="headBox">
                                 <h2>Education</h2>
-                            </div>
+                            </div>-->
                             <form method="post" id="EducationForm">
-                                <div class="headBox">
-                                    <h6>HSSC/College Information</h6>
-                                </div>
+                                
+                                    <h5>HSSC/College Information</h5>
+                                
                                 <div class="row">
-                                    <div class="col-lg-3">
+                                    <div class="col-lg-4">
                                         <div class="form-group">
                                             <label for="currentLevel">Your Current Level of Study<span class="text-danger h-6" style="font-size: 1.1rem;">*</span>:</label>
                                             <select class="form-control" id="currentLevel" name="currentLevel" onchange="ShowHideField('divUniName', 'currentLevel', 'Already enrolled in a University'); LoadYear('startingYear');" required>
@@ -574,7 +574,7 @@
 
                                         </div>
                                     </div>
-                                    <div class="col-lg-3" id="divUniName">
+                                    <div class="col-lg-4" id="divUniName">
                                         <div class="form-group">
                                             <label for="universityName">University Name<span class="text-danger h-6" style="font-size: 1.1rem;">*</span>:</label>
                                             <input class="form-control" type="text" id="universityName" value="@Model.Education.UniversityName" name="universityName">
@@ -582,7 +582,7 @@
                                             <br><br>
                                         </div>
                                     </div>
-                                    <div class="col-lg-3">
+                                    <div class="col-lg-4">
                                         <div class="form-group">
                                             <label for="boardOfEducation">Board Of Education<span class="text-danger h-6" style="font-size: 1.1rem;">*</span>:</label>
                                             <select class="form-control" id="boardOfEducation" name="boardOfEducation" onchange="GetGroupListFromObj(this.value);" required>
@@ -615,7 +615,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-lg-3">
+                                    <div class="col-lg-4">
                                         <div class="form-group">
                                             <label for="groupOfStudy">Group Of Study<span class="text-danger h-6" style="font-size: 1.1rem;">*</span></label>
                                             <select class="form-control" id="groupOfStudy" name="groupOfStudy" onchange="GetSubjects(this.value)" required>
@@ -675,19 +675,19 @@
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-lg-3">
+                                    <div class="col-lg-4">
                                         <div class="form-group">
                                             <label for="collegeName">Current College/Last College Name<span class="text-danger h-6" style="font-size: 1.1rem;">*</span>:</label>
                                             <input class="form-control" type="text" value="@Model.Education.HSSCSchoolName" id="collegeName" name="collegeName" required>
                                         </div>
                                     </div>
-                                    <div class="col-lg-3">
+                                    <div class="col-lg-4">
                                         <div class="form-group">
                                             <label for="collegeAddress">College Address with City Name:</label>
                                             <textarea class="form-control" id="collegeAddress" name="collegeAddress" rows="2"> @Model.Education.HSSCSchoolAddress</textarea>
                                         </div>
                                     </div>
-                                    <div class="col-lg-3">
+                                    <div class="col-lg-4">
                                         <div class="form-group">
                                             <label for="startingYear">Starting Year<span class="text-danger h-6" style="font-size: 1.1rem;">*</span>:</label>
                                             <select class="form-control" id="startingYear" name="startingYear" required>
@@ -696,7 +696,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-lg-3">
+                                    <div class="col-lg-4">
                                         <div class="form-group">
                                             <label for="completionYear">Completion Year<span class="text-danger h-6" style="font-size: 1.1rem;">*</span>:</label>
                                             <select class="form-control" id="completionYear" name="completionYear" required>
@@ -704,32 +704,31 @@
                                             </select>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-3">
+									 <div class="col-lg-4">
                                         <div class="form-group">
                                             <label for="hsscPercentage">Overall HSSC Percentage<span class="text-danger h-6" style="font-size: 1.1rem;">*</span>:</label>
                                             <input class="form-control Percentage" type="text" id="hsscPercentage" value="@Model.Education.HSSCPercentage" name="hsscPercentage" required>
                                         </div>
                                     </div>
-                                </div><br /><br />
-                                <div class="headBox">
-                                    <h6>SSC/School Information</h6>
                                 </div>
+                              
+                                
+                                    <h5>SSC/School Information</h5>
+                             
                                 <div class="row">
-                                    <div class="col-lg-3">
+                                    <div class="col-lg-4">
                                         <div class="form-group">
                                             <label for="secondarySchoolName">Secondary Education School Name<span class="text-danger h-6" style="font-size: 1.1rem;">*</span>:</label>
                                             <input class="form-control" type="text" id="secondarySchoolName" value="@Model.Education.SSCSchoolName" name="secondarySchoolName" required>
                                         </div>
                                     </div>
-                                    <div class="col-lg-3">
+                                    <div class="col-lg-4">
                                         <div class="form-group">
                                             <label for="secondarySchoolAddress">Secondary Education School Address with City Name:</label>
                                             <textarea class="form-control" type="text" id="secondarySchoolAddress" name="secondarySchoolAddress" rows="2"> @Model.Education.SSCSchoolAddress</textarea>
                                         </div>
                                     </div>
-                                    <div class="col-lg-3">
+                                    <div class="col-lg-4">
                                         <div class="form-group">
                                             <label for="sscPercentage">Overall SSC Percentage<span class="text-danger h-6" style="font-size: 1.1rem;">*</span>:</label>
                                             <input class="form-control Percentage" value="@Model.Education.SSCPercentage" type="text" id="sscPercentage" name="sscPercentage" required>
@@ -737,9 +736,9 @@
                                     </div>
                                 </div>
                                 <!-- Habib University Section -->
-                                <div class="headBox">
-                                    <h6>Intended Program</h6>
-                                </div>
+                                
+                                    <h5>Intended Program</h5>
+                                
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <div class="form-group">
@@ -752,7 +751,7 @@
                                         </div>
                                         
                                     </div>
-                                    <div class="col-lg-3">
+                                    <div class="col-lg-4">
                                         <div class="form-group">
                                             <label>Which Degree Program you are planning to pursue at Habib University?<span class="text-danger h-6" style="font-size: 1.1rem;">*</span></label><br>
                                             <!-- This section will be updated based on the selection in the previous question -->
@@ -769,9 +768,9 @@
 
 
                                 <section>
-                                    <div class="headBox">
-                                        <h2>Your Optional/Elective Subjects in HSSC:</h2>
-                                    </div>
+                                   
+                                        <h5>Your Optional/Elective Subjects in HSSC:</h5>
+                                    
                                     <div class="row">
                                         <div class="col-lg-3">
                                             <div class="form-group">
@@ -831,9 +830,9 @@
                 <div class="card-body">
                     <div class="container-fluid">
                         <div class="boxWraper infoBox">
-                            <div class="headBox">
+                            <!--<div class="headBox">
                                 <h2>Documents</h2>
-                            </div>
+                            </div>-->
                             <form id="fileUploadForm" enctype="multipart/form-data">
                                 <div class="row">
                                     <div class="col-lg-6">
@@ -847,7 +846,7 @@
                                         }
                                         else
                                         {
-                                            <input class="form-control" type="file" id="Photograph" size="1" name="Photograph" accept=".jpeg, .jpg" value="@Model.Document.Photograph" onchange="checkFileSize(this.id, 'errPhoto')" required>
+                                            <input class="custom-upload-input" type="file" id="Photograph" size="1" name="Photograph" accept=".jpeg, .jpg" value="@Model.Document.Photograph" onchange="checkFileSize(this.id, 'errPhoto')" required>
                                         }
                                         <span class="text-danger" id="errPhoto"></span>
                                     </div>
@@ -867,11 +866,11 @@
                                         <div class="col-lg-3">
                                             @if (Utility.GetAdminFromSession().Id != 0)
                                             {
-                                                <input type="file" class="form-control" id="SSCMarkSheet" size="1" name="SSCMarkSheet" accept=".jpeg, .jpg" value="@Model.Document.SSCMarkSheet" onchange="checkFileSize(this.id, 'errSSC')">
+                                                <input type="file" class="custom-upload-input" id="SSCMarkSheet" size="1" name="SSCMarkSheet" accept=".jpeg, .jpg" value="@Model.Document.SSCMarkSheet" onchange="checkFileSize(this.id, 'errSSC')">
                                             }
                                             else
                                             {
-                                                <input type="file" class="form-control" id="SSCMarkSheet" size="1" name="SSCMarkSheet" accept=".jpeg, .jpg" value="@Model.Document.SSCMarkSheet" onchange="checkFileSize(this.id, 'errSSC')" required>
+                                                <input type="file" class="custom-upload-input" id="SSCMarkSheet" size="1" name="SSCMarkSheet" accept=".jpeg, .jpg" value="@Model.Document.SSCMarkSheet" onchange="checkFileSize(this.id, 'errSSC')" required>
                                             }
                                             <span class="text-danger" id="errSSC"></span>
                                         </div>
@@ -890,7 +889,7 @@
                                         </div>
 
                                         <div class="col-lg-3">
-                                            <input type="file" class="form-control" id="HSSCMarkSheet" size="1" name="HSSCMarkSheet" accept=".jpeg, .jpg" value="@Model.Document.HSSCMarkSheet" onchange="checkFileSize(this.id, 'errHSSC')">
+                                            <input type="file" class="custom-upload-input" id="HSSCMarkSheet" size="1" name="HSSCMarkSheet" accept=".jpeg, .jpg" value="@Model.Document.HSSCMarkSheet" onchange="checkFileSize(this.id, 'errHSSC')">
                                             <span class="text-danger" id="errHSSC"></span>
                                         </div>
                                         <div class="col-lg-3">
@@ -906,7 +905,7 @@
                                         </div>
 
                                         <div class="col-lg-3">
-                                            <input type="file" id="CNIC" class="form-control" size="1" name="CNIC" accept=".jpeg, .jpg" value="@Model.Document.CNIC" onchange="checkFileSize(this.id, 'errCNIC')">
+                                            <input type="file" id="CNIC" class="custom-upload-input" size="1" name="CNIC" accept=".jpeg, .jpg" value="@Model.Document.CNIC" onchange="checkFileSize(this.id, 'errCNIC')">
                                             <span class="text-danger" id="errCNIC"></span>
                                         </div>
                                         <div class="col-lg-3">
@@ -946,11 +945,11 @@
                 <div class="card-body">
                     <div class="container-fluid">
                         <div class="boxWraper infoBox">
-                            <div class="headBox">
+                           <!-- <div class="headBox">
                                 <h2>Test Date</h2>
-                            </div>
+                            </div>-->
                             <div class="row">
-                                <div class="col-lg-3">
+                                <div class="col-lg-6">
                                     <div class="form-group">
 
                                         <label for="currentLevel">To appear for HU TOPS Qualifying Round Test (Core Skills Test). Please choose a test date<span class="text-danger h-6" style="font-size: 1.1rem;">*</span>:</label>
@@ -998,36 +997,40 @@
                 <div class="card-body">
                     <div class="container-fluid">
                         <div class="boxWraper infoBox">
-                            <div class="headBox">
+                           <!-- <div class="headBox">
                                 <h2>Declarations</h2>
-                            </div>
+                            </div>-->
                             <form method="post">
-                                <div class="row m-1">
+                                <div class="row">
                                     <div class="col-lg-12">
-                                        <label class="container">
+										
+										
+										
+                                         <input type="checkbox" id="validInfo" name="validInfo" required class="styled-checkbox">
+										<label for="validInfo" class="checkbox-label" style="width: 75%;">
                                             The Information provided by me regarding this application is true and complete.<span class="text-danger h-6" style="font-size: 1.1rem;">*</span>
-                                            <input type="checkbox" id="validInfo" name="validInfo" required>
-                                            <span class="checkmark"></span>
+                                           
+                                            
                                         </label>
                                     </div>
                                 </div>
                                 <br /><br />
-                                <div class="row m-1">
+                                <div class="row">
                                     <div class="col-lg-12">
-                                        <label class="container">
+										<input type="checkbox" id="invalidInfo" name="invalidInfo" required class="styled-checkbox">
+                                        <label for="invalidInfo" class="checkbox-label">
                                             I understand that any inaccurate/false information shall render this application invalid, and if admitted on the basis of such information, I may be asked to leave at any stage of the program.<span class="text-danger h-6" style="font-size: 1.1rem;">*</span>
-                                            <input type="checkbox" id="invalidInfo" name="invalidInfo" required>
-                                            <span class="checkmark"></span>
+                                            
                                         </label>
                                     </div>
                                 </div>
                                 <br /><br />
-                                <div class="row m-1">
+                                <div class="row">
                                     <div class="col-lg-12">
-                                        <label class="container">
+										 <input type="checkbox" id="validateLaw" name="invalidInfo" required class="styled-checkbox">
+                                        <label for ="validateLaw" class="checkbox-label">
                                             I understand that the provision of any inaccurate or false information may render me liable to prosecution in a court of law in Pakistan.<span class="text-danger h-6" style="font-size: 1.1rem;">*</span>
-                                            <input type="checkbox" id="validateLaw" name="invalidInfo" required>
-                                            <span class="checkmark"></span>
+                                           
                                         </label>
                                     </div>
                                 </div>
