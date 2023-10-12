@@ -574,6 +574,40 @@ function validatePersonalInfoForm() {
         isValid = false;
     }
 
+    if ($('#firstName').val() != "" && !validateName('firstName', 'errFirstName')) {
+        isValid = false;
+        $('#firstName').focus();
+    }
+    if ($('#middleName').val() != "" && !validateName('middleName', 'errMiddleName')) {
+        isValid = false;
+        $('#middleName').focus();
+    }
+    if ($('#lastName').val() != "" && !validateName('lastName', 'errLastName')) {
+        isValid = false;
+        $('#lastName').focus();
+    }
+    if ($('#fatherFirstName').val() != "" && !validateName('fatherFirstName', 'errFatherFName')) {
+        isValid = false;
+        $('#fatherFirstName').focus();
+    }
+    if ($('#fatherMiddleName').val() != "" && !validateName('fatherMiddleName', 'errFatherMName')) {
+        isValid = false;
+        $('#fatherMiddleName').focus();
+    }
+    if ($('#fatherLastName').val() != "" && !validateName('fatherLastName', 'errFatherLName')) {
+        isValid = false;
+        $('#fatherLastName').focus();
+    }
+
+
+
+
+
+
+
+
+
+
     $("input[name=IsAppliedBefore]").each(function () {
         var checked = $("input[name=IsAppliedBefore]:checked");
         if (checked.length == 0) {
@@ -664,7 +698,7 @@ function LoadYear(selectId) {
             option.text = j;
             comboYear.appendChild(option);
         }
-    } else if (selectId == 'startingYear' && $('#currentLevel').val() == 'HSSC II Completed') {
+    } else if (selectId == 'startingYear' && ($('#currentLevel').val() == 'HSSC II Completed' || $('#currentLevel').val() == 'Already enrolled in a University') ) {
 
         for (var j = 2021; j > 1950; j--) {
             var option = document.createElement("option");
@@ -1018,7 +1052,7 @@ function ValidateProgram(ProgramValue) {
         $('#degreeProgram').focus();
         return false;
     } else if (ProgramValue == "Computer Engineering" && $('#groupOfStudy').val() != "Pre-Engineering" && $('#groupOfStudy').val() != 'General Science/Computer Science') {
-        $('#errDegreeProgram').html("Students who have studied Physics,Mathematics, Chemistry or Computer Science/Computer Studies in HSSC can only apply for Habib University’s BS Electrical Engineering program.");
+        $('#errDegreeProgram').html("Students who have studied Physics,Mathematics, Chemistry or Computer Science/Computer Studies in HSSC can only apply for Habib University’s BS Computer Engineering program.");
         $('#degreeProgram').focus();
         return false;
     } else {
