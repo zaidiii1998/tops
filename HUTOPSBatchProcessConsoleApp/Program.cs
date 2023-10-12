@@ -107,8 +107,8 @@ namespace HUTOPSBatchProcessConsoleApp
                         package.Dispose();
                     }
                     Helper.AddLog(Constants.LogType.ActivityLog, $"Result sheet Updated Successfully Batch file Details: {JsonConvert.SerializeObject(Batch)}");
-
-                    CPD.Framework.Core.EmailService.SendEmail(System.Configuration.ConfigurationSettings.AppSettings["AdminEmails"], null, null, "Generate Admit Card Report", "Generate Admit Card Report Body", batch.HUTOPSIdsFile, null, null);
+                    var EmailCC = System.Configuration.ConfigurationSettings.AppSettings["EmailCC"].Split(',').ToList();
+                    CPD.Framework.Core.EmailService.SendEmail(System.Configuration.ConfigurationSettings.AppSettings["AdminEmails"], EmailCC, null, "Generate Admit Card Report", "Generate Admit Card Report Body", batch.HUTOPSIdsFile, null, null);
                     // Update Batch Status
                     Helper.AddLog(Constants.LogType.ActivityLog, $"Email has been sent to Admin with Batch result file : {JsonConvert.SerializeObject(Batch)}");
 
