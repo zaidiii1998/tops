@@ -89,19 +89,20 @@ namespace HUTOPS
         public string SSCPercentage { get; set; }
         public string UniversityName { get; set; }
         public string IntendedProgram { get; set; }
-        public Nullable<int> IsCompleted1 { get; set; }
         public string HUSchoolName { get; set; }
         public string Photograph { get; set; }
         public string SSCMarkSheet { get; set; }
         public string HSSCMarkSheet { get; set; }
-        public string CNIC1 { get; set; }
+        public string CNICDoc { get; set; }
         public string SubjectName_1 { get; set; }
-        public Nullable<int> ObtainMarks_1 { get; set; }
         public string SubjectName_2 { get; set; }
-        public Nullable<int> ObtainMarks_2 { get; set; }
         public string SubjectName_3 { get; set; }
-        public Nullable<int> ObtainMarks_3 { get; set; }
         public string SubjectName_4 { get; set; }
-        public Nullable<int> ObtainMarks_4 { get; set; }
+        public string SubjectName_5 { get; set; }
+        public string SubjectName_6 { get; set; }
+        public string SubjectName_7 { get; set; }
+        public string SubjectName_8 { get; set; }
+        public string SubjectName_9 { get; set; }
+        public string SubjectName_10 { get; set; }
     }
 }

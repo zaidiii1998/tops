@@ -1,4 +1,6 @@
-﻿using HUTOPS.Helper;
+﻿using ClosedXML.Excel;
+using ClosedXML.Extensions;
+using HUTOPS.Helper;
 using HUTOPS.Models;
 using Newtonsoft.Json;
 using System;
@@ -70,6 +72,176 @@ namespace HUTOPS.Controllers
                 throw;
             }
         }
+
+        
+        public ActionResult Download()
+        {
+            try
+            {
+                dynamic Records = DB.SP_GetStudentRecord(null);
+
+                DataTable dtRecords = new DataTable();
+                dtRecords.Columns.Add("HUTOPSId", typeof(string));
+                dtRecords.Columns.Add("First Name", typeof(string));
+                dtRecords.Columns.Add("Middle Name", typeof(string));
+                dtRecords.Columns.Add("Last Name", typeof(string));
+                dtRecords.Columns.Add("Father First Name", typeof(string));
+                dtRecords.Columns.Add("Father Middle Name", typeof(string));
+                dtRecords.Columns.Add("Father Last Name", typeof(string));
+                dtRecords.Columns.Add("Gender", typeof(string));
+                dtRecords.Columns.Add("Date Of Birth", typeof(string));
+                dtRecords.Columns.Add("Cell Phone Number", typeof(string));
+                dtRecords.Columns.Add("Alternate Cell Phone Number", typeof(string));
+                dtRecords.Columns.Add("CNIC/B-Form", typeof(string));
+                dtRecords.Columns.Add("Email Address", typeof(string));
+                dtRecords.Columns.Add("Residential Address", typeof(string));
+                dtRecords.Columns.Add("Residential Country", typeof(string));
+                dtRecords.Columns.Add("Residential Province", typeof(string));
+                dtRecords.Columns.Add("Residential City", typeof(string));
+                dtRecords.Columns.Add("Residential City Other", typeof(string));
+                dtRecords.Columns.Add("Permanent Address", typeof(string));
+                dtRecords.Columns.Add("Permanent Country", typeof(string));
+                dtRecords.Columns.Add("Permanent Province", typeof(string));
+                dtRecords.Columns.Add("Permanent City", typeof(string));
+                dtRecords.Columns.Add("Permanent City Other", typeof(string));
+                dtRecords.Columns.Add("Test Date", typeof(string));
+                dtRecords.Columns.Add("Is Applied Before", typeof(string));
+                dtRecords.Columns.Add("Applied Before Year", typeof(string));
+                dtRecords.Columns.Add("Home Phone Number", typeof(string));
+                dtRecords.Columns.Add("WhatsApp Number", typeof(string));
+                dtRecords.Columns.Add("Guardian Cell Phone Number", typeof(string));
+                dtRecords.Columns.Add("Guardian Email Address", typeof(string));
+                dtRecords.Columns.Add("Hear About HU", typeof(string));
+                dtRecords.Columns.Add("Hear About HU Other", typeof(string));
+                dtRecords.Columns.Add("Created Datetime", typeof(string));
+                dtRecords.Columns.Add("Declaration", typeof(string));
+
+                // Education 
+                dtRecords.Columns.Add("Current Level Of Education", typeof(string));
+                dtRecords.Columns.Add("HSSC School Name", typeof(string));
+                dtRecords.Columns.Add("HSSC School Address", typeof(string));
+                dtRecords.Columns.Add("HSSC Start Year", typeof(string));
+                dtRecords.Columns.Add("HSSC Completion Year", typeof(string));
+                dtRecords.Columns.Add("HSSC Percentage", typeof(string));
+                dtRecords.Columns.Add("HSSC Board Name", typeof(string));
+                dtRecords.Columns.Add("HSSC Group Name", typeof(string));
+                dtRecords.Columns.Add("SSC School Name", typeof(string));
+                dtRecords.Columns.Add("SSC School Address", typeof(string));
+                dtRecords.Columns.Add("SSC Percentage", typeof(string));
+                dtRecords.Columns.Add("University Name", typeof(string));
+                dtRecords.Columns.Add("Intended Program", typeof(string));
+                dtRecords.Columns.Add("HU School Name", typeof(string));
+                
+                
+                // Documents
+                dtRecords.Columns.Add("Photograph", typeof(string));
+                dtRecords.Columns.Add("CNIC/B-Form Doc", typeof(string));
+                dtRecords.Columns.Add("HSSC MarkSheet", typeof(string));
+                dtRecords.Columns.Add("SSC MarkSheet", typeof(string));
+
+                //Subjects
+                dtRecords.Columns.Add("Subject 1", typeof(string));
+                dtRecords.Columns.Add("Subject 2", typeof(string));
+                dtRecords.Columns.Add("Subject 3", typeof(string));
+                dtRecords.Columns.Add("Subject 4", typeof(string));
+                dtRecords.Columns.Add("Subject 5", typeof(string));
+                dtRecords.Columns.Add("Subject 6", typeof(string));
+                dtRecords.Columns.Add("Subject 7", typeof(string));
+                dtRecords.Columns.Add("Subject 8", typeof(string));
+                dtRecords.Columns.Add("Subject 9", typeof(string));
+                dtRecords.Columns.Add("Subject 10", typeof(string));
+
+
+                if (Records != null)
+                {
+                    foreach (var item in Records)
+                    {
+                        dtRecords.Rows.Add(new object[] {
+                        item.HUTopId == null ? "" : item.HUTopId.ToString(),
+                        item.FirstName == null ? "" : item.FirstName.ToString(),
+                        item.MiddleName == null ? "" : item.MiddleName.ToString(),
+                        item.LastName == null ? "" : item.LastName.ToString(),
+                        item.FatherFirstName == null ? "" : item.FatherFirstName.ToString(),
+                        item.FatherMiddleName == null ? "" : item.FatherMiddleName.ToString(),
+                        item.FatherLastName == null ? "" : item.FatherLastName.ToString(),
+                        item.Gender == null ? "" : item.Gender.ToString(),
+                        item.DateOfBirth == null ? "" : item.DateOfBirth.ToString("dd-MM-yyyy"),
+                        item.CellPhoneNumber == null ? "" : item.CellPhoneNumber.ToString(),
+                        item.AlternateCellPhoneNumber == null ? "" : item.AlternateCellPhoneNumber.ToString(),
+                        item.CNIC == null ? "" : item.CNIC.ToString(),
+                        item.EmailAddress == null ? "" : item.EmailAddress.ToString(),
+                        item.ResidentialAddress == null ? "" : item.ResidentialAddress.ToString(),
+                        item.ResidentialCountry == null ? "" : item.ResidentialCountry.ToString(),
+                        item.ResidentialProvince == null ? "" : item.ResidentialProvince.ToString(),
+                        item.ResidentialCity == null ? "" : item.ResidentialCity.ToString(),
+                        item.ResidentialCityOther == null ? "" : item.ResidentialCityOther.ToString(),
+                        item.PermanentAddress == null ? "" : item.PermanentAddress.ToString(),
+                        item.PermanentCountry == null ? "" : item.PermanentCountry.ToString(),
+                        item.PermanentProvince == null ? "" : item.PermanentProvince.ToString(),
+                        item.PermanentCity == null ? "" : item.PermanentCity.ToString(),
+                        item.PermanentCityOther == null ? "" : item.PermanentCityOther.ToString(),
+                        item.TestDate == null ? "" : item.TestDate.ToString(),
+                        item.IsAppliedBefore == null ? "" : item.IsAppliedBefore.ToString(),
+                        item.AppliedBeforeYear == null ? "" : item.AppliedBeforeYear.ToString(),
+                        item.HomePhoneNumber == null ? "" : item.HomePhoneNumber.ToString(),
+                        item.WhatsAppNumber == null ? "" : item.WhatsAppNumber.ToString(),
+                        item.GuardianCellPhoneNumber == null ? "" : item.GuardianCellPhoneNumber.ToString(),
+                        item.GuardianEmailAddress == null ? "" : item.GuardianEmailAddress.ToString(),
+                        item.HearAboutHU == null ? "" : item.HearAboutHU.ToString(),
+                        item.HearAboutHUOther == null ? "" : item.HearAboutHUOther.ToString(),
+                        item.CreatedDatetime == null ? "" : item.CreatedDatetime.ToString("dd-MM-yyyy HH:mm:ss"),
+                        item.Declaration == 0 ? "False" : "True",
+
+                        // Education 
+                        item.CurrentLevelOfEdu == null ? "" : item.CurrentLevelOfEdu.ToString(),
+                        item.HSSCSchoolName == null ? "" : item.HSSCSchoolName.ToString(),
+                        item.HSSCSchoolAddress == null ? "" : item.HSSCSchoolAddress.ToString(),
+                        item.HSSCStartDate == null ? "" : item.HSSCStartDate.ToString(),
+                        item.HSSCCompletionDate == null ? "" : item.HSSCCompletionDate.ToString(),
+                        item.HSSCPercentage == null ? "" : item.HSSCPercentage.ToString(),
+                        item.HSSCBoardName == null ? "" : item.HSSCBoardName.ToString(),
+                        item.HSSCGroupName == null ? "" : item.HSSCGroupName.ToString(),
+                        item.SSCSchoolName == null ? "" : item.SSCSchoolName.ToString(),
+                        item.SSCSchoolAddress == null ? "" : item.SSCSchoolAddress.ToString(),
+                        item.SSCPercentage == null ? "" : item.SSCPercentage.ToString(),
+                        item.UniversityName == null ? "" : item.UniversityName.ToString(),
+                        item.IntendedProgram == null ? "" : item.IntendedProgram.ToString(),
+                        item.HUSchoolName == null ? "" : item.HUSchoolName.ToString(),
+
+                        // Documents
+                        item.Photograph == null ? "" : item.Photograph.ToString(),
+                        item.CNICDoc == null ? "" : item.CNICDoc.ToString(),
+                        item.HSSCMarkSheet == null ? "" : item.HSSCMarkSheet.ToString(),
+                        item.SSCMarkSheet == null ? "" : item.SSCMarkSheet.ToString(),
+
+                        // Subjects
+                        item.SubjectName_1 == null ? "" : item.SubjectName_1.ToString(),
+                        item.SubjectName_2 == null ? "" : item.SubjectName_2.ToString(),
+                        item.SubjectName_3 == null ? "" : item.SubjectName_3.ToString(),
+                        item.SubjectName_4 == null ? "" : item.SubjectName_4.ToString(),
+                        item.SubjectName_5 == null ? "" : item.SubjectName_5.ToString(),
+                        item.SubjectName_6 == null ? "" : item.SubjectName_6.ToString(),
+                        item.SubjectName_7 == null ? "" : item.SubjectName_7.ToString(),
+                        item.SubjectName_8 == null ? "" : item.SubjectName_8.ToString(),
+                        item.SubjectName_9 == null ? "" : item.SubjectName_9.ToString(),
+                        item.SubjectName_10 == null ? "" : item.SubjectName_10.ToString()
+                    });
+                    }
+
+                }
+
+
+
+                XLWorkbook excel = new XLWorkbook();
+                var file_name = "Students_List" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".xlsx";
+                excel.Worksheets.Add(dtRecords, "Students");
+                return excel.Deliver(file_name);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
         public ActionResult UpdateSession(int? Id)
         {
 
@@ -120,13 +292,12 @@ namespace HUTOPS.Controllers
                     var Educational = new Educational();
                     var EmailTemplate = DB.EmailTemplates.ToList().Where(x => x.Id == 3).FirstOrDefault();
                     string EmailBody = EmailTemplate.Body;
-
+                    string watermarkImage = Path.Combine(System.Configuration.ConfigurationManager.AppSettings["BaseURL"], "Content/Images/bg_logo_large.jpg");
                     if (personalInformation != null)
                     {
                         Utility.AddLog(Constants.LogType.ActivityLog, $"Applicant record found for Admit Card Details: {JsonConvert.SerializeObject(personalInformation)}");
                         document = DB.Documents.ToList().Where(x => x.UserId == personalInformation.Id).FirstOrDefault() == null ? new Document() : DB.Documents.ToList().Where(x => x.UserId == personalInformation.Id).FirstOrDefault();
                         Educational = DB.Educationals.ToList().Where(x => x.UserId == personalInformation.Id).FirstOrDefault() == null ? new Educational() : DB.Educationals.ToList().Where(x => x.UserId == personalInformation.Id).FirstOrDefault();
-
                         EmailBody = EmailBody.Replace("{{HUTOPSId}}", personalInformation.HUTopId);
                         EmailBody = EmailBody.Replace("{{Name}}", personalInformation.FirstName + " " + personalInformation.MiddleName + " " + personalInformation.LastName);
                         EmailBody = EmailBody.Replace("{{CNIC}}", personalInformation.CNIC);
@@ -156,11 +327,13 @@ namespace HUTOPS.Controllers
                         Utility.AddLog(Constants.LogType.ActivityLog, $"Document record not found against personal Information: {JsonConvert.SerializeObject(personalInformation)}");
                         return Json(new { status = false, message = $"Documents not found against this HUTOPS Id {personalInformation.HUTopId}" });
                     }
+
+                    EmailBody = EmailBody.Replace("{{Watermark}}", watermarkImage);
                     EmailBody = EmailBody.Replace("{{TestDate}}", model.TestDate.ToString());
                     EmailBody = EmailBody.Replace("{{ApproxDatetime}}", model.Shift == "1" ? Constants.Shift.FirstShift : model.Shift == "2" ? Constants.Shift.SecondShift : Constants.Shift.ThirtShift);
                     EmailBody = EmailBody.Replace("{{ReportingTime}}", model.Shift == "1" ? Constants.ReportingTime.FirstShift : model.Shift == "2" ? Constants.ReportingTime.SecondShift : Constants.ReportingTime.ThirtShift);
                     EmailBody = EmailBody.Replace("{{Vanue}}", model.Venue == "Karachi" ? Constants.Vanue.Karachi : Constants.Vanue.Islamabad);
-
+                        
                     // Save File to server
                     Utility.AddLog(Constants.LogType.ActivityLog, $"Fetched user Inforation and mapped against HUTOPSId: {personalInformation.HUTopId}");
                     string uploadDirectory = HttpContext.Server.MapPath("~/UploadedFiles");

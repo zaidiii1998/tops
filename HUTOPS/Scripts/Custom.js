@@ -549,20 +549,21 @@ function validatePersonalInfoForm() {
         }
     });
 
-    checkCNIC('cnic');
+/*    checkCNIC('cnic');*/
     checkEmail('email');
     checkPhoneNumber('cellPhone');
 
+    debugger
     if ($('#emailError').html() != "") {
         isValid = false;
         $('#email').addClass('error');
         $('#email').focus();
     }
-    if ($('#cnicError').html() != "") {
-        isValid = false;
-        $('#cnic').addClass('error');
-        $('#cnic').focus();
-    }
+    //if ($('#cnicError').html() != "") {
+    //    isValid = false;
+    //    $('#cnic').addClass('error');
+    //    $('#cnic').focus();
+    //}
     if ($('#numberError').html() != "") {
         isValid = false;
         $('#cellPhone').addClass('error');
@@ -597,6 +598,11 @@ function validatePersonalInfoForm() {
     if ($('#fatherLastName').val() != "" && !validateName('fatherLastName', 'errFatherLName')) {
         isValid = false;
         $('#fatherLastName').focus();
+    }
+
+    if ($('#guardianEmail').val() != "" && !validateEmail('guardianEmail', 'errGuardianEmail')) {
+        isValid = false;
+        $('#guardianEmail').focus();
     }
 
 
@@ -1402,7 +1408,7 @@ function submitDeclaration() {
             // Contact Info
             'PersonalInfo.cellPhoneNumber': $('#cellPhone').val(),
             'PersonalInfo.whatsAppNumber': $('#whatsappNumber').val(),
-            'PersonalInfo.alternateCellPhoneNumber': $('#altCellPhone').val(),
+            'PersonalInfo.alternateCellPhoneNumber': $('#cellPhone').val(), //$('#altCellPhone').val(),
             'PersonalInfo.homePhoneNumber': $('#homePhone').val(),
             'PersonalInfo.alternateLandline': $('#altLandline').val(),
             'PersonalInfo.guardianCellPhoneNumber': $('#guardianCellPhone').val(),
@@ -1549,8 +1555,137 @@ function submitDeclaration() {
             }
         }
 
-    } else {
-        $('input[required]').filter(':first').focus();
+    }
+    else {
+
+
+
+        var isValidPersonalInfo = true;
+        $('#PersonalInfoForm input[required]').each(function () {
+
+            if ($(this).val().trim() === '') {
+                isValidPersonalInfo = false;
+            }
+        });
+        $('#PersonalInfoForm select[required]').each(function () {
+
+            if (($(this).val() === '') || ($(this).val() === null)) {
+                isValidPersonalInfo = false;
+            }
+        });
+        $('#PersonalInfoForm textarea[required]').each(function () {
+
+            if (($(this).val().trim() === '') || ($(this).val() === null)) {
+                isValidPersonalInfo = false;
+            }
+        });
+
+        $("input[name=IsAppliedBefore]").each(function () {
+            var checked = $("input[name=IsAppliedBefore]:checked");
+            if (checked.length == 0) {
+                isValidPersonalInfo = false;
+                $('#errAppliedBefore').html('field is required');
+            } else {
+                $('#errAppliedBefore').html('');
+            }
+        });
+        if ($("input[name='IsAppliedBefore']:checked").val() === '1') {
+            if (($('#AppliedBeforeId').val().trim() == '')) {
+                $('#AppliedBeforeId').addClass('error');
+                $('#AppliedBeforeId').focus();
+                isValidPersonalInfo = false;
+            } else { $('#AppliedBeforeId').removeClass('error'); }
+            if ($('#AppliedBeforeYear :selected').val() === "") {
+                $('#AppliedBeforeYear').addClass('error');
+                $('#AppliedBeforeYear').focus();
+                isValidPersonalInfo = false;
+            } else { $('#AppliedBeforeYear').removeClass('error'); }
+        }
+
+
+        if (!isValidPersonalInfo) {
+            $('#btnPersonalInfo').trigger('click');
+            var element = $('#firstName')[0];
+            $('html, body').animate({
+                scrollTop: $(element).offset().top
+            }, 500);
+            return false;
+
+        }
+
+        var isValidEducation = true;
+        $('#EducationForm input[required]').each(function () {
+
+            if ($(this).val().trim() === '') {
+                isValidEducation = false;
+            }
+        });
+        $('#EducationForm select[required]').each(function () {
+
+            if (($(this).val() === '') || ($(this).val() === null)) {
+                isValidEducation = false;
+            }
+        });
+        $('#EducationForm textarea[required]').each(function () {
+
+            if (($(this).val().trim() === '') || ($(this).val() === null)) {
+                isValidEducation = false;
+            }
+        });
+
+        if ($('input[name="huSchool"]:checked').val() == "" || $('input[name="huSchool"]:checked').val() == null) {
+            isValidEducation = false;
+            $('#errHUSchool').html("Please select School Name");
+        } else {
+            $('#errHUSchool').html("");
+        }
+        if ($('#currentLevel').val() == 'Already enrolled in a University' && $('#universityName').val() == '') {
+            isValidEducation = false;
+            $('#errUniversityName').html('University Name is required');
+        } else {
+            $('#errUniversityName').html('');
+        }
+
+        if (!isValidEducation) {
+            $('#btnEducation').trigger('click');
+            var element = $('#currentLevel')[0];
+            $('html, body').animate({
+                scrollTop: $(element).offset().top
+            }, 500);
+            return false;
+
+        }
+
+        isValidDocument = true;
+        $('input[type="file"][required]').each(function () {
+
+            if ($(this).val().trim() === '') {
+                isValidDocument = false;
+            }
+        });
+
+        if (!isValidDocument) {
+            $('#btnDocument').trigger('click');
+            var element = $('#Photograph')[0];
+            $('html, body').animate({
+                scrollTop: $(element).offset().top
+            }, 500);
+            return false;
+
+        }
+
+        if ($('#TestDate').val() == null && $('#TestDate').val() == "") {
+        $('#btnTest').trigger('click');
+            var element = $('#TestDate')[0];
+            $('html, body').animate({
+                scrollTop: $(element).offset().top
+            }, 500);
+            return false;
+        }
+
+
+
+
         ShowDivError("Please check all sections and enter in all required fields");
     }
 

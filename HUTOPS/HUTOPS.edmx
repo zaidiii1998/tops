@@ -1033,7 +1033,7 @@
             <Parameter Name="Password" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SP_UserShiftToEApplication">
-            <Parameter Name="Id" Mode="In" Type="Int32" />
+          <Parameter Name="Id" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="SP_GetStudentRecord_Result">
@@ -1113,20 +1113,21 @@
           <Property Type="String" Name="SSCPercentage" Nullable="true" MaxLength="50" />
           <Property Type="String" Name="UniversityName" Nullable="true" MaxLength="50" />
           <Property Type="String" Name="IntendedProgram" Nullable="true" MaxLength="50" />
-          <Property Type="Int32" Name="IsCompleted1" Nullable="true" />
           <Property Type="String" Name="HUSchoolName" Nullable="true" MaxLength="50" />
           <Property Type="String" Name="Photograph" Nullable="true" MaxLength="100" />
           <Property Type="String" Name="SSCMarkSheet" Nullable="true" MaxLength="100" />
           <Property Type="String" Name="HSSCMarkSheet" Nullable="true" MaxLength="100" />
-          <Property Type="String" Name="CNIC1" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="CNICDoc" Nullable="true" MaxLength="100" />
           <Property Type="String" Name="SubjectName_1" Nullable="true" MaxLength="50" />
-          <Property Type="Int32" Name="ObtainMarks_1" Nullable="true" />
           <Property Type="String" Name="SubjectName_2" Nullable="true" MaxLength="50" />
-          <Property Type="Int32" Name="ObtainMarks_2" Nullable="true" />
           <Property Type="String" Name="SubjectName_3" Nullable="true" MaxLength="50" />
-          <Property Type="Int32" Name="ObtainMarks_3" Nullable="true" />
           <Property Type="String" Name="SubjectName_4" Nullable="true" MaxLength="50" />
-          <Property Type="Int32" Name="ObtainMarks_4" Nullable="true" />
+          <Property Type="String" Name="SubjectName_5" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="SubjectName_6" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="SubjectName_7" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="SubjectName_8" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="SubjectName_9" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="SubjectName_10" Nullable="true" MaxLength="50" />
         </ComplexType>
         <ComplexType Name="SP_GetStudents_Result">
           <Property Type="Int32" Name="Id" Nullable="false" />
@@ -1632,20 +1633,20 @@
                 <ScalarProperty Name="SSCPercentage" ColumnName="SSCPercentage" />
                 <ScalarProperty Name="UniversityName" ColumnName="UniversityName" />
                 <ScalarProperty Name="IntendedProgram" ColumnName="IntendedProgram" />
-                <ScalarProperty Name="IsCompleted1" ColumnName="IsCompleted1" />
                 <ScalarProperty Name="HUSchoolName" ColumnName="HUSchoolName" />
                 <ScalarProperty Name="Photograph" ColumnName="Photograph" />
                 <ScalarProperty Name="SSCMarkSheet" ColumnName="SSCMarkSheet" />
                 <ScalarProperty Name="HSSCMarkSheet" ColumnName="HSSCMarkSheet" />
-                <ScalarProperty Name="CNIC1" ColumnName="CNIC1" />
                 <ScalarProperty Name="SubjectName_1" ColumnName="SubjectName_1" />
-                <ScalarProperty Name="ObtainMarks_1" ColumnName="ObtainMarks_1" />
                 <ScalarProperty Name="SubjectName_2" ColumnName="SubjectName_2" />
-                <ScalarProperty Name="ObtainMarks_2" ColumnName="ObtainMarks_2" />
                 <ScalarProperty Name="SubjectName_3" ColumnName="SubjectName_3" />
-                <ScalarProperty Name="ObtainMarks_3" ColumnName="ObtainMarks_3" />
                 <ScalarProperty Name="SubjectName_4" ColumnName="SubjectName_4" />
-                <ScalarProperty Name="ObtainMarks_4" ColumnName="ObtainMarks_4" />
+                <ScalarProperty Name="SubjectName_5" ColumnName="SubjectName_5" />
+                <ScalarProperty Name="SubjectName_6" ColumnName="SubjectName_6" />
+                <ScalarProperty Name="SubjectName_7" ColumnName="SubjectName_7" />
+                <ScalarProperty Name="SubjectName_8" ColumnName="SubjectName_8" />
+                <ScalarProperty Name="SubjectName_9" ColumnName="SubjectName_9" />
+                <ScalarProperty Name="SubjectName_10" ColumnName="SubjectName_10" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

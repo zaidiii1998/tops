@@ -8,6 +8,10 @@ using System.IO;
 using System;
 using Newtonsoft.Json;
 using System.Data.Entity.Validation;
+using DocumentFormat.OpenXml.Office2010.Excel;
+using DocumentFormat.OpenXml.Spreadsheet;
+using System.Net.NetworkInformation;
+using System.Security.Policy;
 
 namespace HUTOPS.Controllers
 {
@@ -300,6 +304,7 @@ namespace HUTOPS.Controllers
                 }
                 else
                 {
+
                     string UserDirectory = "";
                     using (DbContextTransaction Transaction = DB.Database.BeginTransaction())
                     {
@@ -422,18 +427,46 @@ namespace HUTOPS.Controllers
                             string EmailBody = EmailTemplate.Body;
 
                             EmailBody = EmailBody.Replace("{{Photo}}", applicationModel.Document.Photograph);
-                            EmailBody = EmailBody.Replace("{{HUTOPSId}}", applicationModel.PersonalInfo.HUTopId);
-                            EmailBody = EmailBody.Replace("{{Name}}", applicationModel.PersonalInfo.FirstName +" " + applicationModel.PersonalInfo.MiddleName + " " + applicationModel.PersonalInfo.LastName);
-                            EmailBody = EmailBody.Replace("{{FatherName}}", applicationModel.PersonalInfo.FatherFirstName + " " + applicationModel.PersonalInfo.FatherMiddleName + " " + applicationModel.PersonalInfo.FatherLastName);
 
-                            EmailBody = EmailBody.Replace("{{CNIC}}", applicationModel.PersonalInfo.CNIC );
-                            EmailBody = EmailBody.Replace("{{Email}}", applicationModel.PersonalInfo.EmailAddress);
-                            EmailBody = EmailBody.Replace("{{Gender}}", applicationModel.PersonalInfo.Gender );
-                            EmailBody = EmailBody.Replace("{{Husband}}", applicationModel.PersonalInfo.HusbandName);
-                            EmailBody = EmailBody.Replace("{{DOB}}", applicationModel.PersonalInfo.DateOfBirth.ToString() );
-                            EmailBody = EmailBody.Replace("{{PhoneNumber}}", applicationModel.PersonalInfo.CellPhoneNumber);
-                            EmailBody = EmailBody.Replace("{{Address}}", applicationModel.PersonalInfo.ResidentialAddress);
 
+                            EmailBody = EmailBody.Replace("{{Id}}", applicationModel.Document.Photograph);
+                            EmailBody = EmailBody.Replace("{{HUTopId}}", applicationModel.PersonalInfo.HUTopId);
+                            EmailBody = EmailBody.Replace("{{FirstName}}", applicationModel.PersonalInfo.FirstName);
+                            EmailBody = EmailBody.Replace("{{MiddleName}}", applicationModel.PersonalInfo.MiddleName);
+                            EmailBody = EmailBody.Replace("{{LastName}}", applicationModel.PersonalInfo.LastName);
+                            EmailBody = EmailBody.Replace("{{FatherFirstName}}", applicationModel.PersonalInfo.FatherFirstName);
+                            EmailBody = EmailBody.Replace("{{FatherMiddleName}}", applicationModel.PersonalInfo.FatherMiddleName);
+                            EmailBody = EmailBody.Replace("{{FatherLastName}}", applicationModel.PersonalInfo.FatherLastName);
+                            EmailBody = EmailBody.Replace("{{Gender}}", applicationModel.PersonalInfo.Gender);
+                            EmailBody = EmailBody.Replace("{{DateOfBirth}}", applicationModel.PersonalInfo.DateOfBirth.ToString());
+                            EmailBody = EmailBody.Replace("{{CellPhoneNumber}}", applicationModel.PersonalInfo.CellPhoneNumber);
+                            EmailBody = EmailBody.Replace("{{ResidentialAddress}}", applicationModel.PersonalInfo.ResidentialAddress);
+                            EmailBody = EmailBody.Replace("{{ResidentialCity}}", applicationModel.PersonalInfo.ResidentialCity);
+                            EmailBody = EmailBody.Replace("{{ResidentialCityOther}}", applicationModel.PersonalInfo.ResidentialCityOther);
+                            EmailBody = EmailBody.Replace("{{ResidentialProvince}}", applicationModel.PersonalInfo.ResidentialProvince);
+                            EmailBody = EmailBody.Replace("{{ResidentialCountry}}", applicationModel.PersonalInfo.ResidentialCountry);
+                            EmailBody = EmailBody.Replace("{{PermanentAddress}}", applicationModel.PersonalInfo.PermanentAddress);
+                            EmailBody = EmailBody.Replace("{{PermanentCity}}", applicationModel.PersonalInfo.PermanentCity);
+                            EmailBody = EmailBody.Replace("{{PermanentCityOther}}", applicationModel.PersonalInfo.PermanentCityOther);
+                            EmailBody = EmailBody.Replace("{{PermanentProvince}}", applicationModel.PersonalInfo.PermanentProvince);
+                            EmailBody = EmailBody.Replace("{{PermanentCountry}}", applicationModel.PersonalInfo.PermanentCountry);
+                            EmailBody = EmailBody.Replace("{{CNIC}}", applicationModel.PersonalInfo.CNIC);
+                            EmailBody = EmailBody.Replace("{{EmailAddress}}", applicationModel.PersonalInfo.EmailAddress);
+
+                            EmailBody = EmailBody.Replace("{{TestDate}}", applicationModel.PersonalInfo.TestDate);
+                            EmailBody = EmailBody.Replace("{{IsAppliedBefore}}", applicationModel.PersonalInfo.IsAppliedBefore.ToString());
+                            EmailBody = EmailBody.Replace("{{AppliedBeforeId}}", applicationModel.PersonalInfo.AppliedBeforeId);
+                            EmailBody = EmailBody.Replace("{{AppliedBeforeYear}}", applicationModel.PersonalInfo.AppliedBeforeYear.ToString());
+                            EmailBody = EmailBody.Replace("{{HomePhoneNumber}}", applicationModel.PersonalInfo.HomePhoneNumber);
+                            EmailBody = EmailBody.Replace("{{WhatsAppNumber}}", applicationModel.PersonalInfo.WhatsAppNumber);
+                            EmailBody = EmailBody.Replace("{{GuardianCellPhoneNumber}}", applicationModel.PersonalInfo.GuardianCellPhoneNumber);
+                            EmailBody = EmailBody.Replace("{{GuardianEmailAddress}}", applicationModel.PersonalInfo.GuardianEmailAddress);
+                            EmailBody = EmailBody.Replace("{{HearAboutHU}}", applicationModel.PersonalInfo.HearAboutHU);
+                            EmailBody = EmailBody.Replace("{{HearAboutHUOther}}", applicationModel.PersonalInfo.HearAboutHUOther);
+                            EmailBody = EmailBody.Replace("{{CreatedDatetime}}", applicationModel.PersonalInfo.CreatedDatetime.ToString());
+                            EmailBody = EmailBody.Replace("{{Declaration}}", applicationModel.PersonalInfo.Declaration == 0? "False" : "True");
+
+                            // Education 
                             EmailBody = EmailBody.Replace("{{levelofEducation}}", applicationModel.Education.CurrentLevelOfEdu);
                             EmailBody = EmailBody.Replace("{{University}}", applicationModel.Education.UniversityName);
                             EmailBody = EmailBody.Replace("{{Board}}", applicationModel.Education.HSSCBoardName);
@@ -442,12 +475,15 @@ namespace HUTOPS.Controllers
                             EmailBody = EmailBody.Replace("{{HSSCPercent}}", applicationModel.Education.HSSCPercentage);
                             EmailBody = EmailBody.Replace("{{StartingYear}}", applicationModel.Education.HSSCStartDate.ToString());
                             EmailBody = EmailBody.Replace("{{CompletionYear}}", applicationModel.Education.HSSCCompletionDate.ToString());
-                            EmailBody = EmailBody.Replace("{{CollegeAddress}}", applicationModel.Education.HSSCSchoolAddress);
+                            EmailBody = EmailBody.Replace("{{HSSCSchoolAddress}}", applicationModel.Education.HSSCSchoolAddress);
 
                             EmailBody = EmailBody.Replace("{{SSCSchoolName}}", applicationModel.Education.SSCSchoolName);
                             EmailBody = EmailBody.Replace("{{SSCPercent}}", applicationModel.Education.SSCPercentage);
-                            EmailBody = EmailBody.Replace("{{SchoolAddress}}", applicationModel.Education.SSCSchoolAddress);
-
+                            EmailBody = EmailBody.Replace("{{SSCSchoolAddress}}", applicationModel.Education.SSCSchoolAddress);
+                            
+                            EmailBody = EmailBody.Replace("{{IntendedProgram}}", applicationModel.Education.IntendedProgram);
+                            EmailBody = EmailBody.Replace("{{HUSchoolName}}", applicationModel.Education.HUSchoolName);
+                            EmailBody = EmailBody.Replace("{{Subjects}}", applicationModel.SubjectName[0]);
 
 
                             CPD.Framework.Core.EmailService.SendEmail(applicationModel.PersonalInfo.EmailAddress, null, EmailTemplate.Subject, EmailBody);
@@ -486,30 +522,74 @@ namespace HUTOPS.Controllers
             return View();
         }
 
-        public ActionResult View(int doc)
+        //public ActionResult View(int doc)
+        //{
+        //    try
+        //    {
+        //        var personalInfo = Utility.GetUserFromSession();
+        //        var documents = DB.Documents.ToList().Where(x => x.UserId == personalInfo.Id).FirstOrDefault();
+
+        //        var url = "";
+        //        if (documents != null)
+        //        {
+        //            if (doc == 1) { url = documents.Photograph == "" ? "" : documents.Photograph.Substring(documents.Photograph.IndexOf("Upload")); }
+        //            else if (doc == 2) { url = documents.SSCMarkSheet == "" ? "" : documents.SSCMarkSheet.Substring(documents.SSCMarkSheet.IndexOf("Upload")); }
+        //            else if (doc == 3) { url = documents.HSSCMarkSheet == "" ? "" : documents.HSSCMarkSheet.Substring(documents.HSSCMarkSheet.IndexOf("Upload")); }
+        //            else if (doc == 4) { url = documents.CNIC == "" ? "" : documents.CNIC.Substring(documents.CNIC.IndexOf("Upload")); }
+        //            else { url = ""; }
+        //        }
+        //        ViewBag.Url = '/' + url;
+        //        return View();
+        //    }
+        //    catch (Exception)
+        //    {
+
+        //        throw;
+        //    }
+        //}
+
+
+        public FileResult View(string Name)
         {
             try
             {
                 var personalInfo = Utility.GetUserFromSession();
                 var documents = DB.Documents.ToList().Where(x => x.UserId == personalInfo.Id).FirstOrDefault();
 
-                var url = "";
                 if (documents != null)
                 {
-                    if (doc == 1) { url = documents.Photograph == "" ? "" : documents.Photograph.Substring(documents.Photograph.IndexOf("Upload")); }
-                    else if (doc == 2) { url = documents.SSCMarkSheet == "" ? "" : documents.SSCMarkSheet.Substring(documents.SSCMarkSheet.IndexOf("Upload")); }
-                    else if (doc == 3) { url = documents.HSSCMarkSheet == "" ? "" : documents.HSSCMarkSheet.Substring(documents.HSSCMarkSheet.IndexOf("Upload")); }
-                    else if (doc == 4) { url = documents.CNIC == "" ? "" : documents.CNIC.Substring(documents.CNIC.IndexOf("Upload")); }
-                    else { url = ""; }
+                    switch (Name)
+                    {
+                        case "Photo":
+                            Name = documents.Photograph == "" ? "" : documents.Photograph.Substring(documents.Photograph.IndexOf("" + personalInfo.Id + "")).Substring(2);
+                            break;
+                        case "SSC Mark Sheet":
+                            Name = documents.SSCMarkSheet == "" ? "" : documents.SSCMarkSheet.Substring(documents.SSCMarkSheet.IndexOf("" + personalInfo.Id + "")).Substring(2);
+                            break;
+                        case "HSSC Mark Sheet":
+                            Name = documents.HSSCMarkSheet == "" ? "" : documents.HSSCMarkSheet.Substring(documents.HSSCMarkSheet.IndexOf("" + personalInfo.Id + "")).Substring(2);
+                            break;
+                        case "CNIC":
+                            Name = documents.CNIC == "" ? "" : documents.CNIC.Substring(documents.CNIC.IndexOf("" + personalInfo.Id + "")).Substring(2);
+                            break;
+                        default:
+                            return File("", "application/octet-stream");
+                    }
                 }
-                ViewBag.Url = '/' + url;
-                return View();
-            }
-            catch (Exception)
-            {
 
-                throw;
+                string contentType = "application/octet-stream";
+                string extension = Path.GetExtension(Name);
+                if (extension.ToLower() == ".jpg" || extension.ToLower() == ".jpeg" || extension.ToLower() == ".png")
+                    contentType = "image/jpeg";
+                else if (extension.ToLower() == ".pdf")
+                    contentType = "application/pdf";
+                return new FilePathResult(Server.MapPath("~/UploadedFiles/" + personalInfo.Id) + "/" + Name, contentType);
             }
+            catch (Exception ex)
+            {
+                return File("", "application/octet-stream");
+            }
+            
         }
     }
 }

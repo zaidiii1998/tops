@@ -92,12 +92,17 @@
                                 </div>
 
                                 <ul class="logoutDrop">
-                                    <li>
-                                        @Html.ActionLink("Logout", "LogOut", "Account", new { area = "" }, new { @class = "global-btn-purple w-100" })
-                                        @Html.ActionLink("Create New Admin", "Register", "Account", new { area = "" }, new { @class = "global-btn-purple w-100" })
-
+                                    <li class="global-btn-purple">
+                                        @Html.ActionLink("Logout", "LogOut", "Account", new { area = "" }, new { @class = " global-btn-purple w-100" })
                                     </li>
-                                </ul>
+                                    @if (Utility.GetAdminFromSession().Id == 1)
+                                    {
+                                        <li class="global-btn-purple">
+                                            @Html.ActionLink("Create New Admin", "Register", "Account", new { area = "" }, new { @class = "global-btn-purple w-100" })
+
+                                        </li>
+                                    }
+                                    </ul>
                             </li>
                         </ul>
                     </div>

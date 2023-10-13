@@ -163,10 +163,10 @@ namespace HUTOPS.Helper
             {
                 errors.Add("Email is already Exists");
             }
-            if (!string.IsNullOrEmpty(personalInfo.CNIC) && DB.PersonalInformations.ToList().Exists(x => x.CNIC == personalInfo.CNIC && x.Id != personalInfo.Id))
-            {
-                errors.Add("CNIC is already Exists");
-            }
+            //if (!string.IsNullOrEmpty(personalInfo.CNIC) && DB.PersonalInformations.ToList().Exists(x => x.CNIC == personalInfo.CNIC && x.Id != personalInfo.Id))
+            //{
+            //    errors.Add("CNIC is already Exists");
+            //}
             if (DB.PersonalInformations.ToList().Exists(x => x.CellPhoneNumber == personalInfo.CellPhoneNumber && x.Id != personalInfo.Id))
             {
                 errors.Add("Phone number is already Exists");

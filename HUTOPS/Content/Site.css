@@ -152,9 +152,14 @@ div#main-datatables_info {
     padding: 0 7px;
     cursor: pointer;
     font-size: 13px;
+    color: #5d2468 !important;
 }
 
-.paginate_button:hover {color: #5d2468 !important;}
+
+.paginate_button:hover {color: #fff !important;}
+
+    
+
 
 .headBox {
     display: flex;
@@ -267,7 +272,7 @@ Ends*/
         li.logoutDropWrap{position:relative;padding:0;cursor:pointer;display:block;}
         ul.logoutDrop{padding:0;margin:0;position:absolute;top:20px;right:0;opacity:0;transition:all .5s;z-index:1;animation:smoothScroll 1s forwards;margin:auto;display:block;}
         li.logoutDropWrap:hover ul.logoutDrop{z-index:2; opacity:1;animation:smoothScroll 1s forwards;top:35px;}
-        ul.logoutDrop li a{font-size: 13px;color:#fff;padding: 8px 10px;display:block;min-width:max-content;height:auto;border-radius:0;}
+        ul.logoutDrop li a{font-size: 13px;padding: 8px 10px;display:block;min-width:max-content;height:auto;border-radius:0;}
         ul.logoutDrop li{margin:0;padding:0;border-radius:0;}
         ul.logoutDrop:before{width:20px;height:20px;position:absolute;top:0;content:"";background-color:#5c2568;top:-6px;right:10px;transform:rotate(45deg);z-index:-1;}
 

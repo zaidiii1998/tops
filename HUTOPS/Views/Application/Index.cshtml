@@ -86,7 +86,7 @@
                                     <div class="col-lg-4">
                                         <div class="form-group">
                                             <label for="cnic">CNIC / B-Form Number:</label>
-                                            <input class="form-control cnic" type="text" id="cnic" name="CNIC" placeholder="12345-1234567-1" value="@Model.PersonalInfo.CNIC" maxlength="15" onchange="checkCNIC(this.id);">
+                                            <input class="form-control cnic" type="text" id="cnic" name="CNIC" placeholder="12345-1234567-1" value="@Model.PersonalInfo.CNIC" maxlength="15" onchange="@*checkCNIC(this.id);*@">
                                             <span class="text-danger" id="cnicError"></span>
                                         </div>
                                     </div>
@@ -194,7 +194,7 @@
                                                     <option value="07">July</option>
                                                     <option value="08">August</option>
                                                     <option value="09">September</option>
-                                                    <option value="10">Octuber</option>
+                                                    <option value="10">October</option>
                                                     <option value="11">November</option>
                                                     <option value="12">December</option>
                                                 </select>
@@ -236,10 +236,10 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-4" hidden>
                                         <div class="form-group">
                                             <label for="altCellPhone">Alternate Cell Phone Number<span class="text-danger h-6" style="font-size: 1.1rem;">*</span>:</label>
-                                            <input class="form-control number" type="tel" id="altCellPhone" value="@Model.PersonalInfo.AlternateCellPhoneNumber" name="AlternateCellPhoneNumber" maxlength="15" placeholder="0333-3333333" required>
+                                            <input class="form-control number" type="tel" id="altCellPhone" value="@Model.PersonalInfo.AlternateCellPhoneNumber" name="AlternateCellPhoneNumber" maxlength="15" placeholder="0333-3333333">
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
@@ -264,6 +264,7 @@
                                         <div class="form-group">
                                             <label for="guardianEmail">Parents/Guardian Email Address <span class="text-danger h-6" style="font-size: 1.1rem;">*</span>:</label>
                                             <input class="form-control" type="email" maxlength="35" id="guardianEmail" value="@Model.PersonalInfo.GuardianEmailAddress" name="GuardianEmailAddress" oninput="validateEmail(this.id,'errGuardianEmail')" required>
+                                            <span class="text-danger" id="errGuardianEmail"></span>
                                         </div>
                                     </div>
                                 </div>
@@ -834,7 +835,10 @@
                                 <h2>Documents</h2>
                             </div>-->
                             <form id="fileUploadForm" enctype="multipart/form-data">
+                                <span class="text-danger h-6">only files with the following extensions are allaowed: .png, .jpg, .jpeg, .pdf</span>
+
                                 <div class="row">
+
                                     <div class="col-lg-6">
 
                                         <label>A recent passport size photograph. Please do not use old photographs.<span class="text-danger h-6" style="font-size: 1.1rem;">*</span></label>
@@ -842,11 +846,11 @@
                                     <div class="col-lg-3">
                                         @if (Utility.GetAdminFromSession().Id != 0)
                                         {
-                                            <input class="form-control" type="file" id="Photograph" size="1" name="Photograph" accept=".jpeg, .jpg" value="@Model.Document.Photograph" onchange="checkFileSize(this.id, 'errPhoto')">
+                                            <input class="custom-upload-input" type="file" id="Photograph" size="1" name="Photograph" accept=".jpeg, .jpg, .png, .pdf" value="@Model.Document.Photograph" onchange="checkFileSize(this.id, 'errPhoto')">
                                         }
                                         else
                                         {
-                                            <input class="custom-upload-input" type="file" id="Photograph" size="1" name="Photograph" accept=".jpeg, .jpg" value="@Model.Document.Photograph" onchange="checkFileSize(this.id, 'errPhoto')" required>
+                                            <input class="custom-upload-input" type="file" id="Photograph" size="1" name="Photograph" accept=".jpeg, .jpg, .png, .pdf" value="@Model.Document.Photograph" onchange="checkFileSize(this.id, 'errPhoto')" required>
                                         }
                                         <span class="text-danger" id="errPhoto"></span>
                                     </div>
@@ -855,66 +859,66 @@
                                     <div class="col-lg-3">
                                         @if (@Model.Document.Photograph != null && @Model.Document.Photograph != "")
                                         {
-                                            <a href="/Application/View?doc=1" target="_blank" class="btn btn-default form-control"><i class="fa-solid fa-eye" style="color: blue;"></i></a>
+                                            <a href="/Application/View?Name=Photo" target="_blank" class="btn btn-default form-control"><i class="fa-solid fa-eye" style="color: blue;"></i></a>
                                         }
                                     </div>
                                 </div><br /><br />
-                                    <div class="row">
-                                        <div class="col-lg-6">
-                                            <label>A scanned copy of your original SSC Final Marks Sheet <span class="text-danger h-6" style="font-size: 1.1rem;">*</span></label>
-                                        </div>
-                                        <div class="col-lg-3">
-                                            @if (Utility.GetAdminFromSession().Id != 0)
-                                            {
-                                                <input type="file" class="custom-upload-input" id="SSCMarkSheet" size="1" name="SSCMarkSheet" accept=".jpeg, .jpg" value="@Model.Document.SSCMarkSheet" onchange="checkFileSize(this.id, 'errSSC')">
-                                            }
-                                            else
-                                            {
-                                                <input type="file" class="custom-upload-input" id="SSCMarkSheet" size="1" name="SSCMarkSheet" accept=".jpeg, .jpg" value="@Model.Document.SSCMarkSheet" onchange="checkFileSize(this.id, 'errSSC')" required>
-                                            }
-                                            <span class="text-danger" id="errSSC"></span>
-                                        </div>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <label>A scanned copy of your original SSC Final Marks Sheet <span class="text-danger h-6" style="font-size: 1.1rem;">*</span></label>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        @if (Utility.GetAdminFromSession().Id != 0)
+                                        {
+                                            <input type="file" class="custom-upload-input" id="SSCMarkSheet" size="1" name="SSCMarkSheet" accept=".jpeg, .jpg, .png, .pdf" value="@Model.Document.SSCMarkSheet" onchange="checkFileSize(this.id, 'errSSC')">
+                                        }
+                                        else
+                                        {
+                                            <input type="file" class="custom-upload-input" id="SSCMarkSheet" size="1" name="SSCMarkSheet" accept=".jpeg, .jpg, .png, .pdf" value="@Model.Document.SSCMarkSheet" onchange="checkFileSize(this.id, 'errSSC')" required>
+                                        }
+                                        <span class="text-danger" id="errSSC"></span>
+                                    </div>
 
-                                        <div class="col-lg-3">
-                                            @if (@Model.Document.SSCMarkSheet != null && @Model.Document.SSCMarkSheet != "")
-                                            {
-                                                <a href="/Application/View?doc=2" target="_blank" class="btn btn-default form-control"><i class="fa-solid fa-eye" style="color: blue;"></i></a>
-                                            }
-                                        </div>
-                                    </div><br /><br />
-                                    <div class="row">
-                                        <div class="col-lg-6">
+                                    <div class="col-lg-3">
+                                        @if (@Model.Document.SSCMarkSheet != null && @Model.Document.SSCMarkSheet != "")
+                                        {
+                                            <a href="/Application/View?Name=SSC Mark Sheet" target="_blank" class="btn btn-default form-control"><i class="fa-solid fa-eye" style="color: blue;"></i></a>
+                                        }
+                                    </div>
+                                </div><br /><br />
+                                <div class="row">
+                                    <div class="col-lg-6">
 
-                                            <label>A scanned copy of your original HSSC I or final HSSC Marks Sheet</label>
-                                        </div>
+                                        <label>A scanned copy of your original HSSC I or final HSSC Marks Sheet</label>
+                                    </div>
 
-                                        <div class="col-lg-3">
-                                            <input type="file" class="custom-upload-input" id="HSSCMarkSheet" size="1" name="HSSCMarkSheet" accept=".jpeg, .jpg" value="@Model.Document.HSSCMarkSheet" onchange="checkFileSize(this.id, 'errHSSC')">
-                                            <span class="text-danger" id="errHSSC"></span>
-                                        </div>
-                                        <div class="col-lg-3">
-                                            @if (@Model.Document.HSSCMarkSheet != null && @Model.Document.HSSCMarkSheet != "")
-                                            {
-                                                <a href="/Application/View?doc=3" target="_blank" class="btn btn-default form-control"><i class="fa-solid fa-eye" style="color: blue;"></i></a>
-                                            }
-                                        </div>
-                                    </div><br /><br />
-                                    <div class="row">
-                                        <div class="col-lg-6">
-                                            <label>A scanned copy of your B-Form or CNIC (If available)</label>
-                                        </div>
+                                    <div class="col-lg-3">
+                                        <input type="file" class="custom-upload-input" id="HSSCMarkSheet" size="1" name="HSSCMarkSheet" accept=".jpeg, .jpg, .png, .pdf" value="@Model.Document.HSSCMarkSheet" onchange="checkFileSize(this.id, 'errHSSC')">
+                                        <span class="text-danger" id="errHSSC"></span>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        @if (@Model.Document.HSSCMarkSheet != null && @Model.Document.HSSCMarkSheet != "")
+                                        {
+                                            <a href="/Application/View?Name=HSSC Mark Sheet" target="_blank" class="btn btn-default form-control"><i class="fa-solid fa-eye" style="color: blue;"></i></a>
+                                        }
+                                    </div>
+                                </div><br /><br />
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <label>A scanned copy of your B-Form or CNIC (If available)</label>
+                                    </div>
 
-                                        <div class="col-lg-3">
-                                            <input type="file" id="CNIC" class="custom-upload-input" size="1" name="CNIC" accept=".jpeg, .jpg" value="@Model.Document.CNIC" onchange="checkFileSize(this.id, 'errCNIC')">
-                                            <span class="text-danger" id="errCNIC"></span>
-                                        </div>
-                                        <div class="col-lg-3">
-                                            @if (@Model.Document.CNIC != null && @Model.Document.CNIC != "")
-                                            {
-                                                <a href="/Application/View?doc=4" target="_blank" class="btn btn-default form-control"><i class="fa-solid fa-eye" style="color: blue;"></i></a>
-                                            }
-                                        </div>
-                                    </div><br /><br />
+                                    <div class="col-lg-3">
+                                        <input type="file" id="CNIC" class="custom-upload-input" size="1" name="CNIC" accept=".jpeg, .jpg, .png, .pdf" value="@Model.Document.CNIC" onchange="checkFileSize(this.id, 'errCNIC')">
+                                        <span class="text-danger" id="errCNIC"></span>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        @if (@Model.Document.CNIC != null && @Model.Document.CNIC != "")
+                                        {
+                                            <a href="/Application/View?Name=CNIC" target="_blank" class="btn btn-default form-control"><i class="fa-solid fa-eye" style="color: blue;"></i></a>
+                                        }
+                                    </div>
+                                </div><br /><br />
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <input class="savebtn global-btn-purple  float-right" type="button" onclick="submitDocuments('');" value="Next">

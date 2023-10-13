@@ -23,7 +23,7 @@ namespace HUTOPS.Controllers
             string filePath = "";
             try
             {
-                if(admitCardBatchModel.Type == byte.Parse(BatchType.GenerateAdmitCard.ToString()))
+                if (admitCardBatchModel.Type == 0)
                 {
                     return Json(new { status = false, message = "Please Select Action First" });
                 }
