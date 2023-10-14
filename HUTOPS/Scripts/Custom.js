@@ -107,6 +107,15 @@ function increaseProgressBarWidth() {
         } else { $('#AppliedBeforeYear').removeClass('error'); }
     }
 
+    checkEmail('email');
+    checkPhoneNumber('cellPhone');
+
+    if ($('#emailError').html() != "") isValidPersonalInfo = false;
+    if ($('#numberError').html() != "") isValidPersonalInfo = false;
+
+    if ($('#guardianEmail').val() != "" && !validateEmail('guardianEmail', 'errGuardianEmail')) isValidPersonalInfo = false;
+
+
 
     if (isValidPersonalInfo) { percent = percent + 35 }
 
@@ -604,13 +613,6 @@ function validatePersonalInfoForm() {
         isValid = false;
         $('#guardianEmail').focus();
     }
-
-
-
-
-
-
-
 
 
 
@@ -1314,6 +1316,7 @@ function SubmitActivity() {
 }
 // Declaration Section
 function submitDeclaration() {
+
     var isValid = true;
     $('input[required]').each(function () {
 
@@ -1378,9 +1381,18 @@ function submitDeclaration() {
         } else { $('#AppliedBeforeYear').removeClass('error'); }
     }
 
+    checkEmail('email');
+    checkPhoneNumber('cellPhone');
+    if ($('#emailError').html() != "") isValid = false;
+    if ($('#numberError').html() != "") isValid = false;
+
+    if ($('#guardianEmail').val() != "" && !validateEmail('guardianEmail', 'errGuardianEmail')) isValid = false;
+
+
     var check1 = $('#validateLaw').is(':checked');
     var check2 = $('#invalidInfo').is(':checked');
     var check3 = $('#validInfo').is(':checked');
+        
     var isProgramValid = ValidateProgram($('#degreeProgram').val());
     if (check1 == true && check2 == true && check3 == true && isValid == true && isProgramValid == true) {
         increaseProgressBarWidth();
@@ -1557,9 +1569,6 @@ function submitDeclaration() {
 
     }
     else {
-
-
-
         var isValidPersonalInfo = true;
         $('#PersonalInfoForm input[required]').each(function () {
 
@@ -1601,6 +1610,14 @@ function submitDeclaration() {
                 isValidPersonalInfo = false;
             } else { $('#AppliedBeforeYear').removeClass('error'); }
         }
+
+        checkEmail('email');
+        checkPhoneNumber('cellPhone');
+
+        if ($('#emailError').html() != "") isValidPersonalInfo = false;
+        if ($('#numberError').html() != "")isValidPersonalInfo = false;
+
+        if ($('#guardianEmail').val() != "" && !validateEmail('guardianEmail', 'errGuardianEmail')) isValidPersonalInfo = false;
 
 
         if (!isValidPersonalInfo) {
@@ -1646,6 +1663,11 @@ function submitDeclaration() {
             $('#errUniversityName').html('');
         }
 
+        var isProgramValid = ValidateProgram($('#degreeProgram').val());
+        if (isProgramValid == false){
+            isValidEducation = false;
+        }
+
         if (!isValidEducation) {
             $('#btnEducation').trigger('click');
             var element = $('#currentLevel')[0];
@@ -1674,7 +1696,7 @@ function submitDeclaration() {
 
         }
 
-        if ($('#TestDate').val() == null && $('#TestDate').val() == "") {
+        if ($('#TestDate').val() == null || $('#TestDate').val() == "") {
         $('#btnTest').trigger('click');
             var element = $('#TestDate')[0];
             $('html, body').animate({
@@ -1683,10 +1705,15 @@ function submitDeclaration() {
             return false;
         }
 
+        // check box
+        if (check1 == false){ $('#validateLaw').next('label').css('color', 'red'); }
+        else { $('#validateLaw').next('label').css('color', 'black'); }
+        if (check2 == false) { $('#invalidInfo').next('label').css('color', 'red'); }
+        else { $('#invalidInfo').next('label').css('color', 'black'); }
+        if (check3 == false) { $('#validInfo').next('label').css('color', 'red'); }
+        else { $('#validInfo').next('label').css('color', 'black'); }
 
-
-
-        ShowDivError("Please check all sections and enter in all required fields");
+        ShowDivError("Please accept all declarations");
     }
 
 }
