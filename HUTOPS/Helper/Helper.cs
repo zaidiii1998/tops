@@ -398,7 +398,7 @@ namespace HUTOPS.Helper
         private static bool IsImageFile(string fileExtension)
         {
             string[] allowedImageExtensions = { ".jpg", ".jpeg", ".png", ".gif" /* Add more if needed */ };
-            return allowedImageExtensions.Contains(fileExtension);
+            return allowedImageExtensions.Contains(fileExtension.ToLower());
         }
     }
 }

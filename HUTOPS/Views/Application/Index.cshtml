@@ -17,22 +17,22 @@
         <div class="card m-4">
             <div class="card-header CollapseCard" id="headingOne" onclick="document.getElementById('btnPersonalInfo').click();">
 
-              
-                    <a class="btn btn-link w-100" id="btnPersonalInfo" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                        Personal Information
-                        <span class="w-100"><i class="fa-solid" aria-hidden="true" style="color: white;font-size: 39px;"></i></span>
-                    </a>
 
-               
+                <a class="btn btn-link w-100" id="btnPersonalInfo" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    Personal Information
+                    <span class="w-100"><i class="fa-solid" aria-hidden="true" style="color: white;font-size: 39px;"></i></span>
+                </a>
+
+
 
             </div>
             <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
                 <div class="card-body">
                     <div class="container-fluid">
                         <div class="boxWraper infoBox">
-                           <!-- <div class="headBox">
-                                <h2>Personal Information</h2>
-                            </div>-->
+                            <!-- <div class="headBox">
+                             <h2>Personal Information</h2>
+                         </div>-->
                             <form id="PersonalInfoForm">
                                 <input class="form-control" type="text" id="id" name="Id" maxlength="25" style="display:none;" value="@Model.PersonalInfo.Id">
 
@@ -198,7 +198,7 @@
                                                     <option value="11">November</option>
                                                     <option value="12">December</option>
                                                 </select>
-                                                <select class="form-control mr-2" id="dobYear" style="max-width: 100px;" name="dobYear" required >
+                                                <select class="form-control mr-2" id="dobYear" style="max-width: 100px;" name="dobYear" required>
                                                     <!-- Add options for years as needed -->
                                                 </select>
 
@@ -208,9 +208,9 @@
                                 </div>
 
                                 <!-- Contact Details Section -->
-                               
-                                    <h5>Contact Details</h5>
-                               
+
+                                <h5>Contact Details</h5>
+
                                 <div class="row">
                                     <div class="col-lg-4">
                                         <div class="form-group">
@@ -500,7 +500,7 @@
                                             <label for="AppliedBeforeNo">No</label><br />
                                             <span class="text-danger" id="errAppliedBefore"></span>
                                         </div>
-                                        
+
                                     </div>
                                     <div class="col-lg-8" id="AppliedBeforeSection">
                                         <div class="row">
@@ -555,13 +555,13 @@
                 <div class="card-body">
                     <div class="container-fluid">
                         <div class="boxWraper infoBox">
-                           <!-- <div class="headBox">
-                                <h2>Education</h2>
-                            </div>-->
+                            <!-- <div class="headBox">
+                             <h2>Education</h2>
+                         </div>-->
                             <form method="post" id="EducationForm">
-                                
-                                    <h5>HSSC/College Information</h5>
-                                
+
+                                <h5>HSSC/College Information</h5>
+
                                 <div class="row">
                                     <div class="col-lg-4">
                                         <div class="form-group">
@@ -643,7 +643,7 @@
                                                 }
                                                 else
                                                 {
-                                            <option value="General Science/Computer Science">General Science/Computer Science</option>
+                                                    <option value="General Science/Computer Science">General Science/Computer Science</option>
                                                 }
                                                 @if ("Commerce" == Model.Education.HSSCGroupName)
                                                 {
@@ -705,17 +705,17 @@
                                             </select>
                                         </div>
                                     </div>
-									 <div class="col-lg-4">
+                                    <div class="col-lg-4">
                                         <div class="form-group">
                                             <label for="hsscPercentage">Overall HSSC Percentage<span class="text-danger h-6" style="font-size: 1.1rem;">*</span>:</label>
                                             <input class="form-control Percentage" type="text" id="hsscPercentage" value="@Model.Education.HSSCPercentage" name="hsscPercentage" required>
                                         </div>
                                     </div>
                                 </div>
-                              
-                                
-                                    <h5>SSC/School Information</h5>
-                             
+
+
+                                <h5>SSC/School Information</h5>
+
                                 <div class="row">
                                     <div class="col-lg-4">
                                         <div class="form-group">
@@ -737,9 +737,9 @@
                                     </div>
                                 </div>
                                 <!-- Habib University Section -->
-                                
-                                    <h5>Intended Program</h5>
-                                
+
+                                <h5>Intended Program</h5>
+
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <div class="form-group">
@@ -750,7 +750,7 @@
                                             <label for="artsSchool">School of Arts, Humanities and Social Sciences</label><br>
                                             <span class="text-danger" id="errHUSchool"></span>
                                         </div>
-                                        
+
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="form-group">
@@ -769,9 +769,9 @@
 
 
                                 <section>
-                                   
-                                        <h5>Your Optional/Elective Subjects in HSSC:</h5>
-                                    
+
+                                    <h5>Your Optional/Elective Subjects in HSSC:</h5>
+
                                     <div class="row">
                                         <div class="col-lg-3">
                                             <div class="form-group">
@@ -832,8 +832,8 @@
                     <div class="container-fluid">
                         <div class="boxWraper infoBox">
                             <!--<div class="headBox">
-                                <h2>Documents</h2>
-                            </div>-->
+                            <h2>Documents</h2>
+                        </div>-->
                             <form id="fileUploadForm" enctype="multipart/form-data">
                                 <span class="text-danger h-6">only files with the following extensions are allaowed: .png, .jpg, .jpeg, .pdf</span>
 
@@ -949,9 +949,9 @@
                 <div class="card-body">
                     <div class="container-fluid">
                         <div class="boxWraper infoBox">
-                           <!-- <div class="headBox">
-                                <h2>Test Date</h2>
-                            </div>-->
+                            <!-- <div class="headBox">
+                             <h2>Test Date</h2>
+                         </div>-->
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="form-group">
@@ -1001,40 +1001,40 @@
                 <div class="card-body">
                     <div class="container-fluid">
                         <div class="boxWraper infoBox">
-                           <!-- <div class="headBox">
-                                <h2>Declarations</h2>
-                            </div>-->
+                            <!-- <div class="headBox">
+                             <h2>Declarations</h2>
+                         </div>-->
                             <form method="post">
                                 <div class="row">
                                     <div class="col-lg-12">
-										
-										
-										
-                                         <input type="checkbox" id="validInfo" name="validInfo" required class="styled-checkbox">
-										<label for="validInfo" class="checkbox-label" style="width: 75%;">
+
+
+
+                                        <input type="checkbox" id="validInfo" name="validInfo" required class="styled-checkbox">
+                                        <label for="validInfo" class="checkbox-label" style="width: 75%;">
                                             The Information provided by me regarding this application is true and complete.<span class="text-danger h-6" style="font-size: 1.1rem;">*</span>
-                                           
-                                            
+
+
                                         </label>
                                     </div>
                                 </div>
                                 <br /><br />
                                 <div class="row">
                                     <div class="col-lg-12">
-										<input type="checkbox" id="invalidInfo" name="invalidInfo" required class="styled-checkbox">
+                                        <input type="checkbox" id="invalidInfo" name="invalidInfo" required class="styled-checkbox">
                                         <label for="invalidInfo" class="checkbox-label">
                                             I understand that any inaccurate/false information shall render this application invalid, and if admitted on the basis of such information, I may be asked to leave at any stage of the program.<span class="text-danger h-6" style="font-size: 1.1rem;">*</span>
-                                            
+
                                         </label>
                                     </div>
                                 </div>
                                 <br /><br />
                                 <div class="row">
                                     <div class="col-lg-12">
-										 <input type="checkbox" id="validateLaw" name="invalidInfo" required class="styled-checkbox">
-                                        <label for ="validateLaw" class="checkbox-label">
+                                        <input type="checkbox" id="validateLaw" name="invalidInfo" required class="styled-checkbox">
+                                        <label for="validateLaw" class="checkbox-label">
                                             I understand that the provision of any inaccurate or false information may render me liable to prosecution in a court of law in Pakistan.<span class="text-danger h-6" style="font-size: 1.1rem;">*</span>
-                                           
+
                                         </label>
                                     </div>
                                 </div>
@@ -1053,6 +1053,7 @@
                 </div>
             </div>
         </div>
+
     </div>
     <div class="row" id="errorBlock">
         <div class="col-md-3 m-4">

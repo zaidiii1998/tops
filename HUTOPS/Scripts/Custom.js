@@ -65,6 +65,18 @@ $("#expandSideBarBtn").click(function () {
 
 function increaseProgressBarWidth() {
     var percent = 0;
+    if ($('#permanentDifferent').is(':checked') == true) {
+        document.getElementById('permanentAddress').required = true;
+        document.getElementById('permanentCountry').required = true;
+        document.getElementById('permanentProvince').required = true;
+        document.getElementById('permanentCity').required = true;
+    } else {
+        document.getElementById('permanentAddress').required = false;
+        document.getElementById('permanentCountry').required = false;
+        document.getElementById('permanentProvince').required = false;
+        document.getElementById('permanentCity').required = false;
+    }
+
     var isValidPersonalInfo = true;
     $('#PersonalInfoForm input[required]').each(function () {
 
@@ -522,7 +534,21 @@ function LoadDate(stringDate, DateId) {
 
 function validatePersonalInfoForm() {
     var isValid = true;
-    
+    if ($('#permanentDifferent').is(':checked') == true) {
+        $('#permanentAddress').prop('required', true);
+        $('#permanentCountry').prop('required', true);
+        $('#permanentProvince').prop('required', true);
+        $('#permanentCity').prop('required', true);
+    } else {
+        $('#permanentAddress').prop('required', false);
+        $('#permanentCountry').prop('required', false);
+        $('#permanentProvince').prop('required', false);
+        $('#permanentCity').prop('required', false);
+    }
+
+
+
+
 
     $('#PersonalInfoForm input[required]').each(function () {
 
@@ -807,6 +833,7 @@ function GetSubjects(GroupName) {
             input.type = "text";
             input.classList.add("SubjectName");
             input.value = subject;
+            input.required = true;
 
             newcontrol.appendChild(input);
             newCol.appendChild(newcontrol);
@@ -832,6 +859,7 @@ function GetSubjects(GroupName) {
             input.type = "text";
             input.classList.add("SubjectName");
             input.value = subject;
+            input.required = true;
 
             newcontrol.appendChild(input);
             newCol.appendChild(newcontrol);
@@ -857,6 +885,7 @@ function GetSubjects(GroupName) {
             input.type = "text";
             input.classList.add("SubjectName");
             input.value = subject;
+            input.required = true;
 
             newcontrol.appendChild(input);
             newCol.appendChild(newcontrol);
@@ -882,6 +911,7 @@ function GetSubjects(GroupName) {
             input.type = "text";
             input.classList.add("SubjectName");
             input.value = subject;
+            input.required = true;
 
             newcontrol.appendChild(input);
             newCol.appendChild(newcontrol);
@@ -907,6 +937,7 @@ function GetSubjects(GroupName) {
             input.type = "text";
             input.classList.add("SubjectName");
             input.value = subject;
+            input.required = true;
 
             newcontrol.appendChild(input);
             newCol.appendChild(newcontrol);
@@ -932,6 +963,7 @@ function GetSubjects(GroupName) {
             input.type = "text";
             input.classList.add("SubjectName");
             input.value = subject;
+            input.required = true;
 
             newcontrol.appendChild(input);
             newCol.appendChild(newcontrol);
@@ -1316,8 +1348,20 @@ function SubmitActivity() {
 }
 // Declaration Section
 function submitDeclaration() {
-
+    debugger
     var isValid = true;
+    if ($('#permanentDifferent').is(':checked') == true) {
+        $('#permanentAddress').prop('required',true);
+        $('#permanentCountry').prop('required', true);
+        $('#permanentProvince').prop('required', true);
+        $('#permanentCity').prop('required', true);
+    } else {
+        $('#permanentAddress').prop('required', false);
+        $('#permanentCountry').prop('required', false);
+        $('#permanentProvince').prop('required', false);
+        $('#permanentCity').prop('required', false);
+    }
+
     $('input[required]').each(function () {
 
         if ($(this).val().trim() === '') {

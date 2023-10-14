@@ -76,6 +76,11 @@ namespace HUTOPS.Controllers
 
 
                     var userId = Utility.GetUserFromSession().Id;
+                    if (applicationModel.PersonalInfo.Id == 0)
+                    {
+                        Utility.AddLog(Constants.LogType.ActivityLog, $"Admin {Utility.GetAdminFromSession().Name} request to Add new Application as a applicant");
+                        return Json(new { status = false, message = "Admin cannot Register new Application for new registration you have to logout" });
+                    }
                     if (userId != applicationModel.PersonalInfo.Id)
                     {
                         Utility.AddLog(Constants.LogType.ActivityLog, $"Multi Profile Error Occured while admit Updating Applicaiton");
@@ -429,7 +434,6 @@ namespace HUTOPS.Controllers
                             EmailBody = EmailBody.Replace("{{Photo}}", applicationModel.Document.Photograph);
 
 
-                            EmailBody = EmailBody.Replace("{{Id}}", applicationModel.Document.Photograph);
                             EmailBody = EmailBody.Replace("{{HUTopId}}", applicationModel.PersonalInfo.HUTopId);
                             EmailBody = EmailBody.Replace("{{FirstName}}", applicationModel.PersonalInfo.FirstName);
                             EmailBody = EmailBody.Replace("{{MiddleName}}", applicationModel.PersonalInfo.MiddleName);
