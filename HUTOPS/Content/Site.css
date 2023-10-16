@@ -815,13 +815,28 @@ li.actionDropWrap {
 
 
 
+.labelInputCheckWraper {
+    position: relative;
+    margin-bottom: 15px;
+}
+
+    .labelInputCheckWraper label.checkbox-label {
+        margin-left: 35px;
+        line-height: 24px;
+        cursor: pointer;
+    }
+
+    .labelInputCheckWraper .styled-checkbox + .checkbox-label:before {
+        position: absolute;
+        left: 0;
+        top: 4px;
+    }
 
 
 
-
-<style >
+/*<style >*/
 /* The container */
-.container {
+/*.container {
     display: block;
     position: relative;
     padding-left: 35px;
@@ -832,7 +847,7 @@ li.actionDropWrap {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-}
+}*/
 
 /* Hide the browser's default checkbox
 .container input {
@@ -844,9 +859,9 @@ li.actionDropWrap {
 } */
 
 /* Create a custom checkbox */
-.checkmark {
-    content: ''; /* Checkmark symbol */
-    display: inline-block;
+/*.checkmark {
+    content: '';*/ /* Checkmark symbol */
+    /*display: inline-block;
     vertical-align: middle;
     margin-right: 5px;
     font-size: 18px;
@@ -862,35 +877,35 @@ li.actionDropWrap {
     height: 18px;
     width: 18px;
     background-color: #f3f3f3 !important;
-}
+}*/
 
 /* On mouse-over, add a grey background color */
-.container:hover input ~ .checkmark {
+/*.container:hover input ~ .checkmark {
     background-color: #ccc;
-}
+}*/
 
 /* When the checkbox is checked, add a blue background */
-.container input:checked ~ .checkmark {
+/*.container input:checked ~ .checkmark {
     content: '\2713';
     background-color: #333;
-    color: white;
+    color: white;*/
     /*background-color: #2196F3;*/
-}
+/*}*/
 
 /* Create the checkmark/indicator (hidden when not checked) */
-.checkmark:after {
+/*.checkmark:after {
     content: "";
     position: absolute;
     display: none;
-}
+}*/
 
 /* Show the checkmark when checked */
-.container input:checked ~ .checkmark:after {
+/*.container input:checked ~ .checkmark:after {
     display: block;
-}
+}*/
 
 /* Style the checkmark/indicator */
-.container .checkmark:after {
+/*.container .checkmark:after {
     left: 9px;
     top: 5px;
     width: 5px;
@@ -902,4 +917,4 @@ li.actionDropWrap {
     transform: rotate(45deg);
 }
 
-</style >
+</style >*/
