@@ -687,7 +687,11 @@ div#contentWrapperDashboard.contentWrapAdon .boxWraper {
 }
 
 .accordion > .card > .card-header {border-radius: 0 !important; border-bottom: solid 1px #e3e3e3; box-shadow: 2px 3px 20px #e5e5e5;}
-.progress{background-color: #F1ECE0 !important; border-radius: 0 !important; height: 0.5rem !important;}
+.progress {
+    background-color: #F1ECE0 !important;
+    border-radius: 0 !important;
+    height: 0.8rem !important
+}
 [data-toggle="collapse"] {
     text-align: left;
 }
