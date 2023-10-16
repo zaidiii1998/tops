@@ -215,10 +215,10 @@ namespace HUTOPS.Helper
             {
                 errors.Add("Provided Email Address is Invalid");
             }
-            if (string.IsNullOrEmpty(personalInfo.GuardianEmailAddress))
-            {
-                errors.Add("Guardian Email Address is Required");
-            }
+            //if (string.IsNullOrEmpty(personalInfo.GuardianEmailAddress))
+            //{
+            //    errors.Add("Guardian Email Address is Required");
+            //}
             if (!string.IsNullOrEmpty(personalInfo.GuardianEmailAddress) && !isValidEmail(personalInfo.GuardianEmailAddress))
             {
                 errors.Add("Provided Guardian Email Address is Invalid");
@@ -231,26 +231,26 @@ namespace HUTOPS.Helper
             {
                 errors.Add("WhatsApp Number Number is Invalid");
             }
-            if (string.IsNullOrEmpty(personalInfo.AlternateCellPhoneNumber))
-            {
-                errors.Add("Alternate Cell Phone Number is required");
-            }
+            //if (string.IsNullOrEmpty(personalInfo.AlternateCellPhoneNumber))
+            //{
+            //    errors.Add("Alternate Cell Phone Number is required");
+            //}
             if (!string.IsNullOrEmpty(personalInfo.AlternateCellPhoneNumber) && !IsValidPhoneNumber(personalInfo.AlternateCellPhoneNumber))
             {
                 errors.Add("Alternate Cell Phone Number is Invalid");
             }
-            if (!string.IsNullOrEmpty(personalInfo.GuardianCellPhoneNumber) && !Helper.Utility.IsValidPhoneNumber(personalInfo.GuardianCellPhoneNumber))
+            if (!string.IsNullOrEmpty(personalInfo.GuardianCellPhoneNumber) && !IsValidPhoneNumber(personalInfo.GuardianCellPhoneNumber))
             {
                 errors.Add("Guardian Cell Phone Number is Invalid");
             }
-            if (string.IsNullOrEmpty(personalInfo.GuardianCellPhoneNumber))
-            {
-                errors.Add("Phone Number is Required");
-            }
-            if (string.IsNullOrEmpty(personalInfo.HomePhoneNumber))
-            {
-                errors.Add("Home Phone Number is Required");
-            }
+            //if (string.IsNullOrEmpty(personalInfo.GuardianCellPhoneNumber))
+            //{
+            //    errors.Add("Phone Number is Required");
+            //}
+            //if (string.IsNullOrEmpty(personalInfo.HomePhoneNumber))
+            //{
+            //    errors.Add("Home Phone Number is Required");
+            //}
             if (!string.IsNullOrEmpty(personalInfo.HomePhoneNumber) && (personalInfo.HomePhoneNumber.Length < 9 || personalInfo.HomePhoneNumber.Length > 15))
             {
                 errors.Add("Home Phone Number length must be greater than 9 and less than 15 characters");
@@ -399,6 +399,26 @@ namespace HUTOPS.Helper
         {
             string[] allowedImageExtensions = { ".jpg", ".jpeg", ".png", ".gif" /* Add more if needed */ };
             return allowedImageExtensions.Contains(fileExtension.ToLower());
+        }
+
+
+        public static string GetInnerException(Exception ex)
+        {
+            string exception;
+            if (ex == null)
+            {
+                return "";
+            }
+            if (ex.InnerException == null)
+            {
+                exception = ex.Message;
+            }
+            else
+            {
+                exception = ex.InnerException.Message;
+            }
+
+            return exception;
         }
     }
 }

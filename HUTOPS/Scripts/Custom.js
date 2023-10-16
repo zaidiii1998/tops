@@ -66,15 +66,15 @@ $("#expandSideBarBtn").click(function () {
 function increaseProgressBarWidth() {
     var percent = 0;
     if ($('#permanentDifferent').is(':checked') == true) {
-        document.getElementById('permanentAddress').required = true;
-        document.getElementById('permanentCountry').required = true;
-        document.getElementById('permanentProvince').required = true;
-        document.getElementById('permanentCity').required = true;
+        $('#permanentAddress').prop('required', true);
+        $('#permanentCountry').prop('required', true);
+        $('#permanentProvince').prop('required', true);
+        $('#permanentCity').prop('required', true);
     } else {
-        document.getElementById('permanentAddress').required = false;
-        document.getElementById('permanentCountry').required = false;
-        document.getElementById('permanentProvince').required = false;
-        document.getElementById('permanentCity').required = false;
+        $('#permanentAddress').prop('required', false);
+        $('#permanentCountry').prop('required', false);
+        $('#permanentProvince').prop('required', false);
+        $('#permanentCity').prop('required', false);
     }
 
     var isValidPersonalInfo = true;
@@ -128,7 +128,6 @@ function increaseProgressBarWidth() {
     if ($('#guardianEmail').val() != "" && !validateEmail('guardianEmail', 'errGuardianEmail')) isValidPersonalInfo = false;
 
 
-
     if (isValidPersonalInfo) { percent = percent + 35 }
 
     var isValidEducation = true;
@@ -153,15 +152,9 @@ function increaseProgressBarWidth() {
 
     if ($('input[name="huSchool"]:checked').val() == "" || $('input[name="huSchool"]:checked').val() == null) {
         isValidEducation = false;
-        $('#errHUSchool').html("Please select School Name");
-    } else {
-        $('#errHUSchool').html("");
     }
     if ($('#currentLevel').val() == 'Already enrolled in a University' && $('#universityName').val() == '') {
         isValidEducation = false;
-        $('#errUniversityName').html('University Name is required');
-    } else {
-        $('#errUniversityName').html('');
     }
 
     if (isValidEducation) { percent = percent + 35 }
@@ -721,7 +714,7 @@ function LoadYear(selectId) {
     option.selected = true;
     option.disabled = true;
     comboYear.appendChild(option);
-    if (selectId == "completionYear") {
+    if (selectId == "completionYear" && ($('#currentLevel').val() == 'HSSC II in progress')) {
         var option = document.createElement("option");
         option.value = "2024";
         option.text = "2024";
@@ -1238,6 +1231,7 @@ function checkFileSize(fileId, ErrSpanId){
     if (fileSize > maxFileSize) {
         
         $("#" + ErrSpanId).html(" Select the file Maximum size 2MB"); // Clear any previous error message
+        $('#' + fileId).val('');
     } else {
         $("#" + ErrSpanId).html(""); // Clear any previous error message
     }
@@ -1540,7 +1534,6 @@ function submitDeclaration() {
         Object.entries(personalInfo).forEach(([key, value]) => {
             data.append(key, value);
         });
-        debugger
         if (!$('#permanentDifferent').prop('checked')) {
             data.append('PersonalInfo.permanentAddress', $('#residentialAddress').val());
             data.append('PersonalInfo.permanentCountry', $('#residentialCountry :selected').text());
@@ -1588,25 +1581,46 @@ function submitDeclaration() {
                 $("#EducationError ul").html('');
                 $("#DocumentError ul").html('');
 
+                debugger
                 var PersonalErrors = response.PersonalErrors.toString();
                 var PersonalErrorsList = PersonalErrors.split(",");
-                $.each(PersonalErrorsList, function (key, value) {
-                    $("#PersonalError ul").append('<li class="text-danger">'+ value +'</li>');
-                })
-                $('#errorBlock').show();
+
+                if (PersonalErrorsList.length > 0) {
+                    if (PersonalErrorsList[0] != "") {
+                        $('#personalErrors').show();
+                    }
+                    
+                    $.each(PersonalErrorsList, function (key, value) {
+                        $("#PersonalError ul").append('<li class="text-danger">' + value + '</li>');
+                    })
+                }
+                
+                
                 var EducationErrors = response.EducationErrors.toString();
-
                 var EducationErrorsList = EducationErrors.split(",");
-                $.each(EducationErrorsList, function (key, value) {
-                    $("#EducationError ul").append('<li class="text-danger">' + value + '</li>');
-                })
+                if (EducationErrorsList.length > 0) {
+                    if (EducationErrorsList[0] != "") {
+                        $('#educationalErrors').show();
+                    }
+                    
+                    $.each(EducationErrorsList, function (key, value) {
+                        $("#EducationError ul").append('<li class="text-danger">' + value + '</li>');
+                    })
+                }
+               
                 var DocumentErrors = response.DocumentErrors.toString();
-
                 var DocumentErrorsList = DocumentErrors.split(",");
-                $.each(DocumentErrorsList, function (key, value) {
-                    $("#DocumentError ul").append('<li class="text-danger">' + value + '</li>');
-                })
-            
+                if (DocumentErrorsList.length > 0) {
+                    if (DocumentErrorsList[0] != "") {
+                        $('#documentErrors').show();
+                    }
+                    
+                    $.each(DocumentErrorsList, function (key, value) {
+                        $("#DocumentError ul").append('<li class="text-danger">' + value + '</li>');
+                    })
+                }
+               
+                $('#errorBlock').show();
             
             }
         }

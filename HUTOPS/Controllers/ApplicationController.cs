@@ -507,7 +507,7 @@ namespace HUTOPS.Controllers
                             Directory.Delete(UserDirectory, true);
                             Utility.AddLog(Constants.LogType.Exception, $"Transaction Rollback and Documents has been removed from the server");
 
-                            return Json(new { status = false, message = "Form Submittion Failed" + ex.Message });
+                            return Json(new { status = false, message = "Form Submittion Failed " + Utility.GetInnerException(ex) });
 
                         }
                     }
@@ -516,7 +516,7 @@ namespace HUTOPS.Controllers
             catch (System.Exception ex)
             {
                 Utility.AddLog(Constants.LogType.Exception, $"Application Submition Failed Details: {ex.Message}");
-                return Json(new { status = false, message = "Form Submittion Failed" + ex.Message });
+                return Json(new { status = false, message = "Form Submittion Failed " + Utility.GetInnerException(ex) });
 
             }
         }
@@ -525,33 +525,6 @@ namespace HUTOPS.Controllers
         {
             return View();
         }
-
-        //public ActionResult View(int doc)
-        //{
-        //    try
-        //    {
-        //        var personalInfo = Utility.GetUserFromSession();
-        //        var documents = DB.Documents.ToList().Where(x => x.UserId == personalInfo.Id).FirstOrDefault();
-
-        //        var url = "";
-        //        if (documents != null)
-        //        {
-        //            if (doc == 1) { url = documents.Photograph == "" ? "" : documents.Photograph.Substring(documents.Photograph.IndexOf("Upload")); }
-        //            else if (doc == 2) { url = documents.SSCMarkSheet == "" ? "" : documents.SSCMarkSheet.Substring(documents.SSCMarkSheet.IndexOf("Upload")); }
-        //            else if (doc == 3) { url = documents.HSSCMarkSheet == "" ? "" : documents.HSSCMarkSheet.Substring(documents.HSSCMarkSheet.IndexOf("Upload")); }
-        //            else if (doc == 4) { url = documents.CNIC == "" ? "" : documents.CNIC.Substring(documents.CNIC.IndexOf("Upload")); }
-        //            else { url = ""; }
-        //        }
-        //        ViewBag.Url = '/' + url;
-        //        return View();
-        //    }
-        //    catch (Exception)
-        //    {
-
-        //        throw;
-        //    }
-        //}
-
 
         public FileResult View(string Name)
         {
