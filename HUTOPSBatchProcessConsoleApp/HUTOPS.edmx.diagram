@@ -20,6 +20,7 @@
         <EntityTypeShape EntityType="HUTOPSModel.PersonalInformation" Width="1.5" PointX="8.75" PointY="6.75" IsExpanded="false" />
         <EntityTypeShape EntityType="HUTOPSModel.State" Width="1.5" PointX="10.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="HUTOPSModel.TestDate" Width="1.5" PointX="10.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HUTOPSModel.EApp_PersonalInformation" Width="1.5" PointX="5.375" PointY="6.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

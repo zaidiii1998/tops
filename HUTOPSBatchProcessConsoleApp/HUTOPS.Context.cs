@@ -42,6 +42,7 @@ namespace HUTOPSBatchProcessConsoleApp
         public virtual DbSet<PersonalInformation> PersonalInformations { get; set; }
         public virtual DbSet<State> States { get; set; }
         public virtual DbSet<TestDate> TestDates { get; set; }
+        public virtual DbSet<EApp_PersonalInformation> EApp_PersonalInformation { get; set; }
     
         public virtual int EducationSubjects(string columnToPivot, string listToPivot)
         {

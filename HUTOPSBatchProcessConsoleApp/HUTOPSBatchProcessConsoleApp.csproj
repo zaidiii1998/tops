@@ -107,6 +107,27 @@
     <Compile Include="Document.cs">
       <DependentUpon>HUTOPS.tt</DependentUpon>
     </Compile>
+    <Compile Include="EAppDBModel\EAppDB.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EAppDB.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EAppDBModel\EAppDB.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EAppDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EAppDBModel\EAppDB.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EAppDB.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="EAppDBModel\PersonalInformation.cs">
+      <DependentUpon>EAppDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EApp_PersonalInformation.cs">
+      <DependentUpon>HUTOPS.tt</DependentUpon>
+    </Compile>
     <Compile Include="Educational.cs">
       <DependentUpon>HUTOPS.tt</DependentUpon>
     </Compile>
@@ -194,6 +215,13 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>HUTOPS.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <EntityDeploy Include="EAppDBModel\EAppDB.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>EAppDB.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="EAppDBModel\EAppDB.edmx.diagram">
+      <DependentUpon>EAppDB.edmx</DependentUpon>
+    </None>
     <None Include="HUTOPS.edmx.diagram">
       <DependentUpon>HUTOPS.edmx</DependentUpon>
     </None>
@@ -202,6 +230,16 @@
   <ItemGroup>
     <Content Include="AppData\CPD.Framework.Core.dll" />
     <Content Include="AppData\HU_HTML_TO_PDF.dll" />
+    <Content Include="EAppDBModel\EAppDB.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>EAppDB.edmx</DependentUpon>
+      <LastGenOutput>EAppDB.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="EAppDBModel\EAppDB.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>EAppDB.edmx</DependentUpon>
+      <LastGenOutput>EAppDB.cs</LastGenOutput>
+    </Content>
     <Content Include="HUTOPS.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>HUTOPS.Context.cs</LastGenOutput>
@@ -216,5 +254,6 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -78,6 +78,87 @@
           <Property Name="AdmitCard" Type="varchar" MaxLength="100" />
           <Property Name="IsCompleted" Type="int" />
         </EntityType>
+        <EntityType Name="EApp_PersonalInformation">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Appid" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="50" />
+          <Property Name="MiddleName" Type="varchar" MaxLength="50" />
+          <Property Name="LastName" Type="varchar" MaxLength="50" />
+          <Property Name="Gender" Type="varchar" MaxLength="50" />
+          <Property Name="HusbandName" Type="varchar" MaxLength="50" />
+          <Property Name="FatherFirstName" Type="varchar" MaxLength="50" />
+          <Property Name="DateofBirth" Type="datetime" />
+          <Property Name="CountryAdd" Type="varchar" MaxLength="50" />
+          <Property Name="PhoneNo" Type="varchar" MaxLength="50" />
+          <Property Name="Tellus" Type="varchar" MaxLength="150" />
+          <Property Name="CurrentAddress" Type="varchar" MaxLength="100" />
+          <Property Name="PostalAddress" Type="varchar" MaxLength="100" />
+          <Property Name="Country" Type="varchar" MaxLength="50" />
+          <Property Name="City" Type="varchar" MaxLength="50" />
+          <Property Name="Provience" Type="varchar" MaxLength="50" />
+          <Property Name="Postal" Type="varchar" MaxLength="50" />
+          <Property Name="Email" Type="varchar" MaxLength="50" />
+          <Property Name="AlterEmail" Type="varchar" MaxLength="50" />
+          <Property Name="Password" Type="varchar" MaxLength="50" />
+          <Property Name="CPassword" Type="varchar" MaxLength="50" />
+          <Property Name="Savedate" Type="datetime" />
+          <Property Name="Updatedate" Type="datetime" />
+          <Property Name="AppStatus" Type="int" />
+          <Property Name="StudentStatus" Type="varchar" MaxLength="50" />
+          <Property Name="TempID" Type="int" />
+          <Property Name="School" Type="varchar" MaxLength="50" />
+          <Property Name="SchoolName" Type="varchar" MaxLength="200" />
+          <Property Name="HereYou" Type="varchar" MaxLength="50" />
+          <Property Name="HereOther" Type="varchar" MaxLength="50" />
+          <Property Name="NewEmail" Type="varchar" MaxLength="50" />
+          <Property Name="Discount" Type="varchar" MaxLength="50" />
+          <Property Name="DiscountFee" Type="varchar" MaxLength="50" />
+          <Property Name="Yourinterests" Type="varchar" MaxLength="300" />
+          <Property Name="YourinterestsOther" Type="varchar" MaxLength="200" />
+          <Property Name="Currentqualification" Type="varchar" MaxLength="200" />
+          <Property Name="AlternateMobile" Type="varchar" MaxLength="50" />
+          <Property Name="Alternatelandline" Type="varchar" MaxLength="50" />
+          <Property Name="Cityother" Type="varchar" MaxLength="50" />
+          <Property Name="OtherCurrentqualification" Type="varchar" MaxLength="300" />
+          <Property Name="Userid" Type="varchar" MaxLength="50" />
+          <Property Name="Permanent_addres" Type="varchar" MaxLength="200" />
+          <Property Name="Permanent_country" Type="varchar" MaxLength="50" />
+          <Property Name="Permanent_city" Type="varchar" MaxLength="50" />
+          <Property Name="Permanent_cityother" Type="varchar" MaxLength="150" />
+          <Property Name="Permanent_provience" Type="varchar" MaxLength="50" />
+          <Property Name="Permanent_provienceother" Type="varchar" MaxLength="150" />
+          <Property Name="Permanent_postal" Type="varchar" MaxLength="50" />
+          <Property Name="Postal_addres" Type="varchar" MaxLength="500" />
+          <Property Name="Postal_country" Type="varchar" MaxLength="50" />
+          <Property Name="Postal_city" Type="varchar" MaxLength="50" />
+          <Property Name="Postal_cityother" Type="varchar" MaxLength="150" />
+          <Property Name="Postal_provience" Type="varchar" MaxLength="50" />
+          <Property Name="Postal_provienceother" Type="varchar" MaxLength="150" />
+          <Property Name="Postal_postal" Type="varchar" MaxLength="50" />
+          <Property Name="chk" Type="varchar" MaxLength="50" />
+          <Property Name="Modeofstudy" Type="varchar" MaxLength="50" />
+          <Property Name="BoardofEducation" Type="varchar" MaxLength="100" />
+          <Property Name="Intendedprogram" Type="varchar" MaxLength="100" />
+          <Property Name="TestDate" Type="varchar" MaxLength="50" />
+          <Property Name="SubmissionDate" Type="datetime" />
+          <Property Name="Retake" Type="bit" Nullable="false" />
+          <Property Name="AppliedBefore" Type="varchar" MaxLength="10" />
+          <Property Name="AppliedBeforeMonth" Type="int" />
+          <Property Name="AppliedBeforeYear" Type="int" />
+          <Property Name="CurrentHighSchoolOther" Type="varchar" MaxLength="200" />
+          <Property Name="CurrentHighSchoolCode_old" Type="int" />
+          <Property Name="BoardofEducationOther" Type="varchar" MaxLength="100" />
+          <Property Name="CurrentHighSchoolCode" Type="varchar" MaxLength="20" />
+          <Property Name="HUTopsCandidate" Type="varchar" MaxLength="10" />
+          <Property Name="HuTopsId" Type="varchar" MaxLength="20" />
+          <Property Name="FatherMiddleName" Type="varchar" MaxLength="50" />
+          <Property Name="FatherLastName" Type="varchar" MaxLength="50" />
+          <Property Name="FatherName" Type="varchar" MaxLength="50" />
+          <Property Name="WhatsAppNumber" Type="varchar" MaxLength="50" />
+        </EntityType>
         <EntityType Name="Educational">
           <Key>
             <PropertyRef Name="Id" />
@@ -510,6 +591,7 @@
           <EntitySet Name="City" EntityType="Self.City" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Country" EntityType="Self.Country" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Documents" EntityType="Self.Documents" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EApp_PersonalInformation" EntityType="Self.EApp_PersonalInformation" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Educational" EntityType="Self.Educational" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EducationalSubjects" EntityType="Self.EducationalSubjects" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EmailTemplates" EntityType="Self.EmailTemplates" Schema="dbo" store:Type="Tables" />
@@ -1033,8 +1115,9 @@
             <Parameter Name="Password" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SP_UserShiftToEApplication">
-            <Parameter Name="Id" Mode="In" Type="Int32" />
+          <Parameter Name="Id" Mode="In" Type="Int32" />
           </FunctionImport>
+          <EntitySet Name="EApp_PersonalInformation" EntityType="HUTOPSModel.EApp_PersonalInformation" />
         </EntityContainer>
         <ComplexType Name="SP_GetStudentRecord_Result">
           <Property Type="Int32" Name="Id" Nullable="false" />
@@ -1301,6 +1384,87 @@
           <Property Type="Int32" Name="Response" Nullable="false" />
           <Property Type="String" Name="Reason" Nullable="false" MaxLength="25" />
         </ComplexType>
+        <EntityType Name="EApp_PersonalInformation">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Appid" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MiddleName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Gender" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="HusbandName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FatherFirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DateofBirth" Type="DateTime" Precision="3" />
+          <Property Name="CountryAdd" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PhoneNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Tellus" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="CurrentAddress" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="PostalAddress" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Country" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Provience" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Postal" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="AlterEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CPassword" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Savedate" Type="DateTime" Precision="3" />
+          <Property Name="Updatedate" Type="DateTime" Precision="3" />
+          <Property Name="AppStatus" Type="Int32" />
+          <Property Name="StudentStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TempID" Type="Int32" />
+          <Property Name="School" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SchoolName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="HereYou" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="HereOther" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="NewEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Discount" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DiscountFee" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Yourinterests" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="YourinterestsOther" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Currentqualification" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="AlternateMobile" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Alternatelandline" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Cityother" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="OtherCurrentqualification" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="Userid" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Permanent_addres" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Permanent_country" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Permanent_city" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Permanent_cityother" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Permanent_provience" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Permanent_provienceother" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Permanent_postal" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Postal_addres" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Postal_country" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Postal_city" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Postal_cityother" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Postal_provience" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Postal_provienceother" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Postal_postal" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="chk" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Modeofstudy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="BoardofEducation" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Intendedprogram" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="TestDate" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SubmissionDate" Type="DateTime" Precision="3" />
+          <Property Name="Retake" Type="Boolean" Nullable="false" />
+          <Property Name="AppliedBefore" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="AppliedBeforeMonth" Type="Int32" />
+          <Property Name="AppliedBeforeYear" Type="Int32" />
+          <Property Name="CurrentHighSchoolOther" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="CurrentHighSchoolCode_old" Type="Int32" />
+          <Property Name="BoardofEducationOther" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CurrentHighSchoolCode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="HUTopsCandidate" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="HuTopsId" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="FatherMiddleName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FatherLastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FatherName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="WhatsAppNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1874,6 +2038,88 @@
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SP_UserShiftToEApplication" FunctionName="HUTOPSModel.Store.SP_UserShiftToEApplication" />
+          <EntitySetMapping Name="EApp_PersonalInformation">
+            <EntityTypeMapping TypeName="HUTOPSModel.EApp_PersonalInformation">
+              <MappingFragment StoreEntitySet="EApp_PersonalInformation">
+                <ScalarProperty Name="WhatsAppNumber" ColumnName="WhatsAppNumber" />
+                <ScalarProperty Name="FatherName" ColumnName="FatherName" />
+                <ScalarProperty Name="FatherLastName" ColumnName="FatherLastName" />
+                <ScalarProperty Name="FatherMiddleName" ColumnName="FatherMiddleName" />
+                <ScalarProperty Name="HuTopsId" ColumnName="HuTopsId" />
+                <ScalarProperty Name="HUTopsCandidate" ColumnName="HUTopsCandidate" />
+                <ScalarProperty Name="CurrentHighSchoolCode" ColumnName="CurrentHighSchoolCode" />
+                <ScalarProperty Name="BoardofEducationOther" ColumnName="BoardofEducationOther" />
+                <ScalarProperty Name="CurrentHighSchoolCode_old" ColumnName="CurrentHighSchoolCode_old" />
+                <ScalarProperty Name="CurrentHighSchoolOther" ColumnName="CurrentHighSchoolOther" />
+                <ScalarProperty Name="AppliedBeforeYear" ColumnName="AppliedBeforeYear" />
+                <ScalarProperty Name="AppliedBeforeMonth" ColumnName="AppliedBeforeMonth" />
+                <ScalarProperty Name="AppliedBefore" ColumnName="AppliedBefore" />
+                <ScalarProperty Name="Retake" ColumnName="Retake" />
+                <ScalarProperty Name="SubmissionDate" ColumnName="SubmissionDate" />
+                <ScalarProperty Name="TestDate" ColumnName="TestDate" />
+                <ScalarProperty Name="Intendedprogram" ColumnName="Intendedprogram" />
+                <ScalarProperty Name="BoardofEducation" ColumnName="BoardofEducation" />
+                <ScalarProperty Name="Modeofstudy" ColumnName="Modeofstudy" />
+                <ScalarProperty Name="chk" ColumnName="chk" />
+                <ScalarProperty Name="Postal_postal" ColumnName="Postal_postal" />
+                <ScalarProperty Name="Postal_provienceother" ColumnName="Postal_provienceother" />
+                <ScalarProperty Name="Postal_provience" ColumnName="Postal_provience" />
+                <ScalarProperty Name="Postal_cityother" ColumnName="Postal_cityother" />
+                <ScalarProperty Name="Postal_city" ColumnName="Postal_city" />
+                <ScalarProperty Name="Postal_country" ColumnName="Postal_country" />
+                <ScalarProperty Name="Postal_addres" ColumnName="Postal_addres" />
+                <ScalarProperty Name="Permanent_postal" ColumnName="Permanent_postal" />
+                <ScalarProperty Name="Permanent_provienceother" ColumnName="Permanent_provienceother" />
+                <ScalarProperty Name="Permanent_provience" ColumnName="Permanent_provience" />
+                <ScalarProperty Name="Permanent_cityother" ColumnName="Permanent_cityother" />
+                <ScalarProperty Name="Permanent_city" ColumnName="Permanent_city" />
+                <ScalarProperty Name="Permanent_country" ColumnName="Permanent_country" />
+                <ScalarProperty Name="Permanent_addres" ColumnName="Permanent_addres" />
+                <ScalarProperty Name="Userid" ColumnName="Userid" />
+                <ScalarProperty Name="OtherCurrentqualification" ColumnName="OtherCurrentqualification" />
+                <ScalarProperty Name="Cityother" ColumnName="Cityother" />
+                <ScalarProperty Name="Alternatelandline" ColumnName="Alternatelandline" />
+                <ScalarProperty Name="AlternateMobile" ColumnName="AlternateMobile" />
+                <ScalarProperty Name="Currentqualification" ColumnName="Currentqualification" />
+                <ScalarProperty Name="YourinterestsOther" ColumnName="YourinterestsOther" />
+                <ScalarProperty Name="Yourinterests" ColumnName="Yourinterests" />
+                <ScalarProperty Name="DiscountFee" ColumnName="DiscountFee" />
+                <ScalarProperty Name="Discount" ColumnName="Discount" />
+                <ScalarProperty Name="NewEmail" ColumnName="NewEmail" />
+                <ScalarProperty Name="HereOther" ColumnName="HereOther" />
+                <ScalarProperty Name="HereYou" ColumnName="HereYou" />
+                <ScalarProperty Name="SchoolName" ColumnName="SchoolName" />
+                <ScalarProperty Name="School" ColumnName="School" />
+                <ScalarProperty Name="TempID" ColumnName="TempID" />
+                <ScalarProperty Name="StudentStatus" ColumnName="StudentStatus" />
+                <ScalarProperty Name="AppStatus" ColumnName="AppStatus" />
+                <ScalarProperty Name="Updatedate" ColumnName="Updatedate" />
+                <ScalarProperty Name="Savedate" ColumnName="Savedate" />
+                <ScalarProperty Name="CPassword" ColumnName="CPassword" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="AlterEmail" ColumnName="AlterEmail" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Postal" ColumnName="Postal" />
+                <ScalarProperty Name="Provience" ColumnName="Provience" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="PostalAddress" ColumnName="PostalAddress" />
+                <ScalarProperty Name="CurrentAddress" ColumnName="CurrentAddress" />
+                <ScalarProperty Name="Tellus" ColumnName="Tellus" />
+                <ScalarProperty Name="PhoneNo" ColumnName="PhoneNo" />
+                <ScalarProperty Name="CountryAdd" ColumnName="CountryAdd" />
+                <ScalarProperty Name="DateofBirth" ColumnName="DateofBirth" />
+                <ScalarProperty Name="FatherFirstName" ColumnName="FatherFirstName" />
+                <ScalarProperty Name="HusbandName" ColumnName="HusbandName" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="Appid" ColumnName="Appid" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
