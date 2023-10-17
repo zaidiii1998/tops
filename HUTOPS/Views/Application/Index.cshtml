@@ -256,8 +256,8 @@
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="form-group">
-                                            <label for="guardianCellPhone">Parents/Guardian Cell Phone Number:</label>
-                                            <input class="form-control number" type="tel" id="guardianCellPhone" value="@Model.PersonalInfo.GuardianCellPhoneNumber" name="GuardianCellPhoneNumber" maxlength="15" placeholder="1234567890">
+                                            <label for="guardianCellPhone">Parents/Guardian Cell Phone Number<span class="text-danger h-6" style="font-size: 1.1rem;">*</span>:</label>
+                                            <input class="form-control number" type="tel" id="guardianCellPhone" value="@Model.PersonalInfo.GuardianCellPhoneNumber" name="GuardianCellPhoneNumber" maxlength="15" placeholder="1234567890" required>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
@@ -1009,33 +1009,44 @@
                                     <div class="col-lg-12">
                                         <div class="labelInputCheckWraper">
                                             <input type="checkbox" id="validInfo" name="validInfo" required class="styled-checkbox">
-                                            <label for="validInfo" class="checkbox-label" >
+                                            <label for="validInfo" class="checkbox-label f-13">
                                                 The Information provided by me regarding this application is true and complete.<span class="text-danger h-6" style="font-size: 1.1rem;">*</span>
                                             </label>
                                         </div>
-
-
-                                        
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <div class="labelInputCheckWraper">
                                             <input type="checkbox" id="invalidInfo" name="invalidInfo" required class="styled-checkbox">
-                                            <label for="invalidInfo" class="checkbox-label">
+                                            <label for="invalidInfo" class="checkbox-label f-13">
                                                 I understand that any inaccurate/false information shall render this application invalid, and if admitted on the basis of such information, I may be asked to leave at any stage of the program.<span class="text-danger h-6" style="font-size: 1.1rem;">*</span>
-
                                             </label>
                                         </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="labelInputCheckWraper">
+                                            <input type="checkbox" id="validHUTOPS" name="validHUTOPS" required class="styled-checkbox">
+                                            <label for="validHUTOPS" class="checkbox-label f-13">
+                                                I understand that submitting
+                                                an HU TOPS application
+                                                simultaneously with a regular
+                                                admission application is not
+                                                allowed until the
+                                                announcement of HU TOPS
+                                                qualifying round results.<span class="text-danger h-6" style="font-size: 1.1rem;">*</span>
+                                            </label>
                                         </div>
                                     </div>
+                                </div>
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <div class="labelInputCheckWraper">
                                             <input type="checkbox" id="validateLaw" name="invalidInfo" required class="styled-checkbox">
-                                            <label for="validateLaw" class="checkbox-label">
+                                            <label for="validateLaw" class="checkbox-label f-13">
                                                 I understand that the provision of any inaccurate or false information may render me liable to prosecution in a court of law in Pakistan.<span class="text-danger h-6" style="font-size: 1.1rem;">*</span>
-
                                             </label>
                                         </div>
                                     </div>

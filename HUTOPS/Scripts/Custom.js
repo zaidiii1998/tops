@@ -176,7 +176,8 @@ function increaseProgressBarWidth() {
     var check1 = $('#validateLaw').is(':checked');
     var check2 = $('#invalidInfo').is(':checked');
     var check3 = $('#validInfo').is(':checked');
-    if (check1 == true && check2 == true && check3 == true) { percent = percent + 10 }
+    var check4 = $('#validHUTOPS').is(':checked');
+    if (check1 == true && check2 == true && check3 == true && check4 == true) { percent = percent + 10 }
 
     let containerWidth = document.getElementById('barContainer').clientWidth;  // get the container width
     let amount = Math.round(containerWidth * percent / 100);      // get amount of pixels the bars width needs to increase
@@ -642,7 +643,7 @@ function validatePersonalInfoForm() {
         var checked = $("input[name=IsAppliedBefore]:checked");
         if (checked.length == 0) {
             isValid = false;
-            $('#errAppliedBefore').html('field is required');
+            $('#errAppliedBefore').html('Field is required');
         } else {
             $('#errAppliedBefore').html('');
         }
@@ -1433,9 +1434,10 @@ function submitDeclaration() {
     var check1 = $('#validateLaw').is(':checked');
     var check2 = $('#invalidInfo').is(':checked');
     var check3 = $('#validInfo').is(':checked');
+    var check4 = $('#validHUTOPS').is(':checked');
         
     var isProgramValid = ValidateProgram($('#degreeProgram').val());
-    if (check1 == true && check2 == true && check3 == true && isValid == true && isProgramValid == true) {
+    if (check1 == true && check2 == true && check3 == true && check4 == true && isValid == true && isProgramValid == true) {
         increaseProgressBarWidth();
         const day = $('#dobDay').val();
         const month = $('#dobMonth').val();
@@ -1654,7 +1656,7 @@ function submitDeclaration() {
             var checked = $("input[name=IsAppliedBefore]:checked");
             if (checked.length == 0) {
                 isValidPersonalInfo = false;
-                $('#errAppliedBefore').html('field is required');
+                $('#errAppliedBefore').html('Field is required');
             } else {
                 $('#errAppliedBefore').html('');
             }
@@ -1773,6 +1775,8 @@ function submitDeclaration() {
         else { $('#invalidInfo').next('label').css('color', 'black'); }
         if (check3 == false) { $('#validInfo').next('label').css('color', 'red'); }
         else { $('#validInfo').next('label').css('color', 'black'); }
+        if (check4 == false) { $('#validHUTOPS').next('label').css('color', 'red'); }
+        else { $('#validHUTOPS').next('label').css('color', 'black'); }
 
         ShowDivError("Please accept all declarations");
     }
@@ -1857,11 +1861,11 @@ function LoadStudentDatatable() {
                 "data": "Result",
                 render: function (data) {
                     if (data == 1) {
-                        return "<i class='fa-regular fa-circle-exclamation f-20 text-danger'></i>";
+                        return "<i class='fa-regular fa-circle-exclamation f-20 text-danger' data-toggle='tooltip' data-placement='bottom' title='Fail'></i>";
                     } else if (data == 2) {
-                        return "<i class='fa-regular fa-circle-check f-20 text-success'></i>";
+                        return "<i class='fa-regular fa-circle-check f-20 text-success' data-toggle='tooltip' data-placement='bottom' title='Pass'></i>";
                     } else {
-                        return "<i class='fa-regular fa-clock f-20 text-warning'></i>";
+                        return "<i class='fa-regular fa-clock f-20 text-warning' data-toggle='tooltip' data-placement='bottom' title='Pending'></i>";
                     }
                 }
             },
@@ -1869,11 +1873,11 @@ function LoadStudentDatatable() {
                 "data": "IsRecordMoveToEApp",
                 render: function (data) {
                     if (data == 1) {
-                        return "<i class='fa-regular fa-circle-check f-20 text-success'></i>";
+                        return "<i class='fa-regular fa-circle-check f-20 text-success' data-toggle='tooltip' data-placement='bottom' title='Record Moved to E-App'></i>";
                     } else if (data == 0) {
-                        return "<i class='fa-regular fa-circle-exclamation f-20 text-danger'></i>";
+                        return "<i class='fa-regular fa-circle-exclamation f-20 text-danger' data-toggle='tooltip' data-placement='bottom' title='Failed to move record to E-App'></i>";
                     } else {
-                        return "<i class='fa-regular fa-clock f-20 text-warning'></i>";
+                        return "<i class='fa-regular fa-clock f-20 text-warning' data-toggle='tooltip' data-placement='bottom' title='Pending'></i>";
                     }
                 }
             },
@@ -1881,11 +1885,11 @@ function LoadStudentDatatable() {
                 "data": "IsAdmitCardGenerated",
                 render: function (data) {
                     if (data == 1) {
-                        return ('<i class="fa fa-circle-check text-success f-20">');
+                        return ('<i class="fa fa-circle-check text-success f-20" data-toggle="tooltip" data-placement="bottom" title="Admit card Generated"></i>');
                     } else if (data == 0) {
-                        return ('<i class="fa fa-circle-exclamation text-danger f-20">');
+                        return ('<i class="fa fa-circle-exclamation text-danger f-20" data-toggle="tooltip" data-placement="bottom" title="Failed to generate admit card"></i>');
                     } else {
-                        return "<i class='fa-regular fa-clock f-20 text-warning'></i>";
+                        return "<i class='fa-regular fa-clock f-20 text-warning' data-toggle='tooltip' data-placement='bottom' title='Pending'></i>";
                     }
                 }    
             },
@@ -1905,12 +1909,11 @@ function LoadStudentDatatable() {
                 "data": "IsAdmitCardSent",
                 render: function (data) {
                     if (data == 1) {
-
-                        return ('<i class="fa fa-circle-check text-success f-20"">');
+                        return ('<i class="fa fa-circle-check text-success f-20" data-toggle="tooltip" data-placement="bottom" title="Admit card sent"></i>');
                     } else if (data == 0) {
-                        return ('<i class="fa fa-circle-exclamation text-danger f-20">');
+                        return ('<i class="fa fa-circle-exclamation text-danger f-20" data-toggle="tooltip" data-placement="bottom" title="Admit card not sent"></i>');
                     } else {
-                        return "<i class='fa-regular fa-clock f-20 text-warning'></i>";
+                        return "<i class='fa-regular fa-clock f-20 text-warning' data-toggle='tooltip' data-placement='bottom' title='Pending'></i>";
                     }
                 }   
             },

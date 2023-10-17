@@ -243,10 +243,10 @@ namespace HUTOPS.Helper
             {
                 errors.Add("Guardian Cell Phone Number is Invalid");
             }
-            //if (string.IsNullOrEmpty(personalInfo.GuardianCellPhoneNumber))
-            //{
-            //    errors.Add("Phone Number is Required");
-            //}
+            if (string.IsNullOrEmpty(personalInfo.GuardianCellPhoneNumber))
+            {
+                errors.Add("Phone Number is Required");
+            }
             //if (string.IsNullOrEmpty(personalInfo.HomePhoneNumber))
             //{
             //    errors.Add("Home Phone Number is Required");
