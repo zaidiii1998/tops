@@ -1857,11 +1857,11 @@ function LoadStudentDatatable() {
                 "data": "Result",
                 render: function (data) {
                     if (data == 1) {
-                        return "<span class='badge badge-pill badge-danger'>FAILED</span>";
+                        return "<i class='fa-regular fa-circle-exclamation f-20 text-danger'></i>";
                     } else if (data == 2) {
-                        return "<span class='badge badge-pill badge-success'>Passed</span>";
+                        return "<i class='fa-regular fa-circle-check f-20 text-success'></i>";
                     } else {
-                        return "<span class='badge badge-pill badge-info'>Pending</span>";
+                        return "<i class='fa-regular fa-clock f-20 text-warning'></i>";
                     }
                 }
             },
@@ -1869,9 +1869,11 @@ function LoadStudentDatatable() {
                 "data": "IsRecordMoveToEApp",
                 render: function (data) {
                     if (data == 1) {
-                        return "<span class='badge badge-pill badge-success'>MOVED</span>";
+                        return "<i class='fa-regular fa-circle-check f-20 text-success'></i>";
+                    } else if (data == 0) {
+                        return "<i class='fa-regular fa-circle-exclamation f-20 text-danger'></i>";
                     } else {
-                        return "<span class='badge badge-pill badge-info'>Pending</span>";
+                        return "<i class='fa-regular fa-clock f-20 text-warning'></i>";
                     }
                 }
             },
@@ -1879,9 +1881,11 @@ function LoadStudentDatatable() {
                 "data": "IsAdmitCardGenerated",
                 render: function (data) {
                     if (data == 1) {
-                        return ('<i class="fa fa-check text-success f-20">');
+                        return ('<i class="fa fa-circle-check text-success f-20">');
+                    } else if (data == 0) {
+                        return ('<i class="fa fa-circle-exclamation text-danger f-20">');
                     } else {
-                        return ('<i class="fa fa-xmark text-danger f-20">');
+                        return "<i class='fa-regular fa-clock f-20 text-warning'></i>";
                     }
                 }    
             },
@@ -1902,9 +1906,11 @@ function LoadStudentDatatable() {
                 render: function (data) {
                     if (data == 1) {
 
-                        return ('<i class="fa fa-check text-success f-20"">');
+                        return ('<i class="fa fa-circle-check text-success f-20"">');
+                    } else if (data == 0) {
+                        return ('<i class="fa fa-circle-exclamation text-danger f-20">');
                     } else {
-                        return ('<i class="fa fa-xmark text-danger f-20">');
+                        return "<i class='fa-regular fa-clock f-20 text-warning'></i>";
                     }
                 }   
             },
@@ -1920,14 +1926,17 @@ function LoadStudentDatatable() {
                 }
             },
             {
-                "data": "Id",
-                //"defaultContent": "<button data-v-aa799a9e='' id='btnEdit' type='button' class='btn btn-icon savebtn global-btn-purple'><i class='fa fa-edit'></i></button> "
-                //"defaultContent": "<div style='min-width: 150px;'><button id='btnEdit' type='button'><i class='fa fa-edit' style='font-size: 30px; color:#5d2468;'></i></button> <button id='btnAdmitCard' type='button'><i class='fa-solid fa-file-pdf' style='font-size: 30px;color:#5d2468;'></i></button> <button id='btnSend' type='button'><i class='fa-regular fa-paper-plane' style='font-size: 30px;color:#5d2468;'></i></button></div>"
-                //render: function (data) {
-                //    return "<li class='actionDropWrap' onclick='ToggleShow($(this))'><div class= 'nameWrapper'><i class='fa-solid fa-list-ul'></i></div ><ul class='logoutDrop'><li class='global-btn-purple w-100' id='btnEdit'>Edit</li><li class='global-btn-purple w-100' onclick='ShowAdmitCardModal(" + data + ")'>Generate Admit Card</li><li onclick='sendAdmitCard(" + data + ")' class='global-btn-purple w-100'>Send Admit Card</li></ul></li > "
-                //}
+                "data": null,
                 render: function (data) {
-                    return "<li class='actionDropWrap' id='" + data + "' onclick='ToggleShow(this.id)'><div class= 'nameWrapper'><i class='fa-solid fa-list-check f-28'></i></div ><ul class='actionDrop'><li class='global-btn-purple w-100' id='btnEdit'><a>Edit</a></li><li class='global-btn-purple w-100' onclick='ShowAdmitCardModal(" + data + ")'><a>Generate Admit Card</a></li><li onclick='sendAdmitCard(" + data + ")' class='global-btn-purple w-100'><a>Send Admit Card</a></li><li onclick='moveRecordToEApp(" + data + ")' class='global-btn-purple w-100'><a>Move Record To E-App</a></li></ul></li > "
+                    if (data.IsAdmitCardGenerated == 1 && data.Result == 2) {
+                        return "<li class='actionDropWrap' id='" + data.Id + "' onclick='ToggleShow(this.id)'><div class= 'nameWrapper'><i class='fa-solid fa-list-check f-28'></i></div ><ul class='actionDrop'><li class='global-btn-purple w-100' id='btnEdit'><a>Edit</a></li><li class='global-btn-purple w-100' onclick='ShowAdmitCardModal(" + data.Id + ")'><a>Generate Admit Card</a></li><li onclick='sendAdmitCard(" + data.Id + ")' class='global-btn-purple w-100'><a>Send Admit Card</a></li><li onclick='moveRecordToEApp(" + data.Id + ")' class='global-btn-purple w-100'><a>Move Record To E-App</a></li></ul></li > "
+                    } else if (data.IsAdmitCardGenerated == 1 && (data.Result == 1 || data.Result == null)) {
+                        return "<li class='actionDropWrap' id='" + data.Id + "' onclick='ToggleShow(this.id)'><div class= 'nameWrapper'><i class='fa-solid fa-list-check f-28'></i></div ><ul class='actionDrop'><li class='global-btn-purple w-100' id='btnEdit'><a>Edit</a></li><li class='global-btn-purple w-100' onclick='ShowAdmitCardModal(" + data.Id + ")'><a>Generate Admit Card</a></li><li onclick='sendAdmitCard(" + data.Id + ")' class='global-btn-purple w-100'><a>Send Admit Card</a></li></ul></li > "
+                    } else if ((data.IsAdmitCardGenerated == 0 || data.IsAdmitCardGenerated == null)  && data.Result == 2) {
+                        return "<li class='actionDropWrap' id='" + data.Id + "' onclick='ToggleShow(this.id)'><div class= 'nameWrapper'><i class='fa-solid fa-list-check f-28'></i></div ><ul class='actionDrop'><li class='global-btn-purple w-100' id='btnEdit'><a>Edit</a></li><li class='global-btn-purple w-100' onclick='ShowAdmitCardModal(" + data.Id + ")'><a>Generate Admit Card</a></li><li onclick='moveRecordToEApp(" + data.Id + ")' class='global-btn-purple w-100'><a>Move Record To E-App</a></li></ul></li > "
+                    } else {
+                        return "<li class='actionDropWrap' id='" + data.Id + "' onclick='ToggleShow(this.id)'><div class= 'nameWrapper'><i class='fa-solid fa-list-check f-28'></i></div ><ul class='actionDrop'><li class='global-btn-purple w-100' id='btnEdit'><a>Edit</a></li><li class='global-btn-purple w-100' onclick='ShowAdmitCardModal(" + data.Id + ")'><a>Generate Admit Card</a></li></ul></li >"
+                    }
                 }
             }
         ],

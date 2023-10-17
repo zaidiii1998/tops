@@ -97,9 +97,25 @@ namespace HUTOPSBatchProcessConsoleApp.Codebase
                             
                             record.Status = "Admit Card Genrated Successfully";
                         }
+                        else
+                        {
+                            using (HUTOPSEntities tempDB = new HUTOPSEntities())
+                            {
+                                var personalInfo = tempDB.PersonalInformations.ToList().Where(x => x.Id == personalInformation.Id).FirstOrDefault();
+                                personalInfo.IsAdmitCardGenerated = 0;
+                                tempDB.SaveChanges();
+                            }
+                            Helper.AddLog(Constants.LogType.ActivityLog, $"Admit Card genration failed against HUTOPSId : {record.HUTOPSIds}");
+                        }
                     }
                     catch (Exception ex)
                     {
+                        using (HUTOPSEntities tempDB = new HUTOPSEntities())
+                        {
+                            var personalInfo = tempDB.PersonalInformations.ToList().Where(x => x.HUTopId == record.HUTOPSIds).FirstOrDefault();
+                            personalInfo.IsAdmitCardGenerated = 0;
+                            tempDB.SaveChanges();
+                        }
                         Helper.AddLog(Constants.LogType.Exception, $"Error Occured while processing Batch Record against HUTOPSId : {record.HUTOPSIds} Error Details: {ex.Message}");
                         record.Status = "Failed" + ex.Message;
                     }
@@ -169,11 +185,33 @@ namespace HUTOPSBatchProcessConsoleApp.Codebase
                                 Helper.AddLog(Constants.LogType.ActivityLog, $"Admit Card not found against HUTOPSId : {record.HUTOPSIds}");
 
                                 record.Status = "Admit Card not Exist";
+                                using (HUTOPSEntities tempDB = new HUTOPSEntities())
+                                {
+                                    var personalInfo = tempDB.PersonalInformations.ToList().Where(x => x.Id == personalInformation.Id).FirstOrDefault();
+                                    personalInfo.IsAdmitCardSent = 0;
+                                    tempDB.SaveChanges();
+                                }
                             }
+                        }
+                        else
+                        {
+                            using (HUTOPSEntities tempDB = new HUTOPSEntities())
+                            {
+                                var personalInfo = tempDB.PersonalInformations.ToList().Where(x => x.Id == personalInformation.Id).FirstOrDefault();
+                                personalInfo.IsAdmitCardSent = 0;
+                                tempDB.SaveChanges();
+                            }
+                            Helper.AddLog(Constants.LogType.ActivityLog, $"Admit Card sending failed against HUTOPSId : {record.HUTOPSIds}");
                         }
                     }
                     catch (Exception ex)
                     {
+                        using (HUTOPSEntities tempDB = new HUTOPSEntities())
+                        {
+                            var personalInfo = tempDB.PersonalInformations.ToList().Where(x => x.HUTopId == record.HUTOPSIds).FirstOrDefault();
+                            personalInfo.IsAdmitCardSent = 0;
+                            tempDB.SaveChanges();
+                        }
                         Helper.AddLog(Constants.LogType.Exception, $"Error Occured while processing Batch Record against HUTOPSId : {record.HUTOPSIds} Error Details: {ex.Message}");
                         record.Status = "Failed" + ex.Message;
                     }
@@ -286,11 +324,40 @@ namespace HUTOPSBatchProcessConsoleApp.Codebase
 
                             record.Status = "Admit Card Genrated and Email Sent";
                         }
+                        else
+                        {
+                            Helper.AddLog(Constants.LogType.ActivityLog, $"Admit card generation failed against HUTOPSId : {record.HUTOPSIds}");
+
+                            using (HUTOPSEntities tempDB = new HUTOPSEntities())
+                            {
+                                var personalInfo = tempDB.PersonalInformations.ToList().Where(x => x.Id == personalInformation.Id).FirstOrDefault();
+                                personalInfo.IsAdmitCardGenerated = 0;
+                                tempDB.SaveChanges();
+                            }
+                            using (HUTOPSEntities tempDB = new HUTOPSEntities())
+                            {
+                                var personalInfo = tempDB.PersonalInformations.ToList().Where(x => x.Id == personalInformation.Id).FirstOrDefault();
+                                personalInfo.IsAdmitCardSent = 0;
+                                tempDB.SaveChanges();
+                            }
+                        }
                     }
                     catch (Exception ex)
                     {
                         Helper.AddLog(Constants.LogType.Exception, $"Error Occured while processing Batch Record against HUTOPSId : {record.HUTOPSIds} Error Details: {ex.Message}");
                         record.Status = "Failed" + ex.Message;
+                        using (HUTOPSEntities tempDB = new HUTOPSEntities())
+                        {
+                            var personalInfo = tempDB.PersonalInformations.ToList().Where(x => x.HUTopId == record.HUTOPSIds).FirstOrDefault();
+                            personalInfo.IsAdmitCardGenerated = 0;
+                            tempDB.SaveChanges();
+                        }
+                        using (HUTOPSEntities tempDB = new HUTOPSEntities())
+                        {
+                            var personalInfo = tempDB.PersonalInformations.ToList().Where(x => x.HUTopId == record.HUTOPSIds).FirstOrDefault();
+                            personalInfo.IsAdmitCardSent = 0;
+                            tempDB.SaveChanges();
+                        }
                     }
 
                 }
@@ -600,12 +667,16 @@ namespace HUTOPSBatchProcessConsoleApp.Codebase
                                     }
                                     else
                                     {
+                                        personalInformation.IsRecordMoveToEApp = 0;
+                                        DB.SaveChanges();
                                         record.Status = "Record Mark as Failed";
                                         Helper.AddLog(Constants.LogType.ActivityLog, $"Personal Information Record already move to E-Application against HUTOPS Id: {record.HUTOPSIds}");
                                     }
                                 }
                                 else
                                 {
+                                    personalInformation.IsRecordMoveToEApp = 1;
+                                    DB.SaveChanges();
                                     record.Status = "Educational Information is not found";
                                     Helper.AddLog(Constants.LogType.ActivityLog, $"Educational Information not found against HUTOPS Id: {record.HUTOPSIds}");
                                 }
@@ -627,6 +698,12 @@ namespace HUTOPSBatchProcessConsoleApp.Codebase
                     }
                     catch (Exception ex)
                     {
+                        using (HUTOPSEntities DB = new HUTOPSEntities())
+                        {
+                            var personalInformation = DB.PersonalInformations.Where(x => x.HUTopId == record.HUTOPSIds).FirstOrDefault();
+                            personalInformation.IsRecordMoveToEApp = 1;
+                            DB.SaveChanges();
+                        }
                         Helper.AddLog(Constants.LogType.Exception, $"Error Occured while processing Batch Record against HUTOPSId : {record.HUTOPSIds} Error Details: {ex.Message}");
                         record.Status = "Failed" + ex.Message;
                     }
