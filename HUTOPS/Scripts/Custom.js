@@ -8,8 +8,6 @@
         $(this).closest(".row").remove();
     });
 
-    document.getElementById("searchForm").addEventListener("submit", submitSearchForm);
-
     tinymce.init({
         selector: '.tinyMceTxt',
         plugins: "preview powerpaste casechange searchreplace autolink autosave save directionality advcode visualblocks visualchars fullscreen image link media mediaembed template codesample advtable table charmap pagebreak nonbreaking anchor advlist lists checklist wordcount tinymcespellchecker a11ychecker help formatpainter permanentpen pageembed linkchecker emoticons export",

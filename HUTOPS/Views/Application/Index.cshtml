@@ -588,7 +588,7 @@
                                             <label for="boardOfEducation">Board Of Education<span class="text-danger h-6" style="font-size: 1.1rem;">*</span>:</label>
                                             <select class="form-control" id="boardOfEducation" name="boardOfEducation" onchange="GetGroupListFromObj(this.value);" required>
                                                 <option value="" selected disabled>Select Board</option>
-                                                @if ("Board Of Intermediate" == Model.Education.HSSCBoardName)
+                                                @if ("IB" == Model.Education.HSSCBoardName)
                                                 {
                                                     <option value="IB" selected>Board Of Intermediate</option>
                                                 }
@@ -596,7 +596,7 @@
                                                 {
                                                     <option value="IB">Board Of Intermediate</option>
                                                 }
-                                                @if ("Federal Board" == Model.Education.HSSCBoardName)
+                                                @if ("FB" == Model.Education.HSSCBoardName)
                                                 {
                                                     <option value="FB" selected>Federal Board</option>
                                                 }
@@ -604,7 +604,7 @@
                                                 {
                                                     <option value="FB">Federal Board</option>
                                                 }
-                                                @if ("Aga Khan University Examination Board" == Model.Education.HSSCBoardName)
+                                                @if ("AKUB" == Model.Education.HSSCBoardName)
                                                 {
                                                     <option value="AKUB" selected>Aga Khan University Examination Board</option>
                                                 }

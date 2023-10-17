@@ -431,8 +431,9 @@ namespace HUTOPS.Controllers
 
                             string EmailBody = EmailTemplate.Body;
 
-                            EmailBody = EmailBody.Replace("{{Photo}}", applicationModel.Document.Photograph);
 
+                            var photo = DB.Documents.Where(x => x.UserId == applicationModel.PersonalInfo.Id).FirstOrDefault().Photograph;
+                            EmailBody = EmailBody.Replace("{{Photo}}", photo);
 
                             EmailBody = EmailBody.Replace("{{HUTopId}}", applicationModel.PersonalInfo.HUTopId);
                             EmailBody = EmailBody.Replace("{{FirstName}}", applicationModel.PersonalInfo.FirstName);

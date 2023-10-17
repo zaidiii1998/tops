@@ -305,6 +305,12 @@ namespace HUTOPS.Controllers
                     else
                     {
                         Utility.AddLog(Constants.LogType.ActivityLog, $"Applicant record not found for Admit Card");
+                        using (HUTOPSEntities tempDB = new HUTOPSEntities())
+                        {
+                            var personalInfo = tempDB.PersonalInformations.ToList().Where(x => x.Id == personalInformation.Id).FirstOrDefault();
+                            personalInfo.IsAdmitCardGenerated = 0;
+                            tempDB.SaveChanges();
+                        }
                         return Json(new { status = false, message = "Record not found" });
                     }
                     if (Educational.Id != 0)
@@ -315,6 +321,12 @@ namespace HUTOPS.Controllers
                     else
                     {
                         Utility.AddLog(Constants.LogType.ActivityLog, $"Educational Information not found against personal Information: {JsonConvert.SerializeObject(personalInformation)}");
+                        using (HUTOPSEntities tempDB = new HUTOPSEntities())
+                        {
+                            var personalInfo = tempDB.PersonalInformations.ToList().Where(x => x.Id == personalInformation.Id).FirstOrDefault();
+                            personalInfo.IsAdmitCardGenerated = 0;
+                            tempDB.SaveChanges();
+                        }
                         return Json(new { status = false, message = "Educational Information not Found" });
                     }
                     if (document.Id != 0)
@@ -325,6 +337,12 @@ namespace HUTOPS.Controllers
                     else
                     {
                         Utility.AddLog(Constants.LogType.ActivityLog, $"Document record not found against personal Information: {JsonConvert.SerializeObject(personalInformation)}");
+                        using (HUTOPSEntities tempDB = new HUTOPSEntities())
+                        {
+                            var personalInfo = tempDB.PersonalInformations.ToList().Where(x => x.Id == personalInformation.Id).FirstOrDefault();
+                            personalInfo.IsAdmitCardGenerated = 0;
+                            tempDB.SaveChanges();
+                        }
                         return Json(new { status = false, message = $"Documents not found against this HUTOPS Id {personalInformation.HUTopId}" });
                     }
 
@@ -372,6 +390,12 @@ namespace HUTOPS.Controllers
             }
             catch (Exception)
             {
+                using (HUTOPSEntities tempDB = new HUTOPSEntities())
+                {
+                    var personalInfo = tempDB.PersonalInformations.ToList().Where(x => x.Id == model.Id).FirstOrDefault();
+                    personalInfo.IsAdmitCardGenerated = 0;
+                    tempDB.SaveChanges();
+                }
                 return Json(new { status = false, message = $"An Error Occur while generating Admit Card" });
             }
         }
@@ -419,12 +443,24 @@ namespace HUTOPS.Controllers
                 else
                 {
                     Utility.AddLog(Constants.LogType.ActivityLog, $"Admit Card not found against HUTOPSId : {personalInformation.HUTopId}");
+                    using (HUTOPSEntities tempDB = new HUTOPSEntities())
+                    {
+                        var personalInfo = tempDB.PersonalInformations.ToList().Where(x => x.Id == personalInformation.Id).FirstOrDefault();
+                        personalInfo.IsAdmitCardSent = 0;
+                        tempDB.SaveChanges();
+                    }
 
                     return Json(new { status = false, message = "Admit Card not found" });
                 }
             }
             catch (Exception ex)
             {
+                using (HUTOPSEntities tempDB = new HUTOPSEntities())
+                {
+                    var personalInfo = tempDB.PersonalInformations.ToList().Where(x => x.Id == Id).FirstOrDefault();
+                    personalInfo.IsAdmitCardSent = 0;
+                    tempDB.SaveChanges();
+                }
                 Utility.AddLog(Constants.LogType.Exception, $"Error Occured while sending Admit Card Error Details: {ex.Message}");
                 return Json(new { status = false, message = "Admit Card not found" });
             }

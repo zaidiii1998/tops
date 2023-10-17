@@ -184,6 +184,7 @@
     <Compile Include="City.cs">
       <DependentUpon>HUTOPS.tt</DependentUpon>
     </Compile>
+    <Compile Include="Codebase\RecordsProcessing.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdmitCardController.cs" />
     <Compile Include="Controllers\ApplicationController.cs" />
@@ -197,6 +198,24 @@
     </Compile>
     <Compile Include="Document.cs">
       <DependentUpon>HUTOPS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EAppDBModel\EAppDB.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EAppDB.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EAppDBModel\EAppDB.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EAppDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EAppDBModel\EAppDB.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EAppDB.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="EAppDBModel\PersonalInformation.cs">
+      <DependentUpon>EAppDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Educational.cs">
       <DependentUpon>HUTOPS.tt</DependentUpon>
@@ -417,6 +436,16 @@
     <Content Include="Content\plugin\summernote\summernote-bs4.min.js" />
     <Content Include="Content\plugin\sweetalert\sweetalert.min.js" />
     <Content Include="Content\plugin\webfont\webfont.min.js" />
+    <Content Include="EAppDBModel\EAppDB.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>EAppDB.edmx</DependentUpon>
+      <LastGenOutput>EAppDB.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="EAppDBModel\EAppDB.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>EAppDB.edmx</DependentUpon>
+      <LastGenOutput>EAppDB.cs</LastGenOutput>
+    </Content>
     <Content Include="HUTOPS.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>HUTOPS.edmx</DependentUpon>
@@ -477,6 +506,13 @@
       <DependentUpon>HUTOPS.edmx</DependentUpon>
     </Content>
     <Content Include="Content\HUTOPS Ids Demo File.xlsx" />
+    <EntityDeploy Include="EAppDBModel\EAppDB.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>EAppDB.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="EAppDBModel\EAppDB.edmx.diagram">
+      <DependentUpon>EAppDB.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\esm\popper-utils.js" />
     <Content Include="Scripts\esm\popper-utils.min.js" />
