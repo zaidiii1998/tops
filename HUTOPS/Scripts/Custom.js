@@ -7,6 +7,9 @@
     $('.trashActivity').click(function () {
         $(this).closest(".row").remove();
     });
+
+    document.getElementById("searchForm").addEventListener("submit", submitSearchForm);
+
     tinymce.init({
         selector: '.tinyMceTxt',
         plugins: "preview powerpaste casechange searchreplace autolink autosave save directionality advcode visualblocks visualchars fullscreen image link media mediaembed template codesample advtable table charmap pagebreak nonbreaking anchor advlist lists checklist wordcount tinymcespellchecker a11ychecker help formatpainter permanentpen pageembed linkchecker emoticons export",
@@ -1876,10 +1879,9 @@ function LoadStudentDatatable() {
                 "data": "IsAdmitCardGenerated",
                 render: function (data) {
                     if (data == 1) {
-
-                        return ('<i class="fa fa-check text-success" style="font-size: 35px;">');
+                        return ('<i class="fa fa-check text-success f-20">');
                     } else {
-                        return ('<i class="fa fa-xmark text-danger" style="font-size: 35px;">');
+                        return ('<i class="fa fa-xmark text-danger f-20">');
                     }
                 }    
             },
@@ -1900,9 +1902,9 @@ function LoadStudentDatatable() {
                 render: function (data) {
                     if (data == 1) {
 
-                        return ('<i class="fa fa-check text-success" style="font-size: 35px;">');
+                        return ('<i class="fa fa-check text-success f-20"">');
                     } else {
-                        return ('<i class="fa fa-xmark text-danger" style="font-size: 35px;">');
+                        return ('<i class="fa fa-xmark text-danger f-20">');
                     }
                 }   
             },
@@ -1925,7 +1927,7 @@ function LoadStudentDatatable() {
                 //    return "<li class='actionDropWrap' onclick='ToggleShow($(this))'><div class= 'nameWrapper'><i class='fa-solid fa-list-ul'></i></div ><ul class='logoutDrop'><li class='global-btn-purple w-100' id='btnEdit'>Edit</li><li class='global-btn-purple w-100' onclick='ShowAdmitCardModal(" + data + ")'>Generate Admit Card</li><li onclick='sendAdmitCard(" + data + ")' class='global-btn-purple w-100'>Send Admit Card</li></ul></li > "
                 //}
                 render: function (data) {
-                    return "<li class='actionDropWrap' id='" + data + "' onclick='ToggleShow(this.id)'><div class= 'nameWrapper'><i class='fa-solid fa-list-ul'></i></div ><ul class='actionDrop'><li class='global-btn-purple w-100' id='btnEdit'><a>Edit</a></li><li class='global-btn-purple w-100' onclick='ShowAdmitCardModal(" + data + ")'><a>Generate Admit Card</a></li><li onclick='sendAdmitCard(" + data + ")' class='global-btn-purple w-100'><a>Send Admit Card</a></li><li onclick='moveRecordToEApp(" + data + ")' class='global-btn-purple w-100'><a>Move Record To E-App</a></li></ul></li > "
+                    return "<li class='actionDropWrap' id='" + data + "' onclick='ToggleShow(this.id)'><div class= 'nameWrapper'><i class='fa-solid fa-list-check f-28'></i></div ><ul class='actionDrop'><li class='global-btn-purple w-100' id='btnEdit'><a>Edit</a></li><li class='global-btn-purple w-100' onclick='ShowAdmitCardModal(" + data + ")'><a>Generate Admit Card</a></li><li onclick='sendAdmitCard(" + data + ")' class='global-btn-purple w-100'><a>Send Admit Card</a></li><li onclick='moveRecordToEApp(" + data + ")' class='global-btn-purple w-100'><a>Move Record To E-App</a></li></ul></li > "
                 }
             }
         ],
@@ -2118,6 +2120,10 @@ function moveRecordToEApp(applicantId) {
             ShowDivError(response.message);
         }
     }
+}
+
+function submitSearchForm(event) {
+    event.preventDefault(); // Prevent the form from submitting in the default way
 }
 
 
