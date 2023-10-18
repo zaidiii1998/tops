@@ -133,5 +133,13 @@ namespace HUTOPS.Controllers
                 return Json(new { status = false, message = "Error Occur while processing you request " + ex.Message});
             }
         }
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                DB.Dispose();
+            }
+            base.Dispose(disposing);
+        }
     }
 }

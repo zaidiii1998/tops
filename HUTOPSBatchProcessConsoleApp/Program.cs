@@ -47,24 +47,24 @@ namespace HUTOPSBatchProcessConsoleApp
                     var Result = new List<ExcelData>(); ;
                     if (records.Count > 0)
                     {
-                        switch (batch.Type)
+                        switch ((BatchType)batch.Type)
                         {
-                            case 1: // Generate Admit Card
+                            case BatchType.GenerateAdmitCard:// Convert the byte value to the State enum        State currentState = (State)stateValue;: // Generate Admit Card
                                 Result = BatchProcessing.GenerateAdmitCard(records, batch.Shift, batch.Venue, batch.TestDate.Value.ToString("dd-MM-yyyy"));
                                 break;
 
-                            case 2: // SendAdmitCard
+                            case BatchType.SendAdmitCard: // SendAdmitCard
                                 Result = BatchProcessing.SendAdmitCard(records);
                                 break;
 
-                            case 3: // GenerateAndSendAdmitCard
+                            case BatchType.GenerateAndSendAdmitCard: // GenerateAndSendAdmitCard
                                 Result  = BatchProcessing.GenerateSendAdmitCard(records, batch.Shift, batch.Venue, batch.TestDate.Value.ToString("dd-MM-yyyy"));
                             break;
 
-                            case 4: // Result
+                            case BatchType.Result: // Result
                                 Result = BatchProcessing.UpdateResult(records, batch.Result, batch.IsRecordSendToEApp);
                                 break;
-                            case 5: //MoveRecordToEApp
+                            case BatchType.MoveRecordToEApp: //MoveRecordToEApp
                                 Result = BatchProcessing.ShiftRecordToEApp(records);
                                 break;
 

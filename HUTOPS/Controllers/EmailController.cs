@@ -51,5 +51,13 @@ namespace HUTOPS.Controllers
                 return Json(new { status = false, message = "Error occured while saving Email Template" });
             }
         }
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                DB.Dispose();
+            }
+            base.Dispose(disposing);
+        }
     }
 }

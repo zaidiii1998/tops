@@ -700,9 +700,10 @@
                                     <div class="col-lg-4">
                                         <div class="form-group">
                                             <label for="completionYear">Completion Year<span class="text-danger h-6" style="font-size: 1.1rem;">*</span>:</label>
-                                            <select class="form-control" id="completionYear" name="completionYear" required>
+                                            <select class="form-control" id="completionYear" name="completionYear" onchange="validateStartAndCompletionDate();" required>
                                                 <!-- Options for years, you can generate these dynamically with JavaScript -->
                                             </select>
+                                            <span class="text-danger" id="errorCompletionDate"></span>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">

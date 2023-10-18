@@ -378,7 +378,7 @@ namespace HUTOPS.Helper
             }
             if (Photo != null)
             {
-                if (Path.GetExtension(Photo.FileName) != ".pdf" && !IsImageFile(Path.GetExtension(Photo.FileName)))
+                if (!IsImageFile(Path.GetExtension(Photo.FileName)))
                 {
                     errors.Add("Photograph File is not Valid");
                 }

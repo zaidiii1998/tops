@@ -538,5 +538,13 @@ namespace HUTOPS.Controllers
                 return Json(new { status = false, message = "Error Occured while Moving Record To E-Application" + ex.Message });
             }
         }
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                DB.Dispose();
+            }
+            base.Dispose(disposing);
+        }
     }
 }

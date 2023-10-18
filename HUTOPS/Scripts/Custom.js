@@ -64,6 +64,18 @@ $("#expandSideBarBtn").click(function () {
 
 
 
+function validateStartAndCompletionDate() {
+
+    if (parseInt($('#startingYear').val()) > parseInt($('#completionYear').val())) {
+        $('#errorCompletionDate').html('Completion Year must be greater then Starting Year');
+        $('#completionYear').focus();
+        return false;
+    } else {
+        $('#errorCompletionDate').html('');
+        return true;
+    }
+}
+
 function increaseProgressBarWidth() {
     var percent = 0;
     if ($('#permanentDifferent').is(':checked') == true) {
@@ -1208,6 +1220,7 @@ function SubmitEducation() {
         $('#errHUSchool').html("");
     }
 
+
     //if ($('#currentLevel').val() == 'Already enrolled in a University' && $('#universityName').val() == '') {
     //    isValid = false;
     //    $('#errUniversityName').html('University Name is required');
@@ -1216,7 +1229,7 @@ function SubmitEducation() {
     //    $('#errUniversityName').html('');
     //}
 
-    if (isValid && ValidateProgram($('#degreeProgram').val()))
+    if (isValid && ValidateProgram($('#degreeProgram').val()) && validateStartAndCompletionDate())
         {
         increaseProgressBarWidth();
         $('#btnDocument').prop('disabled', false);
@@ -1441,7 +1454,7 @@ function submitDeclaration() {
     var check4 = $('#validHUTOPS').is(':checked');
         
     var isProgramValid = ValidateProgram($('#degreeProgram').val());
-    if (check1 == true && check2 == true && check3 == true && check4 == true && isValid == true && isProgramValid == true) {
+    if (check1 == true && check2 == true && check3 == true && check4 == true && isValid == true && isProgramValid == true && validateStartAndCompletionDate()) {
         increaseProgressBarWidth();
         const day = $('#dobDay').val();
         const month = $('#dobMonth').val();
@@ -1732,6 +1745,9 @@ function submitDeclaration() {
 
         var isProgramValid = ValidateProgram($('#degreeProgram').val());
         if (isProgramValid == false){
+            isValidEducation = false;
+        }
+        if (!validateStartAndCompletionDate()) {
             isValidEducation = false;
         }
 

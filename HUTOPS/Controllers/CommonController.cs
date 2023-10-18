@@ -126,5 +126,13 @@ namespace HUTOPS.Controllers
             var result = DB.Cities.ToList().FindAll(x => x.StateId == (ProvinceId == "" ? 0 : int.Parse(ProvinceId)));
             return Json(result);
         }
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                DB.Dispose();
+            }
+            base.Dispose(disposing);
+        }
     }
 }

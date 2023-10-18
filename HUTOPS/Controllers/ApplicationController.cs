@@ -565,5 +565,14 @@ namespace HUTOPS.Controllers
             }
             
         }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                DB.Dispose();
+            }
+            base.Dispose(disposing);
+        }
     }
 }
