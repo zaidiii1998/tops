@@ -49,22 +49,22 @@ namespace HUTOPSBatchProcessConsoleApp
                     {
                         switch (batch.Type)
                         {
-                            case 1:
+                            case 1: // Generate Admit Card
                                 Result = BatchProcessing.GenerateAdmitCard(records, batch.Shift, batch.Venue, batch.TestDate.Value.ToString("dd-MM-yyyy"));
                                 break;
 
-                            case 2:
+                            case 2: // SendAdmitCard
                                 Result = BatchProcessing.SendAdmitCard(records);
                                 break;
 
-                            case 3:
-                               Result  = BatchProcessing.GenerateSendAdmitCard(records, batch.Shift, batch.Venue, batch.TestDate.Value.ToString("dd-MM-yyyy"));
+                            case 3: // GenerateAndSendAdmitCard
+                                Result  = BatchProcessing.GenerateSendAdmitCard(records, batch.Shift, batch.Venue, batch.TestDate.Value.ToString("dd-MM-yyyy"));
                             break;
 
-                            case 4:
+                            case 4: // Result
                                 Result = BatchProcessing.UpdateResult(records, batch.Result, batch.IsRecordSendToEApp);
                                 break;
-                            case 5:
+                            case 5: //MoveRecordToEApp
                                 Result = BatchProcessing.ShiftRecordToEApp(records);
                                 break;
 

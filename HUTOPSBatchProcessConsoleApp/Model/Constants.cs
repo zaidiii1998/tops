@@ -1,5 +1,13 @@
 ﻿namespace HUTOPSBatchProcessConsoleApp.Model
 {
+    enum BatchType
+    {
+        GenerateAdmitCard = 1,
+        SendAdmitCard = 2,
+        GenerateAndSendAdmitCard = 3,
+        Result = 4,
+        MoveRecordToEApp = 5
+    }
     public class Constants
     {
         public class LogType

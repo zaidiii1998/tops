@@ -734,7 +734,7 @@ function LoadYear(selectId) {
             option.text = j;
             comboYear.appendChild(option);
         }
-    } else if (selectId = 'dobYear') {
+    } else if (selectId == 'dobYear') {
         for (var j = 2010; j > 1950; j--) {
             var option = document.createElement("option");
             option.value = j;
