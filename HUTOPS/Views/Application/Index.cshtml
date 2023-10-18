@@ -54,7 +54,7 @@
                                     <div class="col-lg-4">
                                         <div class="form-group">
                                             <label for="lastName">Last Name<span class="text-danger h-6" style="font-size: 1.1rem;">*</span>:</label>
-                                            <input class="form-control" type="text" id="lastName" name="LastName" maxlength="25" value="@Model.PersonalInfo.LastName" oninput="validateText(this); validateName(this.id,'errLastName')" required>
+                                            <input class="form-control" type="text" id="lastName" name="LastName" maxlength="25" value="@Model.PersonalInfo.LastName" oninput="validateText(this);" required>
                                             <span class="text-danger" id="errLastName"></span>
                                         </div>
                                     </div>
@@ -70,7 +70,7 @@
                                     <div class="col-lg-4">
                                         <div class="form-group">
                                             <label for="fatherMiddleName">Father's Middle Name:</label>
-                                            <input class="form-control" type="text" id="fatherMiddleName" maxlength="25" name="FatherMiddleName" value="@Model.PersonalInfo.FatherMiddleName" oninput="validateText(this); validateName(this.id,'errFatherMName')">
+                                            <input class="form-control" type="text" id="fatherMiddleName" maxlength="25" name="FatherMiddleName" value="@Model.PersonalInfo.FatherMiddleName" oninput="validateText(this);">
                                             <span class="text-danger" id="errFatherMName"></span>
                                         </div>
                                     </div>
@@ -232,14 +232,14 @@
                                         <div>
                                             <div class="form-group">
                                                 <label for="whatsappNumber ">WhatsApp Number:</label>
-                                                <input class="form-control number" type="tel" value="@Model.PersonalInfo.WhatsAppNumber" id="whatsappNumber" name="WhatsAppNumber" maxlength="15" placeholder="0333-3333333">
+                                                <input class="form-control number" type="tel" value="@Model.PersonalInfo.WhatsAppNumber" id="whatsappNumber" name="WhatsAppNumber" maxlength="15" placeholder="92333-3333333">
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-lg-4" hidden>
                                         <div class="form-group">
                                             <label for="altCellPhone">Alternate Cell Phone Number:</label>
-                                            <input class="form-control number" type="tel" id="altCellPhone" value="@Model.PersonalInfo.AlternateCellPhoneNumber" name="AlternateCellPhoneNumber" maxlength="15" placeholder="0333-3333333">
+                                            <input class="form-control number" type="tel" id="altCellPhone" value="@Model.PersonalInfo.AlternateCellPhoneNumber" name="AlternateCellPhoneNumber" maxlength="15" placeholder="92333-3333333">
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
@@ -257,7 +257,7 @@
                                     <div class="col-lg-4">
                                         <div class="form-group">
                                             <label for="guardianCellPhone">Parents/Guardian Cell Phone Number<span class="text-danger h-6" style="font-size: 1.1rem;">*</span>:</label>
-                                            <input class="form-control number" type="tel" id="guardianCellPhone" value="@Model.PersonalInfo.GuardianCellPhoneNumber" name="GuardianCellPhoneNumber" maxlength="15" placeholder="1234567890" required>
+                                            <input class="form-control number" type="tel" id="guardianCellPhone" value="@Model.PersonalInfo.GuardianCellPhoneNumber" name="GuardianCellPhoneNumber" maxlength="15" placeholder="92333-3333333" required>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">

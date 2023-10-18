@@ -7,6 +7,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 using static HUTOPS.Helper.Constants;
@@ -124,15 +125,20 @@ namespace HUTOPS.Helper
             return admin;
 
         }
-        public static void AddLog(string LogType, string Description) {
+        public static void AddLog(string LogType, string Description)
+        {
+            Task.Factory.StartNew(() => AddLogAsync(LogType, Description));
+        }
+        public static void AddLogAsync(string LogType, string Description)
+        {
             HUTOPSEntities DB = new HUTOPSEntities();
-             DB.Logs.Add(new Log
+            DB.Logs.Add(new Log
             {
                 Type = LogType,
                 Description = Description,
                 CreatedDatetime = DateTime.Now
             });
-            DB.SaveChanges();
+            DB.SaveChangesAsync();
         }
         
         public static bool isValidEmail(string inputEmail)
@@ -179,10 +185,10 @@ namespace HUTOPS.Helper
             {
                 errors.Add("First Name length must be greater than 3 and less than 25 characters");
             }
-            if (!string.IsNullOrEmpty(personalInfo.MiddleName) && (personalInfo.MiddleName.Length < 3 || personalInfo.MiddleName.Length > 25))
-            {
-                errors.Add("Middle Name length must be greater than 3 and less than 25 characters");
-            }
+            //if (!string.IsNullOrEmpty(personalInfo.MiddleName) && (personalInfo.MiddleName.Length < 3 || personalInfo.MiddleName.Length > 25))
+            //{
+            //    errors.Add("Middle Name length must be greater than 3 and less than 25 characters");
+            //}
             if (string.IsNullOrEmpty(personalInfo.LastName))
             {
                 errors.Add("Last Name is required");
@@ -199,10 +205,10 @@ namespace HUTOPS.Helper
             {
                 errors.Add("Father First Name length must be greater than 3 and less than 25 characters");
             }
-            if (!string.IsNullOrEmpty(personalInfo.FatherMiddleName) && (personalInfo.FatherMiddleName.Length < 3 || personalInfo.FatherMiddleName.Length > 25))
-            {
-                errors.Add("Father Middle Name length must be greater than 3 and less than 25 characters");
-            }
+            //if (!string.IsNullOrEmpty(personalInfo.FatherMiddleName) && (personalInfo.FatherMiddleName.Length < 3 || personalInfo.FatherMiddleName.Length > 25))
+            //{
+            //    errors.Add("Father Middle Name length must be greater than 3 and less than 25 characters");
+            //}
             if (string.IsNullOrEmpty(personalInfo.FatherLastName))
             {
                 errors.Add("Father Last Name is required");
@@ -245,7 +251,7 @@ namespace HUTOPS.Helper
             }
             if (string.IsNullOrEmpty(personalInfo.GuardianCellPhoneNumber))
             {
-                errors.Add("Phone Number is Required");
+                errors.Add("Guardian Phone Number is Required");
             }
             //if (string.IsNullOrEmpty(personalInfo.HomePhoneNumber))
             //{
@@ -400,8 +406,6 @@ namespace HUTOPS.Helper
             string[] allowedImageExtensions = { ".jpg", ".jpeg", ".png", ".gif" /* Add more if needed */ };
             return allowedImageExtensions.Contains(fileExtension.ToLower());
         }
-
-
         public static string GetInnerException(Exception ex)
         {
             string exception;

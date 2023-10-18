@@ -50,7 +50,7 @@ namespace HUTOPSBatchProcessConsoleApp
                         switch (batch.Type)
                         {
                             case 1:
-                                Result = BatchProcessing.GenerateAdmitCard(records, batch.Shift, batch.Venue, batch.TestDate.ToString());
+                                Result = BatchProcessing.GenerateAdmitCard(records, batch.Shift, batch.Venue, batch.TestDate.Value.ToString("dd-MM-yyyy"));
                                 break;
 
                             case 2:
@@ -58,7 +58,7 @@ namespace HUTOPSBatchProcessConsoleApp
                                 break;
 
                             case 3:
-                               Result  = BatchProcessing.GenerateSendAdmitCard(records, batch.Shift, batch.Venue, batch.TestDate.ToString());
+                               Result  = BatchProcessing.GenerateSendAdmitCard(records, batch.Shift, batch.Venue, batch.TestDate.Value.ToString("dd-MM-yyyy"));
                             break;
 
                             case 4:

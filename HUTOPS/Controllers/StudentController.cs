@@ -1,5 +1,6 @@
 ﻿using ClosedXML.Excel;
 using ClosedXML.Extensions;
+using HUTOPS.Codebase;
 using HUTOPS.Helper;
 using HUTOPS.Models;
 using Newtonsoft.Json;
@@ -7,6 +8,7 @@ using System;
 using System.Data;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 
 namespace HUTOPS.Controllers
@@ -347,7 +349,7 @@ namespace HUTOPS.Controllers
                     }
 
                     EmailBody = EmailBody.Replace("{{Watermark}}", watermarkImage);
-                    EmailBody = EmailBody.Replace("{{TestDate}}", model.TestDate.ToString());
+                    EmailBody = EmailBody.Replace("{{TestDate}}", model.TestDate.ToString("dd-MM-yyyy"));
                     EmailBody = EmailBody.Replace("{{ApproxDatetime}}", model.Shift == "1" ? Constants.Shift.FirstShift : model.Shift == "2" ? Constants.Shift.SecondShift : Constants.Shift.ThirtShift);
                     EmailBody = EmailBody.Replace("{{ReportingTime}}", model.Shift == "1" ? Constants.ReportingTime.FirstShift : model.Shift == "2" ? Constants.ReportingTime.SecondShift : Constants.ReportingTime.ThirtShift);
                     EmailBody = EmailBody.Replace("{{Vanue}}", model.Venue == "Karachi" ? Constants.Vanue.Karachi : Constants.Vanue.Islamabad);
@@ -479,12 +481,35 @@ namespace HUTOPS.Controllers
                     {
                         if (personalInformation.Result == 2)
                         {
-                            DB.SP_UserShiftToEApplication(personalInformation.Id);
-                            personalInformation.IsRecordMoveToEApp = 1;
-                            DB.SaveChanges();
+                            var educationalInformation = DB.Educationals.Where(x => x.UserId == Id).FirstOrDefault();
+                            if(educationalInformation != null)
+                            {
+                                // For Moving record using Entity Framework
+                                //if(RecordsProcessing.MoveRecordToEApp(personalInformation, educationalInformation))
+                                //{
+                                //    personalInformation.IsRecordMoveToEApp = 1;
+                                //    DB.SaveChanges();
 
-                            Utility.AddLog(Constants.LogType.ActivityLog, $"Personal Information Record Move to E-Application against HUTOPS Id: {personalInformation.HUTopId}");
-                            return Json(new { status = true, message = "Record Move to E-Application Successfully" });
+                                //    Utility.AddLog(Constants.LogType.ActivityLog, $"Personal Information Record Move to E-Application against HUTOPS Id: {personalInformation.HUTopId}");
+                                //    return Json(new { status = true, message = "Record Move to E-Application Successfully" });
+                                //}
+                                //else
+                                //{
+                                //    return Json(new { status = false, message = "Error Occured while moving record to E-Application" });
+                                //}
+                                DB.SP_UserShiftToEApplication(personalInformation.Id);
+                                personalInformation.IsRecordMoveToEApp = 1;
+                                DB.SaveChanges();
+
+                                Utility.AddLog(Constants.LogType.ActivityLog, $"Personal Information Record Move to E-Application against HUTOPS Id: {personalInformation.HUTopId}");
+                                return Json(new { status = true, message = "Record Move to E-Application Successfully" });
+                            }
+                            else
+                            {
+                                Utility.AddLog(Constants.LogType.ActivityLog, $"Educational Informtion not found against HUTOPS Id: {personalInformation.HUTopId}");
+                                return Json(new { status = false, message = "Educational Informtion not found" });
+                            }
+                            
                         }
                         else
                         {

@@ -193,8 +193,6 @@ function increaseProgressBarWidth() {
 }
 
 
-
-
 function CallAsyncService(url, Param, CallbackFunction) {
     try {
         $.ajax({
@@ -727,9 +725,17 @@ function LoadYear(selectId) {
             option.text = j;
             comboYear.appendChild(option);
         }
-    } else if (selectId == 'startingYear' && ($('#currentLevel').val() == 'HSSC II Completed' || $('#currentLevel').val() == 'Already enrolled in a University') ) {
+    }
+    else if (selectId == 'startingYear' && ($('#currentLevel').val() == 'HSSC II Completed' || $('#currentLevel').val() == 'Already enrolled in a University')) {
 
         for (var j = 2021; j > 1950; j--) {
+            var option = document.createElement("option");
+            option.value = j;
+            option.text = j;
+            comboYear.appendChild(option);
+        }
+    } else if (selectId = 'dobYear') {
+        for (var j = 2010; j > 1950; j--) {
             var option = document.createElement("option");
             option.value = j;
             option.text = j;
@@ -789,7 +795,7 @@ function GetGroupListFromObj(BoardId) {
             selectBox.add(option);
         });
     } else if (BoardId === 'AKUB') {
-        const groups = ['Pre-Medical', 'Pre-Engineering', 'Commerce', 'Arts/Humanities','Home Economics'];
+        const groups = ['Pre-Engineering', 'Pre-Medical', 'General Science/Computer Science', 'Commerce', 'Arts/Humanities', 'Home Economics'];
         const defaultOption = document.createElement('option');
         defaultOption.text = 'Select Group';
         defaultOption.value = "";

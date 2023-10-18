@@ -20,7 +20,7 @@ namespace HUTOPS.Helper
         public class Shift
         {
             public const string FirstShift = "09:00 AM - 11:00 AM";
-            public const string SecondShift = "12:00 AM - 02:00 PM";
+            public const string SecondShift = "12:00 PM - 02:00 PM";
             public const string ThirtShift = "03:00 PM - 05:00 PM";
         }
         public class ReportingTime

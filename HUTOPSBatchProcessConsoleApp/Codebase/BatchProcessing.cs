@@ -42,6 +42,7 @@ namespace HUTOPSBatchProcessConsoleApp.Codebase
                         {
                             record.Status = "Record not found "; isValid = false;
                             Helper.AddLog(Constants.LogType.ActivityLog, $"Personal Information Record not found against HUTOPS Id: {record.HUTOPSIds}");
+                            continue;
                         }
                         if (EducationalInfo.Id != 0)
                         {
@@ -51,6 +52,7 @@ namespace HUTOPSBatchProcessConsoleApp.Codebase
                         {
                             record.Status = "Educational Information not Found"; isValid = false;
                             Helper.AddLog(Constants.LogType.ActivityLog, $"Educational Information Record not found against HUTOPS Id: {record.HUTOPSIds}");
+                            continue;
                         }
                         if (document.Id != 0)
                         {
@@ -60,6 +62,7 @@ namespace HUTOPSBatchProcessConsoleApp.Codebase
                         {
                             record.Status = "Documents not found against this HUTOPS Id"; isValid = false;
                             Helper.AddLog(Constants.LogType.ActivityLog, $"Documents Record not found against HUTOPS Id: {record.HUTOPSIds}");
+                            continue;
                         }
                         EmailBody = EmailBody.Replace("{{TestDate}}", testDate);
                         EmailBody = EmailBody.Replace("{{ApproxDatetime}}", shift == "1" ? Constants.Shift.FirstShift : shift == "2" ? Constants.Shift.SecondShift : Constants.Shift.ThirtShift);
@@ -101,9 +104,13 @@ namespace HUTOPSBatchProcessConsoleApp.Codebase
                         {
                             using (HUTOPSEntities tempDB = new HUTOPSEntities())
                             {
-                                var personalInfo = tempDB.PersonalInformations.ToList().Where(x => x.Id == personalInformation.Id).FirstOrDefault();
-                                personalInfo.IsAdmitCardGenerated = 0;
-                                tempDB.SaveChanges();
+                                var personalInfo = tempDB.PersonalInformations.ToList().Where(x => x.HUTopId == record.HUTOPSIds).FirstOrDefault();
+                                if ( personalInfo != null)
+                                {
+                                    personalInfo.IsAdmitCardGenerated = 0;
+                                    tempDB.SaveChanges();
+                                }
+                                
                             }
                             Helper.AddLog(Constants.LogType.ActivityLog, $"Admit Card genration failed against HUTOPSId : {record.HUTOPSIds}");
                         }
@@ -148,6 +155,7 @@ namespace HUTOPSBatchProcessConsoleApp.Codebase
                         {
                             record.Status = "Record not found "; isValid = false;
                             Helper.AddLog(Constants.LogType.ActivityLog, $"Personal Information Record not found against HUTOPS Id: {record.HUTOPSIds.ToString()}");
+                            continue;
                         }
                         else
                         {
@@ -158,6 +166,7 @@ namespace HUTOPSBatchProcessConsoleApp.Codebase
                         {
                             record.Status = "Documents not found against this HUTOPS Id"; isValid = false;
                             Helper.AddLog(Constants.LogType.ActivityLog, $"Documents Record not found against HUTOPS Id: {record.HUTOPSIds.ToString()}");
+                            continue;
                         }
 
                         // Save File to server
@@ -209,8 +218,11 @@ namespace HUTOPSBatchProcessConsoleApp.Codebase
                         using (HUTOPSEntities tempDB = new HUTOPSEntities())
                         {
                             var personalInfo = tempDB.PersonalInformations.ToList().Where(x => x.HUTopId == record.HUTOPSIds).FirstOrDefault();
-                            personalInfo.IsAdmitCardSent = 0;
-                            tempDB.SaveChanges();
+                            if (personalInfo != null)
+                            {
+                                personalInfo.IsAdmitCardSent = 0;
+                                tempDB.SaveChanges();
+                            }
                         }
                         Helper.AddLog(Constants.LogType.Exception, $"Error Occured while processing Batch Record against HUTOPSId : {record.HUTOPSIds} Error Details: {ex.Message}");
                         record.Status = "Failed" + ex.Message;
@@ -257,6 +269,7 @@ namespace HUTOPSBatchProcessConsoleApp.Codebase
                         {
                             record.Status = "Record not found "; isValid = false;
                             Helper.AddLog(Constants.LogType.ActivityLog, $"Personal Information Record not found against HUTOPS Id: {record.HUTOPSIds}");
+                            continue;
                         }
                         if (EducationalInfo.Id != 0)
                         {
@@ -266,6 +279,7 @@ namespace HUTOPSBatchProcessConsoleApp.Codebase
                         {
                             record.Status = "Educational Information not Found"; isValid = false;
                             Helper.AddLog(Constants.LogType.ActivityLog, $"Educational Information Record not found against HUTOPS Id: {record.HUTOPSIds}");
+                            continue;
                         }
                         if (document.Id != 0)
                         {
@@ -275,6 +289,7 @@ namespace HUTOPSBatchProcessConsoleApp.Codebase
                         {
                             record.Status = "Documents not found against this HUTOPS Id"; isValid = false;
                             Helper.AddLog(Constants.LogType.ActivityLog, $"Documents Record not found against HUTOPS Id: {record.HUTOPSIds}");
+                            continue;
                         }
                         EmailBody = EmailBody.Replace("{{TestDate}}", testDate);
                         EmailBody = EmailBody.Replace("{{ApproxDatetime}}", shift == "1" ? Constants.Shift.FirstShift : shift == "2" ? Constants.Shift.SecondShift : Constants.Shift.ThirtShift);
@@ -368,7 +383,6 @@ namespace HUTOPSBatchProcessConsoleApp.Codebase
                 throw;
             }
         }
-
         public static List<ExcelData> UpdateResult(List<ExcelData> records, byte? result, byte? IsRecordSendToEApp)
         {
             try
@@ -511,29 +525,17 @@ namespace HUTOPSBatchProcessConsoleApp.Codebase
                                     Helper.AddLog(Constants.LogType.ActivityLog, $"Personal Information Record already move to E-Application against HUTOPS Id: {record.HUTOPSIds}");
                                 }
                             }
-
-
-
                         }
                         else
                         {
                             record.Status = "Record not found ";
                             Helper.AddLog(Constants.LogType.ActivityLog, $"Personal Information Record not found against HUTOPS Id: {record.HUTOPSIds}");
+                            continue;
                         }
 
                     }
-                    catch (DbEntityValidationException ex)
+                    catch (Exception ex)
                     {
-                        foreach (var eve in ex.EntityValidationErrors)
-                        {
-                            Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
-                                eve.Entry.Entity.GetType().Name, eve.Entry.State);
-                            foreach (var ve in eve.ValidationErrors)
-                            {
-                                Console.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
-                                    ve.PropertyName, ve.ErrorMessage);
-                            }
-                        }
                         Helper.AddLog(Constants.LogType.Exception, $"Error Occured while processing Batch Record against HUTOPSId : {record.HUTOPSIds} Error Details: {ex.Message}");
                         record.Status = "Failed" + ex.Message;
                     }
@@ -671,6 +673,7 @@ namespace HUTOPSBatchProcessConsoleApp.Codebase
                                         DB.SaveChanges();
                                         record.Status = "Record Mark as Failed";
                                         Helper.AddLog(Constants.LogType.ActivityLog, $"Personal Information Record already move to E-Application against HUTOPS Id: {record.HUTOPSIds}");
+                                        continue;
                                     }
                                 }
                                 else
@@ -679,6 +682,7 @@ namespace HUTOPSBatchProcessConsoleApp.Codebase
                                     DB.SaveChanges();
                                     record.Status = "Educational Information is not found";
                                     Helper.AddLog(Constants.LogType.ActivityLog, $"Educational Information not found against HUTOPS Id: {record.HUTOPSIds}");
+                                    continue;
                                 }
 
                             }
@@ -686,6 +690,7 @@ namespace HUTOPSBatchProcessConsoleApp.Codebase
                             {
                                 record.Status = "Record already move to E-Application";
                                 Helper.AddLog(Constants.LogType.ActivityLog, $"Personal Information Record already move to E-Application against HUTOPS Id: {record.HUTOPSIds}");
+                                continue;
                             }
 
                         }
@@ -693,6 +698,7 @@ namespace HUTOPSBatchProcessConsoleApp.Codebase
                         {
                             record.Status = "Record not found ";
                             Helper.AddLog(Constants.LogType.ActivityLog, $"Personal Information Record not found against HUTOPS Id: {record.HUTOPSIds}");
+                            continue;
                         }
 
                     }
@@ -701,8 +707,11 @@ namespace HUTOPSBatchProcessConsoleApp.Codebase
                         using (HUTOPSEntities DB = new HUTOPSEntities())
                         {
                             var personalInformation = DB.PersonalInformations.Where(x => x.HUTopId == record.HUTOPSIds).FirstOrDefault();
-                            personalInformation.IsRecordMoveToEApp = 1;
-                            DB.SaveChanges();
+                            if (personalInformation != null)
+                            {
+                                personalInformation.IsRecordMoveToEApp = 1;
+                                DB.SaveChanges();
+                            }
                         }
                         Helper.AddLog(Constants.LogType.Exception, $"Error Occured while processing Batch Record against HUTOPSId : {record.HUTOPSIds} Error Details: {ex.Message}");
                         record.Status = "Failed" + ex.Message;
