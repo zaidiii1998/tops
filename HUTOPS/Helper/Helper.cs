@@ -1,4 +1,5 @@
-﻿using HUTOPS.Models;
+﻿using HUTOPS.EAppDBModel;
+using HUTOPS.Models;
 using Microsoft.Ajax.Utilities;
 using System;
 using System.Collections.Generic;
@@ -155,6 +156,7 @@ namespace HUTOPS.Helper
         public static bool IsValidPhoneNumber(string phoneNumber)
         {
             // Define a regular expression pattern for a US phone number (10 digits)
+            phoneNumber = phoneNumber.Replace("(92)", "92");
             string pattern = @"^\d{5}-\d{7}$";
 
             // Use Regex.IsMatch to check if the input matches the pattern
@@ -163,9 +165,20 @@ namespace HUTOPS.Helper
         public static List<string> ValidatePersonalInfo(PersonalInformation personalInfo)
         {
             HUTOPSEntities DB = new HUTOPSEntities();
+            EApplicationEntities EAppDB = new EApplicationEntities();
             List<string> errors = new List<string>();
-
-            if(DB.PersonalInformations.ToList().Exists(x => x.EmailAddress == personalInfo.EmailAddress && x.Id != personalInfo.Id))
+            List<EAppDBModel.PersonalInformation> eappPInfo = new List<EAppDBModel.PersonalInformation>();
+            eappPInfo = EAppDB.PersonalInformations.Where(p => p.ID > 194587).ToList();
+;
+            if (eappPInfo.Exists(p => p.Email == personalInfo.EmailAddress))//(EAppDB.PersonalInformations.ToList().Exists(x => x.Email == personalInfo.EmailAddress && personalInfo.Id > 194587))//x.SubmissionDate > Convert.ToDateTime("2023/10/20")))
+            {
+                errors.Add("You have already Register your Application in regular HU Program Using same Email Address");
+            }
+            if (eappPInfo.Exists(p => p.PhoneNo == personalInfo.CellPhoneNumber))//(EAppDB.PersonalInformations.ToList().Exists(x => x.PhoneNo == personalInfo.CellPhoneNumber && x.SubmissionDate > Convert.ToDateTime("2015/10/20")))
+            {
+                errors.Add("You have already Register your Application in regular HU Program Using same Phone Number");
+            }
+            if (DB.PersonalInformations.ToList().Exists(x => x.EmailAddress == personalInfo.EmailAddress && x.Id != personalInfo.Id))
             {
                 errors.Add("Email is already Exists");
             }
@@ -229,7 +242,7 @@ namespace HUTOPS.Helper
             {
                 errors.Add("Provided Guardian Email Address is Invalid");
             }
-            if (!string.IsNullOrEmpty(personalInfo.CellPhoneNumber) && ! IsValidPhoneNumber(personalInfo.CellPhoneNumber))
+            if (!string.IsNullOrEmpty(personalInfo.CellPhoneNumber) && !IsValidPhoneNumber(personalInfo.CellPhoneNumber))
             {
                 errors.Add("Cell Phone Number is Invalid");
             }
@@ -302,9 +315,6 @@ namespace HUTOPS.Helper
             {
                 errors.Add("Applied Before Id length must be less than 25 characters");
             }
-
-
-
             return errors;
         }
 

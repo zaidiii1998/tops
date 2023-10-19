@@ -81,5 +81,6 @@ namespace HUTOPS
         public Nullable<int> Count { get; set; }
         public Nullable<byte> Result { get; set; }
         public Nullable<byte> IsRecordMoveToEApp { get; set; }
+        public string AdmitCard { get; set; }
     }
 }

@@ -1,9 +1,6 @@
 ﻿using HUTOPS.EAppDBModel;
 using HUTOPS.Helper;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace HUTOPS.Codebase
 {
@@ -100,7 +97,7 @@ namespace HUTOPS.Codebase
                     CurrentHighSchoolCode = "-1"
                 };
 
-                using (E_ApplicationEntities EApp_DB = new E_ApplicationEntities())
+                using (EApplicationEntities EApp_DB = new EApplicationEntities())
                 {
                     EApp_DB.PersonalInformations.Add(EApp_PersonalInformation);
                     EApp_DB.SaveChanges();

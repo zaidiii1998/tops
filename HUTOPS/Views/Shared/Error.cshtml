@@ -1,13 +1,15 @@
-﻿<!DOCTYPE html>
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Error</title>
-</head>
-<body>
-    <hgroup>
-        <h1>Error.</h1>
-        <h2>An error occurred while processing your request.</h2>
-    </hgroup>
-</body>
-</html>
+﻿@{
+    ViewBag.Title = "Error";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div>
+    <div class="accordion" id="accordionExample">
+        <div class="row d-flex justify-content-center">
+            <h1>Error</h1>
+        </div>
+        <div class="row d-flex justify-content-center">
+            <h2>An error occurred while processing your request.</h2>
+        </div>
+    </div>
+</div>
+

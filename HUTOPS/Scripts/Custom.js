@@ -1,47 +1,14 @@
 ﻿$(document).ready(function () {
     //document.addEventListener('scroll', handleScroll, true);
-    $('.number').inputmask("\\92399-9999999");
+    $('.number').inputmask("(\\92)399-9999999");
     $('.cnic').inputmask("99999-9999999-9");
     $('.Percentage').inputmask("99.99%");
 
     $('.trashActivity').click(function () {
         $(this).closest(".row").remove();
     });
-
-    tinymce.init({
-        selector: '.tinyMceTxt',
-        plugins: "preview powerpaste casechange searchreplace autolink autosave save directionality advcode visualblocks visualchars fullscreen image link media mediaembed template codesample advtable table charmap pagebreak nonbreaking anchor advlist lists checklist wordcount tinymcespellchecker a11ychecker help formatpainter permanentpen pageembed linkchecker emoticons export",
-        height: '700px',
-        toolbar_sticky: true,
-        icons: 'thin',
-        autosave_restore_when_empty: false,
-        content_style: `
-                body {
-                    background: #fff;
-                }
-
-                @media (min-width: 840px) {
-                    html {
-                        background: #eceef4;
-                        min-height: 100%;
-                        padding: 0 .5rem
-                    }
-
-                    body {
-                        background-color: #fff;
-                        box-shadow: 0 0 4px rgba(0, 0, 0, .15);
-                        box-sizing: border-box;
-                        margin: 1rem auto 0;
-                        max-width: 820px;
-                        min-height: calc(100vh - 1rem);
-                        padding:4rem 6rem 6rem 6rem
-                    }
-                }
-            `,
-            
-
-    });
-
+    
+    $('[data-toggle="tooltip"]').tooltip();
 });
 
 
@@ -201,7 +168,7 @@ function increaseProgressBarWidth() {
     let totalPercent = Math.round((amount) * 100 / containerWidth); // calculate the total percent finished
 
     document.getElementById('progressBar').style.width = amount + "px";    // increase bar width
-    document.getElementById('progressBar').innerHTML = totalPercent + "%";           // update the percentage text
+    document.getElementById('progressBar').innerHTML = "Application Completion Progress " + totalPercent + "%";           // update the percentage text
 }
 
 
@@ -1055,8 +1022,10 @@ function AddRow() {
     newcontrol.appendChild(input);
     newCol.appendChild(newcontrol);
     newRow.appendChild(newCol);
+    if ($('.SubjectName').length < 10) {
+        $('#divSubjects').append(newRow);
+    }
     
-    $('#divSubjects').append(newRow);
 }
 function loadPrograms(radioValue) {
     const selectBox = document.getElementById('degreeProgram');
@@ -1866,7 +1835,6 @@ function LoadStudentDatatable() {
             "url": '/Student/Get',
             'data': function (data) {
                 return (data);
-
             }
         },
         "columns": [
@@ -1902,11 +1870,11 @@ function LoadStudentDatatable() {
                 }
             },
             {
-                "data": "IsAdmitCardGenerated",
+                "data": null,
                 render: function (data) {
-                    if (data == 1) {
-                        return ('<i class="fa fa-circle-check text-success f-20" data-toggle="tooltip" data-placement="bottom" title="Admit card Generated"></i>');
-                    } else if (data == 0) {
+                    if (data.IsAdmitCardGenerated == 1) {
+                        return ('<a href="' + data.AdmitCard +'" target="_blank"><i class="fa-regular fa-eye text-success f-20" data-toggle="tooltip" data-placement="bottom" title="Admit card Generated"></i></a>');
+                    } else if (data.IsAdmitCardGenerated == 0) {
                         return ('<i class="fa fa-circle-exclamation text-danger f-20" data-toggle="tooltip" data-placement="bottom" title="Failed to generate admit card"></i>');
                     } else {
                         return "<i class='fa-regular fa-clock f-20 text-warning' data-toggle='tooltip' data-placement='bottom' title='Pending'></i>";
@@ -2165,7 +2133,7 @@ function LoadEmailTemplate(Id, model) {
     TempVal = $('#' + Id).val();
     $.each(model, function (key, value) {
         if (value.Id == TempVal) {
-            tinymce.activeEditor.setContent(value.Body);
+            $('#textAreaEmailTemp').summernote('code', value.Body);
             $('#txtSubject').val(value.Subject);
         }
     })
@@ -2175,7 +2143,7 @@ function SaveEmailTemplate() {
     var param = {
         Id: $('#comboEmailTemp').val(),
         Subject: $('#txtSubject').val(),
-        Body: tinymce.get("textAreaEmailTemp").getContent()
+        Body: $("#textAreaEmailTemp").summernote('code')
     }
     $('#mainLoader').show();
     CallAsyncService("/Email/Save", JSON.stringify(param), SaveEmailTemplateCB);

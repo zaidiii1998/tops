@@ -38,6 +38,7 @@ namespace HUTOPS.Controllers
                         Admin admin = new Admin();
                         admin.Id = result.Response;
                         admin.Name = personalInformation.FirstName + " " + personalInformation.LastName;
+                        admin.Email = personalInformation.EmailAddress;
                         Utility.SetSession(admin);
                         Utility.SetSession(new PersonalInformation());
                         return RedirectToAction("Index", "Student");
@@ -202,13 +203,14 @@ namespace HUTOPS.Controllers
                             HUCryptography.Crypto.Encrypt(model["Password"].ToString()), personalInfo.HearAboutHU, personalInfo.HearAboutHUOther).ToList().FirstOrDefault();
                         if (result.Response != 0)
                         {
-                            var currentUser = DB.PersonalInformations.ToList().Where(x => x.Id == result.Response).FirstOrDefault();
-                            var education = DB.Educationals.ToList().Where(x => x.UserId == result.Response).FirstOrDefault();
-                            var document = DB.Documents.ToList().Where(x => x.UserId == result.Response).FirstOrDefault();
-                            Utility.AddLog(Constants.LogType.ActivityLog, "User account has been successfully created." + "UserID: "+ result.Response + "UserName" + currentUser.FirstName + " " + currentUser.LastName);
-                            Utility.SetSession(currentUser);
-                            Utility.SetSession(education);
-                            Utility.SetSession(document);
+                            var personalInformation = DB.PersonalInformations.ToList().Where(x => x.Id == result.Response).FirstOrDefault();
+                            Admin admin = new Admin();
+                            admin.Id = result.Response;
+                            admin.Name = personalInformation.FirstName + " " + personalInformation.LastName;
+                            admin.Email = personalInformation.EmailAddress;
+                            
+                            Utility.AddLog(Constants.LogType.ActivityLog, "User account has been successfully created." + "UserID: "+ result.Response + "UserName" + personalInformation.FirstName + " " + personalInformation.LastName);
+                            Utility.SetSession(admin);
                             return RedirectToAction("Index", "Student");
                         }
                         else

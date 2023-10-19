@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="E_ApplicationModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="PersonalInformation">
           <Key>
             <PropertyRef Name="ID" />
@@ -86,14 +86,14 @@
           <Property Name="FatherName" Type="varchar" MaxLength="50" />
           <Property Name="WhatsAppNumber" Type="varchar" MaxLength="50" />
         </EntityType>
-        <EntityContainer Name="E_ApplicationModelStoreContainer">
+        <EntityContainer Name="ModelStoreContainer">
           <EntitySet Name="PersonalInformation" EntityType="Self.PersonalInformation" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
       </Schema>
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="E_ApplicationModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="PersonalInformation">
           <Key>
             <PropertyRef Name="ID" />
@@ -175,7 +175,7 @@
           <Property Name="FatherName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="WhatsAppNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
-        <EntityContainer Name="E_ApplicationEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="EApplicationEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="PersonalInformations" EntityType="Self.PersonalInformation" />
         </EntityContainer>
       </Schema>
@@ -183,9 +183,9 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="E_ApplicationModelStoreContainer" CdmEntityContainer="E_ApplicationEntities">
+        <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="EApplicationEntities">
           <EntitySetMapping Name="PersonalInformations">
-            <EntityTypeMapping TypeName="E_ApplicationModel.PersonalInformation">
+            <EntityTypeMapping TypeName="Model.PersonalInformation">
               <MappingFragment StoreEntitySet="PersonalInformation">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Appid" ColumnName="Appid" />

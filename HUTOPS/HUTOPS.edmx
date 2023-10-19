@@ -1198,6 +1198,7 @@
           <Property Type="Int32" Name="Count" Nullable="true" />
           <Property Type="Byte" Name="Result" Nullable="true" />
           <Property Type="Byte" Name="IsRecordMoveToEApp" Nullable="true" />
+          <Property Type="String" Name="AdmitCard" Nullable="false" />
         </ComplexType>
         <ComplexType Name="SP_InsertApplication_Result">
           <Property Type="Int32" Name="Response" Nullable="false" />

@@ -5,6 +5,9 @@ using System.Collections.Generic;
 using System.Data.Entity.Validation;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
+using System.Runtime.Remoting.Contexts;
+using System.Web;
 
 namespace HUTOPSBatchProcessConsoleApp.Codebase
 {
@@ -172,10 +175,12 @@ namespace HUTOPSBatchProcessConsoleApp.Codebase
                         // Save File to server
                         if (isValid)
                         {
-                            if (File.Exists(document.AdmitCard))
+                            var admitCardPath = Path.Combine(HttpContext.Current.Server.MapPath("~/"), document.AdmitCard.Substring(document.AdmitCard.IndexOf("Upload")));
+
+                            if (File.Exists(admitCardPath))
                             {
                                 // Send Email
-                                CPD.Framework.Core.EmailService.SendEmail(personalInformation.EmailAddress, null, null, EmailTemplate.Subject, EmailTemplate.Body, document.AdmitCard, null, null);
+                                CPD.Framework.Core.EmailService.SendEmail(personalInformation.EmailAddress, null, null, EmailTemplate.Subject, EmailTemplate.Body, admitCardPath, null/*"tops@habib.edu.pk"*/, null);
 
                                 Helper.AddLog(Constants.LogType.ActivityLog, $"Email has been sent to Applicant against HUTOPSId : {record.HUTOPSIds} ");
                                 // Update sent Admit Card Status in perssonal Info Table
@@ -316,15 +321,17 @@ namespace HUTOPSBatchProcessConsoleApp.Codebase
                             }
                             Helper.AddLog(Constants.LogType.ActivityLog, $"Update Admit Card Status in the personal Information Table Against HUTOPSId : {record.HUTOPSIds}");
                             // Update Admit Card Path in Documents Table
+
                             using (HUTOPSEntities tempDB = new HUTOPSEntities())
                             {
                                 var documents = tempDB.Documents.ToList().Where(x => x.Id == document.Id).FirstOrDefault();
-                                documents.AdmitCard = filePath;
+                                documents.AdmitCard = Path.Combine(System.Configuration.ConfigurationManager.AppSettings["BaseURL"], filePath.Substring(filePath.IndexOf("Upload")));
                                 tempDB.SaveChanges();
                             }
                             Helper.AddLog(Constants.LogType.ActivityLog, $"Update Admit card Path in the documents table against HUTOPSId : {record.HUTOPSIds}");
+                            
                             // Send Email
-                            CPD.Framework.Core.EmailService.SendEmail(personalInformation.EmailAddress, null, null, AdmmitCardEmailTemplate.Subject, EmailTemplate.Body, filePath, null, null);
+                            CPD.Framework.Core.EmailService.SendEmail(personalInformation.EmailAddress, null, null, AdmmitCardEmailTemplate.Subject, EmailTemplate.Body, filePath, null /*"tops@habib.edu.pk"*/, null);
 
                             Helper.AddLog(Constants.LogType.ActivityLog, $"Email has been sent to Applicant against HUTOPSId : {record.HUTOPSIds} ");
                             // Update sent Admit Card Status in perssonal Info Table
@@ -494,7 +501,7 @@ namespace HUTOPSBatchProcessConsoleApp.Codebase
                                                 CurrentHighSchoolCode = "-1"
                                             };
 
-                                            using (E_ApplicationEntities2 EApp_DB = new E_ApplicationEntities2())
+                                            using (EApplicationEntities EApp_DB = new EApplicationEntities())
                                             {
                                                 EApp_DB.PersonalInformations.Add(EApp_PersonalInformation);
                                                 EApp_DB.SaveChanges();
@@ -655,7 +662,7 @@ namespace HUTOPSBatchProcessConsoleApp.Codebase
                                             CurrentHighSchoolCode = "-1"
                                         };
 
-                                        using (E_ApplicationEntities2 EApp_DB = new E_ApplicationEntities2())
+                                        using (EApplicationEntities EApp_DB = new EApplicationEntities())
                                         {
                                             EApp_DB.PersonalInformations.Add(EApp_PersonalInformation);
                                             EApp_DB.SaveChanges();

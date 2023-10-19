@@ -77,6 +77,7 @@
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Threading.Tasks" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -107,23 +108,23 @@
     <Compile Include="Document.cs">
       <DependentUpon>HUTOPS.tt</DependentUpon>
     </Compile>
-    <Compile Include="EAppDBModel\EAppDB.Context.cs">
+    <Compile Include="EAppDBModel\E_Application.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>EAppDB.Context.tt</DependentUpon>
+      <DependentUpon>E_Application.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="EAppDBModel\EAppDB.cs">
+    <Compile Include="EAppDBModel\E_Application.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>EAppDB.tt</DependentUpon>
+      <DependentUpon>E_Application.tt</DependentUpon>
     </Compile>
-    <Compile Include="EAppDBModel\EAppDB.Designer.cs">
+    <Compile Include="EAppDBModel\E_Application.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>EAppDB.edmx</DependentUpon>
+      <DependentUpon>E_Application.edmx</DependentUpon>
     </Compile>
     <Compile Include="EAppDBModel\PersonalInformation.cs">
-      <DependentUpon>EAppDB.tt</DependentUpon>
+      <DependentUpon>E_Application.tt</DependentUpon>
     </Compile>
     <Compile Include="EApp_PersonalInformation.cs">
       <DependentUpon>HUTOPS.tt</DependentUpon>
@@ -215,12 +216,12 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>HUTOPS.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <EntityDeploy Include="EAppDBModel\EAppDB.edmx">
+    <EntityDeploy Include="EAppDBModel\E_Application.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>EAppDB.Designer.cs</LastGenOutput>
+      <LastGenOutput>E_Application.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="EAppDBModel\EAppDB.edmx.diagram">
-      <DependentUpon>EAppDB.edmx</DependentUpon>
+    <None Include="EAppDBModel\E_Application.edmx.diagram">
+      <DependentUpon>E_Application.edmx</DependentUpon>
     </None>
     <None Include="HUTOPS.edmx.diagram">
       <DependentUpon>HUTOPS.edmx</DependentUpon>
@@ -230,15 +231,15 @@
   <ItemGroup>
     <Content Include="AppData\CPD.Framework.Core.dll" />
     <Content Include="AppData\HU_HTML_TO_PDF.dll" />
-    <Content Include="EAppDBModel\EAppDB.Context.tt">
+    <Content Include="EAppDBModel\E_Application.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>EAppDB.edmx</DependentUpon>
-      <LastGenOutput>EAppDB.Context.cs</LastGenOutput>
+      <DependentUpon>E_Application.edmx</DependentUpon>
+      <LastGenOutput>E_Application.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="EAppDBModel\EAppDB.tt">
+    <Content Include="EAppDBModel\E_Application.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>EAppDB.edmx</DependentUpon>
-      <LastGenOutput>EAppDB.cs</LastGenOutput>
+      <DependentUpon>E_Application.edmx</DependentUpon>
+      <LastGenOutput>E_Application.cs</LastGenOutput>
     </Content>
     <Content Include="HUTOPS.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

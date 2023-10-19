@@ -672,12 +672,13 @@ div#contentWrapperDashboard.contentWrapAdon .boxWraper {
 }
 .card-body {padding:0.25rem !important;}
 .progress-bar {
-    background-color: #5c2568 !important;
+    background-color: #F1ECDE /*#5c2568*/ !important;
+    color: #5c2568;
 }
 
 .accordion > .card > .card-header {border-radius: 0 !important; border-bottom: solid 1px #e3e3e3; box-shadow: 2px 3px 20px #e5e5e5;}
 .progress {
-    background-color: #F1ECE0 !important;
+    background-color: /*#F1ECE0*/ #5c2568 !important;
     border-radius: 0 !important;
     height: 0.8rem !important
 }

@@ -428,8 +428,8 @@ namespace HUTOPS.Controllers
                             string EmailBody = EmailTemplate.Body;
 
 
-                            var photo = DB.Documents.Where(x => x.UserId == applicationModel.PersonalInfo.Id).FirstOrDefault().Photograph;
-                            EmailBody = EmailBody.Replace("{{Photo}}", photo);
+                            var documents = DB.Documents.Where(x => x.UserId == applicationModel.PersonalInfo.Id).FirstOrDefault();
+                            EmailBody = EmailBody.Replace("{{Photo}}", documents.Photograph);
 
                             EmailBody = EmailBody.Replace("{{HUTopId}}", applicationModel.PersonalInfo.HUTopId);
                             EmailBody = EmailBody.Replace("{{FirstName}}", applicationModel.PersonalInfo.FirstName);
@@ -486,8 +486,7 @@ namespace HUTOPS.Controllers
                             EmailBody = EmailBody.Replace("{{HUSchoolName}}", applicationModel.Education.HUSchoolName);
                             EmailBody = EmailBody.Replace("{{Subjects}}", applicationModel.SubjectName[0]);
 
-
-                            CPD.Framework.Core.EmailService.SendEmail(applicationModel.PersonalInfo.EmailAddress, null, EmailTemplate.Subject, EmailBody);
+                            CPD.Framework.Core.EmailService.SendEmail(applicationModel.PersonalInfo.EmailAddress, null, null, EmailTemplate.Subject, EmailBody, PhotographPath, null/*"tops@habib.edu.pk"*/, SSCPath);
 
                             Utility.AddLog(Constants.LogType.ActivityLog, $"Email has been sent to applicant User Details: {JsonConvert.SerializeObject(applicationModel.PersonalInfo)}");
 

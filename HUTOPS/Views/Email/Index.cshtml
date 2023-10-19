@@ -38,7 +38,7 @@
                                 <label>Subject:</label>
                                 <input type="text" class="form-control" id="txtSubject" /><br />
                             </div>
-                            <textarea class="tinyMceTxt" id="textAreaEmailTemp"></textarea>
+                            <div class="tinyMceTxt" id="textAreaEmailTemp"></div>
                         </form>
                     </div>
                 </div>
@@ -48,8 +48,25 @@
 </div>
 
 <script>
-
     function Change() {
         LoadEmailTemplate('comboEmailTemp', @Html.Raw(Json.Encode(Model)))
     }
+</script>
+
+<!-- Initialize the Summernote editor -->
+<script>
+    $(document).ready(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+        $('#textAreaEmailTemp').summernote({
+            height: 300,  
+            toolbar: [
+                // Add or remove toolbar buttons as needed
+                //['style', ['bold', 'italic', 'underline', 'clear']],
+                //['para', ['ul', 'ol', 'paragraph']],
+                //['insert', ['link']],
+                //['misc',
+                ['codeview']
+            ]
+        });
+    });
 </script>

@@ -215,7 +215,7 @@
                                     <div class="col-lg-4">
                                         <div class="form-group">
                                             <label for="cellPhone">Cell Phone Number <span class="text-danger h-6" style="font-size: 1.1rem;">*</span>:</label>
-                                            <input class="form-control number" type="tel" id="cellPhone" value="@Model.PersonalInfo.CellPhoneNumber" name="CellPhoneNumber" placeholder="0333-3333333" onchange="checkPhoneNumber(this.id);" maxlength="15" required>
+                                            <input class="form-control number" type="tel" id="cellPhone" value="@Model.PersonalInfo.CellPhoneNumber" name="CellPhoneNumber" placeholder="92333-3333333" onchange="checkPhoneNumber(this.id);" maxlength="15" required>
                                             <span class="text-danger" id="numberError"></span>
                                         </div>
                                     </div>
@@ -833,10 +833,10 @@
                     <div class="container-fluid">
                         <div class="boxWraper infoBox">
                             <!--<div class="headBox">
-                            <h2>Documents</h2>
-                        </div>-->
+        <h2>Documents</h2>
+    </div>-->
+                            
                             <form id="fileUploadForm" enctype="multipart/form-data">
-                                <span class="text-danger h-6">Only files with the following extensions are allowed: .png, .jpg, .jpeg, .pdf</span>
 
                                 <div class="row">
 
@@ -847,11 +847,11 @@
                                     <div class="col-lg-3">
                                         @if (Utility.GetAdminFromSession().Id != 0)
                                         {
-                                            <input class="custom-upload-input" type="file" id="Photograph" size="1" name="Photograph" accept=".jpeg, .jpg, .png, .pdf" value="@Model.Document.Photograph" onchange="checkFileSize(this.id, 'errPhoto')">
+                                            <input class="custom-upload-input" type="file" id="Photograph" size="1" name="Photograph" accept=".jpeg, .jpg, .png" value="@Model.Document.Photograph" onchange="checkFileSize(this.id, 'errPhoto')">
                                         }
                                         else
                                         {
-                                            <input class="custom-upload-input" type="file" id="Photograph" size="1" name="Photograph" accept=".jpeg, .jpg, .png, .pdf" value="@Model.Document.Photograph" onchange="checkFileSize(this.id, 'errPhoto')" required>
+                                            <input class="custom-upload-input" type="file" id="Photograph" size="1" name="Photograph" accept=".jpeg, .jpg, .png" value="@Model.Document.Photograph" onchange="checkFileSize(this.id, 'errPhoto')" required>
                                         }
                                         <span class="text-danger" id="errPhoto"></span>
                                     </div>
@@ -922,6 +922,8 @@
                                 </div><br /><br />
                                 <div class="row">
                                     <div class="col-lg-12">
+                                        <span class="text-danger h-6">Only files with the following extensions are allowed: .png, .jpg, .jpeg, .pdf (pdf is not allowed in photograph)</span>
+
                                         <input class="savebtn global-btn-purple  float-right" type="button" onclick="submitDocuments('');" value="Next">
                                     </div>
                                 </div>

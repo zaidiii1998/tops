@@ -107,7 +107,7 @@ namespace HUTOPS.Controllers
                         Result = admitCardBatchModel.Result,
                         IsRecordSendToEApp = admitCardBatchModel.IsRecordSendToEApp,
                         HUTOPSIdsFile = filePath,
-                        CreatedBy = Utility.GetAdminFromSession().Name
+                        CreatedBy = Utility.GetAdminFromSession().Email
                     }); ;
                     DB.SaveChanges();
                     Utility.AddLog(Constants.LogType.ActivityLog, $"Insert Admit card batch Record by {Utility.GetAdminFromSession().Name} :");

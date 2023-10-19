@@ -1,5 +1,6 @@
 ﻿using ClosedXML.Excel;
 using ClosedXML.Extensions;
+using DocumentFormat.OpenXml.Vml.Office;
 using HUTOPS.Codebase;
 using HUTOPS.Helper;
 using HUTOPS.Models;
@@ -8,7 +9,6 @@ using System;
 using System.Data;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Web.Mvc;
 
 namespace HUTOPS.Controllers
@@ -33,7 +33,7 @@ namespace HUTOPS.Controllers
                 var Phone = Utility.GetParam(param, 4);
                 var Email = Utility.GetParam(param, 5);
 
-                DTResult<PersonalInformation> Result = new DTResult<PersonalInformation>();
+                DTResult<SP_GetStudents_Result> Result = new DTResult<SP_GetStudents_Result>();
                 var Response = DB.SP_GetStudents(param.Start, param.Length,HUTOPSId, Name, CNIC, Phone, Email);
 
                 var Records = Response.ToList();
@@ -44,22 +44,7 @@ namespace HUTOPS.Controllers
                 {
                     foreach (var rec in Records.ToList())
                     {
-                        Result.data.Add(new PersonalInformation()
-                        {
-                            Id = rec.Id,
-                            HUTopId = rec.HUTopId,
-                            FirstName = rec.FirstName,
-                            LastName = rec.LastName,
-                            CellPhoneNumber = rec.CellPhoneNumber,
-                            EmailAddress = rec.EmailAddress,
-                            CNIC = rec.CNIC,
-                            IsAdmitCardGenerated = rec.IsAdmitCardGenerated,
-                            AdmitCardGeneratedOn = rec.AdmitCardGeneratedOn,
-                            IsAdmitCardSent = rec.IsAdmitCardSent,
-                            AdmitCardSentOn = rec.AdmitCardSentOn,
-                            Result = rec.Result,
-                            IsRecordMoveToEApp = rec.IsRecordMoveToEApp
-                        });
+                        Result.data.Add(rec);
                     }
                     Total = Records.Count;
                 }
@@ -211,10 +196,10 @@ namespace HUTOPS.Controllers
                         item.HUSchoolName == null ? "" : item.HUSchoolName.ToString(),
 
                         // Documents
-                        item.Photograph == null ? "" : item.Photograph.ToString(),
-                        item.CNICDoc == null ? "" : item.CNICDoc.ToString(),
-                        item.HSSCMarkSheet == null ? "" : item.HSSCMarkSheet.ToString(),
-                        item.SSCMarkSheet == null ? "" : item.SSCMarkSheet.ToString(),
+                        item.Photograph == null ? "Not Uploaded":item.Photograph == "" ? "Not Uploaded" : "Uploaded",
+                        item.CNICDoc == null ? "Not Uploaded" :item.CNICDoc == "" ? "Not Uploaded" : "Uploaded",
+                        item.HSSCMarkSheet == null ? "Not Uploaded" : item.HSSCMarkSheet == "" ? "Not Uploaded" : "Uploaded",
+                        item.SSCMarkSheet == null ? "Not Uploaded" : item.SSCMarkSheet == "" ? "Not Uploaded" : "Uploaded",
 
                         // Subjects
                         item.SubjectName_1 == null ? "" : item.SubjectName_1.ToString(),
@@ -376,7 +361,7 @@ namespace HUTOPS.Controllers
                     using (HUTOPSEntities tempDB = new HUTOPSEntities())
                     {
                         var documents = tempDB.Documents.ToList().Where(x => x.Id == document.Id).FirstOrDefault();
-                        documents.AdmitCard = filePath;
+                        documents.AdmitCard = Path.Combine(System.Configuration.ConfigurationManager.AppSettings["BaseURL"], filePath.Substring(filePath.IndexOf("Upload")));
                         tempDB.SaveChanges();
                     }
                     Utility.AddLog(Constants.LogType.ActivityLog, $"Update Admit card Path in the documents table against HUTOPSId : {personalInformation.HUTopId}");
@@ -424,11 +409,12 @@ namespace HUTOPS.Controllers
                     Utility.AddLog(Constants.LogType.ActivityLog, $"Documents Record not found against HUTOPS Id: {personalInformation.HUTopId}");
                     return Json(new { status = false, message = "Documents not Found" });
                 }
-
-                if (System.IO.File.Exists(document.AdmitCard))
+                var admitCardPath = Path.Combine(HttpContext.Server.MapPath("~/"), document.AdmitCard.Substring(document.AdmitCard.IndexOf("Upload")));
+                if (System.IO.File.Exists(admitCardPath))
                 {
+                       
                         // Send Email
-                        CPD.Framework.Core.EmailService.SendEmail(personalInformation.EmailAddress, null, null, EmailTemplate.Subject, EmailTemplate.Body, document.AdmitCard, null, null);
+                        CPD.Framework.Core.EmailService.SendEmail(personalInformation.EmailAddress, null, null, EmailTemplate.Subject, EmailTemplate.Body, admitCardPath, null, null);
 
                         Utility.AddLog(Constants.LogType.ActivityLog, $"Email has been sent to Applicant against HUTOPSId : {personalInformation.HUTopId} ");
                         // Update sent Admit Card Status in perssonal Info Table
@@ -484,25 +470,22 @@ namespace HUTOPS.Controllers
                             var educationalInformation = DB.Educationals.Where(x => x.UserId == Id).FirstOrDefault();
                             if(educationalInformation != null)
                             {
-                                // For Moving record using Entity Framework
-                                //if(RecordsProcessing.MoveRecordToEApp(personalInformation, educationalInformation))
-                                //{
-                                //    personalInformation.IsRecordMoveToEApp = 1;
-                                //    DB.SaveChanges();
-
-                                //    Utility.AddLog(Constants.LogType.ActivityLog, $"Personal Information Record Move to E-Application against HUTOPS Id: {personalInformation.HUTopId}");
-                                //    return Json(new { status = true, message = "Record Move to E-Application Successfully" });
-                                //}
-                                //else
-                                //{
-                                //    return Json(new { status = false, message = "Error Occured while moving record to E-Application" });
-                                //}
-                                DB.SP_UserShiftToEApplication(personalInformation.Id);
-                                personalInformation.IsRecordMoveToEApp = 1;
-                                DB.SaveChanges();
-
-                                Utility.AddLog(Constants.LogType.ActivityLog, $"Personal Information Record Move to E-Application against HUTOPS Id: {personalInformation.HUTopId}");
-                                return Json(new { status = true, message = "Record Move to E-Application Successfully" });
+                                 //For Moving record using Entity Framework
+                                if(RecordsProcessing.MoveRecordToEApp(personalInformation, educationalInformation))
+                                {
+                                    using (HUTOPSEntities tempDB  = new HUTOPSEntities())
+                                    {
+                                        var personalInfo = tempDB.PersonalInformations.ToList().Where(x => x.Id == Id).FirstOrDefault();
+                                        personalInfo.IsRecordMoveToEApp = 1;
+                                        tempDB.SaveChanges();
+                                    }
+                                    Utility.AddLog(Constants.LogType.ActivityLog, $"Personal Information Record Move to E-Application against HUTOPS Id: {personalInformation.HUTopId}");
+                                    return Json(new { status = true, message = "Record Move to E-Application Successfully" });
+                                }
+                                else
+                                {
+                                    return Json(new { status = false, message = "Error Occured while moving record to E-Application" });
+                                }
                             }
                             else
                             {

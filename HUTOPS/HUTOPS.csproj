@@ -190,6 +190,7 @@
     <Compile Include="Controllers\ApplicationController.cs" />
     <Compile Include="Controllers\CommonController.cs" />
     <Compile Include="Controllers\EmailController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\ResultController.cs" />
     <Compile Include="Controllers\StudentController.cs" />
     <Compile Include="Controllers\TestDateController.cs" />
@@ -199,23 +200,23 @@
     <Compile Include="Document.cs">
       <DependentUpon>HUTOPS.tt</DependentUpon>
     </Compile>
-    <Compile Include="EAppDBModel\EAppDB.Context.cs">
+    <Compile Include="EAppDBModel\EApplication.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>EAppDB.Context.tt</DependentUpon>
+      <DependentUpon>EApplication.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="EAppDBModel\EAppDB.cs">
+    <Compile Include="EAppDBModel\EApplication.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>EAppDB.tt</DependentUpon>
+      <DependentUpon>EApplication.tt</DependentUpon>
     </Compile>
-    <Compile Include="EAppDBModel\EAppDB.Designer.cs">
+    <Compile Include="EAppDBModel\EApplication.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>EAppDB.edmx</DependentUpon>
+      <DependentUpon>EApplication.edmx</DependentUpon>
     </Compile>
     <Compile Include="EAppDBModel\PersonalInformation.cs">
-      <DependentUpon>EAppDB.tt</DependentUpon>
+      <DependentUpon>EApplication.tt</DependentUpon>
     </Compile>
     <Compile Include="Educational.cs">
       <DependentUpon>HUTOPS.tt</DependentUpon>
@@ -331,9 +332,11 @@
     <Content Include="Content\fonts\fa-light-300.svg" />
     <Content Include="Content\fonts\fa-regular-400.svg" />
     <Content Include="Content\fonts\fa-solid-900.svg" />
+    <Content Include="Content\Images\admin_logo.png" />
     <Content Include="Content\Images\bg_logo_large.jpg" />
     <Content Include="Content\Images\email logo.png" />
     <Content Include="Content\Images\preloader.gif" />
+    <Content Include="Content\Images\tick-Email.png" />
     <Content Include="Content\Images\TOPS_logo_admin.png" />
     <Content Include="Content\img\CategoryMenu.png" />
     <Content Include="Content\img\dashboard-icons\access-permission.svg" />
@@ -436,15 +439,15 @@
     <Content Include="Content\plugin\summernote\summernote-bs4.min.js" />
     <Content Include="Content\plugin\sweetalert\sweetalert.min.js" />
     <Content Include="Content\plugin\webfont\webfont.min.js" />
-    <Content Include="EAppDBModel\EAppDB.Context.tt">
+    <Content Include="EAppDBModel\EApplication.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>EAppDB.edmx</DependentUpon>
-      <LastGenOutput>EAppDB.Context.cs</LastGenOutput>
+      <DependentUpon>EApplication.edmx</DependentUpon>
+      <LastGenOutput>EApplication.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="EAppDBModel\EAppDB.tt">
+    <Content Include="EAppDBModel\EApplication.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>EAppDB.edmx</DependentUpon>
-      <LastGenOutput>EAppDB.cs</LastGenOutput>
+      <DependentUpon>EApplication.edmx</DependentUpon>
+      <LastGenOutput>EApplication.cs</LastGenOutput>
     </Content>
     <Content Include="HUTOPS.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -506,12 +509,12 @@
       <DependentUpon>HUTOPS.edmx</DependentUpon>
     </Content>
     <Content Include="Content\HUTOPS Ids Demo File.xlsx" />
-    <EntityDeploy Include="EAppDBModel\EAppDB.edmx">
+    <EntityDeploy Include="EAppDBModel\EApplication.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>EAppDB.Designer.cs</LastGenOutput>
+      <LastGenOutput>EApplication.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="EAppDBModel\EAppDB.edmx.diagram">
-      <DependentUpon>EAppDB.edmx</DependentUpon>
+    <Content Include="EAppDBModel\EApplication.edmx.diagram">
+      <DependentUpon>EApplication.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\esm\popper-utils.js" />

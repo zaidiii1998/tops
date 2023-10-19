@@ -7,16 +7,16 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace HUTOPSBatchProcessConsoleApp.EAppDBModel
+namespace HUTOPS.EAppDBModel
 {
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class E_ApplicationEntities2 : DbContext
+    public partial class EApplicationEntities : DbContext
     {
-        public E_ApplicationEntities2()
-            : base("name=E_ApplicationEntities2")
+        public EApplicationEntities()
+            : base("name=EApplicationEntities")
         {
         }
     
