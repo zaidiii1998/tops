@@ -50,7 +50,7 @@ namespace HUTOPSBatchProcessConsoleApp
                         switch ((BatchType)batch.Type)
                         {
                             case BatchType.GenerateAdmitCard:// Convert the byte value to the State enum        State currentState = (State)stateValue;: // Generate Admit Card
-                                Result = BatchProcessing.GenerateAdmitCard(records, batch.Shift, batch.Venue, batch.TestDate.Value.ToString("dd-MM-yyyy"));
+                                Result = BatchProcessing.GenerateAdmitCard(records, batch.Shift, batch.Venue, batch.TestDate.Value.ToString("dddd, dd MMMM yyyy"));
                                 break;
 
                             case BatchType.SendAdmitCard: // SendAdmitCard
@@ -58,7 +58,7 @@ namespace HUTOPSBatchProcessConsoleApp
                                 break;
 
                             case BatchType.GenerateAndSendAdmitCard: // GenerateAndSendAdmitCard
-                                Result  = BatchProcessing.GenerateSendAdmitCard(records, batch.Shift, batch.Venue, batch.TestDate.Value.ToString("dd-MM-yyyy"));
+                                Result  = BatchProcessing.GenerateSendAdmitCard(records, batch.Shift, batch.Venue, batch.TestDate.Value.ToString("dddd, dd MMMM yyyy"));
                             break;
 
                             case BatchType.Result: // Result

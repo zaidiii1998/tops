@@ -334,7 +334,7 @@ namespace HUTOPS.Controllers
                     }
 
                     EmailBody = EmailBody.Replace("{{Watermark}}", watermarkImage);
-                    EmailBody = EmailBody.Replace("{{TestDate}}", model.TestDate.ToString("dd-MM-yyyy"));
+                    EmailBody = EmailBody.Replace("{{TestDate}}", model.TestDate.ToString("dddd, dd MMMM yyyy"));
                     EmailBody = EmailBody.Replace("{{ApproxDatetime}}", model.Shift == "1" ? Constants.Shift.FirstShift : model.Shift == "2" ? Constants.Shift.SecondShift : Constants.Shift.ThirtShift);
                     EmailBody = EmailBody.Replace("{{ReportingTime}}", model.Shift == "1" ? Constants.ReportingTime.FirstShift : model.Shift == "2" ? Constants.ReportingTime.SecondShift : Constants.ReportingTime.ThirtShift);
                     EmailBody = EmailBody.Replace("{{Vanue}}", model.Venue == "Karachi" ? Constants.Vanue.Karachi : Constants.Vanue.Islamabad);
