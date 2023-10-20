@@ -470,6 +470,10 @@ namespace HUTOPS.Controllers
                             // Education 
                             EmailBody = EmailBody.Replace("{{levelofEducation}}", applicationModel.Education.CurrentLevelOfEdu);
                             EmailBody = EmailBody.Replace("{{University}}", applicationModel.Education.UniversityName);
+                            if (string.IsNullOrEmpty(applicationModel.Education.UniversityName))
+                            {
+                                EmailBody = EmailBody.Replace("<strong>University:</strong>", "");
+                            }
                             EmailBody = EmailBody.Replace("{{Board}}", applicationModel.Education.HSSCBoardName);
                             EmailBody = EmailBody.Replace("{{Group}}", applicationModel.Education.HSSCGroupName);
                             EmailBody = EmailBody.Replace("{{HSSCSchoolName}}", applicationModel.Education.HSSCSchoolName);
