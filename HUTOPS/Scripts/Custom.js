@@ -2349,7 +2349,7 @@ function SubmitAdmitCardBatch() {
         }
     } else {
         isValid = false;
-        ShowDivError("Please Select Action Radio");
+        ShowDivError("Please Select Action");
         return false;
     }
 
