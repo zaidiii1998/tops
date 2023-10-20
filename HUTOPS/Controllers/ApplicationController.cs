@@ -490,7 +490,7 @@ namespace HUTOPS.Controllers
                             EmailBody = EmailBody.Replace("{{HUSchoolName}}", applicationModel.Education.HUSchoolName);
                             EmailBody = EmailBody.Replace("{{Subjects}}", applicationModel.SubjectName[0]);
 
-                            CPD.Framework.Core.EmailService.SendEmail(applicationModel.PersonalInfo.EmailAddress, null, null, EmailTemplate.Subject, EmailBody, PhotographPath, null/*"tops@habib.edu.pk"*/, SSCPath);
+                            CPD.Framework.Core.EmailService.SendEmail(applicationModel.PersonalInfo.EmailAddress, null, null, EmailTemplate.Subject, EmailBody, PhotographPath, "tops@habib.edu.pk", SSCPath);
 
                             Utility.AddLog(Constants.LogType.ActivityLog, $"Email has been sent to applicant User Details: {JsonConvert.SerializeObject(applicationModel.PersonalInfo)}");
 

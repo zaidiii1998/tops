@@ -23,8 +23,6 @@ namespace HUTOPS.Models
 
         // For  Education Form
         public List<EducationalSubject> Subjects { get; set; }
-        public List<Board> Boards { get; set; }
-        public List<BoardGroup> Groups { get; set; }
 
         // For Test Date Form
         public List<TestDate> TestDate { get; set; }

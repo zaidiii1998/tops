@@ -180,7 +180,7 @@ namespace HUTOPSBatchProcessConsoleApp.Codebase
                             if (File.Exists(admitCardPath))
                             {
                                 // Send Email
-                                CPD.Framework.Core.EmailService.SendEmail(personalInformation.EmailAddress, null, null, EmailTemplate.Subject, EmailTemplate.Body, admitCardPath, null/*"tops@habib.edu.pk"*/, null);
+                                CPD.Framework.Core.EmailService.SendEmail(personalInformation.EmailAddress, null, null, EmailTemplate.Subject, EmailTemplate.Body, admitCardPath, "tops@habib.edu.pk", null);
 
                                 Helper.AddLog(Constants.LogType.ActivityLog, $"Email has been sent to Applicant against HUTOPSId : {record.HUTOPSIds} ");
                                 // Update sent Admit Card Status in perssonal Info Table
@@ -331,7 +331,7 @@ namespace HUTOPSBatchProcessConsoleApp.Codebase
                             Helper.AddLog(Constants.LogType.ActivityLog, $"Update Admit card Path in the documents table against HUTOPSId : {record.HUTOPSIds}");
                             
                             // Send Email
-                            CPD.Framework.Core.EmailService.SendEmail(personalInformation.EmailAddress, null, null, AdmmitCardEmailTemplate.Subject, EmailTemplate.Body, filePath, null /*"tops@habib.edu.pk"*/, null);
+                            CPD.Framework.Core.EmailService.SendEmail(personalInformation.EmailAddress, null, null, AdmmitCardEmailTemplate.Subject, EmailTemplate.Body, filePath, "tops@habib.edu.pk", null);
 
                             Helper.AddLog(Constants.LogType.ActivityLog, $"Email has been sent to Applicant against HUTOPSId : {record.HUTOPSIds} ");
                             // Update sent Admit Card Status in perssonal Info Table

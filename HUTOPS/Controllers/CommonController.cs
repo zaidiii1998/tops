@@ -76,40 +76,6 @@ namespace HUTOPS.Controllers
             }
         }
 
-        public ActionResult GetBoardList()
-        {
-            return Json(DB.Boards.ToList());
-        }
-        public ActionResult GetGroupList(string BoardId)
-        {
-            return Json(DB.BoardGroups.ToList().Where(x => x.BoardId == (BoardId == ""? 0 : int.Parse(BoardId))).ToList());
-        }
-        public ActionResult GetSubjectList(string GroupId)
-        {
-            return Json(DB.GroupSubjects.ToList().Where(x => x.GroupId == (GroupId == ""? 0 : int.Parse(GroupId))).ToList());
-        }
-        
-        public ActionResult CheckPersonalInfo()
-        {
-            try
-            {
-                var personalInfo = Utility.GetUserFromSession();
-                var result = DB.WEB_CheckPersonalInfo(personalInfo.Id).ToList().FirstOrDefault();
-                if (result.Response == 1)
-                {
-                    return Json(new { status = true, message = result.Reason });
-                }
-                else
-                {
-                    return Json(new { status = false, message = result.Reason });
-                }
-            }
-            catch (System.Exception)
-            {
-
-                throw;
-            }
-        }
 
         public ActionResult GetCountry()
         {

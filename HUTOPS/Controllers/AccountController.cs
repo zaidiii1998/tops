@@ -271,7 +271,7 @@ namespace HUTOPS.Controllers
                     EmailBody = EmailBody.Replace("{{Name}}", Name);
                     EmailBody = EmailBody.Replace("{{Password}}", password);
 
-                    CPD.Framework.Core.EmailService.SendEmail(email, null, EmailTemplate.Subject, EmailBody);
+                    CPD.Framework.Core.EmailService.SendEmail(email, null, null, EmailTemplate.Subject, EmailBody,null,"tops@habib.edu.pk",null);
                     ViewBag.Result = "We have sent an email to the registered email address";
                     return View();
 

@@ -27,17 +27,13 @@ namespace HUTOPS
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Activity> Activities { get; set; }
         public virtual DbSet<BatchUpload> BatchUploads { get; set; }
-        public virtual DbSet<Board> Boards { get; set; }
-        public virtual DbSet<BoardGroup> BoardGroups { get; set; }
         public virtual DbSet<City> Cities { get; set; }
         public virtual DbSet<Country> Countries { get; set; }
         public virtual DbSet<Document> Documents { get; set; }
         public virtual DbSet<Educational> Educationals { get; set; }
         public virtual DbSet<EducationalSubject> EducationalSubjects { get; set; }
         public virtual DbSet<EmailTemplate> EmailTemplates { get; set; }
-        public virtual DbSet<GroupSubject> GroupSubjects { get; set; }
         public virtual DbSet<Log> Logs { get; set; }
         public virtual DbSet<PersonalInformation> PersonalInformations { get; set; }
         public virtual DbSet<State> States { get; set; }

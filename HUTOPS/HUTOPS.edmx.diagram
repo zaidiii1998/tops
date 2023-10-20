@@ -5,17 +5,13 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="5cb54fbd03e34359bb44a5906f109584" Name="Diagram1" ZoomLevel="86">
-        <EntityTypeShape EntityType="HUTOPSModel.Activity" Width="1.5" PointX="8.75" PointY="2.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="HUTOPSModel.BatchUpload" Width="1.5" PointX="4.75" PointY="2.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="HUTOPSModel.Board" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="HUTOPSModel.BoardGroup" Width="1.5" PointX="6.75" PointY="3.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="HUTOPSModel.City" Width="1.5" PointX="6.75" PointY="5.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="HUTOPSModel.Country" Width="1.5" PointX="8.75" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="HUTOPSModel.BatchUpload" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HUTOPSModel.City" Width="1.5" PointX="8.875" PointY="2.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="HUTOPSModel.Country" Width="1.5" PointX="8.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="HUTOPSModel.Document" Width="1.5" PointX="6.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="HUTOPSModel.Educational" Width="1.5" PointX="2.375" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="HUTOPSModel.EducationalSubject" Width="1.5" PointX="2.375" PointY="5.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="HUTOPSModel.EmailTemplate" Width="1.5" PointX="4.75" PointY="5.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="HUTOPSModel.GroupSubject" Width="1.5" PointX="8.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HUTOPSModel.EmailTemplate" Width="1.5" PointX="6.75" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="HUTOPSModel.Log" Width="1.5" PointX="10.75" PointY="5.25" IsExpanded="true" />
         <EntityTypeShape EntityType="HUTOPSModel.PersonalInformation" Width="1.5" PointX="0.625" PointY="0.75" IsExpanded="false" />
         <EntityTypeShape EntityType="HUTOPSModel.State" Width="1.5" PointX="10.75" PointY="0.75" IsExpanded="true" />

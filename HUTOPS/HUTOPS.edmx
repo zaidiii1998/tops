@@ -5,16 +5,6 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="HUTOPSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="Activity">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="UserId" Type="int" />
-          <Property Name="Name" Type="varchar" MaxLength="50" />
-          <Property Name="Duration" Type="varchar" MaxLength="50" />
-          <Property Name="CreatedDatetime" Type="datetime2" Precision="7" />
-        </EntityType>
         <EntityType Name="BatchUploads">
           <Key>
             <PropertyRef Name="Id" />
@@ -32,21 +22,6 @@
           <Property Name="Type" Type="tinyint" />
           <Property Name="Result" Type="tinyint" />
           <Property Name="IsRecordSendToEApp" Type="tinyint" />
-        </EntityType>
-        <EntityType Name="Board">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="varchar" MaxLength="50" />
-        </EntityType>
-        <EntityType Name="BoardGroups">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="varchar" MaxLength="50" />
-          <Property Name="BoardId" Type="int" />
         </EntityType>
         <EntityType Name="City">
           <Key>
@@ -122,14 +97,6 @@
           <Property Name="CreatedOn" Type="datetime2" Precision="7" />
           <Property Name="UpdatedOn" Type="datetime2" Precision="7" />
           <Property Name="TypeId" Type="int" Nullable="false" />
-        </EntityType>
-        <EntityType Name="GroupSubjects">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="varchar" MaxLength="50" />
-          <Property Name="GroupId" Type="int" />
         </EntityType>
         <EntityType Name="Log">
           <Key>
@@ -503,17 +470,13 @@
           <Parameter Name="Password" Type="varchar" Mode="In" />
         </Function>
         <EntityContainer Name="HUTOPSModelStoreContainer">
-          <EntitySet Name="Activity" EntityType="Self.Activity" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BatchUploads" EntityType="Self.BatchUploads" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Board" EntityType="Self.Board" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="BoardGroups" EntityType="Self.BoardGroups" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="City" EntityType="Self.City" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Country" EntityType="Self.Country" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Documents" EntityType="Self.Documents" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Educational" EntityType="Self.Educational" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EducationalSubjects" EntityType="Self.EducationalSubjects" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EmailTemplates" EntityType="Self.EmailTemplates" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="GroupSubjects" EntityType="Self.GroupSubjects" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Log" EntityType="Self.Log" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PersonalInformation" EntityType="Self.PersonalInformation" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="State" EntityType="Self.State" Schema="dbo" store:Type="Tables" />
@@ -523,16 +486,6 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="HUTOPSModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="Activity">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserId" Type="Int32" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Duration" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="CreatedDatetime" Type="DateTime" Precision="7" />
-        </EntityType>
         <EntityType Name="BatchUpload">
           <Key>
             <PropertyRef Name="Id" />
@@ -550,21 +503,6 @@
           <Property Name="Type" Type="Byte" />
           <Property Name="Result" Type="Byte" />
           <Property Name="IsRecordSendToEApp" Type="Byte" />
-        </EntityType>
-        <EntityType Name="Board">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="BoardGroup">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="BoardId" Type="Int32" />
         </EntityType>
         <EntityType Name="City">
           <Key>
@@ -640,14 +578,6 @@
           <Property Name="CreatedOn" Type="DateTime" Precision="7" />
           <Property Name="UpdatedOn" Type="DateTime" Precision="7" />
           <Property Name="TypeId" Type="Int32" Nullable="false" />
-        </EntityType>
-        <EntityType Name="GroupSubject">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="GroupId" Type="Int32" />
         </EntityType>
         <EntityType Name="Log">
           <Key>
@@ -754,17 +684,13 @@
           <Property Name="AdmissionSession" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityContainer Name="HUTOPSEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Activities" EntityType="Self.Activity" />
           <EntitySet Name="BatchUploads" EntityType="Self.BatchUpload" />
-          <EntitySet Name="Boards" EntityType="Self.Board" />
-          <EntitySet Name="BoardGroups" EntityType="Self.BoardGroup" />
           <EntitySet Name="Cities" EntityType="Self.City" />
           <EntitySet Name="Countries" EntityType="Self.Country" />
           <EntitySet Name="Documents" EntityType="Self.Document" />
           <EntitySet Name="Educationals" EntityType="Self.Educational" />
           <EntitySet Name="EducationalSubjects" EntityType="Self.EducationalSubject" />
           <EntitySet Name="EmailTemplates" EntityType="Self.EmailTemplate" />
-          <EntitySet Name="GroupSubjects" EntityType="Self.GroupSubject" />
           <EntitySet Name="Logs" EntityType="Self.Log" />
           <EntitySet Name="PersonalInformations" EntityType="Self.PersonalInformation" />
           <EntitySet Name="States" EntityType="Self.State" />
@@ -1307,17 +1233,6 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="HUTOPSModelStoreContainer" CdmEntityContainer="HUTOPSEntities">
-          <EntitySetMapping Name="Activities">
-            <EntityTypeMapping TypeName="HUTOPSModel.Activity">
-              <MappingFragment StoreEntitySet="Activity">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Duration" ColumnName="Duration" />
-                <ScalarProperty Name="CreatedDatetime" ColumnName="CreatedDatetime" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="BatchUploads">
             <EntityTypeMapping TypeName="HUTOPSModel.BatchUpload">
               <MappingFragment StoreEntitySet="BatchUploads">
@@ -1334,23 +1249,6 @@
                 <ScalarProperty Name="IsStatusEmailSent" ColumnName="IsStatusEmailSent" />
                 <ScalarProperty Name="EmailSentOn" ColumnName="EmailSentOn" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Boards">
-            <EntityTypeMapping TypeName="HUTOPSModel.Board">
-              <MappingFragment StoreEntitySet="Board">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="BoardGroups">
-            <EntityTypeMapping TypeName="HUTOPSModel.BoardGroup">
-              <MappingFragment StoreEntitySet="BoardGroups">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="BoardId" ColumnName="BoardId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1432,15 +1330,6 @@
                 <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
                 <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
                 <ScalarProperty Name="TypeId" ColumnName="TypeId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="GroupSubjects">
-            <EntityTypeMapping TypeName="HUTOPSModel.GroupSubject">
-              <MappingFragment StoreEntitySet="GroupSubjects">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="GroupId" ColumnName="GroupId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -166,19 +166,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Activity.cs">
-      <DependentUpon>HUTOPS.tt</DependentUpon>
-    </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="BatchUpload.cs">
-      <DependentUpon>HUTOPS.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Board.cs">
-      <DependentUpon>HUTOPS.tt</DependentUpon>
-    </Compile>
-    <Compile Include="BoardGroup.cs">
       <DependentUpon>HUTOPS.tt</DependentUpon>
     </Compile>
     <Compile Include="City.cs">
@@ -229,9 +220,6 @@
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
-    </Compile>
-    <Compile Include="GroupSubject.cs">
-      <DependentUpon>HUTOPS.tt</DependentUpon>
     </Compile>
     <Compile Include="Helper\Constants.cs" />
     <Compile Include="Helper\Extension.cs" />

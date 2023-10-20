@@ -327,7 +327,7 @@ function validateEmail(inputId, errSpanId) {
     const email = $('#' + inputId).val();
     const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
     if (!emailRegex.test(email)) {
-        debugger
+        
         $('#' + errSpanId).html("Please Enter a valid Email Address");
         return false;
     } else {
@@ -408,7 +408,7 @@ function updateCities(comboProvinceId, ComboCityId) {
 }
 
 function updateProvince(comboCountryId, comboProvinceId) {
-    debugger
+    
     if (comboCountryId == 'residentialCountry') {
         $('#txtResidentialCountry').val($('#residentialCountry :selected').text())
     } else {
@@ -489,7 +489,7 @@ function LoadDate(stringDate, DateId) {
     var date = new Date(stringDate);
     var newDate = date.getFullYear() + '-' + (date.getMonth() + 1).toString().padStart(2, '0') + '-' + date.getDate().toString().padStart(2, '0');
     $('#' + DateId).val(newDate);
-    debugger
+    
     // For Load Combos For Day Month Year
     if (stringDate != "") {
         var day = date.getDate().toString().padStart(2, '0');
@@ -560,7 +560,7 @@ function validatePersonalInfoForm() {
     checkEmail('email');
     checkPhoneNumber('cellPhone');
 
-    debugger
+    
     if ($('#emailError').html() != "") {
         isValid = false;
         $('#email').addClass('error');
@@ -637,7 +637,7 @@ function validatePersonalInfoForm() {
     }
     
     if (isValid) {
-        debugger
+        
         increaseProgressBarWidth();
         $('#btnEducation').prop('disabled', false);
         $('#btnEducation').trigger('click');
@@ -650,7 +650,7 @@ function validatePersonalInfoForm() {
 
 
 function LoadEducationalData(Model) {
-    debugger
+    
     if (Model.Education != null) {
         $('#currentLevel').val(Model.Education.CurrentLevelOfEdu == null ? '' : Model.Education.CurrentLevelOfEdu.toString());
         $('#currentLevel').trigger('change');
@@ -747,7 +747,7 @@ function GetBoardListCallback(response) {
 function GetGroupListFromObj(BoardId) {
     const selectBox = document.getElementById('groupOfStudy');
     selectBox.innerHTML = ''; // Clear previous options
-    debugger
+    
 
     if (BoardId === 'IB') {
         const groups = ['Pre-Engineering', 'Pre-Medical', 'General Science/Computer Science', 'Commerce', 'Arts/Humanities', 'Home Economics'];
@@ -1134,7 +1134,7 @@ function SaveEducation() {
 
     function editEducationCallback(response) {
         $('#mainLoader').hide();
-        debugger
+        
         if (response.status) {
             ShowDivSuccess(response.message)
         }
@@ -1147,7 +1147,7 @@ function SaveEducation() {
 function SubmitEducation() {
 
     var isValid = true;
-    debugger
+    
     $('#EducationForm input[required]').each(function () {
 
         if ($(this).val().trim() === '') {
@@ -1212,7 +1212,7 @@ function SubmitEducation() {
 // Document Section
 
 function checkFileSize(fileId, ErrSpanId){
-    debugger
+    
     
     var file = $('#' + fileId);
     var fileSize = file[0].files[0].size; // Get the file size in bytes
@@ -1227,7 +1227,7 @@ function checkFileSize(fileId, ErrSpanId){
     }
 }
 function submitDocuments(sessionUserId) {
-    debugger
+    
     isValid = true;
     $('input[type="file"][required]').each(function () {
 
@@ -1314,7 +1314,7 @@ function SubmitActivity() {
         ActivityDuration.push($(this).val());
     });
     $('#mainLoader').show();
-    debugger
+    
     CallAsyncService("/Home/SubmitActivity?ActivityName=" + ActivityName + "&ActivityDuration=" + ActivityDuration + "&UserId=" + $('#id').val(), null, SubmitActivityCB)
     function SubmitActivityCB(response) {
         $('#mainLoader').hide();
@@ -1332,7 +1332,7 @@ function SubmitActivity() {
 }
 // Declaration Section
 function submitDeclaration() {
-    debugger
+    
     var isValid = true;
     if ($('#permanentDifferent').is(':checked') == true) {
         $('#permanentAddress').prop('required',true);
@@ -1572,7 +1572,7 @@ function submitDeclaration() {
                 $("#EducationError ul").html('');
                 $("#DocumentError ul").html('');
 
-                debugger
+                
                 var PersonalErrors = response.PersonalErrors.toString();
                 var PersonalErrorsList = PersonalErrors.split(",");
 
@@ -1779,7 +1779,7 @@ function LoadTestDate(date) {
 }
 function SubmitTestDate() {
     date = $('#TestDate').val();
-    debugger
+    
 
     if (date != null && date != "") {
         increaseProgressBarWidth();
@@ -1968,7 +1968,7 @@ function LoadStudentDatatable() {
 
     // Edit Transaction
     $('#main-datatables tbody').on('click', '#btnEdit', function () {
-        debugger
+        
         var data = mainTable.row($(this).parents('tr')).data();
         $('#mainLoader').show();
         CallAsyncService("/Student/UpdateSession?Id=" + data.Id, null, CBFunction)
@@ -1984,7 +1984,7 @@ function LoadStudentDatatable() {
     });
 
     $('#main-datatables tbody').on('click', '.checkbox', function () {
-        debugger
+        
         var data = mainTable.row($(this).parents('tr')).data();
         if ($(this).prop('checked') == true) {
             if (data.IsAdmitCardGenerated == 0) {
@@ -2023,7 +2023,7 @@ function closeStudentProfile(){
 }
 
 function ShowAdmitCardModal(applicantId) {
-    debugger
+    
     var modal = $('#modalAdmitCard');
     $('#applicantId').val(applicantId);
     modal.modal({ show: true })
@@ -2056,7 +2056,7 @@ function SubmitAdmitCard() {
     $("input[name=venue]").each(function () {
 
         var checked = $("input[name=venue]:checked");
-        debugger
+        
         if (checked.length == 0) {
             isValid = false;
             $('#errVenue').html('Please select Venue');
@@ -2202,7 +2202,7 @@ function LoadTestDateDatatable() {
 
     // Edit Transaction
     $('#main-datatables tbody').on('click', '#btnEdit', function () {
-        debugger
+        
         var data = TestDateTable.row($(this).parents('tr')).data();
         var modal = $('#modal');
         console.log(data[3]);
@@ -2295,7 +2295,7 @@ function AddUpdateTestDate() {
 
 // Admit card Managment 
 function SubmitAdmitCardBatch() {
-    debugger
+    
     var isValid = true; 
     if ($("input[name='type']:checked").val() != null) {
         if ($("input[name='type']:checked").val() == 2) {
@@ -2339,7 +2339,7 @@ function SubmitAdmitCardBatch() {
             $("input[name=vanue]").each(function () {
                 
                 var checked = $("input[name=vanue]:checked");
-                debugger
+                
                 if (checked.length == 0) {
                     $('#errVenue').html('Please select Venue');
                 } else {
@@ -2400,7 +2400,7 @@ function SubmitResultBatch() {
     $("#modalForm input[name=result]").each(function () {
 
         var checked = $("input[name=result]:checked");
-        debugger
+        
         if (checked.length == 0) {
             $('#errResult').html('Please select Result Value');
         } else {
@@ -2466,7 +2466,7 @@ function SubmitRecordsToEApp() {
         data.append("Type", 5);
 
         $('#mainLoader').show();
-        debugger
+        
         CallFileAsyncService("/AdmitCard/Submit", data, SubmitAdmitCardBatchCB);
         function SubmitAdmitCardBatchCB(response) {
             $('#mainLoader').hide();

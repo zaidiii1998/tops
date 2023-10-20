@@ -414,7 +414,7 @@ namespace HUTOPS.Controllers
                 {
                        
                         // Send Email
-                        CPD.Framework.Core.EmailService.SendEmail(personalInformation.EmailAddress, null, null, EmailTemplate.Subject, EmailTemplate.Body, admitCardPath, null, null);
+                        CPD.Framework.Core.EmailService.SendEmail(personalInformation.EmailAddress, null, null, EmailTemplate.Subject, EmailTemplate.Body, admitCardPath, "tops@habib.edu.pk", null);
 
                         Utility.AddLog(Constants.LogType.ActivityLog, $"Email has been sent to Applicant against HUTOPSId : {personalInformation.HUTopId} ");
                         // Update sent Admit Card Status in perssonal Info Table

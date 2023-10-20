@@ -67,11 +67,11 @@ function CallFileAsyncService(url, fileData, CallbackFunction) {
 }
 
 function ShowDivSuccess(msg) {
-    debugger
+    
     $.notify(msg, "success");
 }
 function ShowDivError(msg) {
-    debugger
+    
     $.notify(msg, "error");
 }
 
@@ -101,7 +101,7 @@ function checkEmail(Id) {
         const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
 
         if (!emailRegex.test(email)) {
-            debugger
+            
             $('#emailError').html("Please Enter a valid Email Address");
             return false;
         }
@@ -190,7 +190,7 @@ function validateRegisterForm() {
         return false;
 
     } else if (!emailRegex.test(email)) {
-        debugger
+        
         $('#emailError').html("Please Enter a valid Email Address");
         return false;
     } else if ($('#comboHearHU').val() == '') {
