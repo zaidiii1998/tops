@@ -679,13 +679,13 @@
                                     <div class="col-lg-4">
                                         <div class="form-group">
                                             <label for="collegeName">Current College/Last College Name<span class="text-danger h-6" style="font-size: 1.1rem;">*</span>:</label>
-                                            <input class="form-control" type="text" value="@Model.Education.HSSCSchoolName" id="collegeName" name="collegeName" required>
+                                            <input class="form-control" type="text" value="@Model.Education.HSSCSchoolName" id="collegeName" maxlength="50" name="collegeName" required>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="form-group">
                                             <label for="collegeAddress">College Address with City Name:</label>
-                                            <textarea class="form-control" id="collegeAddress" name="collegeAddress" rows="2"> @Model.Education.HSSCSchoolAddress</textarea>
+                                            <textarea class="form-control" id="collegeAddress" name="collegeAddress" maxlength="100" rows="2"> @Model.Education.HSSCSchoolAddress</textarea>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
@@ -721,13 +721,13 @@
                                     <div class="col-lg-4">
                                         <div class="form-group">
                                             <label for="secondarySchoolName">Secondary Education School Name<span class="text-danger h-6" style="font-size: 1.1rem;">*</span>:</label>
-                                            <input class="form-control" type="text" id="secondarySchoolName" value="@Model.Education.SSCSchoolName" name="secondarySchoolName" required>
+                                            <input class="form-control" type="text" id="secondarySchoolName" value="@Model.Education.SSCSchoolName" maxlength="50" name="secondarySchoolName" required>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="form-group">
                                             <label for="secondarySchoolAddress">Secondary Education School Address with City Name:</label>
-                                            <textarea class="form-control" type="text" id="secondarySchoolAddress" name="secondarySchoolAddress" rows="2"> @Model.Education.SSCSchoolAddress</textarea>
+                                            <textarea class="form-control" type="text" id="secondarySchoolAddress" name="secondarySchoolAddress" maxlength="100" rows="2"> @Model.Education.SSCSchoolAddress</textarea>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">

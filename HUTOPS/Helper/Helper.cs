@@ -341,6 +341,11 @@ namespace HUTOPS.Helper
             {
                 errors.Add("Current College/Last College Name: is required");
             }
+            if (!string.IsNullOrEmpty(educational.HSSCSchoolName) && educational.HSSCSchoolName.Length > 50)
+            {
+                errors.Add("Current College/Last College Name: max length is 50 digits");
+            }
+
             //if (string.IsNullOrEmpty(educational.HSSCSchoolAddress))
             //{
             //    errors.Add("College Address with City Name: is required");
@@ -361,6 +366,21 @@ namespace HUTOPS.Helper
             {
                 errors.Add("Secondary Education School Name: is required");
             }
+            if (!string.IsNullOrEmpty(educational.SSCSchoolName) && educational.SSCSchoolName.Length > 50)
+            {
+                errors.Add("Secondary Education School Name: max length is 50 digits");
+            }
+
+            if (!string.IsNullOrEmpty(educational.HSSCSchoolAddress) && educational.HSSCSchoolAddress.Length > 100)
+            {
+                errors.Add("HSSC School Address: max length is 100 digits");
+            }
+            if (!string.IsNullOrEmpty(educational.SSCSchoolAddress) && educational.SSCSchoolAddress.Length > 100)
+            {
+                errors.Add("Secondary Education School Address: max length is 100 digits");
+            }
+
+
             //if (string.IsNullOrEmpty(educational.SSCSchoolAddress))
             //{
             //    errors.Add("Secondary Education School Address with City Name: is required");

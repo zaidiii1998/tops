@@ -811,6 +811,7 @@ function GetSubjects(GroupName) {
             var input = document.createElement("input");
             input.className = "form-control";
             input.type = "text";
+            input.maxLength = 50;
             input.classList.add("SubjectName");
             input.value = subject;
             input.required = true;
@@ -837,6 +838,7 @@ function GetSubjects(GroupName) {
             var input = document.createElement("input");
             input.className = "form-control";
             input.type = "text";
+            input.maxLength = 50;
             input.classList.add("SubjectName");
             input.value = subject;
             input.required = true;
@@ -863,6 +865,7 @@ function GetSubjects(GroupName) {
             var input = document.createElement("input");
             input.className = "form-control";
             input.type = "text";
+            input.maxLength = 50;
             input.classList.add("SubjectName");
             input.value = subject;
             input.required = true;
@@ -889,6 +892,7 @@ function GetSubjects(GroupName) {
             var input = document.createElement("input");
             input.className = "form-control";
             input.type = "text";
+            input.maxLength = 50;
             input.classList.add("SubjectName");
             input.value = subject;
             input.required = true;
@@ -915,6 +919,7 @@ function GetSubjects(GroupName) {
             var input = document.createElement("input");
             input.className = "form-control";
             input.type = "text";
+            input.maxLength = 50;
             input.classList.add("SubjectName");
             input.value = subject;
             input.required = true;
@@ -941,6 +946,7 @@ function GetSubjects(GroupName) {
             var input = document.createElement("input");
             input.className = "form-control";
             input.type = "text";
+            input.maxLength = 50;
             input.classList.add("SubjectName");
             input.value = subject;
             input.required = true;
@@ -1016,7 +1022,8 @@ function AddRow() {
     var input = document.createElement("input");
         
     input.className = "form-control";
-        input.type = "text";
+    input.type = "text";
+    input.maxLength = 50;
         input.classList.add("SubjectName");
         
     newcontrol.appendChild(input);
