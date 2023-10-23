@@ -325,6 +325,7 @@
     <Content Include="Content\Images\email logo.png" />
     <Content Include="Content\Images\preloader.gif" />
     <Content Include="Content\Images\tick-Email.png" />
+    <Content Include="Content\Images\tops-logo.png" />
     <Content Include="Content\Images\TOPS_logo_admin.png" />
     <Content Include="Content\img\CategoryMenu.png" />
     <Content Include="Content\img\dashboard-icons\access-permission.svg" />
