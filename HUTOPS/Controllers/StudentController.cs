@@ -186,14 +186,14 @@ namespace HUTOPS.Controllers
                         item.HSSCStartDate == null ? "" : item.HSSCStartDate.ToString(),
                         item.HSSCCompletionDate == null ? "" : item.HSSCCompletionDate.ToString(),
                         item.HSSCPercentage == null ? "" : item.HSSCPercentage.ToString(),
-                        item.HSSCBoardName == null ? "" : item.HSSCBoardName.ToString(),
+                        item.HSSCBoardName == null ? "" : item.HSSCBoardName == "IB" ? "Board Of Intermediate" : item.HSSCBoardName == "FB" ? "Federal Board" : "Aga Khan University Examination Board",
                         item.HSSCGroupName == null ? "" : item.HSSCGroupName.ToString(),
                         item.SSCSchoolName == null ? "" : item.SSCSchoolName.ToString(),
                         item.SSCSchoolAddress == null ? "" : item.SSCSchoolAddress.ToString(),
                         item.SSCPercentage == null ? "" : item.SSCPercentage.ToString(),
                         item.UniversityName == null ? "" : item.UniversityName.ToString(),
                         item.IntendedProgram == null ? "" : item.IntendedProgram.ToString(),
-                        item.HUSchoolName == null ? "" : item.HUSchoolName.ToString(),
+                        item.HUSchoolName == null ? "" : item.HUSchoolName == "SE"? "Dhanani School of Science and Engineering" : "School of Arts, Humanities and Social Sciences",
 
                         // Documents
                         item.Photograph == null ? "Not Uploaded":item.Photograph == "" ? "Not Uploaded" : "Uploaded",
