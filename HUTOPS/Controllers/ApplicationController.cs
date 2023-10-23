@@ -321,6 +321,7 @@ namespace HUTOPS.Controllers
                             applicationModel.PersonalInfo.FatherMiddleName = Utility.ToCamelCase(applicationModel.PersonalInfo.FatherMiddleName);
                             applicationModel.PersonalInfo.FatherLastName = Utility.ToCamelCase(applicationModel.PersonalInfo.FatherLastName);
 
+
                             DB.PersonalInformations.Add(applicationModel.PersonalInfo);
                             DB.SaveChanges();
                             Utility.AddLog(Constants.LogType.ActivityLog, $"Personal Information Table record Inserted : {JsonConvert.SerializeObject(applicationModel.PersonalInfo)}");
@@ -438,7 +439,7 @@ namespace HUTOPS.Controllers
                             EmailBody = EmailBody.Replace("{{FatherMiddleName}}", applicationModel.PersonalInfo.FatherMiddleName);
                             EmailBody = EmailBody.Replace("{{FatherLastName}}", applicationModel.PersonalInfo.FatherLastName);
                             EmailBody = EmailBody.Replace("{{Gender}}", applicationModel.PersonalInfo.Gender);
-                            EmailBody = EmailBody.Replace("{{DateOfBirth}}", applicationModel.PersonalInfo.DateOfBirth.ToString());
+                            EmailBody = EmailBody.Replace("{{DateOfBirth}}", applicationModel.PersonalInfo.DateOfBirth.Value.ToString("dd/MM/yyyy"));
                             EmailBody = EmailBody.Replace("{{CellPhoneNumber}}", applicationModel.PersonalInfo.CellPhoneNumber);
                             EmailBody = EmailBody.Replace("{{ResidentialAddress}}", applicationModel.PersonalInfo.ResidentialAddress);
                             EmailBody = EmailBody.Replace("{{ResidentialCity}}", applicationModel.PersonalInfo.ResidentialCity);
