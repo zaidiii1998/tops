@@ -418,18 +418,18 @@ namespace HUTOPS.Helper
         }
         public static string GetInnerException(Exception ex)
         {
-            string exception;
+            string exception = string.Empty;
             if (ex == null)
             {
                 return "";
             }
             if (ex.InnerException == null)
             {
-                exception = ex.Message;
+                exception = $"Excepton Message: {ex.Message}";
             }
             else
             {
-                exception = ex.InnerException.Message;
+                exception = $"Excepton Message: {ex.Message}, InnerExceptionMsg: {ex.InnerException.Message}";
             }
 
             return exception;
