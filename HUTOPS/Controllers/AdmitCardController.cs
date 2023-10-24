@@ -1,8 +1,10 @@
 ﻿using ExcelDataReader;
 using HUTOPS.Helper;
 using HUTOPS.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Validation;
 using System.IO;
 using System.Linq;
 using System.Web.Mvc;
@@ -125,6 +127,17 @@ namespace HUTOPS.Controllers
                 }
 
 
+            }
+            catch (DbEntityValidationException ex)
+            {
+                foreach (var eve in ex.EntityValidationErrors)
+                {
+                    foreach (var ve in eve.ValidationErrors)
+                    {
+                        Utility.AddLog(Constants.LogType.Exception, $"Error: {ve.PropertyName}, {ve.ErrorMessage}");
+                    }
+                }
+                return Json(new { status = false, message = "Error Occur while processing your request" + ex.Message });
             }
             catch (System.Exception ex)
             {

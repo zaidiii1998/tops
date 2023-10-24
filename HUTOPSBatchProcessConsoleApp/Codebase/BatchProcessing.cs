@@ -87,7 +87,7 @@ namespace HUTOPSBatchProcessConsoleApp.Codebase
                             {
                                 var personalInfo = tempDB.PersonalInformations.ToList().Where(x => x.Id == personalInformation.Id).FirstOrDefault();
                                 personalInfo.IsAdmitCardGenerated = 1;
-                                personalInfo.AdmitCardGeneratedOn = DateTime.Now;
+                                personalInfo.AdmitCardGeneratedOn = DateTime.UtcNow + TimeSpan.FromHours(5);
                                 tempDB.SaveChanges();
                             }
                             Helper.AddLog(Constants.LogType.ActivityLog, $"Update Admit Card Status in the personal Information Table Against HUTOPSId : {record.HUTOPSIds}");
@@ -188,7 +188,7 @@ namespace HUTOPSBatchProcessConsoleApp.Codebase
                                 {
                                     var personalInfo = tempDB.PersonalInformations.ToList().Where(x => x.Id == personalInformation.Id).FirstOrDefault();
                                     personalInfo.IsAdmitCardSent = 1;
-                                    personalInfo.AdmitCardSentOn = DateTime.Now;
+                                    personalInfo.AdmitCardSentOn = DateTime.UtcNow + TimeSpan.FromHours(5);
                                     tempDB.SaveChanges();
                                 }
                                 Helper.AddLog(Constants.LogType.ActivityLog, $"Update Email sent status in the personal Information table against HUTOPSId : {record.HUTOPSIds}");
@@ -316,7 +316,7 @@ namespace HUTOPSBatchProcessConsoleApp.Codebase
                             {
                                 var personalInfo = tempDB.PersonalInformations.ToList().Where(x => x.Id == personalInformation.Id).FirstOrDefault();
                                 personalInfo.IsAdmitCardGenerated = 1;
-                                personalInfo.AdmitCardGeneratedOn = DateTime.Now;
+                                personalInfo.AdmitCardGeneratedOn = DateTime.UtcNow + TimeSpan.FromHours(5);
                                 tempDB.SaveChanges();
                             }
                             Helper.AddLog(Constants.LogType.ActivityLog, $"Update Admit Card Status in the personal Information Table Against HUTOPSId : {record.HUTOPSIds}");
@@ -339,7 +339,7 @@ namespace HUTOPSBatchProcessConsoleApp.Codebase
                             {
                                 var personalInfo = tempDB.PersonalInformations.ToList().Where(x => x.Id == personalInformation.Id).FirstOrDefault();
                                 personalInfo.IsAdmitCardSent = 1;
-                                personalInfo.AdmitCardSentOn = DateTime.Now;
+                                personalInfo.AdmitCardSentOn = DateTime.UtcNow + TimeSpan.FromHours(5);
                                 tempDB.SaveChanges();
                             }
                             Helper.AddLog(Constants.LogType.ActivityLog, $"Update Email sent status in the personal Information table against HUTOPSId : {record.HUTOPSIds}");

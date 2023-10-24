@@ -137,7 +137,7 @@ namespace HUTOPS.Helper
             {
                 Type = LogType,
                 Description = Description,
-                CreatedDatetime = DateTime.Now
+                CreatedDatetime = DateTime.UtcNow + TimeSpan.FromHours(5)
             });
             DB.SaveChangesAsync();
         }

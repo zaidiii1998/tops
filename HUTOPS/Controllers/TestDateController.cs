@@ -1,6 +1,7 @@
 ﻿using HUTOPS.Helper;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Security.Policy;
 using System.Web;
@@ -55,7 +56,7 @@ namespace HUTOPS.Controllers
 
                     // Add new record
                     testDate.CreatedBy = Utility.GetAdminFromSession().Name;
-                    testDate.CreatedOn = DateTime.Now;
+                    testDate.CreatedOn = DateTime.UtcNow + TimeSpan.FromHours(5);
                     DB.TestDates.Add(testDate);
                     DB.SaveChanges();
 
@@ -63,6 +64,17 @@ namespace HUTOPS.Controllers
 
                     return Json(new { status = true, message = "Test Date Inserted Successfully" });
                 }
+            }
+            catch (DbEntityValidationException ex)
+            {
+                foreach (var eve in ex.EntityValidationErrors)
+                {
+                    foreach (var ve in eve.ValidationErrors)
+                    {
+                        Utility.AddLog(Constants.LogType.Exception, $"Error: {ve.PropertyName}, {ve.ErrorMessage} Error Occured while saving Test Date record by Admin ({Utility.GetAdminFromSession().Name}).");
+                    }
+                }
+                return Json(new { status = false, message = "Error Occur while saving record " + ex.Message });
             }
             catch (Exception ex)
             {

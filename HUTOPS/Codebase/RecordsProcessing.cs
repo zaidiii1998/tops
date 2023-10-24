@@ -1,6 +1,8 @@
 ﻿using HUTOPS.EAppDBModel;
 using HUTOPS.Helper;
+using Newtonsoft.Json;
 using System;
+using System.Data.Entity.Validation;
 
 namespace HUTOPS.Codebase
 {
@@ -106,9 +108,20 @@ namespace HUTOPS.Codebase
                 return true;
                 
             }
+            catch (DbEntityValidationException ex)
+            {
+                foreach (var eve in ex.EntityValidationErrors)
+                {
+                    foreach (var ve in eve.ValidationErrors)
+                    {
+                        Utility.AddLog(Constants.LogType.Exception, $"Error: {ve.PropertyName}, {ve.ErrorMessage} Error Occured while moving record to E-App against HUTOPS Id : {personalInformation.HUTopId}");
+                    }
+                }
+                return false;
+            }
             catch (Exception ex)
             {
-                Utility.AddLog(Constants.LogType.Exception, $"Error Occured while processing Batch Record against HUTOPS Id : {personalInformation.HUTopId} Error Details: {ex.Message}");
+                Utility.AddLog(Constants.LogType.Exception, $"Error Occured while moving record to E-App against HUTOPS Id : {personalInformation.HUTopId} Error Details: {ex.Message}");
                 return false;
             }
         }

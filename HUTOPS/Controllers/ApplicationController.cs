@@ -8,6 +8,7 @@ using System.IO;
 using System;
 using Newtonsoft.Json;
 using System.Data.Entity.Validation;
+using System.Configuration;
 
 namespace HUTOPS.Controllers
 {
@@ -34,7 +35,7 @@ namespace HUTOPS.Controllers
                 city = DB.Cities.ToList().Where(x => x.StateId == (UserProvince == null ? 0 : UserProvince.Id)).ToList();
             }
             List<EducationalSubject> subjects = new List<EducationalSubject>();
-            List<TestDate> testDate = DB.TestDates.ToList().Where(x => x.Visibility == 1 && x.DeadlineDate > DateTime.Now).ToList();
+            List<TestDate> testDate = DB.TestDates.ToList().Where(x => x.Visibility == 1 && x.DeadlineDate > DateTime.UtcNow + TimeSpan.FromHours(5)).ToList();
             if (Education != null)
             {
                 subjects = DB.EducationalSubjects.ToList().FindAll(x => x.EducationalId == (Education == null ? 0 : Education.Id)).ToList();
@@ -263,12 +264,10 @@ namespace HUTOPS.Controllers
                         {
                             foreach (var eve in ex.EntityValidationErrors)
                             {
-                                Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
-                                    eve.Entry.Entity.GetType().Name, eve.Entry.State);
+                                //Utility.AddLog(Constants.LogType.Exception, $"Entity of type \"{0}\" in state \"{1}\" has the following validation errors: {eve.Entry.Entity.GetType().Name}, {eve.Entry.State} UserDetails: {JsonConvert.SerializeObject(applicationModel)}");
                                 foreach (var ve in eve.ValidationErrors)
                                 {
-                                    Console.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
-                                        ve.PropertyName, ve.ErrorMessage);
+                                    Utility.AddLog(Constants.LogType.Exception, $"Error: {ve.PropertyName}, {ve.ErrorMessage}  UserDetails: {JsonConvert.SerializeObject(applicationModel.PersonalInfo)}");
                                 }
                             }
                             Transaction.Rollback();
@@ -320,7 +319,7 @@ namespace HUTOPS.Controllers
                             applicationModel.PersonalInfo.FatherFirstName = Utility.ToCamelCase(applicationModel.PersonalInfo.FatherFirstName);
                             applicationModel.PersonalInfo.FatherMiddleName = Utility.ToCamelCase(applicationModel.PersonalInfo.FatherMiddleName);
                             applicationModel.PersonalInfo.FatherLastName = Utility.ToCamelCase(applicationModel.PersonalInfo.FatherLastName);
-
+                            applicationModel.PersonalInfo.CreatedDatetime = DateTime.UtcNow + TimeSpan.FromHours(5);
 
                             DB.PersonalInformations.Add(applicationModel.PersonalInfo);
                             DB.SaveChanges();
@@ -501,11 +500,15 @@ namespace HUTOPS.Controllers
                         }
                         catch (DbEntityValidationException ex)
                         {
+                            string EmailBody = string.Empty;
+                            EmailBody = EmailBody + "Entity Validation Error Occured on submition of HUTOPS Applicant form <br />";
+                            EmailBody = EmailBody + $"Datetime: {DateTime.UtcNow + TimeSpan.FromHours(5)} <br />";
                             foreach (var eve in ex.EntityValidationErrors)
                             {
                                 //Utility.AddLog(Constants.LogType.Exception, $"Entity of type \"{0}\" in state \"{1}\" has the following validation errors: {eve.Entry.Entity.GetType().Name}, {eve.Entry.State} UserDetails: {JsonConvert.SerializeObject(applicationModel)}");
                                 foreach (var ve in eve.ValidationErrors)
                                 {
+                                    EmailBody = EmailBody + $"<br /> <br /> <br />  Error: {ve.PropertyName} , {ve.ErrorMessage}";
                                     Utility.AddLog(Constants.LogType.Exception, $"Error: {ve.PropertyName}, {ve.ErrorMessage}  UserDetails: {JsonConvert.SerializeObject(applicationModel.PersonalInfo)}");
                                 }
                             }
@@ -518,11 +521,19 @@ namespace HUTOPS.Controllers
                             
                             Utility.AddLog(Constants.LogType.Exception, $"Transaction Rollback and Documents has been removed from the server");
 
+                            EmailBody = EmailBody + $"<br /> <br /> <br /> Personal Information: {JsonConvert.SerializeObject(applicationModel.PersonalInfo)}";
+                            EmailBody = EmailBody + $"<br /> <br /> <br /> Education Information: {JsonConvert.SerializeObject(applicationModel.Education)}";
+                            CPD.Framework.Core.EmailService.SendEmail(ConfigurationSettings.AppSettings["EmailTo"], ConfigurationSettings.AppSettings["EmailCC"].ToString().Split(';').ToList(), null, "Exception HUTOPS", EmailBody, null, "tops@habib.edu.pk", null);
+
+
                             return Json(new { status = false, message = "Form Submittion Failed " + ex.Message });
 
                         }
                         catch (Exception ex)
                         {
+                            string EmailBody = string.Empty;
+                            EmailBody = EmailBody + "General Exception Error Occured on submition of HUTOPS Applicant form <br />";
+                            EmailBody = EmailBody + $"Datetime: {DateTime.UtcNow + TimeSpan.FromHours(5)} <br />";
                             Utility.AddLog(Constants.LogType.Exception, $"Error Occured while Submitting Application Details: {Utility.GetInnerException(ex)} UserDetails: {JsonConvert.SerializeObject(applicationModel.PersonalInfo)}");
 
                             Transaction.Rollback();
@@ -532,6 +543,13 @@ namespace HUTOPS.Controllers
                             }
                             Utility.AddLog(Constants.LogType.Exception, $"Transaction Rollback and Documents has been removed from the server");
 
+                            EmailBody = EmailBody + Utility.GetInnerException(ex);
+                            EmailBody = EmailBody + $"<br /> <br /> <br /> Personal Information: {JsonConvert.SerializeObject(applicationModel.PersonalInfo)}";
+                            EmailBody = EmailBody + $"<br /> <br /> <br /> Education Information: {JsonConvert.SerializeObject(applicationModel.Education)} <br />";
+                            CPD.Framework.Core.EmailService.SendEmail(ConfigurationSettings.AppSettings["EmailTo"], ConfigurationSettings.AppSettings["EmailCC"].ToString().Split(';').ToList(), null, "Exception HUTOPS", EmailBody, null, "tops@habib.edu.pk", null);
+
+
+
                             return Json(new { status = false, message = "Form Submittion Failed " + Utility.GetInnerException(ex) });
                         }
                     }
@@ -539,8 +557,17 @@ namespace HUTOPS.Controllers
             }
             catch (System.Exception ex)
             {
-
+                string EmailBody = string.Empty;
+                EmailBody = EmailBody + "General Exception Error Occured on submition of HUTOPS Applicant form <br />";
+                EmailBody = EmailBody + $"Datetime: {DateTime.UtcNow + TimeSpan.FromHours(5)} <br />";
                 Utility.AddLog(Constants.LogType.Exception, $"Application Submition Failed Details: {Utility.GetInnerException(ex)}UserDetails: {JsonConvert.SerializeObject(applicationModel.PersonalInfo)}");
+
+
+                EmailBody = EmailBody + Utility.GetInnerException(ex);
+                EmailBody = EmailBody + $"<br /> <br /> Personal Information: {JsonConvert.SerializeObject(applicationModel.PersonalInfo)} <br />";
+                EmailBody = EmailBody + $"<br /> <br /> Education Information: {JsonConvert.SerializeObject(applicationModel.Education)}  <br />";
+                CPD.Framework.Core.EmailService.SendEmail(ConfigurationSettings.AppSettings["EmailTo"], ConfigurationSettings.AppSettings["EmailCC"].ToString().Split(';').ToList(), null, "Exception HUTOPS", EmailBody, null, "tops@habib.edu.pk", null);
+
                 return Json(new { status = false, message = "Form Submittion Failed " + Utility.GetInnerException(ex) });
 
             }

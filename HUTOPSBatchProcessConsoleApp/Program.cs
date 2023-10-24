@@ -8,6 +8,8 @@ using HUTOPSBatchProcessConsoleApp.Model;
 using OfficeOpenXml;
 using Newtonsoft.Json;
 using HUTOPSBatchProcessConsoleApp.Codebase;
+using CPD.Framework.Core;
+using System.Data.Entity.Validation;
 
 namespace HUTOPSBatchProcessConsoleApp
 {
@@ -29,6 +31,7 @@ namespace HUTOPSBatchProcessConsoleApp
                     var records = new List<ExcelData>();
                     Helper.AddLog(Constants.LogType.ActivityLog, $"Service get Batch for processing {JsonConvert.SerializeObject(Batch)}");
 
+                    var EmailTemp = new EmailTemplate();
                     using (var stream = File.Open(batch.HUTOPSIdsFile, FileMode.Open, FileAccess.Read))
                     {
                         using (var reader = ExcelReaderFactory.CreateReader(stream))
@@ -44,28 +47,33 @@ namespace HUTOPSBatchProcessConsoleApp
                             }
                         }
                     }
-                    var Result = new List<ExcelData>(); ;
+                    var Result = new List<ExcelData>();
                     if (records.Count > 0)
                     {
                         switch ((BatchType)batch.Type)
                         {
                             case BatchType.GenerateAdmitCard:// Convert the byte value to the State enum        State currentState = (State)stateValue;: // Generate Admit Card
                                 Result = BatchProcessing.GenerateAdmitCard(records, batch.Shift, batch.Venue, batch.TestDate.Value.ToString("dddd, dd MMMM yyyy"));
+                                EmailTemp = DB.EmailTemplates.Where(x => x.Id == 5).FirstOrDefault();
                                 break;
 
                             case BatchType.SendAdmitCard: // SendAdmitCard
                                 Result = BatchProcessing.SendAdmitCard(records);
+                                EmailTemp = DB.EmailTemplates.Where(x => x.Id == 7).FirstOrDefault();
                                 break;
 
                             case BatchType.GenerateAndSendAdmitCard: // GenerateAndSendAdmitCard
                                 Result  = BatchProcessing.GenerateSendAdmitCard(records, batch.Shift, batch.Venue, batch.TestDate.Value.ToString("dddd, dd MMMM yyyy"));
-                            break;
+                                EmailTemp = DB.EmailTemplates.Where(x => x.Id == 6).FirstOrDefault();
+                                break;
 
                             case BatchType.Result: // Result
                                 Result = BatchProcessing.UpdateResult(records, batch.Result, batch.IsRecordSendToEApp);
+                                EmailTemp = DB.EmailTemplates.Where(x => x.Id == 8).FirstOrDefault();
                                 break;
                             case BatchType.MoveRecordToEApp: //MoveRecordToEApp
                                 Result = BatchProcessing.ShiftRecordToEApp(records);
+                                EmailTemp = DB.EmailTemplates.Where(x => x.Id == 9).FirstOrDefault();
                                 break;
 
                         }
@@ -107,8 +115,8 @@ namespace HUTOPSBatchProcessConsoleApp
                         package.Dispose();
                     }
                     Helper.AddLog(Constants.LogType.ActivityLog, $"Result sheet Updated Successfully Batch file Details: {JsonConvert.SerializeObject(Batch)}");
-                    var EmailCC = System.Configuration.ConfigurationSettings.AppSettings["EmailCC"].Split(',').ToList();
-                    CPD.Framework.Core.EmailService.SendEmail(batch.CreatedBy, EmailCC, null, "Generate Admit Card Report", "Generate Admit Card Report Body", batch.HUTOPSIdsFile, "tops@habib.edu.pk", null);
+                    var EmailCC = System.Configuration.ConfigurationSettings.AppSettings["EmailCC"].Split(';').ToList();
+                    EmailService.SendEmail(batch.CreatedBy, EmailCC, null, EmailTemp.Subject, EmailTemp.Body, batch.HUTOPSIdsFile, "tops@habib.edu.pk", null);
                     // Update Batch Status
                     Helper.AddLog(Constants.LogType.ActivityLog, $"Email has been sent to Admin with Batch result file : {JsonConvert.SerializeObject(Batch)}");
 
@@ -116,12 +124,23 @@ namespace HUTOPSBatchProcessConsoleApp
                     {
                         var batchUpload = tempDB.BatchUploads.ToList().Where(x => x.Id == batch.Id).FirstOrDefault();
                         batchUpload.IsStatusEmailSent = 1;
-                        batchUpload.EmailSentOn = DateTime.Now;
+                        batchUpload.EmailSentOn = DateTime.UtcNow + TimeSpan.FromHours(5);
                         tempDB.SaveChanges();
                     }
                     Helper.AddLog(Constants.LogType.ActivityLog, $"Update Email sent Status in BatchUploads Tabel : {JsonConvert.SerializeObject(Batch)}");
 
                 }
+            }
+            catch (DbEntityValidationException ex)
+            {
+                foreach (var eve in ex.EntityValidationErrors)
+                {
+                    foreach (var ve in eve.ValidationErrors)
+                    {
+                        Helper.AddLog(Constants.LogType.Exception, $"Error: {ve.PropertyName}, {ve.ErrorMessage} Error Occured while processing Batch File Error Details: {ex.Message}).");
+                    }
+                }
+                throw;
             }
             catch (System.Exception ex)
             {

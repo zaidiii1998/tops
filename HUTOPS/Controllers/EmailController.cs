@@ -1,6 +1,8 @@
 ﻿using HUTOPS.Helper;
+using HUTOPS.Models;
 using Newtonsoft.Json;
 using System;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -31,7 +33,7 @@ namespace HUTOPS.Controllers
                     var email = DB.EmailTemplates.Where(x => x.Id == emailTemplate.Id).FirstOrDefault();
                     email.Subject = emailTemplate.Subject;
                     email.Body = emailTemplate.Body;
-                    email.UpdatedOn = DateTime.Now;
+                    email.UpdatedOn = DateTime.UtcNow + TimeSpan.FromHours(5);
                     DB.SaveChanges();
                     Utility.AddLog(Constants.LogType.ActivityLog, $"Email Template Updated Successfully. Template Details: {JsonConvert.SerializeObject(emailTemplate)}");
 
@@ -43,6 +45,17 @@ namespace HUTOPS.Controllers
                     return Json(new { status = false, message = "Email Template not Found" });
                 }
 
+            }
+            catch (DbEntityValidationException ex)
+            {
+                foreach (var eve in ex.EntityValidationErrors)
+                {
+                    foreach (var ve in eve.ValidationErrors)
+                    {
+                        Utility.AddLog(Constants.LogType.Exception, $"Error: {ve.PropertyName}, {ve.ErrorMessage} Template Details: {JsonConvert.SerializeObject(emailTemplate)}");
+                    }
+                }
+                return Json(new { status = false, message = "Error Occur while saving Email Template" + ex.Message });
             }
             catch (Exception ex)
             {
