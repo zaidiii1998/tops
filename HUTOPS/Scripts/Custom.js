@@ -1846,7 +1846,12 @@ function LoadStudentDatatable() {
         },
         "columns": [
             { "data": "Id" },
-            { "data": "HUTopId" },
+            {
+                "data": null,
+                "render": function (data) {
+                    return "<a onclick='ViewDowcuments(" + data.Id + ")' style='cursor: pointer;'>" + data.HUTopId + "</a>";
+                }
+            },
             { "data": "FirstName" },
             { "data": "LastName" },
             { "data": "CellPhoneNumber" },
@@ -2034,6 +2039,29 @@ function ShowAdmitCardModal(applicantId) {
     var modal = $('#modalAdmitCard');
     $('#applicantId').val(applicantId);
     modal.modal({ show: true })
+}
+function ViewDowcuments(applicantId) {
+    CallAsyncService("/Student/GetDocuments?Id=" + applicantId, null, DocumentViewCB);
+    function DocumentViewCB(response) {
+        if (response.Photograph == null || response.Photograph == "") {
+            $('#divPhoto').hide();
+        } else { $('#divPhoto').show(); }
+        if (response.SSCMarkSheet == null || response.SSCMarkSheet == "") {
+            $('#divSSC').hide();
+        } else { $('#divSSC').show(); }
+        if (response.HSSCMarkSheet == null || response.HSSCMarkSheet == "") {
+            $('#divHSSC').hide();
+        } else { $('#divHSSC').show(); }
+        if (response.CNIC == null || response.CNIC == "") {
+            $('#divCNIC').hide();
+        } else { $('#divCNIC').show(); }
+        var modal = $('#modalDocument');
+        $('#Photo').prop('href', '/Application/View?Name=Photo&Id=' + applicantId);
+        $('#SSC').prop('href', '/Application/View?Name=SSC Mark Sheet&Id=' + applicantId);
+        $('#HSSC').prop('href', '/Application/View?Name=HSSC Mark Sheet&Id=' + applicantId);
+        $('#CNIC').prop('href', '/Application/View?Name=CNIC&Id=' + applicantId);
+        modal.modal({ show: true })
+    }
 }
 
 function SubmitAdmitCard() {

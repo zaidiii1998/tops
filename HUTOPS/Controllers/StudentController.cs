@@ -60,7 +60,11 @@ namespace HUTOPS.Controllers
             }
         }
 
-        
+        public ActionResult GetDocuments(int Id)
+        {
+            var documents = DB.Documents.Where(x => x.UserId == Id).FirstOrDefault();
+            return Json(documents);
+        }
         public ActionResult Download()
         {
             try

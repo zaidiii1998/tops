@@ -578,11 +578,18 @@ namespace HUTOPS.Controllers
             return View();
         }
 
-        public FileResult View(string Name)
+        public FileResult View(string Name, int? Id = null )
         {
             try
             {
-                var personalInfo = Utility.GetUserFromSession();
+                var personalInfo = new PersonalInformation();
+                if(Id == null) { 
+                    personalInfo = Utility.GetUserFromSession();
+                }
+                else
+                {
+                    personalInfo = DB.PersonalInformations.Where(x => x.Id == Id).FirstOrDefault();
+                }
                 var documents = DB.Documents.ToList().Where(x => x.UserId == personalInfo.Id).FirstOrDefault();
 
                 if (documents != null)
@@ -590,16 +597,16 @@ namespace HUTOPS.Controllers
                     switch (Name)
                     {
                         case "Photo":
-                            Name = documents.Photograph == "" ? "" : documents.Photograph.Substring(documents.Photograph.IndexOf("" + personalInfo.Id + "")).Substring(2);
+                            Name = documents.Photograph == "" ? "" : documents.Photograph.Substring(documents.Photograph.IndexOf("" + personalInfo.Id + "")).Substring(personalInfo.Id.ToString().Length + 1);
                             break;
                         case "SSC Mark Sheet":
-                            Name = documents.SSCMarkSheet == "" ? "" : documents.SSCMarkSheet.Substring(documents.SSCMarkSheet.IndexOf("" + personalInfo.Id + "")).Substring(2);
+                            Name = documents.SSCMarkSheet == "" ? "" : documents.SSCMarkSheet.Substring(documents.SSCMarkSheet.IndexOf("" + personalInfo.Id + "")).Substring(personalInfo.Id.ToString().Length + 1);
                             break;
                         case "HSSC Mark Sheet":
-                            Name = documents.HSSCMarkSheet == "" ? "" : documents.HSSCMarkSheet.Substring(documents.HSSCMarkSheet.IndexOf("" + personalInfo.Id + "")).Substring(2);
+                            Name = documents.HSSCMarkSheet == "" ? "" : documents.HSSCMarkSheet.Substring(documents.HSSCMarkSheet.IndexOf("" + personalInfo.Id + "")).Substring(personalInfo.Id.ToString().Length + 1);
                             break;
                         case "CNIC":
-                            Name = documents.CNIC == "" ? "" : documents.CNIC.Substring(documents.CNIC.IndexOf("" + personalInfo.Id + "")).Substring(2);
+                            Name = documents.CNIC == "" ? "" : documents.CNIC.Substring(documents.CNIC.IndexOf("" + personalInfo.Id + "")).Substring(personalInfo.Id.ToString().Length + 1);
                             break;
                         default:
                             return File("", "application/octet-stream");
