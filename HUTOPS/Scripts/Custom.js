@@ -1849,7 +1849,7 @@ function LoadStudentDatatable() {
             {
                 "data": null,
                 "render": function (data) {
-                    return "<a onclick='ViewDowcuments(" + data.Id + ")' style='cursor: pointer;'>" + data.HUTopId + "</a>";
+                    return "<a onclick='ViewDowcuments(" + data.Id + ")' style='cursor: pointer;color: #5d2468;text-decoration: underline !important;'>" + data.HUTopId + "</a>";
                 }
             },
             { "data": "FirstName" },
