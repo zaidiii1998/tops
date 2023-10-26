@@ -339,7 +339,7 @@ function validateEmail(inputId, errSpanId) {
 
 function validateText(input) {
     // Remove non-numeric characters using a regular expression
-    input.value = input.value.replace(/[^A-Za-z]/g, '');
+    input.value = input.value.replace(/[^A-Za-z\s]/g, '');
     //input.value = input.value.replace(/[^!@#$%^&*()_+{}\[\]:;<>,.?~\\\-]/g, '');
 }
 function validateNumber(input) {
