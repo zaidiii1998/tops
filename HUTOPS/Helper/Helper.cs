@@ -358,10 +358,10 @@ namespace HUTOPS.Helper
             {
                 errors.Add("Group Of Study: is required");
             }
-            if (string.IsNullOrEmpty(educational.HSSCPercentage))
-            {
-                errors.Add("Overall HSSC Percentage: is required");
-            }
+            //if (string.IsNullOrEmpty(educational.HSSCPercentage))
+            //{
+            //    errors.Add("Overall HSSC Percentage: is required");
+            //}
             if (string.IsNullOrEmpty(educational.SSCSchoolName))
             {
                 errors.Add("Secondary Education School Name: is required");
