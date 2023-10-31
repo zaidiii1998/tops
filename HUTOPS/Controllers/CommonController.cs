@@ -25,12 +25,12 @@ namespace HUTOPS.Controllers
                 }
                 else
                 {
-                    return Json(new { status = false, message = "Phone Number Is already exist" });
+                    return Json(new { status = false, message = "This number is already in our records" });
                 }
             }
             catch (System.Exception)
             {
-                return Json(new { status = false, message = "Phone Number Is already exist" });
+                return Json(new { status = false, message = "This number is already in our records" });
             }
         }
         public ActionResult CheckEmail(string email)
@@ -46,12 +46,12 @@ namespace HUTOPS.Controllers
                 }
                 else
                 {
-                    return Json(new { status = false, message = "Email Is already exist" });
+                    return Json(new { status = false, message = "This email address is already in our records" });
                 }
             }
             catch (System.Exception)
             {
-                return Json(new { status = false, message = "Email Is already exist" });
+                return Json(new { status = false, message = "This email address is already in our records" });
             }
         }
         public ActionResult CheckCNIC(string cnic)
