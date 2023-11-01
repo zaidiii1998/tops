@@ -453,7 +453,7 @@ namespace HUTOPS.Controllers
                             EmailBody = EmailBody.Replace("{{CNIC}}", applicationModel.PersonalInfo.CNIC);
                             EmailBody = EmailBody.Replace("{{EmailAddress}}", applicationModel.PersonalInfo.EmailAddress);
 
-                            EmailBody = EmailBody.Replace("{{TestDate}}", applicationModel.PersonalInfo.TestDate);
+                            EmailBody = EmailBody.Replace("{{TestDate}}", DateTime.Parse(applicationModel.PersonalInfo.TestDate).ToString("dd/MM/yyyy"));
                             EmailBody = EmailBody.Replace("{{IsAppliedBefore}}", applicationModel.PersonalInfo.IsAppliedBefore.ToString());
                             EmailBody = EmailBody.Replace("{{AppliedBeforeId}}", applicationModel.PersonalInfo.AppliedBeforeId);
                             EmailBody = EmailBody.Replace("{{AppliedBeforeYear}}", applicationModel.PersonalInfo.AppliedBeforeYear.ToString());
