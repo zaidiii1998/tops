@@ -299,7 +299,7 @@ namespace HUTOPS.Controllers
 
                 if (PersonalInfoErrors.Count > 0 || EducationError.Count > 0 || DocumentError.Count > 0)
                 {
-                    Utility.AddLog(Constants.LogType.ActivityLog, $"Validation Failed Details: {PersonalInfoErrors}{EducationError} {DocumentError}");
+                    Utility.AddLog(Constants.LogType.ActivityLog, $"Validation Failed Details: {JsonConvert.SerializeObject(PersonalInfoErrors)}{JsonConvert.SerializeObject(EducationError)} {JsonConvert.SerializeObject(DocumentError)}");
                     return Json(new { status = false, message = "Error Occured while validating your data", PersonalErrors = PersonalInfoErrors, EducationErrors = EducationError, DocumentErrors  = DocumentError });
                 }
                 else
