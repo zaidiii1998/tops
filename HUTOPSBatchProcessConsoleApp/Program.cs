@@ -115,7 +115,7 @@ namespace HUTOPSBatchProcessConsoleApp
                         package.Dispose();
                     }
                     Helper.AddLog(Constants.LogType.ActivityLog, $"Result sheet Updated Successfully Batch file Details: {JsonConvert.SerializeObject(Batch)}");
-                    var EmailCC = System.Configuration.ConfigurationSettings.AppSettings["EmailCC"].Split(';').ToList();
+                    var EmailCC = System.Configuration.ConfigurationSettings.AppSettings["BatchReportEmailCC"].Split(';').ToList();
                     EmailService.SendEmail(batch.CreatedBy, EmailCC, null, EmailTemp.Subject, EmailTemp.Body, batch.HUTOPSIdsFile, "tops@habib.edu.pk", null);
                     // Update Batch Status
                     Helper.AddLog(Constants.LogType.ActivityLog, $"Email has been sent to Admin with Batch result file : {JsonConvert.SerializeObject(Batch)}");
