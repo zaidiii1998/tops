@@ -77,7 +77,7 @@ namespace HUTOPSBatchProcessConsoleApp.Codebase
                         {
                             Helper.AddLog(Constants.LogType.ActivityLog, $"Service fetched user Inforation and mapped against HUTOPSId: {record.HUTOPSIds}");
 
-                            string baseFilePath = System.Configuration.ConfigurationSettings.AppSettings["PhysicalPath"].ToString() + personalInformation.Id;
+                            string baseFilePath = System.Configuration.ConfigurationManager.AppSettings["PhysicalPath"].ToString() + personalInformation.Id;
                             var filePath = HU_HTML_TO_PDF.Converter.ConvertHTML_TO_PDF(EmailBody, baseFilePath, "A4", "Portrait");
                             // Update Admit Card Status in perssonal Info Table
 
@@ -306,7 +306,7 @@ namespace HUTOPSBatchProcessConsoleApp.Codebase
                         {
                             Helper.AddLog(Constants.LogType.ActivityLog, $"Service fetched user Inforation and mapped against HUTOPSId: {record.HUTOPSIds}");
 
-                            string baseFilePath = System.Configuration.ConfigurationSettings.AppSettings["PhysicalPath"].ToString() + personalInformation.Id;
+                            string baseFilePath = System.Configuration.ConfigurationManager.AppSettings["PhysicalPath"].ToString() + personalInformation.Id;
                             var filePath = HU_HTML_TO_PDF.Converter.ConvertHTML_TO_PDF(EmailBody, baseFilePath, "A4", "Portrait");
                             // Update Admit Card Status in perssonal Info Table
 

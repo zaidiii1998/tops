@@ -523,7 +523,7 @@ namespace HUTOPS.Controllers
 
                             EmailBody = EmailBody + $"<br /> <br /> <br /> Personal Information: {JsonConvert.SerializeObject(applicationModel.PersonalInfo)}";
                             EmailBody = EmailBody + $"<br /> <br /> <br /> Education Information: {JsonConvert.SerializeObject(applicationModel.Education)}";
-                            CPD.Framework.Core.EmailService.SendEmail(ConfigurationSettings.AppSettings["ExceptionEmailTo"], ConfigurationSettings.AppSettings["ExceptionEmailCC"].ToString().Split(';').ToList(), null, "Exception HUTOPS", EmailBody, null, "tops@habib.edu.pk", null);
+                            CPD.Framework.Core.EmailService.SendEmail(ConfigurationManager.AppSettings["ExceptionEmailTo"], ConfigurationManager.AppSettings["ExceptionEmailCC"].ToString().Split(';').ToList(), null, "Exception HUTOPS", EmailBody, null, "tops@habib.edu.pk", null);
 
 
                             return Json(new { status = false, message = "Form Submittion Failed " + ex.Message });
@@ -546,7 +546,7 @@ namespace HUTOPS.Controllers
                             EmailBody = EmailBody + Utility.GetInnerException(ex);
                             EmailBody = EmailBody + $"<br /> <br /> <br /> Personal Information: {JsonConvert.SerializeObject(applicationModel.PersonalInfo)}";
                             EmailBody = EmailBody + $"<br /> <br /> <br /> Education Information: {JsonConvert.SerializeObject(applicationModel.Education)} <br />";
-                            CPD.Framework.Core.EmailService.SendEmail(ConfigurationSettings.AppSettings["ExceptionEmailTo"], ConfigurationSettings.AppSettings["ExceptionEmailCC"].ToString().Split(';').ToList(), null, "Exception HUTOPS", EmailBody, null, "tops@habib.edu.pk", null);
+                            CPD.Framework.Core.EmailService.SendEmail(ConfigurationManager.AppSettings["ExceptionEmailTo"], ConfigurationManager.AppSettings["ExceptionEmailCC"].ToString().Split(';').ToList(), null, "Exception HUTOPS", EmailBody, null, "tops@habib.edu.pk", null);
 
 
 
@@ -566,7 +566,7 @@ namespace HUTOPS.Controllers
                 EmailBody = EmailBody + Utility.GetInnerException(ex);
                 EmailBody = EmailBody + $"<br /> <br /> Personal Information: {JsonConvert.SerializeObject(applicationModel.PersonalInfo)} <br />";
                 EmailBody = EmailBody + $"<br /> <br /> Education Information: {JsonConvert.SerializeObject(applicationModel.Education)}  <br />";
-                CPD.Framework.Core.EmailService.SendEmail(ConfigurationSettings.AppSettings["ExceptionEmailTo"], ConfigurationSettings.AppSettings["ExceptionEmailCC"].ToString().Split(';').ToList(), null, "Exception HUTOPS", EmailBody, null, "tops@habib.edu.pk", null);
+                CPD.Framework.Core.EmailService.SendEmail(ConfigurationManager.AppSettings["ExceptionEmailTo"], ConfigurationManager.AppSettings["ExceptionEmailCC"].ToString().Split(';').ToList(), null, "Exception HUTOPS", EmailBody, null, "tops@habib.edu.pk", null);
 
                 return Json(new { status = false, message = "Form Submittion Failed " + Utility.GetInnerException(ex) });
 
