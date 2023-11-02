@@ -227,6 +227,13 @@ function CallFileAsyncService(url, fileData, CallbackFunction) {
                     else {
                         ShowDivError('Error');
                     }
+                } else {
+                    $('#mainLoader').hide();
+                    if (xhr.state() == 'rejected') {
+                        ShowDivError('You are offline, please check your internet connection and try again.');
+                    } else {
+                        ShowDivError(xhr.statusText + ' ' + xhr.state() + 'Something went wrong, it seems you are offline, please check your internet connection and try again.');
+                    }
                 }
             }
         });
