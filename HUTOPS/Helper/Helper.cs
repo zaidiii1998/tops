@@ -139,7 +139,8 @@ namespace HUTOPS.Helper
                 Description = Description,
                 CreatedDatetime = DateTime.UtcNow + TimeSpan.FromHours(5)
             });
-            DB.SaveChangesAsync();
+            DB.SaveChanges();
+            
         }
         
         public static bool isValidEmail(string inputEmail)
