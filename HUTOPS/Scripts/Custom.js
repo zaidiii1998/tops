@@ -277,9 +277,9 @@ function checkEmail(Id) {
         return false;
     } else {
         $('#emailError').html("");
-        CallAsyncService('/Common/CheckEmail?email=' + $('#' + Id).val(), null, checkEmail);
+        CallAsyncService('/Common/CheckEmail?email=' + $('#' + Id).val(), null, checkEmailCB);
 
-        function checkEmail(response) {
+        function checkEmailCB(response) {
         if (!response.status) {
             msg = response.message;
             $('#emailError').html(msg);

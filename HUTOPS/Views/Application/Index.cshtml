@@ -93,7 +93,7 @@
                                     <div class="col-lg-4">
                                         <div class="form-group">
                                             <label for="email">Email Address<span class="text-danger h-6" style="font-size: 1.1rem;">*</span>:</label>
-                                            <input class="form-control" type="email" id="email" name="EmailAddress" maxlength="50" value="@Model.PersonalInfo.EmailAddress" oninput="validateEmail(this.id,'emailError');" onchange="checkEmail(this.id);validateEmail(this.id,'emailError');" required>
+                                            <input class="form-control" type="email" id="email" name="EmailAddress" maxlength="30" value="@Model.PersonalInfo.EmailAddress" oninput="validateEmail(this.id,'emailError');" onchange="checkEmail(this.id);validateEmail(this.id,'emailError');" required>
                                             <span class="text-danger" id="emailError"></span>
                                         </div>
                                     </div>
