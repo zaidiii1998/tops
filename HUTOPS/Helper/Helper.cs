@@ -137,6 +137,7 @@ namespace HUTOPS.Helper
         {
             try
             {
+                
                 HUTOPSEntities DB = new HUTOPSEntities();
                 DB.Logs.Add(new Log
                 {
@@ -160,6 +161,14 @@ namespace HUTOPS.Helper
                     }
                 }
 
+                CPD.Framework.Core.EmailService.SendEmail(ConfigurationManager.AppSettings["ExceptionEmailTo"], ConfigurationManager.AppSettings["ExceptionEmailCC"].ToString().Split(';').ToList(), null, "Exception HUTOPS", EmailBody, null, "tops@habib.edu.pk", null);
+
+            }catch (Exception ex)
+            {
+                string EmailBody = string.Empty;
+                EmailBody = EmailBody + "General Exception occurred while Log Insertion <br />";
+                EmailBody = EmailBody + $"Datetime: {DateTime.UtcNow + TimeSpan.FromHours(5)} <br />";
+                EmailBody = EmailBody + $"<br /> <br /> <br />  Exception: {GetInnerException(ex)}";
                 CPD.Framework.Core.EmailService.SendEmail(ConfigurationManager.AppSettings["ExceptionEmailTo"], ConfigurationManager.AppSettings["ExceptionEmailCC"].ToString().Split(';').ToList(), null, "Exception HUTOPS", EmailBody, null, "tops@habib.edu.pk", null);
 
 
