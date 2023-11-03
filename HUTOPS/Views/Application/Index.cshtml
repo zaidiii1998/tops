@@ -93,14 +93,14 @@
                                     <div class="col-lg-4">
                                         <div class="form-group">
                                             <label for="email">Email Address<span class="text-danger h-6" style="font-size: 1.1rem;">*</span>:</label>
-                                            <input class="form-control" type="email" id="email" name="EmailAddress" maxlength="30" value="@Model.PersonalInfo.EmailAddress" oninput="validateEmail(this.id,'emailError');" onchange="checkEmail(this.id);" required>
+                                            <input class="form-control" type="email" id="email" name="EmailAddress" maxlength="50" value="@Model.PersonalInfo.EmailAddress" oninput="validateEmail(this.id,'emailError');" onchange="checkEmail(this.id);validateEmail(this.id,'emailError');" required>
                                             <span class="text-danger" id="emailError"></span>
                                         </div>
                                     </div>
                                     <div class="col-lg-4" hidden>
                                         <div class="form-group">
                                             <label for="altEmail">Alternate Email Address:</label>
-                                            <input class="form-control" type="email" id="altEmail" name="AlterEmailAddress" value="@Model.PersonalInfo.AlterEmailAddress" maxlength="35" oninput="validateEmail(this.id,'errAltEmail');">
+                                            <input class="form-control" type="email" id="altEmail" name="AlterEmailAddress" value="@Model.PersonalInfo.AlterEmailAddress" maxlength="50" oninput="validateEmail(this.id,'errAltEmail');">
 
                                         </div>
                                     </div>
@@ -263,7 +263,7 @@
                                     <div class="col-lg-4">
                                         <div class="form-group">
                                             <label for="guardianEmail">Parents/Guardian Email Address:</label>
-                                            <input class="form-control" type="email" maxlength="35" id="guardianEmail" value="@Model.PersonalInfo.GuardianEmailAddress" name="GuardianEmailAddress" oninput="validateEmail(this.id,'errGuardianEmail')">
+                                            <input class="form-control" type="email" maxlength="50" id="guardianEmail" value="@Model.PersonalInfo.GuardianEmailAddress" name="GuardianEmailAddress" oninput="validateEmail(this.id,'errGuardianEmail')">
                                             <span class="text-danger" id="errGuardianEmail"></span>
                                         </div>
                                     </div>

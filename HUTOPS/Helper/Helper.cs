@@ -144,9 +144,7 @@ namespace HUTOPS.Helper
         
         public static bool isValidEmail(string inputEmail)
         {
-            string strRegex = @"^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}" +
-                  @"\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\" +
-                  @".)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$";
+            string strRegex = @"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$";
             Regex re = new Regex(strRegex);
             if (re.IsMatch(inputEmail))
                 return (true);
@@ -181,6 +179,14 @@ namespace HUTOPS.Helper
             if (DB.PersonalInformations.ToList().Exists(x => x.EmailAddress == personalInfo.EmailAddress && x.Id != personalInfo.Id))
             {
                 errors.Add("Email is already Exists");
+            }
+            if (string.IsNullOrEmpty(personalInfo.EmailAddress))
+            {
+                errors.Add("Email Address is required");
+            }
+            if (!string.IsNullOrEmpty(personalInfo.EmailAddress) && isValidEmail(personalInfo.EmailAddress))
+            {
+                errors.Add("Email Address is Invalid");
             }
             //if (!string.IsNullOrEmpty(personalInfo.CNIC) && DB.PersonalInformations.ToList().Exists(x => x.CNIC == personalInfo.CNIC && x.Id != personalInfo.Id))
             //{
@@ -232,7 +238,7 @@ namespace HUTOPS.Helper
             }
             if (!string.IsNullOrEmpty(personalInfo.AlterEmailAddress) && !isValidEmail(personalInfo.AlterEmailAddress))
             {
-                errors.Add("Provided Email Address is Invalid");
+                errors.Add("Alternate Email Address is Invalid");
             }
             //if (string.IsNullOrEmpty(personalInfo.GuardianEmailAddress))
             //{

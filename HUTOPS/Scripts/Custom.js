@@ -101,7 +101,7 @@ function increaseProgressBarWidth() {
 
     checkEmail('email');
     checkPhoneNumber('cellPhone');
-
+    validateEmail('email', 'emailError');
     if ($('#emailError').html() != "") isValidPersonalInfo = false;
     if ($('#numberError').html() != "") isValidPersonalInfo = false;
 
@@ -270,10 +270,16 @@ function checkPhoneNumber(Id) {
 
 function checkEmail(Id) {
     // Check Email
+    const email = $('#' + Id).val();
+    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+    if (!emailRegex.test(email)) {
+        $('#emailError').html("Please Enter a valid Email Address");
+        return false;
+    } else {
+        $('#emailError').html("");
+        CallAsyncService('/Common/CheckEmail?email=' + $('#' + Id).val(), null, checkEmail);
 
-    CallAsyncService('/Common/CheckEmail?email=' + $('#' + Id).val(), null, checkEmail);
-
-    function checkEmail(response) {
+        function checkEmail(response) {
         if (!response.status) {
             msg = response.message;
             $('#emailError').html(msg);
@@ -281,6 +287,7 @@ function checkEmail(Id) {
         } else {
             $('#emailError').html('');
             return true;
+        }
         }
     }
 }
@@ -336,14 +343,13 @@ function validateEmail(inputId, errSpanId) {
     if (!emailRegex.test(email)) {
         
         $('#' + errSpanId).html("Please Enter a valid Email Address");
+        $('#' + inputId).focus();
         return false;
     } else {
         $('#' + errSpanId).html("");
         return true
     }
 }
-
-
 function validateText(input) {
     // Remove non-numeric characters using a regular expression
     input.value = input.value.replace(/[^A-Za-z\s]/g, '');
@@ -566,7 +572,7 @@ function validatePersonalInfoForm() {
 /*    checkCNIC('cnic');*/
     checkEmail('email');
     checkPhoneNumber('cellPhone');
-
+    validateEmail('email', 'emailError');
     
     if ($('#emailError').html() != "") {
         isValid = false;
@@ -644,7 +650,7 @@ function validatePersonalInfoForm() {
     }
     
     if (isValid) {
-        
+
         increaseProgressBarWidth();
         $('#btnEducation').prop('disabled', false);
         $('#btnEducation').trigger('click');
@@ -1425,6 +1431,8 @@ function submitDeclaration() {
 
     checkEmail('email');
     checkPhoneNumber('cellPhone');
+    validateEmail('email', 'emailError');
+
     if ($('#emailError').html() != "") isValid = false;
     if ($('#numberError').html() != "") isValid = false;
 
@@ -1676,7 +1684,7 @@ function submitDeclaration() {
 
         checkEmail('email');
         checkPhoneNumber('cellPhone');
-
+        validateEmail('email', 'emailError');
         if ($('#emailError').html() != "") isValidPersonalInfo = false;
         if ($('#numberError').html() != "")isValidPersonalInfo = false;
 
