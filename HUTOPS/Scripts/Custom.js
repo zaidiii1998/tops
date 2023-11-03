@@ -655,6 +655,62 @@ function validatePersonalInfoForm() {
         $('#btnEducation').prop('disabled', false);
         $('#btnEducation').trigger('click');
         window.scrollTo(0, 100);
+        const day = $('#dobDay').val();
+        const month = $('#dobMonth').val();
+        const year = $('#dobYear').val();
+        var dob = `${year}-${month}-${day}`;
+        var personalInfo = {
+            'Id': $('#id').val(),
+            'firstName': $('#firstName').val(),
+            'middleName': $('#middleName').val(),
+            'lastName': $('#lastName').val(),
+            'fatherFirstName': $('#fatherFirstName').val(),
+            'fatherMiddleName': $('#fatherMiddleName').val(),
+            'fatherLastName': $('#fatherLastName').val(),
+            'cnic': $('#cnic').val(),
+            'emailAddress': $('#email').val(),
+            'alterEmailAddress': $('#altEmail').val(),
+            'gender': $("#gender").val(),
+            'husbandName': $('#husbandName').val(),
+            'dateOfBirth': dob,
+            // Contact Info
+            'cellPhoneNumber': $('#cellPhone').val(),
+            'whatsAppNumber': $('#whatsappNumber').val(),
+            'alternateCellPhoneNumber': $('#cellPhone').val(), //$('#altCellPhone').val(),
+            'homePhoneNumber': $('#homePhone').val(),
+            'alternateLandline': $('#altLandline').val(),
+            'guardianCellPhoneNumber': $('#guardianCellPhone').val(),
+            'guardianEmailAddress': $('#guardianEmail').val(),
+            // Address info
+            'residentialAddress': $('#residentialAddress').val(),
+            'residentialCountry': $('#residentialCountry :selected').text(),
+            'residentialProvince': $('#residentialProvince :selected').text(),
+            'residentialCity': $('#residentialCity :selected').text(),
+            'residentialCityOther': $('#residentialCityOther').val(),
+            'residentialPostalCode': $('#residentialPostalCode').val(),
+
+            //'PersonalInfo.permanentAddress': $('#permanentAddress').val(),
+            //'PersonalInfo.permanentCountry': $('#permanentCountry :selected').text(),
+            //'PersonalInfo.permanentProvince': $('#permanentProvince :selected').text(),
+            //'PersonalInfo.permanentCity': $('#permanentCity :selected').text(),
+            //'PersonalInfo.permanentCityOther': $('#permanentCityOther').val(),
+            //'PersonalInfo.permanentPostalCode': $('#permanentPostalCode').val(),
+
+            'IsAppliedBefore': $("input[name='IsAppliedBefore']:checked").val(),
+            'AppliedBeforeYear': $('#AppliedBeforeYear').val(),
+            'AppliedBeforeId': $('#AppliedBeforeId').val(),
+
+            // Hear About
+            'HearAboutHU': $('#comboHearHU').val(),
+            'HearAboutHUOther': $('#OtherHearHU').val(),
+
+            // Test Date
+
+            'TestDate': $('#TestDate').val()
+
+        }
+        CallAsyncService("/Application/AddPersonalInformationLog", JSON.stringify(personalInfo), CBfunction);
+        function CBfunction(response) { }
     }
     
 }
@@ -1225,7 +1281,29 @@ function SubmitEducation() {
 
         $('#btnDocument').trigger('click');
         window.scrollTo(0, 200);
+        var education = {
 
+            'CurrentLevelOfEdu': $('#currentLevel').val(),
+            'HSSCSchoolName': $('#collegeName').val(),
+            'HSSCSchoolAddress': $('#collegeAddress').val(),
+            'HSSCPercentage': $('#hsscPercentage').val(),
+            'HSSCStartDate': $('#startingYear').val(),
+            'HSSCCompletionDate': $('#completionYear').val(),
+            'HSSCBoardId': $('#boardOfEducation').val(),
+            'HSSCBoardName': $('#boardOfEducation :selected').val(),
+
+            'HSSCGroupId': $('#groupOfStudy').val(),
+            'HSSCGroupName': $('#groupOfStudy :selected').text(),
+            'SSCSchoolName': $('#secondarySchoolName').val(),
+            'SSCSchoolAddress': $('#secondarySchoolAddress').val(),
+            'SSCPercentage': $('#sscPercentage').val(),
+            'UniversityName': $('#universityName').val(),
+            'IntendedProgram': $('#degreeProgram').val(),
+            'HUSchoolName': $('input[name="huSchool"]:checked').val(),
+
+        }
+        CallAsyncService("/Application/AddEducationLog", JSON.stringify(education), CBfunction);
+        function CBfunction(response) { }
     }
 };
 
@@ -1266,7 +1344,6 @@ function submitDocuments(sessionUserId) {
 
         $('#btnTest').trigger('click');
         window.scrollTo(0, 300);
-
     }
 }
 

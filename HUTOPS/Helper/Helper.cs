@@ -1,9 +1,12 @@
 ﻿using HUTOPS.EAppDBModel;
 using HUTOPS.Models;
 using Microsoft.Ajax.Utilities;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
+using System.Data.Entity.Validation;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -132,17 +135,38 @@ namespace HUTOPS.Helper
         }
         public static void AddLogAsync(string LogType, string Description)
         {
-            HUTOPSEntities DB = new HUTOPSEntities();
-            DB.Logs.Add(new Log
+            try
             {
-                Type = LogType,
-                Description = Description,
-                CreatedDatetime = DateTime.UtcNow + TimeSpan.FromHours(5)
-            });
-            DB.SaveChanges();
-            
+                HUTOPSEntities DB = new HUTOPSEntities();
+                DB.Logs.Add(new Log
+                {
+                    Type = LogType,
+                    Description = Description,
+                    CreatedDatetime = DateTime.UtcNow + TimeSpan.FromHours(5)
+                });
+                DB.SaveChanges();
+            }
+            catch (DbEntityValidationException ex)
+            {
+                string EmailBody = string.Empty;
+                EmailBody = EmailBody + "Entity Validation Error while Log Insertion <br />";
+                EmailBody = EmailBody + $"Datetime: {DateTime.UtcNow + TimeSpan.FromHours(5)} <br />";
+                foreach (var eve in ex.EntityValidationErrors)
+                {
+                    foreach (var ve in eve.ValidationErrors)
+                    {
+                        EmailBody = EmailBody + $"<br /> <br /> <br />  Error: {ve.PropertyName} , {ve.ErrorMessage}";
+                        Utility.AddLog(Constants.LogType.Exception, $"Error: {ve.PropertyName}, {ve.ErrorMessage}");
+                    }
+                }
+
+                CPD.Framework.Core.EmailService.SendEmail(ConfigurationManager.AppSettings["ExceptionEmailTo"], ConfigurationManager.AppSettings["ExceptionEmailCC"].ToString().Split(';').ToList(), null, "Exception HUTOPS", EmailBody, null, "tops@habib.edu.pk", null);
+
+
+            }
+
+
         }
-        
         public static bool isValidEmail(string inputEmail)
         {
             string strRegex = @"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$";
@@ -324,7 +348,6 @@ namespace HUTOPS.Helper
             }
             return errors;
         }
-
         public static List<string> ValidateEducation(Educational educational)
         {
             List<string> errors = new List<string>();
@@ -403,7 +426,6 @@ namespace HUTOPS.Helper
 
             return errors;
         }
-
         public static List<string> ValidateDocuments(HttpPostedFileBase CNIC, HttpPostedFileBase Photo, HttpPostedFileBase SSC, HttpPostedFileBase HSSC)
         {
             List<string> errors = new List<string>();

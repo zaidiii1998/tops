@@ -628,6 +628,18 @@ namespace HUTOPS.Controllers
             
         }
 
+        [HttpPost]
+        public ActionResult AddPersonalInformationLog(PersonalInformation personalInformation)
+        {
+            Utility.AddLog(Constants.LogType.ActivityLog, $"User move to next section from Personal Information {JsonConvert.SerializeObject(personalInformation)} ");
+            return null;
+        }
+        [HttpPost]
+        public ActionResult AddEducationLog(Educational educational)
+        {
+            Utility.AddLog(Constants.LogType.ActivityLog, $"User move to next section from Education Information {JsonConvert.SerializeObject(educational)} ");
+            return null;
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)
