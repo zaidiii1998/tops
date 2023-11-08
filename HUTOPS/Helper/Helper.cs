@@ -202,11 +202,11 @@ namespace HUTOPS.Helper
             List<EAppDBModel.PersonalInformation> eappPInfo = new List<EAppDBModel.PersonalInformation>();
             eappPInfo = EAppDB.PersonalInformations.Where(p => p.ID > 194587).ToList();
 ;
-            if (eappPInfo.Exists(p => p.Email == personalInfo.EmailAddress))//(EAppDB.PersonalInformations.ToList().Exists(x => x.Email == personalInfo.EmailAddress && personalInfo.Id > 194587))//x.SubmissionDate > Convert.ToDateTime("2023/10/20")))
+            if (eappPInfo.Exists(p => p.Email == personalInfo.EmailAddress && p.AppStatus != 6))//(EAppDB.PersonalInformations.ToList().Exists(x => x.Email == personalInfo.EmailAddress && personalInfo.Id > 194587))//x.SubmissionDate > Convert.ToDateTime("2023/10/20")))
             {
                 errors.Add("You have already Register your Application in regular HU Program Using same Email Address");
             }
-            if (eappPInfo.Exists(p => p.PhoneNo == personalInfo.CellPhoneNumber))//(EAppDB.PersonalInformations.ToList().Exists(x => x.PhoneNo == personalInfo.CellPhoneNumber && x.SubmissionDate > Convert.ToDateTime("2015/10/20")))
+            if (eappPInfo.Exists(p => p.PhoneNo == personalInfo.CellPhoneNumber && p.AppStatus != 6))//(EAppDB.PersonalInformations.ToList().Exists(x => x.PhoneNo == personalInfo.CellPhoneNumber && x.SubmissionDate > Convert.ToDateTime("2015/10/20")))
             {
                 errors.Add("You have already Register your Application in regular HU Program Using same Phone Number");
             }
@@ -218,7 +218,7 @@ namespace HUTOPS.Helper
             {
                 errors.Add("Email Address is required");
             }
-            if (!string.IsNullOrEmpty(personalInfo.EmailAddress) && isValidEmail(personalInfo.EmailAddress))
+            if (!string.IsNullOrEmpty(personalInfo.EmailAddress) && !isValidEmail(personalInfo.EmailAddress))
             {
                 errors.Add("Email Address is Invalid");
             }
