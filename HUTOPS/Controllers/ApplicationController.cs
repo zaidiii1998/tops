@@ -9,6 +9,7 @@ using System;
 using Newtonsoft.Json;
 using System.Data.Entity.Validation;
 using System.Configuration;
+using DocumentFormat.OpenXml.Spreadsheet;
 
 namespace HUTOPS.Controllers
 {
@@ -489,7 +490,20 @@ namespace HUTOPS.Controllers
                             EmailBody = EmailBody.Replace("{{HUSchoolName}}", applicationModel.Education.HUSchoolName == "SE"? "Dhanani School of Science and Engineering" : "School of Arts, Humanities and Social Sciences");
                             EmailBody = EmailBody.Replace("{{Subjects}}", applicationModel.SubjectName[0]);
 
-                            CPD.Framework.Core.EmailService.SendEmail(applicationModel.PersonalInfo.EmailAddress, null, null, EmailTemplate.Subject, EmailBody, PhotographPath, "tops@habib.edu.pk", SSCPath);
+
+                            List<string> files = new List<string>();
+                            if (!string.IsNullOrEmpty(SSCPath))
+                                files.Add(SSCPath);
+                            if (!string.IsNullOrEmpty(HSSCPath))
+                                files.Add(HSSCPath);
+                            if (!string.IsNullOrEmpty(PhotographPath))
+                                files.Add(PhotographPath);
+                            if (!string.IsNullOrEmpty(CnicPath))
+                                files.Add(CnicPath);
+
+
+
+                            CPD.Framework.Core.EmailService.SendEmailWithMultipleFiles(applicationModel.PersonalInfo.EmailAddress, null, null, EmailTemplate.Subject, EmailBody,files, "tops@habib.edu.pk");
 
                             Utility.AddLog(Constants.LogType.ActivityLog, $"Email has been sent to applicant User Details: {JsonConvert.SerializeObject(applicationModel.PersonalInfo)}");
 
@@ -546,6 +560,7 @@ namespace HUTOPS.Controllers
                             EmailBody = EmailBody + Utility.GetInnerException(ex);
                             EmailBody = EmailBody + $"<br /> <br /> <br /> Personal Information: {JsonConvert.SerializeObject(applicationModel.PersonalInfo)}";
                             EmailBody = EmailBody + $"<br /> <br /> <br /> Education Information: {JsonConvert.SerializeObject(applicationModel.Education)} <br />";
+
                             CPD.Framework.Core.EmailService.SendEmail(ConfigurationManager.AppSettings["ExceptionEmailTo"], ConfigurationManager.AppSettings["ExceptionEmailCC"].ToString().Split(';').ToList(), null, "Exception HUTOPS", EmailBody, null, "tops@habib.edu.pk", null);
 
 

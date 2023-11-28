@@ -599,10 +599,10 @@ function validatePersonalInfoForm() {
         isValid = false;
         $('#firstName').focus();
     }
-    if ($('#middleName').val() != "" && !validateName('middleName', 'errMiddleName')) {
-        isValid = false;
-        $('#middleName').focus();
-    }
+    //if ($('#middleName').val() != "" && !validateName('middleName', 'errMiddleName')) {
+    //    isValid = false;
+    //    $('#middleName').focus();
+    //}
     if ($('#lastName').val() != "" && !validateName('lastName', 'errLastName')) {
         isValid = false;
         $('#lastName').focus();
@@ -611,10 +611,10 @@ function validatePersonalInfoForm() {
         isValid = false;
         $('#fatherFirstName').focus();
     }
-    if ($('#fatherMiddleName').val() != "" && !validateName('fatherMiddleName', 'errFatherMName')) {
-        isValid = false;
-        $('#fatherMiddleName').focus();
-    }
+    //if ($('#fatherMiddleName').val() != "" && !validateName('fatherMiddleName', 'errFatherMName')) {
+    //    isValid = false;
+    //    $('#fatherMiddleName').focus();
+    //}
     if ($('#fatherLastName').val() != "" && !validateName('fatherLastName', 'errFatherLName')) {
         isValid = false;
         $('#fatherLastName').focus();
