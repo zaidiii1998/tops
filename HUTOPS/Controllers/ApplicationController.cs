@@ -9,7 +9,6 @@ using System;
 using Newtonsoft.Json;
 using System.Data.Entity.Validation;
 using System.Configuration;
-using DocumentFormat.OpenXml.Spreadsheet;
 
 namespace HUTOPS.Controllers
 {
@@ -503,7 +502,7 @@ namespace HUTOPS.Controllers
 
 
 
-                            CPD.Framework.Core.EmailService.SendEmailWithMultipleFiles(applicationModel.PersonalInfo.EmailAddress, null, null, EmailTemplate.Subject, EmailBody,files, "tops@habib.edu.pk");
+                            CPD.Framework.Core.EmailService.SendEmailWithMultipleFiles(applicationModel.PersonalInfo.EmailAddress,new List<string> {"tops@habib.edu.pk"} , null, EmailTemplate.Subject, EmailBody,files, "tops@habib.edu.pk");
 
                             Utility.AddLog(Constants.LogType.ActivityLog, $"Email has been sent to applicant User Details: {JsonConvert.SerializeObject(applicationModel.PersonalInfo)}");
 
