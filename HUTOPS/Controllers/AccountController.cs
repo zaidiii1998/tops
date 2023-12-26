@@ -33,12 +33,13 @@ namespace HUTOPS.Controllers
                     
                     Utility.SetSession(education);
                     Utility.SetSession(document);
-                    if (personalInformation.UserType == 1)
+                    if (personalInformation.UserType != 2)
                     {
                         Admin admin = new Admin();
                         admin.Id = result.Response;
                         admin.Name = personalInformation.FirstName + " " + personalInformation.LastName;
                         admin.Email = personalInformation.EmailAddress;
+                        admin.UserType = personalInformation.UserType;
                         Utility.SetSession(admin);
                         Utility.SetSession(new PersonalInformation());
                         return RedirectToAction("Index", "Student");
@@ -80,7 +81,8 @@ namespace HUTOPS.Controllers
                 CNIC = model["CNIC"],
                 CellPhoneNumber = model["CellPhoneNumber"],
                 HearAboutHU = model["HearAboutHU"],
-                HearAboutHUOther = model["HearAboutHUOther"]
+                HearAboutHUOther = model["HearAboutHUOther"],
+                UserType = int.Parse(model["UserType"])
 
             };
             try
@@ -200,7 +202,7 @@ namespace HUTOPS.Controllers
                             personalInfo.CNIC,
                             personalInfo.CellPhoneNumber,
                             personalInfo.EmailAddress,
-                            HUCryptography.Crypto.Encrypt(model["Password"].ToString()), personalInfo.HearAboutHU, personalInfo.HearAboutHUOther).ToList().FirstOrDefault();
+                            HUCryptography.Crypto.Encrypt(model["Password"].ToString()), personalInfo.HearAboutHU, personalInfo.HearAboutHUOther, personalInfo.UserType).ToList().FirstOrDefault();
                         if (result.Response != 0)
                         {
                             var personalInformation = DB.PersonalInformations.ToList().Where(x => x.Id == result.Response).FirstOrDefault();

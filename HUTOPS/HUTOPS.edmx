@@ -122,7 +122,7 @@
           <Property Name="FatherLastName" Type="varchar" MaxLength="50" />
           <Property Name="Gender" Type="varchar" MaxLength="10" />
           <Property Name="HusbandName" Type="varchar" MaxLength="50" />
-          <Property Name="DateOfBirth" Type="datetime2" Precision="7" />
+          <Property Name="DateOfBirth" Type="date" />
           <Property Name="CountyAdd" Type="varchar" MaxLength="50" />
           <Property Name="CellPhoneNumber" Type="varchar" MaxLength="15" Nullable="false" />
           <Property Name="AlternateCellPhoneNumber" Type="varchar" MaxLength="15" />
@@ -185,7 +185,7 @@
             <PropertyRef Name="Name" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="30" Nullable="false" />
           <Property Name="CountryId" Type="tinyint" />
           <Property Name="Status" Type="tinyint" />
         </EntityType>
@@ -350,6 +350,7 @@
           <Parameter Name="Password" Type="varchar" Mode="In" />
           <Parameter Name="HearAboutHU" Type="varchar" Mode="In" />
           <Parameter Name="HearAboutHUOther" Type="varchar" Mode="In" />
+          <Parameter Name="UserType" Type="int" Mode="In" />
         </Function>
         <Function Name="WEB_GetAll" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="WEB_GetBoards" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
@@ -358,37 +359,6 @@
         </Function>
         <Function Name="WEB_GetSubjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="GroupId" Type="int" Mode="In" />
-        </Function>
-        <Function Name="WEB_InsertEducation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="UserId" Type="int" Mode="In" />
-          <Parameter Name="CurrentLevel" Type="varchar" Mode="In" />
-          <Parameter Name="HSSCSchoolName" Type="varchar" Mode="In" />
-          <Parameter Name="HSSCSchoolAddress" Type="varchar" Mode="In" />
-          <Parameter Name="HSSCStartDate" Type="varchar" Mode="In" />
-          <Parameter Name="HSSCCompletionDate" Type="varchar" Mode="In" />
-          <Parameter Name="HSSCPercentage" Type="varchar" Mode="In" />
-          <Parameter Name="BoardOfEdu" Type="varchar" Mode="In" />
-          <Parameter Name="BoardName" Type="varchar" Mode="In" />
-          <Parameter Name="Group" Type="varchar" Mode="In" />
-          <Parameter Name="GroupName" Type="varchar" Mode="In" />
-          <Parameter Name="SSCSchoolName" Type="varchar" Mode="In" />
-          <Parameter Name="SSCSchoolAddress" Type="varchar" Mode="In" />
-          <Parameter Name="SSCPercentage" Type="varchar" Mode="In" />
-          <Parameter Name="UniversityName" Type="varchar" Mode="In" />
-          <Parameter Name="IntendedProgram" Type="varchar" Mode="In" />
-          <Parameter Name="HUSchoolName" Type="varchar" Mode="In" />
-          <Parameter Name="IsCompleted" Type="int" Mode="In" />
-          <Parameter Name="SubjectName" Type="varchar(max)" Mode="In" />
-          <Parameter Name="SubjectObtain" Type="varchar(max)" Mode="In" />
-          <Parameter Name="SubjectTotal" Type="varchar(max)" Mode="In" />
-          <Parameter Name="SubjectGrade" Type="varchar(max)" Mode="In" />
-        </Function>
-        <Function Name="WEB_InsertEducationalSubjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="EducationalId" Type="int" Mode="In" />
-          <Parameter Name="SubjectName" Type="varchar(max)" Mode="In" />
-          <Parameter Name="SubjectObtain" Type="varchar(max)" Mode="In" />
-          <Parameter Name="SubjectTotal" Type="varchar(max)" Mode="In" />
-          <Parameter Name="SubjectGrade" Type="varchar(max)" Mode="In" />
         </Function>
         <Function Name="WEB_UpdateAddressDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Id" Type="int" Mode="In" />
@@ -603,7 +573,7 @@
           <Property Name="FatherLastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Gender" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="HusbandName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="DateOfBirth" Type="DateTime" Precision="7" />
+          <Property Name="DateOfBirth" Type="DateTime" Precision="0" />
           <Property Name="CountyAdd" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="CellPhoneNumber" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="AlternateCellPhoneNumber" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
@@ -666,7 +636,7 @@
             <PropertyRef Name="Name" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="CountryId" Type="Byte" />
           <Property Name="Status" Type="Byte" />
         </EntityType>
@@ -839,6 +809,7 @@
             <Parameter Name="Password" Mode="In" Type="String" />
             <Parameter Name="HearAboutHU" Mode="In" Type="String" />
             <Parameter Name="HearAboutHUOther" Mode="In" Type="String" />
+            <Parameter Name="UserType" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="WEB_GetAll" ReturnType="Collection(HUTOPSModel.WEB_GetAll_Result)" />
           <FunctionImport Name="WEB_GetBoards" ReturnType="Collection(HUTOPSModel.WEB_GetBoards_Result)" />
@@ -1741,8 +1712,6 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="WEB_InsertEducation" FunctionName="HUTOPSModel.Store.WEB_InsertEducation" />
-          <FunctionImportMapping FunctionImportName="WEB_InsertEducationalSubjects" FunctionName="HUTOPSModel.Store.WEB_InsertEducationalSubjects" />
           <FunctionImportMapping FunctionImportName="WEB_UpdateAddressDetails" FunctionName="HUTOPSModel.Store.WEB_UpdateAddressDetails" />
           <FunctionImportMapping FunctionImportName="WEB_UpdateContactDetails" FunctionName="HUTOPSModel.Store.WEB_UpdateContactDetails" />
           <FunctionImportMapping FunctionImportName="WEB_UpdatePersonal" FunctionName="HUTOPSModel.Store.WEB_UpdatePersonal" />

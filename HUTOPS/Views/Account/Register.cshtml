@@ -164,6 +164,19 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <label>How did you first hear about Habib University?</label>
+                                            <select class="input input100" id="comboUserType" name="UserType" style="padding:0;" required>
+                                                <option value="" selected disabled>User Type</option>
+                                                <option value="1">Supper Admin</option>
+                                                <option value="3">Admin</option>
+                                            </select>
+                                            @Html.ValidationMessageFor(model => model.HearAboutHU, "", new { @class = "text-danger", id = "hearAboutHU" })
+                                        </div>
+                                    </div>
+                                </div>
                                 @if (@ViewBag.Result + "" != "")
                                 {
                                     <div class="row">

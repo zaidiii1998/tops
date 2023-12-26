@@ -1909,7 +1909,7 @@ function SubmitTestDate() {
 
 // Students DataTable
 
-function LoadStudentDatatable() {
+function LoadStudentDatatable(UserType) {
     var mainTable = $('#main-datatables').DataTable({
         dom: 'Blrtip',
         "processing": true,
@@ -2023,14 +2023,18 @@ function LoadStudentDatatable() {
             {
                 "data": null,
                 render: function (data) {
-                    if (data.IsAdmitCardGenerated == 1 && data.Result == 2) {
-                        return "<li class='actionDropWrap' id='" + data.Id + "' onclick='ToggleShow(this.id)'><div class= 'nameWrapper'><i class='fa-solid fa-list-check f-28'></i></div ><ul class='actionDrop'><li class='global-btn-purple w-100' id='btnEdit'><a>Edit</a></li><li class='global-btn-purple w-100' onclick='ShowAdmitCardModal(" + data.Id + ")'><a>Generate Admit Card</a></li><li onclick='sendAdmitCard(" + data.Id + ")' class='global-btn-purple w-100'><a>Send Admit Card</a></li><li onclick='moveRecordToEApp(" + data.Id + ")' class='global-btn-purple w-100'><a>Move Record To E-App</a></li></ul></li > "
-                    } else if (data.IsAdmitCardGenerated == 1 && (data.Result == 1 || data.Result == null)) {
-                        return "<li class='actionDropWrap' id='" + data.Id + "' onclick='ToggleShow(this.id)'><div class= 'nameWrapper'><i class='fa-solid fa-list-check f-28'></i></div ><ul class='actionDrop'><li class='global-btn-purple w-100' id='btnEdit'><a>Edit</a></li><li class='global-btn-purple w-100' onclick='ShowAdmitCardModal(" + data.Id + ")'><a>Generate Admit Card</a></li><li onclick='sendAdmitCard(" + data.Id + ")' class='global-btn-purple w-100'><a>Send Admit Card</a></li></ul></li > "
-                    } else if ((data.IsAdmitCardGenerated == 0 || data.IsAdmitCardGenerated == null)  && data.Result == 2) {
-                        return "<li class='actionDropWrap' id='" + data.Id + "' onclick='ToggleShow(this.id)'><div class= 'nameWrapper'><i class='fa-solid fa-list-check f-28'></i></div ><ul class='actionDrop'><li class='global-btn-purple w-100' id='btnEdit'><a>Edit</a></li><li class='global-btn-purple w-100' onclick='ShowAdmitCardModal(" + data.Id + ")'><a>Generate Admit Card</a></li><li onclick='moveRecordToEApp(" + data.Id + ")' class='global-btn-purple w-100'><a>Move Record To E-App</a></li></ul></li > "
+                    if (UserType == 3) {
+                        return "";
                     } else {
-                        return "<li class='actionDropWrap' id='" + data.Id + "' onclick='ToggleShow(this.id)'><div class= 'nameWrapper'><i class='fa-solid fa-list-check f-28'></i></div ><ul class='actionDrop'><li class='global-btn-purple w-100' id='btnEdit'><a>Edit</a></li><li class='global-btn-purple w-100' onclick='ShowAdmitCardModal(" + data.Id + ")'><a>Generate Admit Card</a></li></ul></li >"
+                        if (data.IsAdmitCardGenerated == 1 && data.Result == 2) {
+                            return "<li class='actionDropWrap' id='" + data.Id + "' onclick='ToggleShow(this.id)'><div class= 'nameWrapper'><i class='fa-solid fa-list-check f-28'></i></div ><ul class='actionDrop'><li class='global-btn-purple w-100' id='btnEdit'><a>Edit</a></li><li class='global-btn-purple w-100' onclick='ShowAdmitCardModal(" + data.Id + ")'><a>Generate Admit Card</a></li><li onclick='sendAdmitCard(" + data.Id + ")' class='global-btn-purple w-100'><a>Send Admit Card</a></li><li onclick='moveRecordToEApp(" + data.Id + ")' class='global-btn-purple w-100'><a>Move Record To E-App</a></li></ul></li > "
+                        } else if (data.IsAdmitCardGenerated == 1 && (data.Result == 1 || data.Result == null)) {
+                            return "<li class='actionDropWrap' id='" + data.Id + "' onclick='ToggleShow(this.id)'><div class= 'nameWrapper'><i class='fa-solid fa-list-check f-28'></i></div ><ul class='actionDrop'><li class='global-btn-purple w-100' id='btnEdit'><a>Edit</a></li><li class='global-btn-purple w-100' onclick='ShowAdmitCardModal(" + data.Id + ")'><a>Generate Admit Card</a></li><li onclick='sendAdmitCard(" + data.Id + ")' class='global-btn-purple w-100'><a>Send Admit Card</a></li></ul></li > "
+                        } else if ((data.IsAdmitCardGenerated == 0 || data.IsAdmitCardGenerated == null)&& data.Result == 2) {
+                            return "<li class='actionDropWrap' id='" + data.Id + "' onclick='ToggleShow(this.id)'><div class= 'nameWrapper'><i class='fa-solid fa-list-check f-28'></i></div ><ul class='actionDrop'><li class='global-btn-purple w-100' id='btnEdit'><a>Edit</a></li><li class='global-btn-purple w-100' onclick='ShowAdmitCardModal(" + data.Id + ")'><a>Generate Admit Card</a></li><li onclick='moveRecordToEApp(" + data.Id + ")' class='global-btn-purple w-100'><a>Move Record To E-App</a></li></ul></li > "
+                        } else {
+                            return "<li class='actionDropWrap' id='" + data.Id + "' onclick='ToggleShow(this.id)'><div class= 'nameWrapper'><i class='fa-solid fa-list-check f-28'></i></div ><ul class='actionDrop'><li class='global-btn-purple w-100' id='btnEdit'><a>Edit</a></li><li class='global-btn-purple w-100' onclick='ShowAdmitCardModal(" + data.Id + ")'><a>Generate Admit Card</a></li></ul></li >"
+                        }
                     }
                 }
             }

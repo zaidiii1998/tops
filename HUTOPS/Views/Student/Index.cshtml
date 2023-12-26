@@ -1,4 +1,4 @@
-﻿
+﻿@using HUTOPS.Helper
 @{
     Page.Title = "All Students";
     Layout = "~/Views/Shared/_LayoutAdminPanal.cshtml";
@@ -63,7 +63,9 @@
                                 <form>
                                     <button class="savebtn global-btn-purple  float-right m-1" type="submit" formaction="/Student/Download" id="btnDownload">Download All</button>
                                 </form>
+                                @if(Utility.GetAdminFromSession().UserType == 1) {
                                 <input class="savebtn global-btn-purple  float-right m-1" type="button" value="Close Current Student Profile" onclick="closeStudentProfile();">
+                                }
                             </div>
                         </div>
                     </div>
@@ -213,7 +215,7 @@
 
 <script>
     $(document).ready(function () {
-        LoadStudentDatatable();
+        LoadStudentDatatable(@Utility.GetAdminFromSession().UserType);
         document.getElementById("searchForm").addEventListener("submit", submitSearchForm);
     })
     

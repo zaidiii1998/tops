@@ -33,7 +33,8 @@ namespace HUTOPS.Helper
             if(input.IsNullOrWhiteSpace()) { return ""; }
             TextInfo textInfo = new CultureInfo("en-US", false).TextInfo;
             input = input.ToLower(); // Convert the string to lowercase
-            return textInfo.ToTitleCase(input).Replace(" ", ""); // Convert to title case and remove spaces
+            //return textInfo.ToTitleCase(input).Replace(" ", ""); // Convert to title case and remove spaces
+            return textInfo.ToTitleCase(input);
         }
         public static string ConvertArrayToCSV(string[] array)
         {

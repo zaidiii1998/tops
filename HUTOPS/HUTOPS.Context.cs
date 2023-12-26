@@ -551,7 +551,7 @@ namespace HUTOPS
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<WEB_CheckPersonalInfo_Result>("WEB_CheckPersonalInfo", idParameter);
         }
     
-        public virtual ObjectResult<WEB_CreateUser_Result> WEB_CreateUser(string firstName, string middleName, string lastName, string cNIC, string cellPhoneNumber, string emailAddress, string password, string hearAboutHU, string hearAboutHUOther)
+        public virtual ObjectResult<WEB_CreateUser_Result> WEB_CreateUser(string firstName, string middleName, string lastName, string cNIC, string cellPhoneNumber, string emailAddress, string password, string hearAboutHU, string hearAboutHUOther, Nullable<int> userType)
         {
             var firstNameParameter = firstName != null ?
                 new ObjectParameter("FirstName", firstName) :
@@ -589,7 +589,11 @@ namespace HUTOPS
                 new ObjectParameter("HearAboutHUOther", hearAboutHUOther) :
                 new ObjectParameter("HearAboutHUOther", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<WEB_CreateUser_Result>("WEB_CreateUser", firstNameParameter, middleNameParameter, lastNameParameter, cNICParameter, cellPhoneNumberParameter, emailAddressParameter, passwordParameter, hearAboutHUParameter, hearAboutHUOtherParameter);
+            var userTypeParameter = userType.HasValue ?
+                new ObjectParameter("UserType", userType) :
+                new ObjectParameter("UserType", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<WEB_CreateUser_Result>("WEB_CreateUser", firstNameParameter, middleNameParameter, lastNameParameter, cNICParameter, cellPhoneNumberParameter, emailAddressParameter, passwordParameter, hearAboutHUParameter, hearAboutHUOtherParameter, userTypeParameter);
         }
     
         public virtual ObjectResult<WEB_GetAll_Result> WEB_GetAll()
