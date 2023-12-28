@@ -213,8 +213,8 @@ function CallFileAsyncService(url, fileData, CallbackFunction) {
             data: fileData,
             contentType: false,
             processData: false,
-            async: true,
-            timeout: (1000 * 60 * 4),
+            //async: true,
+            //timeout: (1000 * 60 * 4),
             success: function (data) {
                 CallbackFunction(data);
             },

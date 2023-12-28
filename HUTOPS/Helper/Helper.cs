@@ -132,6 +132,7 @@ namespace HUTOPS.Helper
         }
         public static void AddLog(string LogType, string Description)
         {
+            Description = Description + $"UCID: {HttpContext.Current.Session[Constants.Session.UCID]}";
             Task.Factory.StartNew(() => AddLogAsync(LogType, Description));
         }
         public static void AddLogAsync(string LogType, string Description)

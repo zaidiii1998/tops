@@ -9,6 +9,7 @@ using System;
 using Newtonsoft.Json;
 using System.Data.Entity.Validation;
 using System.Configuration;
+using System.Data;
 
 namespace HUTOPS.Controllers
 {
@@ -24,6 +25,10 @@ namespace HUTOPS.Controllers
         }
         public ActionResult Index()
         {
+            // Check and Create Unique Cookie Id (UCID)
+            var UCID = Session[Constants.Session.UCID] == null? "" : Session[Constants.Session.UCID].ToString();
+            if (string.IsNullOrEmpty(UCID)) Session[Constants.Session.UCID] = DateTime.Now.Ticks.ToString();
+
             var LoginUser = Utility.GetUserFromSession();
             var Education = Utility.GetEducationFromSession();
             var country = DB.Countries.ToList();
@@ -66,6 +71,9 @@ namespace HUTOPS.Controllers
         {
             try
             {
+                // Check and Create Unique Cookie Id (UCID)
+                var UCID = Session[Constants.Session.UCID] == null ? "" : Session[Constants.Session.UCID].ToString();
+                if (string.IsNullOrEmpty(UCID)) Session[Constants.Session.UCID] = DateTime.Now.Ticks.ToString();
 
                 if (Utility.GetAdminFromSession().Id != 0)
                 {
@@ -506,7 +514,7 @@ namespace HUTOPS.Controllers
 
                             Utility.AddLog(Constants.LogType.ActivityLog, $"Email has been sent to applicant User Details: {JsonConvert.SerializeObject(applicationModel.PersonalInfo)}");
 
-
+                            Session.RemoveAll();
                             return Json(new { status = true, message = "Application Submited Successfully"});
 
 

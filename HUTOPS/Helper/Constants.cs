@@ -11,6 +11,7 @@ namespace HUTOPS.Helper
             public const string DocumentSession = "LogedInDocumentSession";
 
             public const string AdminSession = "LogedInAdminSession";
+            public const string UCID = "UCID";
         }
         public class LogType
         {
