@@ -132,6 +132,7 @@ namespace HUTOPS.Helper
         }
         public static void AddLog(string LogType, string Description)
         {
+            // Unique cookie Id
             Description = Description + $"UCID: {HttpContext.Current.Session[Constants.Session.UCID]}";
             Task.Factory.StartNew(() => AddLogAsync(LogType, Description));
         }
