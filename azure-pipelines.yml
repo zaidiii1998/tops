@@ -1,4 +1,17 @@
 # ASP.NET
+- task: AzureRmWebAppDeployment@4
+  inputs:
+    ConnectionType: 'AzureRM'
+    azureSubscription: 'Habib University(d144c3f7-2c7c-49d7-a840-cf26b9fb5d1b)'
+    appType: 'webApp'
+    WebAppName: 'HUTOPS'
+    deployToSlotOrASE: true
+    ResourceGroupName: 'HUTOPS'
+    SlotName: 'test'
+    packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
+    enableCustomDeployment: true
+    DeploymentType: 'webDeploy'
+    ExcludeFilesFromAppDataFlag: false
 # Build and test ASP.NET projects.
 # Add steps that publish symbols, save build artifacts, deploy, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/apps/aspnet/build-aspnet-4
