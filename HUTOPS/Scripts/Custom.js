@@ -920,7 +920,7 @@ function GetSubjects(GroupName) {
         });
     }
     else if (GroupName === 'General Science/Computer Science') {
-        const subjects = ['Physics', 'Chemistry', 'Computer Science/Computer Studies'];
+        const subjects = ['Physics', 'Mathematics', 'Computer Science/Computer Studies'];
 
         subjects.forEach(subject => {
             var newRow = document.createElement("div");
