@@ -237,7 +237,7 @@ namespace HUTOPS.Helper
             {
                 errors.Add("First Name is required");
             }
-            if (!string.IsNullOrEmpty(personalInfo.FirstName) && (personalInfo.FirstName.Length < 3 || personalInfo.FirstName.Length > 25))
+            if (!string.IsNullOrEmpty(personalInfo.FirstName) && (personalInfo.FirstName.Trim().Length < 3 || personalInfo.FirstName.Trim().Length >= 25))
             {
                 errors.Add("First Name length must be greater than 3 and less than 25 characters");
             }
@@ -249,7 +249,7 @@ namespace HUTOPS.Helper
             {
                 errors.Add("Last Name is required");
             }
-            if (!string.IsNullOrEmpty(personalInfo.LastName) && (personalInfo.LastName.Length < 3 || personalInfo.LastName.Length > 25))
+            if (!string.IsNullOrEmpty(personalInfo.LastName) && (personalInfo.LastName.Trim().Length < 3 || personalInfo.LastName.Trim().Length >= 25))
             {
                 errors.Add("Last Name length must be greater than 3 and less than 25 characters");
             }
@@ -257,7 +257,7 @@ namespace HUTOPS.Helper
             {
                 errors.Add("Father First Name is required");
             }
-            if (!string.IsNullOrEmpty(personalInfo.FatherFirstName) && (personalInfo.FatherFirstName.Length < 3 || personalInfo.FatherFirstName.Length > 25))
+            if (!string.IsNullOrEmpty(personalInfo.FatherFirstName) && (personalInfo.FatherFirstName.Trim().Length < 3 || personalInfo.FatherFirstName.Trim().Length >= 25))
             {
                 errors.Add("Father First Name length must be greater than 3 and less than 25 characters");
             }
@@ -269,7 +269,7 @@ namespace HUTOPS.Helper
             {
                 errors.Add("Father Last Name is required");
             }
-            if (!string.IsNullOrEmpty(personalInfo.FatherLastName) && (personalInfo.FatherLastName.Length < 3 || personalInfo.FatherLastName.Length > 25))
+            if (!string.IsNullOrEmpty(personalInfo.FatherLastName) && (personalInfo.FatherLastName.Trim().Length < 3 || personalInfo.FatherLastName.Trim().Length >= 25))
             {
                 errors.Add("Father Last Name length must be greater than 3 and less than 25 characters");
             }
@@ -313,11 +313,11 @@ namespace HUTOPS.Helper
             //{
             //    errors.Add("Home Phone Number is Required");
             //}
-            if (!string.IsNullOrEmpty(personalInfo.HomePhoneNumber) && (personalInfo.HomePhoneNumber.Length < 9 || personalInfo.HomePhoneNumber.Length > 15))
+            if (!string.IsNullOrEmpty(personalInfo.HomePhoneNumber) && (personalInfo.HomePhoneNumber.Trim().Length < 9 || personalInfo.HomePhoneNumber.Trim().Length >= 15))
             {
                 errors.Add("Home Phone Number length must be greater than 9 and less than 15 characters");
             }
-            if (!string.IsNullOrEmpty(personalInfo.HusbandName) && (personalInfo.HusbandName.Length < 3 || personalInfo.HusbandName.Length > 25))
+            if (!string.IsNullOrEmpty(personalInfo.HusbandName) && (personalInfo.HusbandName.Trim().Length < 3 || personalInfo.HusbandName.Trim().Length >= 25))
             {
                 errors.Add("Husband Name length must be greater than 3 and less than 25 characters");
             }
@@ -354,7 +354,7 @@ namespace HUTOPS.Helper
             {
                 errors.Add("Applied Before Id is required");
             }
-            if (!string.IsNullOrEmpty(personalInfo.AppliedBeforeId) && personalInfo.AppliedBeforeId.Length > 25)
+            if (!string.IsNullOrEmpty(personalInfo.AppliedBeforeId) && personalInfo.AppliedBeforeId.Trim().Length >= 25)
             {
                 errors.Add("Applied Before Id length must be less than 25 characters");
             }
@@ -383,7 +383,7 @@ namespace HUTOPS.Helper
             {
                 errors.Add("Current College/Last College Name: is required");
             }
-            if (!string.IsNullOrEmpty(educational.HSSCSchoolName) && educational.HSSCSchoolName.Length > 50)
+            if (!string.IsNullOrEmpty(educational.HSSCSchoolName) && educational.HSSCSchoolName.Trim().Length >= 50)
             {
                 errors.Add("Current College/Last College Name: max length is 50 digits");
             }
@@ -408,16 +408,16 @@ namespace HUTOPS.Helper
             {
                 errors.Add("Secondary Education School Name: is required");
             }
-            if (!string.IsNullOrEmpty(educational.SSCSchoolName) && educational.SSCSchoolName.Length > 50)
+            if (!string.IsNullOrEmpty(educational.SSCSchoolName) && educational.SSCSchoolName.Trim().Length >= 50)
             {
                 errors.Add("Secondary Education School Name: max length is 50 digits");
             }
 
-            if (!string.IsNullOrEmpty(educational.HSSCSchoolAddress) && educational.HSSCSchoolAddress.Length > 100)
+            if (!string.IsNullOrEmpty(educational.HSSCSchoolAddress) && educational.HSSCSchoolAddress.Trim().Length >= 100)
             {
                 errors.Add("HSSC School Address: max length is 100 digits");
             }
-            if (!string.IsNullOrEmpty(educational.SSCSchoolAddress) && educational.SSCSchoolAddress.Length > 100)
+            if (!string.IsNullOrEmpty(educational.SSCSchoolAddress) && educational.SSCSchoolAddress.Trim().Length >= 100)
             {
                 errors.Add("Secondary Education School Address: max length is 100 digits");
             }
