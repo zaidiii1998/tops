@@ -371,6 +371,10 @@ namespace HUTOPS.Helper
             {
                 errors.Add("University Name: is required");
             }
+            if (!string.IsNullOrEmpty(educational.UniversityName) && educational.UniversityName.Trim().Length >= 50)
+            {
+                errors.Add("University Name: max length is 50 digits");
+            }
             if (string.IsNullOrEmpty(educational.HSSCStartDate.ToString()))
             {
                 errors.Add("Starting Year: is required");
