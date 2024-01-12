@@ -191,14 +191,18 @@ namespace HUTOPS.Controllers
 
                             for (var i = 0; i < applicationModel.SubjectName[0].ToString().Split(',').Length; i++)
                             {
-                                string name = applicationModel.SubjectName[0].ToString().Split(',')[i];
-                                name = name.Substring(0, name.Length <= 50? name.Length : 50);
-                                DB.EducationalSubjects.Add(new EducationalSubject()
+                                if (!string.IsNullOrEmpty(applicationModel.SubjectName[0].ToString().Split(',')[i]))
                                 {
-                                    EducationalId = applicationModel.Education.Id,
-                                    Name = name
-                                });
-                                DB.SaveChanges();
+                                    string name = applicationModel.SubjectName[0].ToString().Split(',')[i];
+                                    name = name.Substring(0, name.Length <= 50 ? name.Length : 50);
+                                    DB.EducationalSubjects.Add(new EducationalSubject()
+                                    {
+                                        EducationalId = applicationModel.Education.Id,
+                                        Name = name
+                                    });
+                                    DB.SaveChanges();
+                                }
+                                
                             }
                             Utility.AddLog(Constants.LogType.ActivityLog, $"Remove and Insert updated Educational Subjects Updated by {Utility.GetAdminFromSession().Name} Against Educational Id: {education.Id}");
 
@@ -414,11 +418,13 @@ namespace HUTOPS.Controllers
 
                             for (var i = 0; i < applicationModel.SubjectName[0].ToString().Split(',').Length; i++)
                             {
-                                if (!string.IsNullOrEmpty(applicationModel.SubjectName[0].ToString().Split(',')[i])) { 
+                                if (!string.IsNullOrEmpty(applicationModel.SubjectName[0].ToString().Split(',')[i])) {
+                                    string name = applicationModel.SubjectName[0].ToString().Split(',')[i];
+                                    name = name.Substring(0, name.Length <= 50 ? name.Length : 50);
                                     DB.EducationalSubjects.Add(new EducationalSubject()
                                     {
                                         EducationalId = applicationModel.Education.Id,
-                                        Name = applicationModel.SubjectName[0].ToString().Split(',')[i]
+                                        Name = name
                                     });
                                     DB.SaveChanges();
                                 }
