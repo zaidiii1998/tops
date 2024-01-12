@@ -345,7 +345,14 @@ namespace HUTOPS.Helper
             {
                 errors.Add("Residential City Field is required");
             }
-
+            if (!string.IsNullOrEmpty(personalInfo.ResidentialCityOther) &&  personalInfo.ResidentialCityOther.Trim().Length >= 50)
+            {
+                errors.Add("Residential City Other length must be less than 50 characters");
+            }
+            if (!string.IsNullOrEmpty(personalInfo.PermanentCityOther) && personalInfo.PermanentCityOther.Trim().Length >= 50)
+            {
+                errors.Add("Permanent City Other length must be less than 50 characters");
+            }
             if (personalInfo.IsAppliedBefore == 1 && personalInfo.AppliedBeforeYear == 0)
             {
                 errors.Add("Applied Before Year is required");

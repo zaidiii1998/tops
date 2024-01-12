@@ -340,7 +340,7 @@
                                     <div class="col-lg-4" id="divResidentialCityOther" style="display: none;">
                                         <div class="form-group">
                                             <label for="residentialCityOther">Other City<span class="text-danger h-6" style="font-size: 1.1rem;">*</span>:</label>
-                                            <input class="form-control" type="text" id="residentialCityOther" value="@Model.PersonalInfo.ResidentialCityOther" name="ResidentialCityOther"><br><br>
+                                            <input class="form-control" type="text" id="residentialCityOther" maxlength="50" value="@Model.PersonalInfo.ResidentialCityOther" name="ResidentialCityOther"><br><br>
                                         </div>
                                     </div>
                                     <div class="col-lg-4" hidden>
@@ -430,7 +430,7 @@
                                         <div class="col-lg-4" id="divPermanentCityOther" style="display: none;">
                                             <div class="form-group">
                                                 <label for="permanentCityOther">Other City<span class="text-danger h-6" style="font-size: 1.1rem;">*</span>:</label>
-                                                <input class="form-control" type="text" id="permanentCityOther" name="PermanentCityOther" value="@Model.PersonalInfo.PermanentCityOther"><br><br>
+                                                <input class="form-control" type="text" id="permanentCityOther" name="PermanentCityOther" maxlength="50" value="@Model.PersonalInfo.PermanentCityOther"><br><br>
                                             </div>
                                         </div>
                                         <div class="col-lg-4" hidden>
@@ -770,7 +770,6 @@
                                             <select class="form-control" id="degreeProgram" name="degreeProgram" onchange="ValidateProgram(this.value);" required>
                                                 <option value="" selected disabled>Select Bachelor's Program</option>
                                             </select>
-
                                         </div>
                                         <span class="text-danger" id="errDegreeProgram"></span>
                                     </div>
