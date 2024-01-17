@@ -1616,11 +1616,7 @@ function submitDeclaration() {
             SubjectObtain.push($(this).val());
         });
         var data = new FormData();
-        data.append("Photograph", jQuery("#Photograph").get(0).files[0]);
-        data.append("CNIC", jQuery("#CNIC").get(0).files[0]);
-        data.append("SSCMarkSheet", jQuery("#SSCMarkSheet").get(0).files[0]);
-        data.append("HSSCMarkSheet", jQuery("#HSSCMarkSheet").get(0).files[0]);
-
+        
         Object.entries(personalInfo).forEach(([key, value]) => {
             data.append(key, value);
         });
@@ -1650,6 +1646,12 @@ function submitDeclaration() {
         data.append("SubjectName", SubjectName);
         data.append("SubjectObtain", SubjectObtain);
 
+
+        //Add document files to data
+        data.append("Photograph", jQuery("#Photograph").get(0).files[0]);
+        data.append("CNIC", jQuery("#CNIC").get(0).files[0]);
+        data.append("SSCMarkSheet", jQuery("#SSCMarkSheet").get(0).files[0]);
+        data.append("HSSCMarkSheet", jQuery("#HSSCMarkSheet").get(0).files[0]);
 
 
 
