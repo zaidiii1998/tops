@@ -107,48 +107,48 @@ namespace HUTOPS.Controllers
                             var person = DB.PersonalInformations.ToList().Where(x => x.Id == applicationModel.PersonalInfo.Id).FirstOrDefault();
                             if (person != null)
                             {
-                                person.FirstName = applicationModel.PersonalInfo.FirstName.Trim();
-                                person.MiddleName = applicationModel.PersonalInfo.MiddleName.Trim();
-                                person.LastName = applicationModel.PersonalInfo.LastName.Trim();
+                                person.FirstName = applicationModel.PersonalInfo.FirstName?.Trim();
+                                person.MiddleName = applicationModel.PersonalInfo.MiddleName?.Trim();
+                                person.LastName = applicationModel.PersonalInfo.LastName?.Trim();
 
-                                person.FatherFirstName = applicationModel.PersonalInfo.FatherFirstName.Trim();
-                                person.FatherMiddleName = applicationModel.PersonalInfo.MiddleName.Trim();
-                                person.FatherLastName = applicationModel.PersonalInfo.FatherLastName.Trim();
+                                person.FatherFirstName = applicationModel.PersonalInfo.FatherFirstName?.Trim();
+                                person.FatherMiddleName = applicationModel.PersonalInfo.MiddleName?.Trim();
+                                person.FatherLastName = applicationModel.PersonalInfo.FatherLastName?.Trim();
 
-                                person.CNIC = applicationModel.PersonalInfo.CNIC.Trim();
-                                person.EmailAddress = applicationModel.PersonalInfo.EmailAddress.Trim();
-                                person.AlterEmailAddress = applicationModel.PersonalInfo.AlterEmailAddress.Trim();
-                                person.Gender = applicationModel.PersonalInfo.Gender.Trim();
+                                person.CNIC = applicationModel.PersonalInfo.CNIC?.Trim();
+                                person.EmailAddress = applicationModel.PersonalInfo.EmailAddress?.Trim();
+                                person.AlterEmailAddress = applicationModel.PersonalInfo.AlterEmailAddress?.Trim();
+                                person.Gender = applicationModel.PersonalInfo.Gender?.Trim();
                                 person.DateOfBirth = applicationModel.PersonalInfo.DateOfBirth;
 
-                                person.CellPhoneNumber = applicationModel.PersonalInfo.CellPhoneNumber.Trim();
-                                person.WhatsAppNumber = applicationModel.PersonalInfo.WhatsAppNumber.Trim();
-                                person.AlternateCellPhoneNumber = applicationModel.PersonalInfo.AlternateCellPhoneNumber.Trim();
-                                person.HomePhoneNumber = applicationModel.PersonalInfo.HomePhoneNumber.Trim();
+                                person.CellPhoneNumber = applicationModel.PersonalInfo.CellPhoneNumber?.Trim();
+                                person.WhatsAppNumber = applicationModel.PersonalInfo.WhatsAppNumber?.Trim();
+                                person.AlternateCellPhoneNumber = applicationModel.PersonalInfo.AlternateCellPhoneNumber?.Trim();
+                                person.HomePhoneNumber = applicationModel.PersonalInfo.HomePhoneNumber?.Trim();  
                                 //person.AlternateLandline = applicationModel.PersonalInfo.AlternateLandline;
                                 //person.GuardianCellPhoneNumber = applicationModel.PersonalInfo.GuardianCellPhoneNumber;
-                                person.GuardianEmailAddress = applicationModel.PersonalInfo.GuardianEmailAddress.Trim();
+                                person.GuardianEmailAddress = applicationModel.PersonalInfo.GuardianEmailAddress?.Trim();
 
-                                person.ResidentialAddress = applicationModel.PersonalInfo.ResidentialAddress.Trim();
-                                person.ResidentialCountry = applicationModel.PersonalInfo.ResidentialCountry.Trim();
-                                person.ResidentialProvince = applicationModel.PersonalInfo.ResidentialProvince.Trim();
-                                person.ResidentialCity = applicationModel.PersonalInfo.ResidentialCity.Trim();
-                                person.ResidentialCityOther = applicationModel.PersonalInfo.ResidentialCityOther.Trim();
+                                person.ResidentialAddress = applicationModel.PersonalInfo.ResidentialAddress?.Trim();
+                                person.ResidentialCountry = applicationModel.PersonalInfo.ResidentialCountry?.Trim();
+                                person.ResidentialProvince = applicationModel.PersonalInfo.ResidentialProvince?.Trim();
+                                person.ResidentialCity = applicationModel.PersonalInfo.ResidentialCity?.Trim();
+                                person.ResidentialCityOther = applicationModel.PersonalInfo.ResidentialCityOther?.Trim();
                                 person.ResidentialPostalCode = applicationModel.PersonalInfo.ResidentialPostalCode;
 
-                                person.PermanentAddress = applicationModel.PersonalInfo.PermanentAddress.Trim();
-                                person.PermanentCountry = applicationModel.PersonalInfo.PermanentCountry.Trim();
-                                person.PermanentProvince = applicationModel.PersonalInfo.PermanentProvince.Trim();
-                                person.PermanentCity = applicationModel.PersonalInfo.PermanentCity.Trim();
-                                person.PermanentCityOther = applicationModel.PersonalInfo.PermanentCityOther.Trim();
+                                person.PermanentAddress = applicationModel.PersonalInfo.PermanentAddress?.Trim();
+                                person.PermanentCountry = applicationModel.PersonalInfo.PermanentCountry?.Trim();
+                                person.PermanentProvince = applicationModel.PersonalInfo.PermanentProvince?.Trim();
+                                person.PermanentCity = applicationModel.PersonalInfo.PermanentCity?.Trim();
+                                person.PermanentCityOther = applicationModel.PersonalInfo.PermanentCityOther?.Trim();
                                 person.PermanentPostalCode = applicationModel.PersonalInfo.PermanentPostalCode;
 
                                 person.IsAppliedBefore = applicationModel.PersonalInfo.IsAppliedBefore;
                                 person.AppliedBeforeYear = applicationModel.PersonalInfo.AppliedBeforeYear;
                                 person.AppliedBeforeId = applicationModel.PersonalInfo.AppliedBeforeId;
 
-                                person.HearAboutHU = applicationModel.PersonalInfo.HearAboutHU.Trim();
-                                person.HearAboutHUOther = applicationModel.PersonalInfo.HearAboutHUOther.Trim();
+                                person.HearAboutHU = applicationModel.PersonalInfo.HearAboutHU?.Trim();
+                                person.HearAboutHUOther = applicationModel.PersonalInfo.HearAboutHUOther?.Trim();
 
                                 person.TestDate = applicationModel.PersonalInfo.TestDate;
 
@@ -161,25 +161,25 @@ namespace HUTOPS.Controllers
                             {
                                 applicationModel.Education.Id = education.Id;
 
-                                education.CurrentLevelOfEdu = applicationModel.Education.CurrentLevelOfEdu.Trim();
-                                education.UniversityName = applicationModel.Education.UniversityName.Trim();
-                                education.HSSCBoardId = applicationModel.Education.HSSCBoardId.Trim();
-                                education.HSSCBoardName = applicationModel.Education.HSSCBoardName.Trim();
-                                education.HSSCGroupId = applicationModel.Education.HSSCGroupId.Trim();
-                                education.HSSCGroupName = applicationModel.Education.HSSCGroupName.Trim();
+                                education.CurrentLevelOfEdu = applicationModel.Education.CurrentLevelOfEdu?.Trim();
+                                education.UniversityName = applicationModel.Education.UniversityName?.Trim();
+                                education.HSSCBoardId = applicationModel.Education.HSSCBoardId?.Trim();
+                                education.HSSCBoardName = applicationModel.Education.HSSCBoardName?.Trim();
+                                education.HSSCGroupId = applicationModel.Education.HSSCGroupId?.Trim();
+                                education.HSSCGroupName = applicationModel.Education.HSSCGroupName?.Trim();
 
-                                education.HSSCSchoolName = applicationModel.Education.HSSCSchoolName.Trim();
-                                education.HSSCSchoolAddress = applicationModel.Education.HSSCSchoolAddress.Trim();
+                                education.HSSCSchoolName = applicationModel.Education.HSSCSchoolName?.Trim();
+                                education.HSSCSchoolAddress = applicationModel.Education.HSSCSchoolAddress?.Trim();
                                 education.HSSCStartDate = applicationModel.Education.HSSCStartDate;
                                 education.HSSCCompletionDate = applicationModel.Education.HSSCCompletionDate;
-                                education.HSSCPercentage = applicationModel.Education.HSSCPercentage.Trim();
+                                education.HSSCPercentage = applicationModel.Education.HSSCPercentage?.Trim();
 
-                                education.SSCSchoolName = applicationModel.Education.SSCSchoolName.Trim();
-                                education.SSCSchoolAddress = applicationModel.Education.SSCSchoolAddress.Trim();
-                                education.SSCPercentage = applicationModel.Education.SSCPercentage.Trim();
+                                education.SSCSchoolName = applicationModel.Education.SSCSchoolName?.Trim();
+                                education.SSCSchoolAddress = applicationModel.Education.SSCSchoolAddress?.Trim();
+                                education.SSCPercentage = applicationModel.Education.SSCPercentage?.Trim();
 
-                                education.HUSchoolName = applicationModel.Education.HUSchoolName.Trim();
-                                education.IntendedProgram = applicationModel.Education.IntendedProgram.Trim();
+                                education.HUSchoolName = applicationModel.Education.HUSchoolName?.Trim();
+                                education.IntendedProgram = applicationModel.Education.IntendedProgram?.Trim();
 
                                 DB.SaveChanges();
                             }
@@ -327,12 +327,12 @@ namespace HUTOPS.Controllers
                         {
                             applicationModel.PersonalInfo.Declaration = 1;
 
-                            applicationModel.PersonalInfo.FirstName = Utility.ToCamelCase(applicationModel.PersonalInfo.FirstName.Trim());
-                            applicationModel.PersonalInfo.MiddleName = Utility.ToCamelCase(applicationModel.PersonalInfo.MiddleName.Trim());
-                            applicationModel.PersonalInfo.LastName = Utility.ToCamelCase(applicationModel.PersonalInfo.LastName.Trim());
-                            applicationModel.PersonalInfo.FatherFirstName = Utility.ToCamelCase(applicationModel.PersonalInfo.FatherFirstName.Trim());
-                            applicationModel.PersonalInfo.FatherMiddleName = Utility.ToCamelCase(applicationModel.PersonalInfo.FatherMiddleName.Trim());
-                            applicationModel.PersonalInfo.FatherLastName = Utility.ToCamelCase(applicationModel.PersonalInfo.FatherLastName.Trim());
+                            applicationModel.PersonalInfo.FirstName = Utility.ToCamelCase(applicationModel.PersonalInfo.FirstName)?.Trim();
+                            applicationModel.PersonalInfo.MiddleName = Utility.ToCamelCase(applicationModel.PersonalInfo.MiddleName)?.Trim();
+                            applicationModel.PersonalInfo.LastName = Utility.ToCamelCase(applicationModel.PersonalInfo.LastName)?.Trim();
+                            applicationModel.PersonalInfo.FatherFirstName = Utility.ToCamelCase(applicationModel.PersonalInfo.FatherFirstName)?.Trim();
+                            applicationModel.PersonalInfo.FatherMiddleName = Utility.ToCamelCase(applicationModel.PersonalInfo.FatherMiddleName)?.Trim();
+                            applicationModel.PersonalInfo.FatherLastName = Utility.ToCamelCase(applicationModel.PersonalInfo.FatherLastName)?.Trim();
                             applicationModel.PersonalInfo.CreatedDatetime = DateTime.UtcNow + TimeSpan.FromHours(5);
 
                             DB.PersonalInformations.Add(applicationModel.PersonalInfo);
@@ -408,8 +408,8 @@ namespace HUTOPS.Controllers
                             }
 
                             applicationModel.Education.UserId = applicationModel.PersonalInfo.Id;
-                            applicationModel.Education.SSCSchoolName = Utility.ToCamelCase(applicationModel.Education.SSCSchoolName.Trim());
-                            applicationModel.Education.HSSCSchoolName = Utility.ToCamelCase(applicationModel.Education.HSSCSchoolName.Trim());
+                            applicationModel.Education.SSCSchoolName = Utility.ToCamelCase(applicationModel.Education.SSCSchoolName)?.Trim();
+                            applicationModel.Education.HSSCSchoolName = Utility.ToCamelCase(applicationModel.Education.HSSCSchoolName)?.Trim();
 
                             DB.Educationals.Add(applicationModel.Education);
                             DB.SaveChanges();
