@@ -93,7 +93,7 @@
                                     <div class="col-lg-4">
                                         <div class="form-group">
                                             <label for="email">Email Address<span class="text-danger h-6" style="font-size: 1.1rem;">*</span>:</label>
-                                            <input class="form-control" type="email" id="email" name="EmailAddress" maxlength="30" value="@Model.PersonalInfo.EmailAddress" oninput="validateEmail(this.id,'emailError');" onchange="checkEmail(this.id);validateEmail(this.id,'emailError');" required>
+                                            <input class="form-control" type="email" id="email" name="EmailAddress" maxlength="50" value="@Model.PersonalInfo.EmailAddress" oninput="validateEmail(this.id,'emailError');" onchange="checkEmail(this.id);validateEmail(this.id,'emailError');" required>
                                             <span class="text-danger" id="emailError"></span>
                                         </div>
                                     </div>
@@ -273,7 +273,7 @@
                                     <div class="col-lg-4">
                                         <div class="form-group">
                                             <label for="residentialAddress">Residential Address<span class="text-danger h-6" style="font-size: 1.1rem;">*</span>:</label>
-                                            <textarea class="form-control" id="residentialAddress" name="ResidentialAddress" rows="2" cols="100" maxlength="100" required> @Model.PersonalInfo.ResidentialAddress</textarea>
+                                            <textarea class="form-control" id="residentialAddress" name="ResidentialAddress" rows="2" cols="100" maxlength="100" required>@Model.PersonalInfo.ResidentialAddress</textarea>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
@@ -731,7 +731,7 @@
                                     <div class="col-lg-4">
                                         <div class="form-group">
                                             <label for="secondarySchoolAddress">Secondary Education School Address with City Name:</label>
-                                            <textarea class="form-control" type="text" id="secondarySchoolAddress" name="secondarySchoolAddress" maxlength="100" rows="2"> @Model.Education.SSCSchoolAddress</textarea>
+                                            <textarea class="form-control" type="text" id="secondarySchoolAddress" name="secondarySchoolAddress" maxlength="100" rows="2">@Model.Education.SSCSchoolAddress</textarea>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
