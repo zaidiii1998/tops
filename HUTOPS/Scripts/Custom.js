@@ -1533,33 +1533,33 @@ function submitDeclaration() {
         
         var personalInfo = {
             'PersonalInfo.Id': $('#id').val(),
-            'PersonalInfo.firstName': $('#firstName').val(),
-            'PersonalInfo.middleName': $('#middleName').val(),
-            'PersonalInfo.lastName': $('#lastName').val(),
-            'PersonalInfo.fatherFirstName': $('#fatherFirstName').val(),
-            'PersonalInfo.fatherMiddleName': $('#fatherMiddleName').val(),
-            'PersonalInfo.fatherLastName': $('#fatherLastName').val(),
-            'PersonalInfo.cnic': $('#cnic').val(),
-            'PersonalInfo.emailAddress': $('#email').val(),
-            'PersonalInfo.alterEmailAddress': $('#altEmail').val(),
-            'PersonalInfo.gender': $("#gender").val(),
-            'PersonalInfo.husbandName': $('#husbandName').val(),
+            'PersonalInfo.firstName': $('#firstName').val().trim(),
+            'PersonalInfo.middleName': $('#middleName').val().trim(),
+            'PersonalInfo.lastName': $('#lastName').val().trim(),
+            'PersonalInfo.fatherFirstName': $('#fatherFirstName').val().trim(),
+            'PersonalInfo.fatherMiddleName': $('#fatherMiddleName').val().trim(),
+            'PersonalInfo.fatherLastName': $('#fatherLastName').val().trim(),
+            'PersonalInfo.cnic': $('#cnic').val().trim(),
+            'PersonalInfo.emailAddress': $('#email').val().trim(),
+            'PersonalInfo.alterEmailAddress': $('#altEmail').val().trim(),
+            'PersonalInfo.gender': $("#gender").val().trim(),
+            'PersonalInfo.husbandName': $('#husbandName').val().trim(),
             'PersonalInfo.dateOfBirth': dob,
             // Contact Info
-            'PersonalInfo.cellPhoneNumber': $('#cellPhone').val(),
-            'PersonalInfo.whatsAppNumber': $('#whatsappNumber').val(),
-            'PersonalInfo.alternateCellPhoneNumber': $('#cellPhone').val(), //$('#altCellPhone').val(),
-            'PersonalInfo.homePhoneNumber': $('#homePhone').val(),
-            'PersonalInfo.alternateLandline': $('#altLandline').val(),
-            'PersonalInfo.guardianCellPhoneNumber': $('#guardianCellPhone').val(),
-            'PersonalInfo.guardianEmailAddress': $('#guardianEmail').val(),
+            'PersonalInfo.cellPhoneNumber': $('#cellPhone').val().trim(),
+            'PersonalInfo.whatsAppNumber': $('#whatsappNumber').val().trim(),
+            'PersonalInfo.alternateCellPhoneNumber': $('#cellPhone').val().trim(), //$('#altCellPhone').val(),
+            'PersonalInfo.homePhoneNumber': $('#homePhone').val().trim(),
+            'PersonalInfo.alternateLandline': $('#altLandline').val().trim(),
+            'PersonalInfo.guardianCellPhoneNumber': $('#guardianCellPhone').val().trim(),
+            'PersonalInfo.guardianEmailAddress': $('#guardianEmail').val().trim(),
             // Address info
-            'PersonalInfo.residentialAddress': $('#residentialAddress').val(),
-            'PersonalInfo.residentialCountry': $('#residentialCountry :selected').text(),
-            'PersonalInfo.residentialProvince': $('#residentialProvince :selected').text(),
-            'PersonalInfo.residentialCity': $('#residentialCity :selected').text(),
-            'PersonalInfo.residentialCityOther': $('#residentialCityOther').val(),
-            'PersonalInfo.residentialPostalCode': $('#residentialPostalCode').val(),
+            'PersonalInfo.residentialAddress': $('#residentialAddress').val().trim(),
+            'PersonalInfo.residentialCountry': $('#residentialCountry :selected').text().trim(),
+            'PersonalInfo.residentialProvince': $('#residentialProvince :selected').text().trim(),
+            'PersonalInfo.residentialCity': $('#residentialCity :selected').text().trim(),
+            'PersonalInfo.residentialCityOther': $('#residentialCityOther').val().trim(),
+            'PersonalInfo.residentialPostalCode': $('#residentialPostalCode').val().trim(),
 
             //'PersonalInfo.permanentAddress': $('#permanentAddress').val(),
             //'PersonalInfo.permanentCountry': $('#permanentCountry :selected').text(),
@@ -1568,13 +1568,13 @@ function submitDeclaration() {
             //'PersonalInfo.permanentCityOther': $('#permanentCityOther').val(),
             //'PersonalInfo.permanentPostalCode': $('#permanentPostalCode').val(),
 
-            'PersonalInfo.IsAppliedBefore': $("input[name='IsAppliedBefore']:checked").val(),
-            'PersonalInfo.AppliedBeforeYear': $('#AppliedBeforeYear').val(),
-            'PersonalInfo.AppliedBeforeId': $('#AppliedBeforeId').val(),
+            'PersonalInfo.IsAppliedBefore': $("input[name='IsAppliedBefore']:checked").val().trim(),
+            'PersonalInfo.AppliedBeforeYear': $('#AppliedBeforeYear').val().trim(),
+            'PersonalInfo.AppliedBeforeId': $('#AppliedBeforeId').val().trim(),
 
             // Hear About
-            'PersonalInfo.HearAboutHU': $('#comboHearHU').val(),
-            'PersonalInfo.HearAboutHUOther': $('#OtherHearHU').val(),
+            'PersonalInfo.HearAboutHU': $('#comboHearHU').val().trim(),
+            'PersonalInfo.HearAboutHUOther': $('#OtherHearHU').val().trim(),
 
             // Test Date
 
@@ -1583,23 +1583,23 @@ function submitDeclaration() {
         }
         var education = {
 
-            'Education.CurrentLevelOfEdu': $('#currentLevel').val(),
-            'Education.HSSCSchoolName': $('#collegeName').val(),
-            'Education.HSSCSchoolAddress': $('#collegeAddress').val(),
-            'Education.HSSCPercentage': $('#hsscPercentage').val(),
-            'Education.HSSCStartDate': $('#startingYear').val(),
-            'Education.HSSCCompletionDate': $('#completionYear').val(),
-            'Education.HSSCBoardId': $('#boardOfEducation').val(),
-            'Education.HSSCBoardName': $('#boardOfEducation :selected').val(),
+            'Education.CurrentLevelOfEdu': $('#currentLevel').val().trim(),
+            'Education.HSSCSchoolName': $('#collegeName').val().trim(),
+            'Education.HSSCSchoolAddress': $('#collegeAddress').val().trim(),
+            'Education.HSSCPercentage': $('#hsscPercentage').val().trim(),
+            'Education.HSSCStartDate': $('#startingYear').val().trim(),
+            'Education.HSSCCompletionDate': $('#completionYear').val().trim(),
+            'Education.HSSCBoardId': $('#boardOfEducation').val().trim(),
+            'Education.HSSCBoardName': $('#boardOfEducation :selected').val().trim(),
 
-            'Education.HSSCGroupId': $('#groupOfStudy').val(),
-            'Education.HSSCGroupName': $('#groupOfStudy :selected').text(),
-            'Education.SSCSchoolName': $('#secondarySchoolName').val(),
-            'Education.SSCSchoolAddress': $('#secondarySchoolAddress').val(),
-            'Education.SSCPercentage': $('#sscPercentage').val(),
-            'Education.UniversityName': $('#universityName').val(),
-            'Education.IntendedProgram': $('#degreeProgram').val(),
-            'Education.HUSchoolName': $('input[name="huSchool"]:checked').val(),
+            'Education.HSSCGroupId': $('#groupOfStudy').val().trim(),
+            'Education.HSSCGroupName': $('#groupOfStudy :selected').text().trim(),
+            'Education.SSCSchoolName': $('#secondarySchoolName').val().trim(),
+            'Education.SSCSchoolAddress': $('#secondarySchoolAddress').val().trim(),
+            'Education.SSCPercentage': $('#sscPercentage').val().trim(),
+            'Education.UniversityName': $('#universityName').val().trim(),
+            'Education.IntendedProgram': $('#degreeProgram').val().trim(),
+            'Education.HUSchoolName': $('input[name="huSchool"]:checked').val().trim(),
 
         }
         var document = {
@@ -1621,19 +1621,19 @@ function submitDeclaration() {
             data.append(key, value);
         });
         if (!$('#permanentDifferent').prop('checked')) {
-            data.append('PersonalInfo.permanentAddress', $('#residentialAddress').val());
-            data.append('PersonalInfo.permanentCountry', $('#residentialCountry :selected').text());
-            data.append('PersonalInfo.permanentProvince', $('#residentialProvince :selected').text());
-            data.append('PersonalInfo.permanentCity', $('#residentialCity :selected').text());
-            data.append('PersonalInfo.permanentCityOther', $('#residentialCityOther').val());
-            data.append('PersonalInfo.permanentPostalCode', $('#residentialPostalCode').val());
+            data.append('PersonalInfo.permanentAddress', $('#residentialAddress').val().trim());
+            data.append('PersonalInfo.permanentCountry', $('#residentialCountry :selected').text().trim());
+            data.append('PersonalInfo.permanentProvince', $('#residentialProvince :selected').text().trim());
+            data.append('PersonalInfo.permanentCity', $('#residentialCity :selected').text().trim());
+            data.append('PersonalInfo.permanentCityOther', $('#residentialCityOther').val().trim());
+            data.append('PersonalInfo.permanentPostalCode', $('#residentialPostalCode').val().trim());
         } else {
-            data.append('PersonalInfo.permanentAddress', $('#permanentAddress').val());
-            data.append('PersonalInfo.permanentCountry', $('#permanentCountry :selected').text());
-            data.append('PersonalInfo.permanentProvince', $('#permanentProvince :selected').text());
-            data.append('PersonalInfo.permanentCity', $('#permanentCity :selected').text());
-            data.append('PersonalInfo.permanentCityOther', $('#permanentCityOther').val());
-            data.append('PersonalInfo.permanentPostalCode', $('#permanentPostalCode').val());
+            data.append('PersonalInfo.permanentAddress', $('#permanentAddress').val().trim());
+            data.append('PersonalInfo.permanentCountry', $('#permanentCountry :selected').text().trim());
+            data.append('PersonalInfo.permanentProvince', $('#permanentProvince :selected').text().trim());
+            data.append('PersonalInfo.permanentCity', $('#permanentCity :selected').text().trim());
+            data.append('PersonalInfo.permanentCityOther', $('#permanentCityOther').val().trim());
+            data.append('PersonalInfo.permanentPostalCode', $('#permanentPostalCode').val().trim());
         }
 
         Object.entries(education).forEach(([key, value]) => {
