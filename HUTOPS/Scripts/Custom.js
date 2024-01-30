@@ -1533,33 +1533,33 @@ function submitDeclaration() {
         
         var personalInfo = {
             'PersonalInfo.Id': $('#id').val(),
-            'PersonalInfo.firstName': $('#firstName').val().trim(),
-            'PersonalInfo.middleName': $('#middleName').val().trim(),
-            'PersonalInfo.lastName': $('#lastName').val().trim(),
-            'PersonalInfo.fatherFirstName': $('#fatherFirstName').val().trim(),
-            'PersonalInfo.fatherMiddleName': $('#fatherMiddleName').val().trim(),
-            'PersonalInfo.fatherLastName': $('#fatherLastName').val().trim(),
-            'PersonalInfo.cnic': $('#cnic').val().trim(),
-            'PersonalInfo.emailAddress': $('#email').val().trim(),
-            'PersonalInfo.alterEmailAddress': $('#altEmail').val().trim(),
-            'PersonalInfo.gender': $("#gender").val().trim(),
-            'PersonalInfo.husbandName': $('#husbandName').val().trim(),
+            'PersonalInfo.firstName': $('#firstName').val() !== null ? $('#firstName').val().trim() : "",
+            'PersonalInfo.middleName': $('#middleName').val() !== null ? $('#middleName').val().trim() : "",
+            'PersonalInfo.lastName': $('#lastName').val() !== null ? $('#lastName').val().trim() : "",
+            'PersonalInfo.fatherFirstName': $('#fatherFirstName').val() !== null ? $('#fatherFirstName').val().trim() : "",
+            'PersonalInfo.fatherMiddleName': $('#fatherMiddleName').val() !== null ? $('#fatherMiddleName').val().trim() : "",
+            'PersonalInfo.fatherLastName': $('#fatherLastName').val() !== null ? $('#fatherLastName').val().trim() : "",
+            'PersonalInfo.cnic': $('#cnic').val() !== null ? $('#cnic').val().trim() : "",
+            'PersonalInfo.emailAddress': $('#email').val() !== null ? $('#email').val().trim() : "",
+            'PersonalInfo.alterEmailAddress': $('#altEmail').val() !== null ? $('#altEmail').val().trim() : "",
+            'PersonalInfo.gender': $("#gender").val() !== null ? $('#gender').val().trim() : "",
+            'PersonalInfo.husbandName': $('#husbandName') !== null ? $('#husbandName').val().trim() : "".trim(),
             'PersonalInfo.dateOfBirth': dob,
             // Contact Info
-            'PersonalInfo.cellPhoneNumber': $('#cellPhone').val().trim(),
-            'PersonalInfo.whatsAppNumber': $('#whatsappNumber').val().trim(),
-            'PersonalInfo.alternateCellPhoneNumber': $('#cellPhone').val().trim(), //$('#altCellPhone').val(),
-            'PersonalInfo.homePhoneNumber': $('#homePhone').val().trim(),
-            'PersonalInfo.alternateLandline': $('#altLandline').val().trim(),
-            'PersonalInfo.guardianCellPhoneNumber': $('#guardianCellPhone').val().trim(),
-            'PersonalInfo.guardianEmailAddress': $('#guardianEmail').val().trim(),
+            'PersonalInfo.cellPhoneNumber': $('#cellPhone').val() !== null ? $('#cellPhone').val().trim() : "",
+            'PersonalInfo.whatsAppNumber': $('#whatsappNumber').val() !== null ? $('#whatsappNumber').val().trim() : "",
+            'PersonalInfo.alternateCellPhoneNumber': $('#cellPhone').val() !== null ? $('#cellPhone').val().trim() : "", //$('#altCellPhone').val(),
+            'PersonalInfo.homePhoneNumber': $('#homePhone').val() !== null ? $('#homePhone').val().trim() : "",
+            'PersonalInfo.alternateLandline': $('#altLandline').val() !== null ? $('#altLandline').val().trim() : "",
+            'PersonalInfo.guardianCellPhoneNumber': $('#guardianCellPhone').val() !== null ? $('#guardianCellPhone').val().trim() : "",
+            'PersonalInfo.guardianEmailAddress': $('#guardianEmail').val() !== null ? $('#guardianEmail').val().trim() : "",
             // Address info
-            'PersonalInfo.residentialAddress': $('#residentialAddress').val().trim(),
-            'PersonalInfo.residentialCountry': $('#residentialCountry :selected').text().trim(),
-            'PersonalInfo.residentialProvince': $('#residentialProvince :selected').text().trim(),
-            'PersonalInfo.residentialCity': $('#residentialCity :selected').text().trim(),
-            'PersonalInfo.residentialCityOther': $('#residentialCityOther').val().trim(),
-            'PersonalInfo.residentialPostalCode': $('#residentialPostalCode').val().trim(),
+            'PersonalInfo.residentialAddress': $('#residentialAddress').val() !== null ? $('#residentialAddress').val().trim() : "",
+            'PersonalInfo.residentialCountry': $('#residentialCountry :selected').text() !== null ? $('#residentialCountry :selected').text().trim() : "",
+            'PersonalInfo.residentialProvince': $('#residentialProvince :selected').text() !== null ? $('#residentialProvince :selected').trim() : "",
+            'PersonalInfo.residentialCity': $('#residentialCity :selected').text() !== null ? $('#residentialCity :selected').text().trim() : "",
+            'PersonalInfo.residentialCityOther': $('#residentialCityOther').val() !== null ? $('#AppliedBeforeId').val().trim() : "",
+            'PersonalInfo.residentialPostalCode': $('#residentialPostalCode').val() !== null ? $('#AppliedBeforeId').val().trim() : "",
 
             //'PersonalInfo.permanentAddress': $('#permanentAddress').val(),
             //'PersonalInfo.permanentCountry': $('#permanentCountry :selected').text(),
@@ -1568,13 +1568,13 @@ function submitDeclaration() {
             //'PersonalInfo.permanentCityOther': $('#permanentCityOther').val(),
             //'PersonalInfo.permanentPostalCode': $('#permanentPostalCode').val(),
 
-            'PersonalInfo.IsAppliedBefore': $("input[name='IsAppliedBefore']:checked").val().trim(),
-            'PersonalInfo.AppliedBeforeYear': $('#AppliedBeforeYear').val().trim(),
-            'PersonalInfo.AppliedBeforeId': $('#AppliedBeforeId').val().trim(),
+            'PersonalInfo.IsAppliedBefore': $("input[name='IsAppliedBefore']:checked").val() !== null ? $("input[name='IsAppliedBefore']:checked").val().trim() : "",
+            'PersonalInfo.AppliedBeforeYear': $('#AppliedBeforeYear').val() !== null ? $('#AppliedBeforeYear').val().trim() :"",
+            'PersonalInfo.AppliedBeforeId': $('#AppliedBeforeId').val() !== null ? $('#AppliedBeforeId').val().trim() : "",
 
             // Hear About
-            'PersonalInfo.HearAboutHU': $('#comboHearHU').val().trim(),
-            'PersonalInfo.HearAboutHUOther': $('#OtherHearHU').val().trim(),
+            'PersonalInfo.HearAboutHU': $('#comboHearHU').val() !== null ? $('#comboHearHU').val().trim() : "",
+            'PersonalInfo.HearAboutHUOther': $('#OtherHearHU').val() !== null ? $('#OtherHearHU').val().trim() : "",
 
             // Test Date
 
@@ -1583,23 +1583,23 @@ function submitDeclaration() {
         }
         var education = {
 
-            'Education.CurrentLevelOfEdu': $('#currentLevel').val().trim(),
-            'Education.HSSCSchoolName': $('#collegeName').val().trim(),
-            'Education.HSSCSchoolAddress': $('#collegeAddress').val().trim(),
-            'Education.HSSCPercentage': $('#hsscPercentage').val().trim(),
-            'Education.HSSCStartDate': $('#startingYear').val().trim(),
-            'Education.HSSCCompletionDate': $('#completionYear').val().trim(),
-            'Education.HSSCBoardId': $('#boardOfEducation').val().trim(),
-            'Education.HSSCBoardName': $('#boardOfEducation :selected').val().trim(),
+            'Education.CurrentLevelOfEdu': $('#currentLevel').val() !== null ? $('#currentLevel').val().trim() : "",
+            'Education.HSSCSchoolName': $('#collegeName').val() !== null ? $('#collegeName').val().trim() : "",
+            'Education.HSSCSchoolAddress': $('#collegeAddress').val() !== null ? $('#collegeAddress').val().trim() : "",
+            'Education.HSSCPercentage': $('#hsscPercentage').val() !== null ? $('#hsscPercentage').val().trim() : "",
+            'Education.HSSCStartDate': $('#startingYear').val() !== null ? $('#startingYear').val().trim() : "",
+            'Education.HSSCCompletionDate': $('#completionYear').val() !== null ? $('#completionYear').val().trim() : "",
+            'Education.HSSCBoardId': $('#boardOfEducation').val() !== null ? $('#boardOfEducation').val().trim() : "",
+            'Education.HSSCBoardName': $('#boardOfEducation :selected').val() !== null ? $('#boardOfEducation :selected').val().trim() : "",
 
-            'Education.HSSCGroupId': $('#groupOfStudy').val().trim(),
-            'Education.HSSCGroupName': $('#groupOfStudy :selected').text().trim(),
-            'Education.SSCSchoolName': $('#secondarySchoolName').val().trim(),
-            'Education.SSCSchoolAddress': $('#secondarySchoolAddress').val().trim(),
-            'Education.SSCPercentage': $('#sscPercentage').val().trim(),
-            'Education.UniversityName': $('#universityName').val().trim(),
-            'Education.IntendedProgram': $('#degreeProgram').val().trim(),
-            'Education.HUSchoolName': $('input[name="huSchool"]:checked').val().trim(),
+            'Education.HSSCGroupId': $('#groupOfStudy').val() !== null ? $('#groupOfStudy').val().trim() : "",
+            'Education.HSSCGroupName': $('#groupOfStudy :selected').text() !== null ? $('#groupOfStudy :selected').text().trim() : "",
+            'Education.SSCSchoolName': $('#secondarySchoolName').val() !== null ? $('#secondarySchoolName').val().trim() : "",
+            'Education.SSCSchoolAddress': $('#secondarySchoolAddress').val() !== null ? $('#secondarySchoolAddress').val().trim() : "",
+            'Education.SSCPercentage': $('#sscPercentage').val() !== null ? $('#sscPercentage').val().trim() : "",
+            'Education.UniversityName': $('#universityName').val() !== null ? $('#universityName').val().trim() : "",
+            'Education.IntendedProgram': $('#degreeProgram').val() !== null ? $('#degreeProgram').val().trim() : "",
+            'Education.HUSchoolName': $('input[name="huSchool"]:checked').val() !== null ? $('input[name="huSchool"]:checked').val().trim() : "",
 
         }
         var document = {
@@ -1621,19 +1621,19 @@ function submitDeclaration() {
             data.append(key, value);
         });
         if (!$('#permanentDifferent').prop('checked')) {
-            data.append('PersonalInfo.permanentAddress', $('#residentialAddress').val().trim());
-            data.append('PersonalInfo.permanentCountry', $('#residentialCountry :selected').text().trim());
-            data.append('PersonalInfo.permanentProvince', $('#residentialProvince :selected').text().trim());
-            data.append('PersonalInfo.permanentCity', $('#residentialCity :selected').text().trim());
-            data.append('PersonalInfo.permanentCityOther', $('#residentialCityOther').val().trim());
-            data.append('PersonalInfo.permanentPostalCode', $('#residentialPostalCode').val().trim());
+            data.append('PersonalInfo.permanentAddress', $('#residentialAddress').val() !== null ? $('#residentialAddress').val().trim() : "");
+            data.append('PersonalInfo.permanentCountry', $('#residentialCountry :selected').text() !== null ? $('#residentialCountry :selected').text().trim() : "");
+            data.append('PersonalInfo.permanentProvince', $('#residentialProvince :selected').text() !== null ? $('#residentialProvince :selected').text().trim() : "");
+            data.append('PersonalInfo.permanentCity', $('#residentialCity :selected').text() !== null ? $('#residentialCity :selected').text().trim() : "");
+            data.append('PersonalInfo.permanentCityOther', $('#residentialCityOther').val() !== null ? $('#residentialCityOther').val().trim() : "");
+            data.append('PersonalInfo.permanentPostalCode', $('#residentialPostalCode').val() !== null ? $('#residentialPostalCode').val().trim() : "");
         } else {
-            data.append('PersonalInfo.permanentAddress', $('#permanentAddress').val().trim());
-            data.append('PersonalInfo.permanentCountry', $('#permanentCountry :selected').text().trim());
-            data.append('PersonalInfo.permanentProvince', $('#permanentProvince :selected').text().trim());
-            data.append('PersonalInfo.permanentCity', $('#permanentCity :selected').text().trim());
-            data.append('PersonalInfo.permanentCityOther', $('#permanentCityOther').val().trim());
-            data.append('PersonalInfo.permanentPostalCode', $('#permanentPostalCode').val().trim());
+            data.append('PersonalInfo.permanentAddress', $('#permanentAddress').val() !== null ? $('#permanentAddress').val().trim() : "");
+            data.append('PersonalInfo.permanentCountry', $('#permanentCountry :selected').text() !== null ? $('#permanentCountry :selected').text().trim() : "");
+            data.append('PersonalInfo.permanentProvince', $('#permanentProvince :selected').text() !== null ? $('#permanentProvince :selected').text().trim() : "");
+            data.append('PersonalInfo.permanentCity', $('#permanentCity :selected').text() !== null ? $('#permanentCity :selected').text().trim() : "");
+            data.append('PersonalInfo.permanentCityOther', $('#permanentCityOther').val() !== null ? $('#permanentCityOther').val().trim() : "");
+            data.append('PersonalInfo.permanentPostalCode', $('#permanentPostalCode').val() !== null ? $('#permanentPostalCode').val().trim() : "");
         }
 
         Object.entries(education).forEach(([key, value]) => {
