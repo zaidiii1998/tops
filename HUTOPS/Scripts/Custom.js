@@ -1543,7 +1543,7 @@ function submitDeclaration() {
             'PersonalInfo.emailAddress': $('#email').val() !== null ? $('#email').val().trim() : "",
             'PersonalInfo.alterEmailAddress': $('#altEmail').val() !== null ? $('#altEmail').val().trim() : "",
             'PersonalInfo.gender': $("#gender").val() !== null ? $('#gender').val().trim() : "",
-            'PersonalInfo.husbandName': $('#husbandName') !== null ? $('#husbandName').val().trim() : "".trim(),
+            'PersonalInfo.husbandName': $('#husbandName').val() !== null ? $('#husbandName').val().trim() : "",
             'PersonalInfo.dateOfBirth': dob,
             // Contact Info
             'PersonalInfo.cellPhoneNumber': $('#cellPhone').val() !== null ? $('#cellPhone').val().trim() : "",
@@ -1556,7 +1556,7 @@ function submitDeclaration() {
             // Address info
             'PersonalInfo.residentialAddress': $('#residentialAddress').val() !== null ? $('#residentialAddress').val().trim() : "",
             'PersonalInfo.residentialCountry': $('#residentialCountry :selected').text() !== null ? $('#residentialCountry :selected').text().trim() : "",
-            'PersonalInfo.residentialProvince': $('#residentialProvince :selected').text() !== null ? $('#residentialProvince :selected').trim() : "",
+            'PersonalInfo.residentialProvince': $('#residentialProvince :selected').text() !== null ? $('#residentialProvince :selected').text().trim() : "",
             'PersonalInfo.residentialCity': $('#residentialCity :selected').text() !== null ? $('#residentialCity :selected').text().trim() : "",
             'PersonalInfo.residentialCityOther': $('#residentialCityOther').val() !== null ? $('#AppliedBeforeId').val().trim() : "",
             'PersonalInfo.residentialPostalCode': $('#residentialPostalCode').val() !== null ? $('#AppliedBeforeId').val().trim() : "",
