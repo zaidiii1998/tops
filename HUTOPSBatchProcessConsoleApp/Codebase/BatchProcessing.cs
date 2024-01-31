@@ -612,6 +612,10 @@ namespace HUTOPSBatchProcessConsoleApp.Codebase
             AzureEntityFrameworkHandler dbContextHandler = new AzureEntityFrameworkHandler();
             dbContextHandler.ExecuteWithRetry(() =>
             {
+                EApplicationEntities EAppDB = new EApplicationEntities();
+                List<EAppDBModel.PersonalInformation> eappPInfo = new List<EAppDBModel.PersonalInformation>();
+                eappPInfo = EAppDB.PersonalInformations.Where(p => p.ID > 194587).ToList();
+
                 using (HUTOPSEntities DB = new HUTOPSEntities())
                 {
                     try
@@ -627,138 +631,147 @@ namespace HUTOPSBatchProcessConsoleApp.Codebase
                                 var educationalInformation = new Educational();
                                 if (personalInformation != null)
                                 {
-                                    educationalInformation = DB.Educationals.Where(x => x.UserId == personalInformation.Id).FirstOrDefault();
-                                    if (personalInformation.IsRecordMoveToEApp != 1)
+                                    if (eappPInfo.Exists(p => p.HuTopsId != personalInformation.HUTopId))
                                     {
-                                        if (educationalInformation.Id != 0)
+                                        educationalInformation = DB.Educationals.Where(x => x.UserId == personalInformation.Id).FirstOrDefault();
+                                        if (personalInformation.IsRecordMoveToEApp != 1)
                                         {
-                                            if (personalInformation.Result == 2)
+
+                                            if (educationalInformation.Id != 0)
                                             {
-                                                var EApp_PersonalInformation = new EAppDBModel.PersonalInformation()
+                                                if (personalInformation.Result == 2)
                                                 {
-                                                    Appid = "",
-                                                    FirstName = personalInformation.FirstName,
-                                                    MiddleName = personalInformation.MiddleName,
-                                                    LastName = personalInformation.LastName,
-                                                    Gender = personalInformation.Gender,
-                                                    HusbandName = personalInformation.HusbandName,
-                                                    FatherFirstName = personalInformation.FatherFirstName,
-                                                    FatherMiddleName = personalInformation.FatherMiddleName,
-                                                    FatherLastName = personalInformation.FatherLastName,
-                                                    FatherName = personalInformation.FatherFirstName + personalInformation.FatherMiddleName + personalInformation.FatherLastName,
-                                                    DateofBirth = personalInformation.DateOfBirth,
-                                                    CountryAdd = null,
-                                                    PhoneNo = personalInformation.CellPhoneNumber,
-                                                    Tellus = null,
-                                                    CurrentAddress = personalInformation.ResidentialAddress,
-                                                    PostalAddress = personalInformation.ResidentialAddress,
-                                                    Country = personalInformation.ResidentialCountry,
-                                                    City = personalInformation.ResidentialCity,
-                                                    Provience = personalInformation.ResidentialProvince,
-                                                    Postal = null,
-                                                    Email = personalInformation.EmailAddress,
-                                                    AlterEmail = personalInformation.AlterEmailAddress,
-                                                    Password = personalInformation.Password,
-                                                    CPassword = personalInformation.Password,
-                                                    Savedate = personalInformation.CreatedDatetime,
-                                                    Updatedate = personalInformation.UpdateDate,
-                                                    AppStatus = 1,
-                                                    StudentStatus = "0",
-                                                    TempID = null,
-                                                    HereYou = personalInformation.HearAboutHU,
-                                                    HereOther = personalInformation.HearAboutHUOther,
-                                                    NewEmail = "",
-                                                    Discount = null,
-                                                    DiscountFee = null,
-                                                    Yourinterests = null,
-                                                    YourinterestsOther = null,
-
-                                                    Permanent_addres = personalInformation.PermanentAddress,
-                                                    Permanent_country = personalInformation.PermanentCountry,
-                                                    Permanent_provience = personalInformation.PermanentProvince,
-                                                    Permanent_city = personalInformation.PermanentCity,
-                                                    Permanent_cityother = personalInformation.PermanentCityOther,
-                                                    Permanent_postal = null,
-
-
-                                                    Postal_addres = personalInformation.ResidentialAddress,
-                                                    Postal_country = personalInformation.ResidentialCountry,
-                                                    Postal_provience = personalInformation.ResidentialProvince,
-                                                    Postal_city = personalInformation.ResidentialCity,
-                                                    Postal_cityother = personalInformation.ResidentialCityOther,
-                                                    Postal_postal = null,
-
-                                                    AppliedBefore = personalInformation.IsAppliedBefore == 0 ? "No" : "Yes",
-                                                    AppliedBeforeMonth = null,
-                                                    AppliedBeforeYear = personalInformation.AppliedBeforeYear,
-
-                                                    WhatsAppNumber = personalInformation.WhatsAppNumber,
-
-                                                    TestDate = personalInformation.TestDate,
-                                                    SubmissionDate = personalInformation.SubmissionDate,
-                                                    HUTopsCandidate = "Yes",
-                                                    HuTopsId = personalInformation.HUTopId,
-
-                                                    // Education 
-                                                    School = educationalInformation.HUSchoolName,
-                                                    SchoolName = "Other",
-                                                    Currentqualification = educationalInformation.CurrentLevelOfEdu,
-                                                    AlternateMobile = personalInformation.AlternateCellPhoneNumber,
-                                                    Alternatelandline = personalInformation.AlternateLandline,
-                                                    Cityother = personalInformation.ResidentialCityOther,
-                                                    OtherCurrentqualification = educationalInformation.HSSCSchoolName,
-                                                    Userid = null,
-                                                    chk = null,
-                                                    Modeofstudy = null,
-                                                    BoardofEducation = educationalInformation.HSSCBoardName,
-                                                    Intendedprogram = educationalInformation.IntendedProgram,
-                                                    Retake = false,
-                                                    CurrentHighSchoolOther = educationalInformation.HSSCSchoolName,
-                                                    CurrentHighSchoolCode_old = 0,
-                                                    BoardofEducationOther = "",
-                                                    CurrentHighSchoolCode = "-1"
-                                                };
-                                                dbContextHandler.ExecuteWithRetry(() =>
-                                                {
-                                                    using (EApplicationEntities EApp_DB = new EApplicationEntities())
+                                                    var EApp_PersonalInformation = new EAppDBModel.PersonalInformation()
                                                     {
-                                                        EApp_DB.PersonalInformations.Add(EApp_PersonalInformation);
-                                                        EApp_DB.SaveChanges();
-                                                    }
-                                                });
-                                                personalInformation.IsRecordMoveToEApp = 1;
-                                                DB.SaveChanges();
+                                                        Appid = "",
+                                                        FirstName = personalInformation.FirstName,
+                                                        MiddleName = personalInformation.MiddleName,
+                                                        LastName = personalInformation.LastName,
+                                                        Gender = personalInformation.Gender,
+                                                        HusbandName = personalInformation.HusbandName,
+                                                        FatherFirstName = personalInformation.FatherFirstName,
+                                                        FatherMiddleName = personalInformation.FatherMiddleName,
+                                                        FatherLastName = personalInformation.FatherLastName,
+                                                        FatherName = personalInformation.FatherFirstName + personalInformation.FatherMiddleName + personalInformation.FatherLastName,
+                                                        DateofBirth = personalInformation.DateOfBirth,
+                                                        CountryAdd = null,
+                                                        PhoneNo = personalInformation.CellPhoneNumber,
+                                                        Tellus = null,
+                                                        CurrentAddress = personalInformation.ResidentialAddress,
+                                                        PostalAddress = personalInformation.ResidentialAddress,
+                                                        Country = personalInformation.ResidentialCountry,
+                                                        City = personalInformation.ResidentialCity,
+                                                        Provience = personalInformation.ResidentialProvince,
+                                                        Postal = null,
+                                                        Email = personalInformation.EmailAddress,
+                                                        AlterEmail = personalInformation.AlterEmailAddress,
+                                                        Password = personalInformation.Password,
+                                                        CPassword = personalInformation.Password,
+                                                        Savedate = personalInformation.CreatedDatetime,
+                                                        Updatedate = personalInformation.UpdateDate,
+                                                        AppStatus = 1,
+                                                        StudentStatus = "0",
+                                                        TempID = null,
+                                                        HereYou = personalInformation.HearAboutHU,
+                                                        HereOther = personalInformation.HearAboutHUOther,
+                                                        NewEmail = "",
+                                                        Discount = null,
+                                                        DiscountFee = null,
+                                                        Yourinterests = null,
+                                                        YourinterestsOther = null,
 
-                                                record.Status = "Record Move to E-Application Successfully";
-                                                Helper.AddLog(Constants.LogType.ActivityLog, $"Personal Information Record Move to E-Application against HUTOPS Id: {record.HUTOPSIds}");
+                                                        Permanent_addres = personalInformation.PermanentAddress,
+                                                        Permanent_country = personalInformation.PermanentCountry,
+                                                        Permanent_provience = personalInformation.PermanentProvince,
+                                                        Permanent_city = personalInformation.PermanentCity,
+                                                        Permanent_cityother = personalInformation.PermanentCityOther,
+                                                        Permanent_postal = null,
 
+
+                                                        Postal_addres = personalInformation.ResidentialAddress,
+                                                        Postal_country = personalInformation.ResidentialCountry,
+                                                        Postal_provience = personalInformation.ResidentialProvince,
+                                                        Postal_city = personalInformation.ResidentialCity,
+                                                        Postal_cityother = personalInformation.ResidentialCityOther,
+                                                        Postal_postal = null,
+
+                                                        AppliedBefore = personalInformation.IsAppliedBefore == 0 ? "No" : "Yes",
+                                                        AppliedBeforeMonth = null,
+                                                        AppliedBeforeYear = personalInformation.AppliedBeforeYear,
+
+                                                        WhatsAppNumber = personalInformation.WhatsAppNumber,
+
+                                                        TestDate = personalInformation.TestDate,
+                                                        SubmissionDate = personalInformation.SubmissionDate,
+                                                        HUTopsCandidate = "Yes",
+                                                        HuTopsId = personalInformation.HUTopId,
+
+                                                        // Education 
+                                                        School = educationalInformation.HUSchoolName,
+                                                        SchoolName = "Other",
+                                                        Currentqualification = educationalInformation.CurrentLevelOfEdu,
+                                                        AlternateMobile = personalInformation.AlternateCellPhoneNumber,
+                                                        Alternatelandline = personalInformation.AlternateLandline,
+                                                        Cityother = personalInformation.ResidentialCityOther,
+                                                        OtherCurrentqualification = educationalInformation.HSSCSchoolName,
+                                                        Userid = null,
+                                                        chk = null,
+                                                        Modeofstudy = null,
+                                                        BoardofEducation = educationalInformation.HSSCBoardName,
+                                                        Intendedprogram = educationalInformation.IntendedProgram,
+                                                        Retake = false,
+                                                        CurrentHighSchoolOther = educationalInformation.HSSCSchoolName,
+                                                        CurrentHighSchoolCode_old = 0,
+                                                        BoardofEducationOther = "",
+                                                        CurrentHighSchoolCode = "-1"
+                                                    };
+                                                    dbContextHandler.ExecuteWithRetry(() =>
+                                                    {
+                                                        using (EApplicationEntities EApp_DB = new EApplicationEntities())
+                                                        {
+                                                            EApp_DB.PersonalInformations.Add(EApp_PersonalInformation);
+                                                            EApp_DB.SaveChanges();
+                                                        }
+                                                    });
+                                                    personalInformation.IsRecordMoveToEApp = 1;
+                                                    DB.SaveChanges();
+
+                                                    record.Status = "Record Move to E-Application Successfully";
+                                                    Helper.AddLog(Constants.LogType.ActivityLog, $"Personal Information Record Move to E-Application against HUTOPS Id: {record.HUTOPSIds}");
+
+                                                }
+                                                else
+                                                {
+                                                    personalInformation.IsRecordMoveToEApp = 0;
+                                                    DB.SaveChanges();
+                                                    record.Status = "Record Mark as Failed";
+                                                    Helper.AddLog(Constants.LogType.ActivityLog, $"Personal Information Record already move to E-Application against HUTOPS Id: {record.HUTOPSIds}");
+                                                    continue;
+                                                }
                                             }
                                             else
                                             {
-                                                personalInformation.IsRecordMoveToEApp = 0;
+                                                personalInformation.IsRecordMoveToEApp = 1;
                                                 DB.SaveChanges();
-                                                record.Status = "Record Mark as Failed";
-                                                Helper.AddLog(Constants.LogType.ActivityLog, $"Personal Information Record already move to E-Application against HUTOPS Id: {record.HUTOPSIds}");
+                                                record.Status = "Educational Information is not found";
+                                                Helper.AddLog(Constants.LogType.ActivityLog, $"Educational Information not found against HUTOPS Id: {record.HUTOPSIds}");
                                                 continue;
                                             }
+
                                         }
                                         else
                                         {
-                                            personalInformation.IsRecordMoveToEApp = 1;
-                                            DB.SaveChanges();
-                                            record.Status = "Educational Information is not found";
-                                            Helper.AddLog(Constants.LogType.ActivityLog, $"Educational Information not found against HUTOPS Id: {record.HUTOPSIds}");
+                                            record.Status = "Record already move to E-Application";
+                                            Helper.AddLog(Constants.LogType.ActivityLog, $"Personal Information Record already move to E-Application against HUTOPS Id: {record.HUTOPSIds}");
                                             continue;
                                         }
-
                                     }
                                     else
                                     {
-                                        record.Status = "Record already move to E-Application";
-                                        Helper.AddLog(Constants.LogType.ActivityLog, $"Personal Information Record already move to E-Application against HUTOPS Id: {record.HUTOPSIds}");
+                                        record.Status = "Record already exist in E-Application";
+                                        Helper.AddLog(Constants.LogType.ActivityLog, $"Personal Information Record already exist in E-Application against HUTOPS Id: {record.HUTOPSIds}");
                                         continue;
                                     }
-
                                 }
                                 else
                                 {
@@ -777,7 +790,7 @@ namespace HUTOPSBatchProcessConsoleApp.Codebase
                                         var personalInformation = Db.PersonalInformations.Where(x => x.HUTopId == record.HUTOPSIds).FirstOrDefault();
                                         if (personalInformation != null)
                                         {
-                                            personalInformation.IsRecordMoveToEApp = 1;
+                                            personalInformation.IsRecordMoveToEApp = 0;
                                             Db.SaveChanges();
                                         }
                                     }

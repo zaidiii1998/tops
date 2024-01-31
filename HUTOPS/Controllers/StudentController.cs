@@ -2,10 +2,12 @@
 using ClosedXML.Extensions;
 using DocumentFormat.OpenXml.Vml.Office;
 using HUTOPS.Codebase;
+using HUTOPS.EAppDBModel;
 using HUTOPS.Helper;
 using HUTOPS.Models;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
@@ -461,56 +463,68 @@ namespace HUTOPS.Controllers
         {
             try
             {
+                EApplicationEntities EAppDB = new EApplicationEntities();
+                List<EAppDBModel.PersonalInformation> eappPInfo = new List<EAppDBModel.PersonalInformation>();
+                eappPInfo = EAppDB.PersonalInformations.Where(p => p.ID > 194587).ToList();
+
+
                 Utility.AddLog(Constants.LogType.ActivityLog, $"Admin request to move record to E-Application against Id : {Id}");
 
 
                 var personalInformation = DB.PersonalInformations.ToList().Where(x => x.Id == Id).FirstOrDefault();
                 if (personalInformation != null)
                 {
-                    if (personalInformation.IsRecordMoveToEApp != 1)
+                    if (eappPInfo.Exists(p => p.HuTopsId != personalInformation.HUTopId))
                     {
-                        if (personalInformation.Result == 2)
+                        if (personalInformation.IsRecordMoveToEApp != 1)
                         {
-                            var educationalInformation = DB.Educationals.Where(x => x.UserId == Id).FirstOrDefault();
-                            if(educationalInformation != null)
+                            if (personalInformation.Result == 2)
                             {
-                                 //For Moving record using Entity Framework
-                                if(RecordsProcessing.MoveRecordToEApp(personalInformation, educationalInformation))
+                                var educationalInformation = DB.Educationals.Where(x => x.UserId == Id).FirstOrDefault();
+                                if (educationalInformation != null)
                                 {
-                                    using (HUTOPSEntities tempDB  = new HUTOPSEntities())
+                                    //For Moving record using Entity Framework
+                                    if (RecordsProcessing.MoveRecordToEApp(personalInformation, educationalInformation))
                                     {
-                                        var personalInfo = tempDB.PersonalInformations.ToList().Where(x => x.Id == Id).FirstOrDefault();
-                                        personalInfo.IsRecordMoveToEApp = 1;
-                                        tempDB.SaveChanges();
+                                        using (HUTOPSEntities tempDB = new HUTOPSEntities())
+                                        {
+                                            var personalInfo = tempDB.PersonalInformations.ToList().Where(x => x.Id == Id).FirstOrDefault();
+                                            personalInfo.IsRecordMoveToEApp = 1;
+                                            tempDB.SaveChanges();
+                                        }
+                                        Utility.AddLog(Constants.LogType.ActivityLog, $"Personal Information Record Move to E-Application against HUTOPS Id: {personalInformation.HUTopId}");
+                                        return Json(new { status = true, message = "Record Move to E-Application Successfully" });
                                     }
-                                    Utility.AddLog(Constants.LogType.ActivityLog, $"Personal Information Record Move to E-Application against HUTOPS Id: {personalInformation.HUTopId}");
-                                    return Json(new { status = true, message = "Record Move to E-Application Successfully" });
+                                    else
+                                    {
+                                        return Json(new { status = false, message = "Error Occured while moving record to E-Application" });
+                                    }
                                 }
                                 else
                                 {
-                                    return Json(new { status = false, message = "Error Occured while moving record to E-Application" });
+                                    Utility.AddLog(Constants.LogType.ActivityLog, $"Educational Informtion not found against HUTOPS Id: {personalInformation.HUTopId}");
+                                    return Json(new { status = false, message = "Educational Informtion not found" });
                                 }
+
                             }
                             else
                             {
-                                Utility.AddLog(Constants.LogType.ActivityLog, $"Educational Informtion not found against HUTOPS Id: {personalInformation.HUTopId}");
-                                return Json(new { status = false, message = "Educational Informtion not found" });
+                                Utility.AddLog(Constants.LogType.ActivityLog, $"Personal Information Record already move to E-Application against HUTOPS Id: {personalInformation.HUTopId}");
+                                return Json(new { status = false, message = "Record Mark as Failed" });
                             }
-                            
+
                         }
                         else
                         {
                             Utility.AddLog(Constants.LogType.ActivityLog, $"Personal Information Record already move to E-Application against HUTOPS Id: {personalInformation.HUTopId}");
-                            return Json(new { status = false, message = "Record Mark as Failed" });
+                            return Json(new { status = false, message = "Record already move to E-Application" });
                         }
-
                     }
                     else
                     {
-                        Utility.AddLog(Constants.LogType.ActivityLog, $"Personal Information Record already move to E-Application against HUTOPS Id: {personalInformation.HUTopId}");
-                        return Json(new { status = false, message = "Record already move to E-Application" });
+                        Utility.AddLog(Constants.LogType.ActivityLog, $"Personal Information Record already exist in E-Application against HUTOPS Id: {personalInformation.HUTopId}");
+                        return Json(new { status = false, message = "Record already exist in E-Application" });
                     }
-
                 }
                 else
                 {
