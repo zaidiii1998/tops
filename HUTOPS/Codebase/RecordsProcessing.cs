@@ -27,7 +27,7 @@ namespace HUTOPS.Codebase
                     FatherLastName = personalInformation.FatherLastName,
                     FatherName = personalInformation.FatherFirstName + personalInformation.FatherMiddleName + personalInformation.FatherLastName,
                     DateofBirth = personalInformation.DateOfBirth,
-                    CountryAdd = null,
+                    CountryAdd = "Pakistan",
                     PhoneNo = personalInformation.CellPhoneNumber,
                     Tellus = null,
                     CurrentAddress = personalInformation.ResidentialAddress,
@@ -40,8 +40,8 @@ namespace HUTOPS.Codebase
                     AlterEmail = personalInformation.AlterEmailAddress,
                     Password = personalInformation.Password,
                     CPassword = personalInformation.Password,
-                    Savedate = personalInformation.CreatedDatetime,
-                    Updatedate = personalInformation.UpdateDate,
+                    Savedate = personalInformation.CreatedDatetime, // Save Date
+                    Updatedate = personalInformation.CreatedDatetime, // Updated Date
                     AppStatus = 1,
                     StudentStatus = "0",
                     TempID = null,
@@ -89,7 +89,7 @@ namespace HUTOPS.Codebase
                     OtherCurrentqualification = educationalInformation.HSSCSchoolName,
                     Userid = null,
                     chk = null,
-                    Modeofstudy = null,
+                    Modeofstudy = "Regular",
                     BoardofEducation = educationalInformation.HSSCBoardName,
                     Intendedprogram = educationalInformation.IntendedProgram,
                     Retake = false,
