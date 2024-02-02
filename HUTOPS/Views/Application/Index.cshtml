@@ -709,10 +709,10 @@
                                     <div class="col-lg-4">
                                         <div class="form-group">
                                             <label for="hsscPercentage">Overall HSSC Percentage:</label>
-                                            <input class="form-control Percentage" type="text" id="hsscPercentage" value="@Model.Education.HSSCPercentage" name="hsscPercentage">
+                                            <input class="form-control Percentage" type="text" id="hsscPercentage" value="@Model.Education.HSSCPercentage" name="hsscPercentage" required>
                                             <span class="text-danger m-1">
-                                                If your HSSC-I results are not announced
-                                                yet, kindly leave this field blank.
+                                                If your HSSC-I results have not been announced yet,
+                                                kindly enter “00:00” in the field.
                                             </span>
                                         </div>
                                     </div>
@@ -989,6 +989,25 @@
                                             }
                                         </select>
                                         <span class="text-danger" id="testdateError"></span>
+                                        <span class="text-danger">
+                                            Before selecting your preferred test dates, please carefully
+                                            review the following information regarding test schedules for
+                                            different regions:<br /><br />
+                                        </span>
+                                        <span>
+                                            Karachi/Sindh/Baluchistan Applicants:<br />
+                                            Test Dates: 24th/25th February <br />
+                                            Test Venue: Karachi<br /><br /><br />
+                                        </span>
+                                        <span>
+                                            Islamabad/AJK/GB/KPK/Punjab Applicants:<br />
+                                            Test Dates: 1st/2nd March 2024<br />
+                                            Test Venue: Islamabad<br /><br /><br />
+                                        </span>
+                                        <span class="text-danger">
+                                            All applicants will receive updates regarding the test details
+                                            by the 15th of February
+                                        </span>
                                     </div>
                                 </div>
                             </div>
