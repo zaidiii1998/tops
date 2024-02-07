@@ -6,7 +6,11 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-
+<style>
+    .fs-14 {
+        font-size: 14px !important;
+    }
+</style>
 
 <div>
     <div class="accordion" id="accordionExample">
@@ -31,8 +35,8 @@
                     <div class="container-fluid">
                         <div class="boxWraper infoBox">
                             <!-- <div class="headBox">
-                             <h2>Personal Information</h2>
-                         </div>-->
+                                <h2>Personal Information</h2>
+                            </div>-->
                             <form id="PersonalInfoForm">
                                 <input class="form-control" type="text" id="id" name="Id" maxlength="25" style="display:none;" value="@Model.PersonalInfo.Id">
 
@@ -556,8 +560,8 @@
                     <div class="container-fluid">
                         <div class="boxWraper infoBox">
                             <!-- <div class="headBox">
-                             <h2>Education</h2>
-                         </div>-->
+                                <h2>Education</h2>
+                            </div>-->
                             <form method="post" id="EducationForm">
 
                                 <h5>HSSC/College Information</h5>
@@ -841,9 +845,9 @@
                     <div class="container-fluid">
                         <div class="boxWraper infoBox">
                             <!--<div class="headBox">
-        <h2>Documents</h2>
-    </div>-->
-                            
+                                <h2>Documents</h2>
+                            </div>-->
+
                             <form id="fileUploadForm" enctype="multipart/form-data">
 
                                 <div class="row">
@@ -967,8 +971,8 @@
                     <div class="container-fluid">
                         <div class="boxWraper infoBox">
                             <!-- <div class="headBox">
-                             <h2>Test Date</h2>
-                         </div>-->
+                                <h2>Test Date</h2>
+                            </div>-->
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="form-group">
@@ -989,24 +993,24 @@
                                             }
                                         </select>
                                         <span class="text-danger" id="testdateError"></span>
-                                        <span class="text-danger">
+                                        <span class="text-danger fs-14">
                                             Before selecting your preferred test dates, please carefully
                                             review the following information regarding test schedules for
                                             different regions:<br /><br />
                                         </span>
-                                        <span>
+                                        <span class="fs-14">
                                             Karachi/Sindh/Baluchistan Applicants:<br />
                                             Test Dates: 24th/25th February <br />
                                             Test Venue: Karachi<br /><br /><br />
                                         </span>
-                                        <span>
+                                        <span class="fs-14">
                                             Islamabad/AJK/GB/KPK/Punjab Applicants:<br />
                                             Test Dates: 1st/2nd March 2024<br />
                                             Test Venue: Islamabad<br /><br /><br />
                                         </span>
-                                        <span class="text-danger">
+                                        <span class="text-danger fs-14">
                                             All applicants will receive updates regarding the test details
-                                            by the 15th of February
+                                            by the 15th of February.
                                         </span>
                                     </div>
                                 </div>
@@ -1038,8 +1042,8 @@
                     <div class="container-fluid">
                         <div class="boxWraper infoBox">
                             <!-- <div class="headBox">
-                             <h2>Declarations</h2>
-                         </div>-->
+                                <h2>Declarations</h2>
+                            </div>-->
                             <form method="post">
                                 <div class="row">
                                     <div class="col-lg-12">
@@ -1132,7 +1136,7 @@
     if ('@Model.PersonalInfo.IsAppliedBefore' != '1') {
         $('#AppliedBeforeSection').hide();
     }
-    
+
     $('#errorBlock').hide();
     $('#divUniName').hide();
     LoadYear('startingYear');
