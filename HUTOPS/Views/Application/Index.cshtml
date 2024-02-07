@@ -1129,7 +1129,10 @@
     </div>
 </div>
 
-<a href="/Application/Success" id="redirectToSuccess" style="display:none;">success</a>
+<form action="/Application/Success" method="post">
+    <input type="hidden" name="isSubmitted" value="true" />
+    <input type="submit" id="redirectToSuccess" value="success" style="display:none;">
+</form>
 
 <script>
 

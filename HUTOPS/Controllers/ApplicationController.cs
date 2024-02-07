@@ -603,9 +603,14 @@ namespace HUTOPS.Controllers
             }
         }
 
-        public ActionResult Success()
+        [HttpPost]
+        public ActionResult Success(bool isSubmitted)
         {
-            return View();
+            if (isSubmitted)
+            {
+                return View();
+            }
+            return RedirectToAction("Index");
         }
 
         public FileResult View(string Name, int? Id = null )
