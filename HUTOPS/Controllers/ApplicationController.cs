@@ -94,11 +94,14 @@ namespace HUTOPS.Controllers
                     var PersonalInformationErrors = Utility.ValidatePersonalInfo(applicationModel.PersonalInfo);
                     var EducationalError = Utility.ValidateEducation(applicationModel.Education);
                     var DocumentErrors = Utility.ValidateDocuments(applicationModel.CNIC, applicationModel.Photograph, applicationModel.SSCMarkSheet, applicationModel.HSSCMarkSheet);
-                    var subjectslen = applicationModel.SubjectName[0].ToString().Split(',').Length;
-                    if (subjectslen < 3)
+                    if (applicationModel.SubjectName[0] != null)
                     {
-                        Utility.AddLog(Constants.LogType.ActivityLog, $"Error Occured while validating Subjects Name: missing subjects names");
-                        EducationalError.Add("Please Enter Subjects name in Education section");
+                        var subjectslen = applicationModel.SubjectName[0].ToString().Split(',').Length;
+                        if (subjectslen < 3)
+                        {
+                            Utility.AddLog(Constants.LogType.ActivityLog, $"Error Occured while validating Subjects Name: missing subjects names");
+                            EducationalError.Add("Please Enter Subjects name in Education section");
+                        }
                     }
                     if (PersonalInformationErrors.Count > 0 || EducationalError.Count > 0 || DocumentErrors.Count > 0)
                     {
@@ -316,11 +319,14 @@ namespace HUTOPS.Controllers
                     DocumentError.Add("Passport size Photograph: is required");
                     Utility.AddLog(Constants.LogType.ActivityLog, $"Error Occured while validating Documents: Photograph = {applicationModel.Photograph}");
                 }
-                var subjectslength = applicationModel.SubjectName[0].ToString().Split(',').Length;
-                if (subjectslength < 3)
+                if (applicationModel.SubjectName[0] != null)
                 {
-                    Utility.AddLog(Constants.LogType.ActivityLog, $"Error Occured while validating Subjects Name: missing subjects names");
-                    EducationError.Add("Please Enter Subjects name in Education section");
+                    var subjectslength = applicationModel.SubjectName[0].ToString().Split(',').Length;
+                    if (subjectslength < 3)
+                    {
+                        Utility.AddLog(Constants.LogType.ActivityLog, $"Error Occured while validating Subjects Name: missing subjects names");
+                        EducationError.Add("Please Enter Subjects name in Education section");
+                    }
                 }
                 if (PersonalInfoErrors.Count > 0 || EducationError.Count > 0 || DocumentError.Count > 0)
                 {
@@ -426,18 +432,19 @@ namespace HUTOPS.Controllers
                             DB.SaveChanges();
                             Utility.AddLog(Constants.LogType.ActivityLog, $"Educational Table record Inserted Detials: {JsonConvert.SerializeObject(applicationModel.PersonalInfo)}");
 
-                            var len = applicationModel.SubjectName[0].ToString().Split(',').Length;
-                            for (var i = 0; i < applicationModel.SubjectName[0].ToString().Split(',').Length; i++)
-                            {
-                                if (!string.IsNullOrEmpty(applicationModel.SubjectName[0].ToString().Split(',')[i])) {
-                                    string name = applicationModel.SubjectName[0].ToString().Split(',')[i];
-                                    name = name.Substring(0, name.Length <= 50 ? name.Length : 50);
-                                    DB.EducationalSubjects.Add(new EducationalSubject()
-                                    {
-                                        EducationalId = applicationModel.Education.Id,
-                                        Name = name
-                                    });
-                                    DB.SaveChanges();
+                            if(applicationModel.SubjectName[0] != null) { 
+                                for (var i = 0; i < applicationModel.SubjectName[0].ToString().Split(',').Length; i++)
+                                {
+                                    if (!string.IsNullOrEmpty(applicationModel.SubjectName[0].ToString().Split(',')[i])) {
+                                        string name = applicationModel.SubjectName[0].ToString().Split(',')[i];
+                                        name = name.Substring(0, name.Length <= 50 ? name.Length : 50);
+                                        DB.EducationalSubjects.Add(new EducationalSubject()
+                                        {
+                                            EducationalId = applicationModel.Education.Id,
+                                            Name = name
+                                        });
+                                        DB.SaveChanges();
+                                    }
                                 }
                             }
                             Utility.AddLog(Constants.LogType.ActivityLog, $"Educational Subjects Inserted against Educational: {JsonConvert.SerializeObject(applicationModel.Education)}");
