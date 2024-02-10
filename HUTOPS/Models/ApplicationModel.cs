@@ -8,8 +8,8 @@ namespace HUTOPS.Models
         public PersonalInformation PersonalInfo { get; set; }
         public Educational Education { get; set; }
         public Document Document { get; set; }
-        public string[] SubjectName { get; set; }
-        public string[] SubjectObtain { get; set; }
+        public string SubjectName { get; set; } = string.Empty;
+        public string SubjectObtain { get; set; }
 
         public HttpPostedFileBase CNIC { get; set; }
         public HttpPostedFileBase Photograph { get; set; }

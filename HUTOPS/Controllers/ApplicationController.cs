@@ -94,9 +94,9 @@ namespace HUTOPS.Controllers
                     var PersonalInformationErrors = Utility.ValidatePersonalInfo(applicationModel.PersonalInfo);
                     var EducationalError = Utility.ValidateEducation(applicationModel.Education);
                     var DocumentErrors = Utility.ValidateDocuments(applicationModel.CNIC, applicationModel.Photograph, applicationModel.SSCMarkSheet, applicationModel.HSSCMarkSheet);
-                    if (applicationModel.SubjectName != null && applicationModel.SubjectName.Count() > 0)
+                    if (!string.IsNullOrEmpty(applicationModel.SubjectName))
                     {
-                        var subjectslen = applicationModel.SubjectName[0].ToString().Split(',').Length;
+                        var subjectslen = applicationModel.SubjectName.Split(',').Length;
                         if (subjectslen < 3)
                         {
                             Utility.AddLog(Constants.LogType.ActivityLog, $"Error Occured while validating Subjects Name: missing subjects names");
@@ -197,9 +197,10 @@ namespace HUTOPS.Controllers
                             // Delete Previous Educational Subjects
                             DB.EducationalSubjects.RemoveRange(DB.EducationalSubjects.ToList().Where(x => x.EducationalId == applicationModel.Education.Id));
                             DB.SaveChanges();
-                            if (applicationModel.SubjectName != null && applicationModel.SubjectName.Count() > 0)
+                            if (!string.IsNullOrEmpty(applicationModel.SubjectName))
                             {
-                                foreach (string _subjectName in applicationModel.SubjectName)
+                                var SubjectNames = applicationModel.SubjectName.Split(',');
+                                foreach (string _subjectName in SubjectNames)
                                 {
                                     if (!string.IsNullOrEmpty(_subjectName))
                                     {
@@ -320,9 +321,9 @@ namespace HUTOPS.Controllers
                     DocumentError.Add("Passport size Photograph: is required");
                     Utility.AddLog(Constants.LogType.ActivityLog, $"Error Occured while validating Documents: Photograph = {applicationModel.Photograph}");
                 }
-                if (applicationModel.SubjectName != null && applicationModel.SubjectName.Count() > 0)
+                if (!string.IsNullOrEmpty(applicationModel.SubjectName))
                 {
-                    var subjectslength = applicationModel.SubjectName[0].ToString().Split(',').Length;
+                    var subjectslength = applicationModel.SubjectName.Split(',').Length;
                     if (subjectslength < 3)
                     {
                         Utility.AddLog(Constants.LogType.ActivityLog, $"Error Occured while validating Subjects Name: missing subjects names");
@@ -433,11 +434,14 @@ namespace HUTOPS.Controllers
                             DB.SaveChanges();
                             Utility.AddLog(Constants.LogType.ActivityLog, $"Educational Table record Inserted Detials: {JsonConvert.SerializeObject(applicationModel.PersonalInfo)}");
 
-                            if (applicationModel.SubjectName != null && applicationModel.SubjectName.Count() > 0)
+                            if (!string.IsNullOrEmpty(applicationModel.SubjectName))
                             {
-                                foreach (string _subjectName in applicationModel.SubjectName) {
-                                    if (!string.IsNullOrEmpty(_subjectName)) {
-                                       string name = _subjectName.Substring(0, _subjectName.Length <= 50 ? _subjectName.Length : 50);
+                                var SubjectNames = applicationModel.SubjectName.Split(',');
+                                foreach (string _subjectName in SubjectNames)
+                                {
+                                    if (!string.IsNullOrEmpty(_subjectName))
+                                    {
+                                        string name = _subjectName.Substring(0, _subjectName.Length <= 50 ? _subjectName.Length : 50);
                                         DB.EducationalSubjects.Add(new EducationalSubject()
                                         {
                                             EducationalId = applicationModel.Education.Id,
@@ -521,7 +525,7 @@ namespace HUTOPS.Controllers
                             
                             EmailBody = EmailBody.Replace("{{IntendedProgram}}", applicationModel.Education.IntendedProgram);
                             EmailBody = EmailBody.Replace("{{HUSchoolName}}", applicationModel.Education.HUSchoolName == "SE"? "Dhanani School of Science and Engineering" : "School of Arts, Humanities and Social Sciences");
-                            EmailBody = EmailBody.Replace("{{Subjects}}", applicationModel.SubjectName[0]);
+                            EmailBody = EmailBody.Replace("{{Subjects}}", applicationModel.SubjectName);
 
 
                             List<string> files = new List<string>();
