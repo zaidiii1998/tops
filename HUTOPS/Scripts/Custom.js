@@ -1522,7 +1522,16 @@ function submitDeclaration() {
     var check4 = $('#validHUTOPS').is(':checked');
         
     var isProgramValid = ValidateProgram($('#degreeProgram').val());
-    if (check1 == true && check2 == true && check3 == true && check4 == true && isValid == true && isProgramValid == true && validateStartAndCompletionDate()) {
+    var validsub = true;
+    $(".SubjectName").each(function () {
+        debugger
+        if ($(this).val() == "") {
+            $(this).addClass('error');
+            $(this).focus();
+            validsub = false;
+        } 
+    });
+    if (check1 == true && check2 == true && check3 == true && check4 == true && isValid == true && isProgramValid == true && validateStartAndCompletionDate() && validsub) {
         increaseProgressBarWidth();
         const day = $('#dobDay').val();
         const month = $('#dobMonth').val();
@@ -1609,9 +1618,13 @@ function submitDeclaration() {
         var SubjectObtain = [];
 
         // Iterate over input elements with the class "my-input"
+        
         $(".SubjectName").each(function () {
-            SubjectName.push($(this).val());
+            if ($(this).val() != "") {
+                SubjectName.push($(this).val());
+            }
         });
+        
         $(".SubjectObtain").each(function () {
             SubjectObtain.push($(this).val());
         });
@@ -1811,6 +1824,9 @@ function submitDeclaration() {
             $('#errUniversityName').html('University Name is required');
         } else {
             $('#errUniversityName').html('');
+        }
+        if (!validsub) {
+            isValidEducation = false;
         }
 
         var isProgramValid = ValidateProgram($('#degreeProgram').val());
