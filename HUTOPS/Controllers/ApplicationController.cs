@@ -21,6 +21,15 @@ namespace HUTOPS.Controllers
 
         public ActionResult TermAndConditions()
         {
+            if (ConfigurationManager.AppSettings["FormStatus"].ToString() == "Disabled")
+            {
+                return RedirectToAction("Disabled");
+            }
+                
+            return View();
+        }
+        public ActionResult Disabled()
+        {
             return View();
         }
         public ActionResult Index()

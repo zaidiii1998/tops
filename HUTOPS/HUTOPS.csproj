@@ -327,7 +327,10 @@
     <Content Include="Content\Images\tick-Email.png" />
     <Content Include="Content\Images\tops-logo.png" />
     <Content Include="Content\Images\TOPS_logo_admin.png" />
+    <Content Include="Content\img\Admission-closed.jpg" />
+    <Content Include="Content\img\Admissionclosed.jpg" />
     <Content Include="Content\img\CategoryMenu.png" />
+    <Content Include="Content\img\closed.png" />
     <Content Include="Content\img\dashboard-icons\access-permission.svg" />
     <Content Include="Content\img\dashboard-icons\activity-stats.svg" />
     <Content Include="Content\img\dashboard-icons\all-users.svg" />
@@ -345,6 +348,7 @@
     <Content Include="Content\img\HUTOPS-logo.png" />
     <Content Include="Content\img\image-content.jpg" />
     <Content Include="Content\img\mct-logo.svg" />
+    <Content Include="Content\img\registrationclosed.png" />
     <Content Include="Content\img\Step-1.png" />
     <Content Include="Content\img\Step-10.png" />
     <Content Include="Content\img\Step-11.png" />
@@ -636,6 +640,7 @@
     <Content Include="Views\AdmitCard\Index.cshtml" />
     <Content Include="Views\Result\Index.cshtml" />
     <Content Include="Views\Application\TermAndConditions.cshtml" />
+    <Content Include="Views\Application\Disabled.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Common\" />
