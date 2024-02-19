@@ -100,7 +100,7 @@ namespace HUTOPSBatchProcessConsoleApp.Codebase
                                         using (HUTOPSEntities tempDB = new HUTOPSEntities())
                                         {
                                             var documents = tempDB.Documents.ToList().Where(x => x.Id == document.Id).FirstOrDefault();
-                                            documents.AdmitCard = filePath;
+                                            documents.AdmitCard = Path.Combine(System.Configuration.ConfigurationManager.AppSettings["BaseURL"], filePath.Substring(filePath.IndexOf("Upload")));
                                             tempDB.SaveChanges();
                                         }
                                     });
