@@ -34,6 +34,12 @@ namespace HUTOPS.Controllers
         }
         public ActionResult Index()
         {
+            if (ConfigurationManager.AppSettings["FormStatus"].ToLowerInvariant() == "disabled" && Utility.GetAdminFromSession().Id == 0)
+            {
+                return RedirectToAction("Disabled");
+            }
+
+
             // Check and Create Unique Cookie Id (UCID)
             var UCID = Session[Constants.Session.UCID] == null? "" : Session[Constants.Session.UCID].ToString();
             if (string.IsNullOrEmpty(UCID)) Session[Constants.Session.UCID] = DateTime.Now.Ticks.ToString();
