@@ -462,7 +462,7 @@ namespace HUTOPSBatchProcessConsoleApp.Codebase
                                     Helper.AddLog(Constants.LogType.ActivityLog, $"Personal Information Result Updated against HUTOPS Id: {record.HUTOPSIds}");
                                     if (IsRecordSendToEApp == 1)
                                     {
-                                        if (!eappPInfo.Exists(p => p.HuTopsId != personalInformation.HUTopId))
+                                        if (!eappPInfo.Exists(p => p.HuTopsId == personalInformation.HUTopId))
                                         {
                                             if (personalInformation.IsRecordMoveToEApp != 1)
                                             {
@@ -646,7 +646,7 @@ namespace HUTOPSBatchProcessConsoleApp.Codebase
                                 var educationalInformation = new Educational();
                                 if (personalInformation != null)
                                 {
-                                    if (!eappPInfo.Exists(p => p.HuTopsId != personalInformation.HUTopId))
+                                    if (!eappPInfo.Exists(p => p.HuTopsId == personalInformation.HUTopId))
                                     {
                                         educationalInformation = DB.Educationals.Where(x => x.UserId == personalInformation.Id).FirstOrDefault();
                                         if (personalInformation.IsRecordMoveToEApp != 1)

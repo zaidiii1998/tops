@@ -474,7 +474,7 @@ namespace HUTOPS.Controllers
                 var personalInformation = DB.PersonalInformations.ToList().Where(x => x.Id == Id).FirstOrDefault();
                 if (personalInformation != null)
                 {
-                    if (!eappPInfo.Exists(p => p.HuTopsId != personalInformation.HUTopId))
+                    if (!eappPInfo.Exists(p => p.HuTopsId == personalInformation.HUTopId))
                     {
                         if (personalInformation.IsRecordMoveToEApp != 1)
                         {
