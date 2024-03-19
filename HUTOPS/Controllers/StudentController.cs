@@ -474,7 +474,7 @@ namespace HUTOPS.Controllers
                 var personalInformation = DB.PersonalInformations.ToList().Where(x => x.Id == Id).FirstOrDefault();
                 if (personalInformation != null)
                 {
-                    if (eappPInfo.Exists(p => p.HuTopsId != personalInformation.HUTopId))
+                    if (!eappPInfo.Exists(p => p.HuTopsId != personalInformation.HUTopId))
                     {
                         if (personalInformation.IsRecordMoveToEApp != 1)
                         {
@@ -497,6 +497,12 @@ namespace HUTOPS.Controllers
                                     }
                                     else
                                     {
+                                        using (HUTOPSEntities tempDB = new HUTOPSEntities())
+                                        {
+                                            var personalInfo = tempDB.PersonalInformations.ToList().Where(x => x.Id == Id).FirstOrDefault();
+                                            personalInfo.IsRecordMoveToEApp = 0;
+                                            tempDB.SaveChanges();
+                                        }
                                         return Json(new { status = false, message = "Error Occured while moving record to E-Application" });
                                     }
                                 }
@@ -509,7 +515,7 @@ namespace HUTOPS.Controllers
                             }
                             else
                             {
-                                Utility.AddLog(Constants.LogType.ActivityLog, $"Personal Information Record already move to E-Application against HUTOPS Id: {personalInformation.HUTopId}");
+                                Utility.AddLog(Constants.LogType.ActivityLog, $"Personal Information Record Result Mark as Failed against HUTOPS Id: {personalInformation.HUTopId}");
                                 return Json(new { status = false, message = "Record Mark as Failed" });
                             }
 
