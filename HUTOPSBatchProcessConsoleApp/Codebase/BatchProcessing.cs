@@ -10,6 +10,22 @@ namespace HUTOPSBatchProcessConsoleApp.Codebase
 {
     public static class BatchProcessing
     {
+        public static Dictionary<string, string> province = new Dictionary<string, string>()
+        {
+            {"Sindh","SN" },
+            {"Punjab","PJ" },
+            {"Khyber Pakhtunkhwa","KP" },
+            {"Islamabad Capital Territory","ICT" },
+            {"Gilgit-Baltistan","GB" },
+            {"FATA","FATA" },
+            {"Balochistan","Bl" },
+            {"Azad Kashmir","AJK" },
+
+        };
+        public static Dictionary<string, string> country = new Dictionary<string, string>()
+        {
+            {"Pakistan","PAK" }
+        };
         public static List<ExcelData> GenerateAdmitCard(List<ExcelData> records, string shift, string venue, string testDate)
         {
             AzureEntityFrameworkHandler dbContextHandler = new AzureEntityFrameworkHandler();
@@ -510,8 +526,8 @@ namespace HUTOPSBatchProcessConsoleApp.Codebase
                                                             YourinterestsOther = null,
 
                                                             Permanent_addres = personalInformation.PermanentAddress,
-                                                            Permanent_country = personalInformation.PermanentCountry,
-                                                            Permanent_provience = personalInformation.PermanentProvince,
+                                                            Permanent_country = country[personalInformation.PermanentCountry.Trim()],
+                                                            Permanent_provience = province[personalInformation.PermanentProvince.Trim()],
                                                             Permanent_city = personalInformation.PermanentCity,
                                                             Permanent_cityother = personalInformation.PermanentCityOther,
                                                             Permanent_postal = null,
@@ -519,7 +535,7 @@ namespace HUTOPSBatchProcessConsoleApp.Codebase
 
                                                             Postal_addres = personalInformation.ResidentialAddress,
                                                             Postal_country = personalInformation.ResidentialCountry,
-                                                            Postal_provience = personalInformation.ResidentialProvince,
+                                                            Postal_provience = province[personalInformation.ResidentialProvince.Trim()],
                                                             Postal_city = personalInformation.ResidentialCity,
                                                             Postal_cityother = personalInformation.ResidentialCityOther,
                                                             Postal_postal = null,
@@ -696,8 +712,8 @@ namespace HUTOPSBatchProcessConsoleApp.Codebase
                                                         YourinterestsOther = null,
 
                                                         Permanent_addres = personalInformation.PermanentAddress,
-                                                        Permanent_country = personalInformation.PermanentCountry,
-                                                        Permanent_provience = personalInformation.PermanentProvince,
+                                                        Permanent_country = country[personalInformation.PermanentCountry.Trim()],
+                                                        Permanent_provience = province[personalInformation.PermanentProvince.Trim()],
                                                         Permanent_city = personalInformation.PermanentCity,
                                                         Permanent_cityother = personalInformation.PermanentCityOther,
                                                         Permanent_postal = null,
@@ -705,7 +721,7 @@ namespace HUTOPSBatchProcessConsoleApp.Codebase
 
                                                         Postal_addres = personalInformation.ResidentialAddress,
                                                         Postal_country = personalInformation.ResidentialCountry,
-                                                        Postal_provience = personalInformation.ResidentialProvince,
+                                                        Postal_provience = province[personalInformation.ResidentialProvince.Trim()],
                                                         Postal_city = personalInformation.ResidentialCity,
                                                         Postal_cityother = personalInformation.ResidentialCityOther,
                                                         Postal_postal = null,

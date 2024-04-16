@@ -9,6 +9,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Entity;
 using System.IO;
 using System.Linq;
 using System.Web.Mvc;
@@ -490,6 +491,7 @@ namespace HUTOPS.Controllers
                                         {
                                             var personalInfo = tempDB.PersonalInformations.ToList().Where(x => x.Id == Id).FirstOrDefault();
                                             personalInfo.IsRecordMoveToEApp = 1;
+                                            //tempDB.Entry(personalInfo).State = EntityState.Modified;
                                             tempDB.SaveChanges();
                                         }
                                         Utility.AddLog(Constants.LogType.ActivityLog, $"Personal Information Record Move to E-Application against HUTOPS Id: {personalInformation.HUTopId}");
@@ -501,6 +503,7 @@ namespace HUTOPS.Controllers
                                         {
                                             var personalInfo = tempDB.PersonalInformations.ToList().Where(x => x.Id == Id).FirstOrDefault();
                                             personalInfo.IsRecordMoveToEApp = 0;
+                                            tempDB.Entry(personalInfo).State = EntityState.Modified;
                                             tempDB.SaveChanges();
                                         }
                                         return Json(new { status = false, message = "Error Occured while moving record to E-Application" });
