@@ -35,9 +35,9 @@ namespace HUTOPS
         public virtual DbSet<EducationalSubject> EducationalSubjects { get; set; }
         public virtual DbSet<EmailTemplate> EmailTemplates { get; set; }
         public virtual DbSet<Log> Logs { get; set; }
-        public virtual DbSet<PersonalInformation> PersonalInformations { get; set; }
         public virtual DbSet<State> States { get; set; }
         public virtual DbSet<TestDate> TestDates { get; set; }
+        public virtual DbSet<PersonalInformation> PersonalInformations { get; set; }
     
         public virtual int EducationSubjects(string columnToPivot, string listToPivot)
         {

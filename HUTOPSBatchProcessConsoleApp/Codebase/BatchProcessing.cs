@@ -546,7 +546,7 @@ namespace HUTOPSBatchProcessConsoleApp.Codebase
 
                                                             WhatsAppNumber = personalInformation.WhatsAppNumber,
 
-                                                            TestDate = personalInformation.TestDate,
+                                                            TestDate = null,
                                                             SubmissionDate = personalInformation.SubmissionDate,
                                                             HUTopsCandidate = "Yes",
                                                             HuTopsId = personalInformation.HUTopId,
@@ -732,7 +732,7 @@ namespace HUTOPSBatchProcessConsoleApp.Codebase
 
                                                         WhatsAppNumber = personalInformation.WhatsAppNumber,
 
-                                                        TestDate = personalInformation.TestDate,
+                                                        TestDate = null,
                                                         SubmissionDate = personalInformation.SubmissionDate,
                                                         HUTopsCandidate = "Yes",
                                                         HuTopsId = personalInformation.HUTopId,

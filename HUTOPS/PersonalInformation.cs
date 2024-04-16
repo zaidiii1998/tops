@@ -64,6 +64,7 @@ namespace HUTOPS
         public Nullable<int> Retake { get; set; }
         public Nullable<int> IsAppliedBefore { get; set; }
         public Nullable<int> AppliedBeforeMonth { get; set; }
+        public string AppliedBeforeId { get; set; }
         public Nullable<int> AppliedBeforeYear { get; set; }
         public string HomePhoneNumber { get; set; }
         public string WhatsAppNumber { get; set; }
@@ -80,7 +81,6 @@ namespace HUTOPS
         public Nullable<byte> IsAdmitCardSent { get; set; }
         public Nullable<System.DateTime> AdmitCardSentOn { get; set; }
         public Nullable<byte> Result { get; set; }
-        public string AppliedBeforeId { get; set; }
         public Nullable<byte> IsRecordMoveToEApp { get; set; }
     }
 }
