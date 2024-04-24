@@ -561,7 +561,7 @@ namespace HUTOPSBatchProcessConsoleApp.Codebase
                                                             OtherCurrentqualification = educationalInformation.HSSCSchoolName,
                                                             Userid = null,
                                                             chk = null,
-                                                            Modeofstudy = null,
+                                                            Modeofstudy = "Regular",
                                                             BoardofEducation = educationalInformation.HSSCBoardName,
                                                             Intendedprogram = educationalInformation.IntendedProgram,
                                                             Retake = false,
