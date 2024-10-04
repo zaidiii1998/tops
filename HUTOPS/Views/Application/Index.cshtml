@@ -237,6 +237,7 @@
                                             <div class="form-group">
                                                 <label for="whatsappNumber ">WhatsApp Number:</label>
                                                 <input class="form-control number" type="tel" value="@Model.PersonalInfo.WhatsAppNumber" id="whatsappNumber" name="WhatsAppNumber" maxlength="15" placeholder="92333-3333333">
+                                                <span class="text-danger" id="whatsappNumberError"></span>
                                             </div>
                                         </div>
                                     </div>
@@ -262,6 +263,7 @@
                                         <div class="form-group">
                                             <label for="guardianCellPhone">Parents/Guardian Cell Phone Number<span class="text-danger h-6" style="font-size: 1.1rem;">*</span>:</label>
                                             <input class="form-control number" type="tel" id="guardianCellPhone" value="@Model.PersonalInfo.GuardianCellPhoneNumber" name="GuardianCellPhoneNumber" maxlength="15" placeholder="92333-3333333" required>
+                                            <span class="text-danger" id="guardianCellPhoneError"></span>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
@@ -1000,17 +1002,22 @@
                                         </span>
                                         <span class="fs-14">
                                             Karachi/Sindh/Baluchistan Applicants:<br />
-                                            Test Dates: 24th/25th February <br />
+                                            Test Dates: 22nd/23rd February 2025 <br />
                                             Test Venue: Karachi<br /><br /><br />
                                         </span>
                                         <span class="fs-14">
                                             Islamabad/AJK/GB/KPK/Punjab Applicants:<br />
-                                            Test Dates: 1st/2nd March 2024<br />
+                                            Test Dates: Between 5th to 8th March 2025<span style="color:red;">*</span><br />
                                             Test Venue: Islamabad<br /><br /><br />
                                         </span>
-                                        <span class="text-danger fs-14">
-                                            All applicants will receive updates regarding the test details
-                                            by the 15th of February.
+                                        <span class="text-danger fs-14 mt-2 mb-2">
+                                            For Islamabad/AJK/GB/KPK/Punjab Applicants: Final dates will be communicated via email.
+                                        </span>
+                                        <span class="text-danger fs-14 mt-2 mb-2">
+                                            All applicants will receive updates regarding the test details. Please keep yourself updated.
+                                        </span>
+                                        <span class="text-danger fs-14 mt-2 mb-2">
+                                            Habib University reserves the right to change any date(s) in the event of unforeseen circumstances.
                                         </span>
                                     </div>
                                 </div>

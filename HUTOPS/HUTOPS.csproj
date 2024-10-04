@@ -605,6 +605,9 @@
     <Content Include="bin\roslyn\VBCSCompiler.exe.config" />
     <Content Include="bin\Select.Html.dep" />
     <Content Include="bin\Select.Tools.dep" />
+    <None Include="Properties\PublishProfiles\hutops-test - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\hutops-test - ReadOnly - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\hutops-test - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.5.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.5.1.js" />
     <Content Include="Scripts\jquery-3.5.1.min.js" />

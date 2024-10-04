@@ -4,11 +4,16 @@
     $('.cnic').inputmask("99999-9999999-9");
     $('.Percentage').inputmask("99.99%");
 
+    $('#whatsappNumber, #guardianCellPhone').on('input', function () {
+        validateFields();
+    });
+
     $('.trashActivity').click(function () {
         $(this).closest(".row").remove();
     });
     
     $('[data-toggle="tooltip"]').tooltip();
+
 });
 
 
@@ -573,6 +578,9 @@ function validatePersonalInfoForm() {
     checkEmail('email');
     checkPhoneNumber('cellPhone');
     validateEmail('email', 'emailError');
+    validateFields();
+    if ($('#whatsappNumberError').html() != "") isValid = false;
+    if ($('#guardianCellPhoneError').html() != "") isValid = false;
     
     if ($('#emailError').html() != "") {
         isValid = false;
@@ -764,10 +772,10 @@ function LoadYear(selectId) {
     comboYear.appendChild(option);
     if (selectId == "completionYear" && ($('#currentLevel').val() == 'HSSC II in progress')) {
         var option = document.createElement("option");
-        option.value = "2024";
-        option.text = "2024";
+        option.value = "2025";
+        option.text = "2025";
         comboYear.appendChild(option);
-        for (var j = 2023; j > 1950; j--) {
+        for (var j = 2024; j > 1950; j--) {
             var option = document.createElement("option");
             option.value = j;
             option.text = j;
@@ -776,7 +784,7 @@ function LoadYear(selectId) {
     }
     else if (selectId == 'startingYear' && ($('#currentLevel').val() == 'HSSC II Completed' || $('#currentLevel').val() == 'Already enrolled in a University')) {
 
-        for (var j = 2021; j > 1950; j--) {
+        for (var j = 2022; j > 1950; j--) {
             var option = document.createElement("option");
             option.value = j;
             option.text = j;
@@ -792,7 +800,7 @@ function LoadYear(selectId) {
     }
     else
     {
-        for (var j = 2023; j > 1950; j--) {
+        for (var j = 2024; j > 1950; j--) {
             var option = document.createElement("option");
             option.value = j;
             option.text = j;
@@ -1509,9 +1517,13 @@ function submitDeclaration() {
     checkEmail('email');
     checkPhoneNumber('cellPhone');
     validateEmail('email', 'emailError');
+    validateFields();
+    
 
     if ($('#emailError').html() != "") isValid = false;
     if ($('#numberError').html() != "") isValid = false;
+    if ($('#whatsappNumberError').html() != "") isValid = false;
+    if ($('#guardianCellPhoneError').html() != "") isValid = false;
 
     if ($('#guardianEmail').val() != "" && !validateEmail('guardianEmail', 'errGuardianEmail')) isValid = false;
 
@@ -1777,9 +1789,12 @@ function submitDeclaration() {
         checkEmail('email');
         checkPhoneNumber('cellPhone');
         validateEmail('email', 'emailError');
+        validateFields();
         if ($('#emailError').html() != "") isValidPersonalInfo = false;
-        if ($('#numberError').html() != "")isValidPersonalInfo = false;
-
+        if ($('#numberError').html() != "") isValidPersonalInfo = false;
+        if ($('#whatsappNumberError').html() != "") isValidPersonalInfo = false;
+        if ($('#guardianCellPhoneError').html() != "") isValidPersonalInfo = false;
+        
         if ($('#guardianEmail').val() != "" && !validateEmail('guardianEmail', 'errGuardianEmail')) isValidPersonalInfo = false;
 
 
@@ -1888,6 +1903,42 @@ function submitDeclaration() {
     }
 
 }
+
+function validateFields() {
+    //cellPhone
+    //whatsappNumber
+    //whatsappNumberError
+    //guardianCellPhone
+    //guardianCellPhoneError
+    var field1 = $('#cellPhone');
+    var field1Error = $('#cellPhoneError');
+    var field2 = $('#whatsappNumber');
+    var field2Error = $('#whatsappNumberError');
+    var field3 = $('#guardianCellPhone');
+    var field3Error = $('#guardianCellPhoneError');
+
+    if (
+        (field1.val() !== '' && (field1.val() === field2.val() || field1.val() === field3.val())) ||
+        (field2.val() !== '' && (field1.val() === field2.val() || field2.val() === field3.val())) ||
+        (field3.val() !== '' && (field2.val() === field3.val() || field1.val() === field3.val()))
+    ) {
+            //field1Error.html("All fields cannot have the same number.");
+            //field1.addClass("error");
+            field2Error.html("Number fields cannot have the same number.");
+            field2.addClass("error");
+            field3Error.html("Number fields cannot have the same number.");
+            field3.addClass("error");
+        
+    } else {
+        //field1Error.html("");
+        //field1.removeClass("error");
+        field2Error.html("");
+        field2.removeClass("error");
+        field3Error.html("");
+        field3.removeClass("error");
+    }
+}
+
 
 // Test Date Section
 function LoadTestDate(date) {
