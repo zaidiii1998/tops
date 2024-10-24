@@ -45,9 +45,27 @@
                                 <input type="email" class="form-control cnic" id="txtFilterEmail" />
                             </div>
                         </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Admission Session</label>
+                                <select id="comboFilterAdmissionSession" class="form-control">
+                                    <option value="">Select Admission Session</option>
+                                    <option value="HUTOPS24">2024</option>
+                                    <option value="HUTOPS25">2025</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
                     <div class="row">
-                        <div class="col-lg-12">
+                        <div class="col-lg-4">
+                            <select class="form-control mr-2" id="applicationStatus" name="applicationStatus">
+                                <option value="">Select Application Status</option>
+                                <option value="PENDING">PENDING</option>
+                                <option value="ACCEPT">ACCEPT</option>
+                                <option value="REJECT">REJECT</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-8">
                             <input class="savebtn global-btn-purple  float-right m-1" type="submit" id="btnSearch" value="Search">
                             <input class="savebtn global-btn-purple  float-right m-1" type="button" id="btnClear" value="Clear">
                         </div>
@@ -81,6 +99,7 @@
                             <th>Cell Phone Number</th>
                             <th>Email Address</th>
                             <th>CNIC/B-Form</th>
+                            <th>Application&nbsp;Status&nbsp;&nbsp;&nbsp;&nbsp;</th>
                             <th>Result</th>
                             <th>Record Move To E-App</th>
                             <th>Admit Card Generated</th>
@@ -227,6 +246,8 @@
         form.append("<input type='hidden' name='CNIC' value='" + $("#txtFilterCNIC").val() + "' />");
         form.append("<input type='hidden' name='Phone' value='" + $("#txtFilterPhoneNumber").val() + "' />");
         form.append("<input type='hidden' name='Email' value='" + $("#txtFilterEmail").val() + "' />");
+        form.append("<input type='hidden' name='AdmissionSession' value='" + $("#comboFilterAdmissionSession").val() + "' />");
+        form.append("<input type='hidden' name='ApplicationStatus' value='" + $("#applicationStatus").val() + "' />");
         form.submit();
     }
 </script>

@@ -12,6 +12,7 @@ using System.Data;
 using System.Data.Entity;
 using System.IO;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Web.Mvc;
 
 namespace HUTOPS.Controllers
@@ -35,9 +36,11 @@ namespace HUTOPS.Controllers
                 var CNIC = Utility.GetParam(param, 3);
                 var Phone = Utility.GetParam(param, 4);
                 var Email = Utility.GetParam(param, 5);
+                var AdmissionSession = Utility.GetParam(param, 6);
+                var ApplicationStatus = Utility.GetParam(param, 7);
 
                 DTResult<SP_GetStudents_Result> Result = new DTResult<SP_GetStudents_Result>();
-                var Response = DB.SP_GetStudents(param.Start, param.Length,HUTOPSId, Name, CNIC, Phone, Email);
+                var Response = DB.SP_GetStudents(param.Start, param.Length,HUTOPSId, Name, CNIC, Phone, Email, AdmissionSession, ApplicationStatus);
 
                 var Records = Response.ToList();
                 var SingleRecord = Records.FirstOrDefault();
@@ -72,10 +75,11 @@ namespace HUTOPS.Controllers
         {
             try
             {
-                dynamic Records = DB.SP_GetStudentRecord(model.HUTOPSId, model.Name, model.CNIC, model.Phone, model.Email);
+                dynamic Records = DB.SP_GetStudentRecord(model.HUTOPSId, model.Name, model.CNIC, model.Phone, model.Email, model.AdmissionSession, model.ApplicationStatus);
 
                 DataTable dtRecords = new DataTable();
                 dtRecords.Columns.Add("HUTOPSId", typeof(string));
+                dtRecords.Columns.Add("Application Status", typeof(string));
                 dtRecords.Columns.Add("First Name", typeof(string));
                 dtRecords.Columns.Add("Middle Name", typeof(string));
                 dtRecords.Columns.Add("Last Name", typeof(string));
@@ -152,6 +156,7 @@ namespace HUTOPS.Controllers
                     {
                         dtRecords.Rows.Add(new object[] {
                         item.HUTopId == null ? "" : item.HUTopId.ToString(),
+                        item.ApplicationStatus == null ? "" : item.ApplicationStatus.ToString(),
                         item.FirstName == null ? "" : item.FirstName.ToString(),
                         item.MiddleName == null ? "" : item.MiddleName.ToString(),
                         item.LastName == null ? "" : item.LastName.ToString(),
@@ -270,6 +275,28 @@ namespace HUTOPS.Controllers
 
             return Json(new { status = true, message = "Student Profile Closed Successfully" });
         }
+
+        public ActionResult UpdateApplicationStatus(UpdateApplicationStatusModel model)
+        {
+            try
+            {
+                var personalInfo = DB.PersonalInformations.FirstOrDefault(x => x.Id == model.Id);
+                if(personalInfo != null)
+                {
+                    personalInfo.ApplicationStatus = model.Status;
+                    DB.SaveChanges();
+                }
+                else
+                {
+                    return Json(new { status = false, message = "Record not found, please try again" });
+                }
+                return Json(new {status = true, message = "Application Status updated successfully"});
+            }
+            catch (Exception ex)
+            {
+                return Json(new { status = true, message = ex.Message });
+            }
+        } 
 
         [HttpPost]
         public ActionResult GenerateAdmitCard(AdmitCardModel model)

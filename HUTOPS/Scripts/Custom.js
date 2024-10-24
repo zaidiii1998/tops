@@ -16,7 +16,29 @@
 
 });
 
+function ShowConfirmationMessage(confirmationMsg, buttonText, successfunctionName, successfunctionData) {
 
+    const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+            confirmButton: "btn btn-success",
+            cancelButton: "btn btn-danger"
+        },
+        buttonsStyling: false
+    });
+    swalWithBootstrapButtons.fire({
+        title: confirmationMsg + '?',
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Yes, do it!",
+        cancelButtonText: "No, cancel!",
+        reverseButtons: true
+    }).then((result) => {
+        if (result.isConfirmed) {
+            successfunctionName(successfunctionData);
+        }
+    });
+}
 function showLoader() {
     $('.overlay').show();
     $('.adminDashboard').removeClass('loaded');
@@ -2019,6 +2041,18 @@ function LoadStudentDatatable(UserType) {
             { "data": "EmailAddress" },
             { "data": "CNIC" },
             {
+                "data": "ApplicationStatus",
+                render: function (data) {
+                    console.log(data);
+                    return `<select class="form-control mr-2" id="applicationStatus" name="applicationStatus" required="">
+                        <option value="PENDING" ${data === 'PENDING' ? 'selected' : ''}>PENDING</option>
+                        <option value="ACCEPT" ${data === 'ACCEPT' ? 'selected' : ''}>ACCEPT</option>
+                        <option value="REJECT" ${data === 'REJECT' ? 'selected' : ''}>REJECT</option>
+                    </select>`;
+
+                }
+            },
+            {
                 "data": "Result",
                 render: function (data) {
                     if (data == 1) {
@@ -2128,6 +2162,8 @@ function LoadStudentDatatable(UserType) {
         mainTable.column(3).search($("#txtFilterCNIC").val());
         mainTable.column(4).search($("#txtFilterPhoneNumber").val());
         mainTable.column(5).search($("#txtFilterEmail").val());
+        mainTable.column(6).search($("#comboFilterAdmissionSession").val());
+        mainTable.column(7).search($("#applicationStatus").val());
 
         mainTable.draw();
     });
@@ -2140,6 +2176,8 @@ function LoadStudentDatatable(UserType) {
         $("#txtFilterCNIC").val('');
         $("#txtFilterPhoneNumber").val('');
         $("#txtFilterEmail").val('');
+        $("#comboFilterAdmissionSession").val('')
+        $("#applicationStatus").val('');
         $('#btnSearch').trigger('click');
     })
 
@@ -2159,6 +2197,34 @@ function LoadStudentDatatable(UserType) {
         }
 
     });
+
+    
+
+    // Change Application Status
+    $('#main-datatables tbody').on('change', '#applicationStatus', function () {
+
+        var data = mainTable.row($(this).parents('tr')).data();
+        var info = {
+            id : data.Id,
+            status : $(this).val()
+        }
+
+        ShowConfirmationMessage("Do you really want to update the Application Status", "Confirm", UpdateApplicationStatus, JSON.stringify(info));
+       
+    });
+
+    function UpdateApplicationStatus(data) {
+        $('#mainLoader').show();
+        CallAsyncService("/Student/UpdateApplicationStatus", data, UpdateApplicationCBFunction)
+        function UpdateApplicationCBFunction(response) {
+            $('#mainLoader').hide();
+            if (response.status) {
+                ShowDivSuccess(response.message);
+            } else {
+                ShowDivError(response.message);
+            }
+        }
+    }
 
     $('#main-datatables tbody').on('click', '.checkbox', function () {
         

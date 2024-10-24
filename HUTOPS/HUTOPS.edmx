@@ -179,6 +179,7 @@
           <Property Name="AdmitCardSentOn" Type="datetime2" Precision="7" />
           <Property Name="Result" Type="tinyint" />
           <Property Name="IsRecordMoveToEApp" Type="tinyint" />
+          <Property Name="ApplicationStatus" Type="varchar" MaxLength="15" />
         </EntityType>
         <EntityType Name="State">
           <Key>
@@ -221,6 +222,8 @@
           <Parameter Name="CNIC" Type="nvarchar" Mode="In" />
           <Parameter Name="PhoneNumber" Type="varchar" Mode="In" />
           <Parameter Name="Email" Type="varchar" Mode="In" />
+          <Parameter Name="AdmissionSession" Type="varchar" Mode="In" />
+          <Parameter Name="ApplicationStatus" Type="varchar" Mode="In" />
         </Function>
         <Function Name="SP_GetStudents" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="PageIndex" Type="int" Mode="In" />
@@ -230,6 +233,8 @@
           <Parameter Name="CNIC" Type="nvarchar" Mode="In" />
           <Parameter Name="PhoneNumber" Type="varchar" Mode="In" />
           <Parameter Name="Email" Type="varchar" Mode="In" />
+          <Parameter Name="AdmissionSession" Type="varchar" Mode="In" />
+          <Parameter Name="ApplicationStatus" Type="varchar" Mode="In" />
         </Function>
         <Function Name="SP_InsertApplication" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="FName" Type="varchar" Mode="In" />
@@ -613,6 +618,8 @@
             <Parameter Name="CNIC" Mode="In" Type="String" />
             <Parameter Name="PhoneNumber" Mode="In" Type="String" />
             <Parameter Name="Email" Mode="In" Type="String" />
+            <Parameter Name="AdmissionSession" Mode="In" Type="String" />
+            <Parameter Name="ApplicationStatus" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SP_GetStudents" ReturnType="Collection(HUTOPSModel.SP_GetStudents_Result)">
             <Parameter Name="PageIndex" Mode="In" Type="Int32" />
@@ -622,6 +629,8 @@
             <Parameter Name="CNIC" Mode="In" Type="String" />
             <Parameter Name="PhoneNumber" Mode="In" Type="String" />
             <Parameter Name="Email" Mode="In" Type="String" />
+            <Parameter Name="AdmissionSession" Mode="In" Type="String" />
+            <Parameter Name="ApplicationStatus" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SP_InsertApplication" ReturnType="Collection(HUTOPSModel.SP_InsertApplication_Result)">
             <Parameter Name="FName" Mode="In" Type="String" />
@@ -960,6 +969,7 @@
           <Property Type="String" Name="SubjectName_8" Nullable="true" MaxLength="50" />
           <Property Type="String" Name="SubjectName_9" Nullable="true" MaxLength="50" />
           <Property Type="String" Name="SubjectName_10" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="ApplicationStatus" Nullable="false" />
         </ComplexType>
         <ComplexType Name="SP_GetStudents_Result">
           <Property Type="Int32" Name="Id" Nullable="false" />
@@ -1031,6 +1041,7 @@
           <Property Type="Byte" Name="Result" Nullable="true" />
           <Property Type="Byte" Name="IsRecordMoveToEApp" Nullable="true" />
           <Property Type="String" Name="AdmitCard" Nullable="false" />
+          <Property Type="String" Name="ApplicationStatus" Nullable="false" />
         </ComplexType>
         <ComplexType Name="SP_InsertApplication_Result">
           <Property Type="Int32" Name="Response" Nullable="false" />
@@ -1205,6 +1216,7 @@
           <Property Name="AdmitCardSentOn" Type="DateTime" Precision="7" />
           <Property Name="Result" Type="Byte" />
           <Property Name="IsRecordMoveToEApp" Type="Byte" />
+          <Property Name="ApplicationStatus" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1662,6 +1674,7 @@
           <EntitySetMapping Name="PersonalInformations">
             <EntityTypeMapping TypeName="HUTOPSModel.PersonalInformation">
               <MappingFragment StoreEntitySet="PersonalInformation">
+                <ScalarProperty Name="ApplicationStatus" ColumnName="ApplicationStatus" />
                 <ScalarProperty Name="IsRecordMoveToEApp" ColumnName="IsRecordMoveToEApp" />
                 <ScalarProperty Name="Result" ColumnName="Result" />
                 <ScalarProperty Name="AdmitCardSentOn" ColumnName="AdmitCardSentOn" />

@@ -104,5 +104,6 @@ namespace HUTOPS
         public string SubjectName_8 { get; set; }
         public string SubjectName_9 { get; set; }
         public string SubjectName_10 { get; set; }
+        public string ApplicationStatus { get; set; }
     }
 }

@@ -243,6 +243,7 @@
     <Compile Include="Models\DownloadFiltersModel.cs" />
     <Compile Include="Models\PersonalInfoPageModel.cs" />
     <Compile Include="Models\EducationPageModel.cs" />
+    <Compile Include="Models\UpdateApplicationStatusModel.cs" />
     <Compile Include="PersonalInformation.cs">
       <DependentUpon>HUTOPS.tt</DependentUpon>
     </Compile>
@@ -525,6 +526,8 @@
     <Content Include="Content\plugin\summernote\summernote-bs4.min.js" />
     <Content Include="Content\plugin\sweetalert\sweetalert.min.js" />
     <Content Include="Content\plugin\webfont\webfont.min.js" />
+    <Content Include="Content\sweetalert2\sweetalert2.css" />
+    <Content Include="Content\sweetalert2\sweetalert2.js" />
     <Content Include="EAppDBModel\EApplication.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>EApplication.edmx</DependentUpon>

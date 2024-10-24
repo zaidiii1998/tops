@@ -78,7 +78,7 @@ namespace HUTOPS
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertGroupSubjects", subjectNamesParameter, groupIdParameter);
         }
     
-        public virtual ObjectResult<SP_GetStudentRecord_Result> SP_GetStudentRecord(string hUTOPSId, string name, string cNIC, string phoneNumber, string email)
+        public virtual ObjectResult<SP_GetStudentRecord_Result> SP_GetStudentRecord(string hUTOPSId, string name, string cNIC, string phoneNumber, string email, string admissionSession, string applicationStatus)
         {
             var hUTOPSIdParameter = hUTOPSId != null ?
                 new ObjectParameter("HUTOPSId", hUTOPSId) :
@@ -100,10 +100,18 @@ namespace HUTOPS
                 new ObjectParameter("Email", email) :
                 new ObjectParameter("Email", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_GetStudentRecord_Result>("SP_GetStudentRecord", hUTOPSIdParameter, nameParameter, cNICParameter, phoneNumberParameter, emailParameter);
+            var admissionSessionParameter = admissionSession != null ?
+                new ObjectParameter("AdmissionSession", admissionSession) :
+                new ObjectParameter("AdmissionSession", typeof(string));
+    
+            var applicationStatusParameter = applicationStatus != null ?
+                new ObjectParameter("ApplicationStatus", applicationStatus) :
+                new ObjectParameter("ApplicationStatus", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_GetStudentRecord_Result>("SP_GetStudentRecord", hUTOPSIdParameter, nameParameter, cNICParameter, phoneNumberParameter, emailParameter, admissionSessionParameter, applicationStatusParameter);
         }
     
-        public virtual ObjectResult<SP_GetStudents_Result> SP_GetStudents(Nullable<int> pageIndex, Nullable<int> pageSize, string hUTOPSId, string name, string cNIC, string phoneNumber, string email)
+        public virtual ObjectResult<SP_GetStudents_Result> SP_GetStudents(Nullable<int> pageIndex, Nullable<int> pageSize, string hUTOPSId, string name, string cNIC, string phoneNumber, string email, string admissionSession, string applicationStatus)
         {
             var pageIndexParameter = pageIndex.HasValue ?
                 new ObjectParameter("PageIndex", pageIndex) :
@@ -133,7 +141,15 @@ namespace HUTOPS
                 new ObjectParameter("Email", email) :
                 new ObjectParameter("Email", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_GetStudents_Result>("SP_GetStudents", pageIndexParameter, pageSizeParameter, hUTOPSIdParameter, nameParameter, cNICParameter, phoneNumberParameter, emailParameter);
+            var admissionSessionParameter = admissionSession != null ?
+                new ObjectParameter("AdmissionSession", admissionSession) :
+                new ObjectParameter("AdmissionSession", typeof(string));
+    
+            var applicationStatusParameter = applicationStatus != null ?
+                new ObjectParameter("ApplicationStatus", applicationStatus) :
+                new ObjectParameter("ApplicationStatus", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_GetStudents_Result>("SP_GetStudents", pageIndexParameter, pageSizeParameter, hUTOPSIdParameter, nameParameter, cNICParameter, phoneNumberParameter, emailParameter, admissionSessionParameter, applicationStatusParameter);
         }
     
         public virtual ObjectResult<SP_InsertApplication_Result> SP_InsertApplication(string fName, string mName, string lName, string fatherFName, string fatherMName, string fatherLName, string gender, string husbandName, string dOB, string cNIC, string email, string alterEmail, string cellPhone, string whatsApp, string altCellPhone, string homeCellPhone, string altLandline, string guardianCellPhone, string guardianEmail, string residentialAddress, string residentialCountry, string residentialProvince, string residentialCity, string residentialCityOther, Nullable<int> residentialPostalCode, string permanentAddress, string permanentCountry, string permanentProvince, string permanentCity, string permanentCityOther, Nullable<int> permanentPostalCode, string hearAboutHU, string hearAboutHUOther, string currentLevel, string hSSCSchoolName, string hSSCSchoolAddress, string hSSCStartDate, string hSSCCompletionDate, string hSSCPercentage, string boardOfEdu, string boardName, string group, string groupName, string sSCSchoolName, string sSCSchoolAddress, string sSCPercentage, string universityName, string intendedProgram, string hUSchoolName, string subjectName, string subjectObtain)

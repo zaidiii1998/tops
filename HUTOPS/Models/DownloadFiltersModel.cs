@@ -7,5 +7,7 @@
         public string CNIC { get; set; }
         public string Phone { get; set; }
         public string Email { get; set; }
+        public string AdmissionSession { get; set; }
+        public string ApplicationStatus { get; set; }
     }
 }
