@@ -240,6 +240,7 @@
     <Compile Include="Models\AdmitCard.cs" />
     <Compile Include="Models\ApplicationModel.cs" />
     <Compile Include="Models\DataTableRequest.cs" />
+    <Compile Include="Models\DownloadFiltersModel.cs" />
     <Compile Include="Models\PersonalInfoPageModel.cs" />
     <Compile Include="Models\EducationPageModel.cs" />
     <Compile Include="PersonalInformation.cs">

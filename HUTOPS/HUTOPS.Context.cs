@@ -78,13 +78,29 @@ namespace HUTOPS
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertGroupSubjects", subjectNamesParameter, groupIdParameter);
         }
     
-        public virtual ObjectResult<SP_GetStudentRecord_Result> SP_GetStudentRecord(Nullable<int> id)
+        public virtual ObjectResult<SP_GetStudentRecord_Result> SP_GetStudentRecord(string hUTOPSId, string name, string cNIC, string phoneNumber, string email)
         {
-            var idParameter = id.HasValue ?
-                new ObjectParameter("Id", id) :
-                new ObjectParameter("Id", typeof(int));
+            var hUTOPSIdParameter = hUTOPSId != null ?
+                new ObjectParameter("HUTOPSId", hUTOPSId) :
+                new ObjectParameter("HUTOPSId", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_GetStudentRecord_Result>("SP_GetStudentRecord", idParameter);
+            var nameParameter = name != null ?
+                new ObjectParameter("Name", name) :
+                new ObjectParameter("Name", typeof(string));
+    
+            var cNICParameter = cNIC != null ?
+                new ObjectParameter("CNIC", cNIC) :
+                new ObjectParameter("CNIC", typeof(string));
+    
+            var phoneNumberParameter = phoneNumber != null ?
+                new ObjectParameter("PhoneNumber", phoneNumber) :
+                new ObjectParameter("PhoneNumber", typeof(string));
+    
+            var emailParameter = email != null ?
+                new ObjectParameter("Email", email) :
+                new ObjectParameter("Email", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_GetStudentRecord_Result>("SP_GetStudentRecord", hUTOPSIdParameter, nameParameter, cNICParameter, phoneNumberParameter, emailParameter);
         }
     
         public virtual ObjectResult<SP_GetStudents_Result> SP_GetStudents(Nullable<int> pageIndex, Nullable<int> pageSize, string hUTOPSId, string name, string cNIC, string phoneNumber, string email)

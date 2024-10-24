@@ -68,11 +68,11 @@ namespace HUTOPS.Controllers
             var documents = DB.Documents.Where(x => x.UserId == Id).FirstOrDefault();
             return Json(documents);
         }
-        public ActionResult Download()
+        public ActionResult Download(DownloadFiltersModel model)
         {
             try
             {
-                dynamic Records = DB.SP_GetStudentRecord(null);
+                dynamic Records = DB.SP_GetStudentRecord(model.HUTOPSId, model.Name, model.CNIC, model.Phone, model.Email);
 
                 DataTable dtRecords = new DataTable();
                 dtRecords.Columns.Add("HUTOPSId", typeof(string));

@@ -216,7 +216,11 @@
           <Parameter Name="GroupId" Type="int" Mode="In" />
         </Function>
         <Function Name="SP_GetStudentRecord" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="Id" Type="int" Mode="In" />
+          <Parameter Name="HUTOPSId" Type="varchar" Mode="In" />
+          <Parameter Name="Name" Type="varchar" Mode="In" />
+          <Parameter Name="CNIC" Type="nvarchar" Mode="In" />
+          <Parameter Name="PhoneNumber" Type="varchar" Mode="In" />
+          <Parameter Name="Email" Type="varchar" Mode="In" />
         </Function>
         <Function Name="SP_GetStudents" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="PageIndex" Type="int" Mode="In" />
@@ -604,7 +608,11 @@
             <Parameter Name="GroupId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="SP_GetStudentRecord" ReturnType="Collection(HUTOPSModel.SP_GetStudentRecord_Result)">
-          <Parameter Name="Id" Mode="In" Type="Int32" />
+            <Parameter Name="HUTOPSId" Mode="In" Type="String" />
+            <Parameter Name="Name" Mode="In" Type="String" />
+            <Parameter Name="CNIC" Mode="In" Type="String" />
+            <Parameter Name="PhoneNumber" Mode="In" Type="String" />
+            <Parameter Name="Email" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SP_GetStudents" ReturnType="Collection(HUTOPSModel.SP_GetStudents_Result)">
             <Parameter Name="PageIndex" Mode="In" Type="Int32" />
