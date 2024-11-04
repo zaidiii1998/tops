@@ -179,7 +179,7 @@
           <Property Name="AdmitCardSentOn" Type="datetime2" Precision="7" />
           <Property Name="Result" Type="tinyint" />
           <Property Name="IsRecordMoveToEApp" Type="tinyint" />
-          <Property Name="ApplicationStatus" Type="varchar" MaxLength="15" />
+          <Property Name="ApplicationStatus" Type="varchar" MaxLength="15" StoreGeneratedPattern="Computed" />
         </EntityType>
         <EntityType Name="State">
           <Key>
@@ -1216,7 +1216,7 @@
           <Property Name="AdmitCardSentOn" Type="DateTime" Precision="7" />
           <Property Name="Result" Type="Byte" />
           <Property Name="IsRecordMoveToEApp" Type="Byte" />
-          <Property Name="ApplicationStatus" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="ApplicationStatus" Type="String" MaxLength="15" FixedLength="false" Unicode="false" annotation:StoreGeneratedPattern="Computed" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
