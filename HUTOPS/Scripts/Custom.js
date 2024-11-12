@@ -2045,9 +2045,11 @@ function LoadStudentDatatable(UserType) {
                 render: function (data) {
                     console.log(data);
                     return `<select class="form-control mr-2" id="applicationStatus" name="applicationStatus" required="">
+                        <option value="">Select Application Status</option>
                         <option value="PENDING" ${data === 'PENDING' ? 'selected' : ''}>PENDING</option>
                         <option value="ACCEPT" ${data === 'ACCEPT' ? 'selected' : ''}>ACCEPT</option>
                         <option value="REJECT" ${data === 'REJECT' ? 'selected' : ''}>REJECT</option>
+                        <option value="ACCEPT SSC" ${data === 'ACCEPT SSC' ? 'selected' : ''}>ACCEPT SSC</option>
                     </select>`;
 
                 }
