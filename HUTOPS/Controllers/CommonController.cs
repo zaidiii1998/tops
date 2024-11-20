@@ -1,4 +1,6 @@
 ﻿using HUTOPS.Helper;
+using System;
+using System.Configuration;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -15,10 +17,12 @@ namespace HUTOPS.Controllers
         {
             try
             {
-                var personalInfo = Utility.GetUserFromSession();
-                var PersonalInformation = DB.PersonalInformations.ToList();
+                var currentAdmissionSession = ConfigurationManager.AppSettings["CurrentAdmissionSession"].ToString();
 
-                var res = PersonalInformation.Exists(x => x.CellPhoneNumber == number && x.Id != personalInfo.Id);
+                var personalInfo = Utility.GetUserFromSession();
+                var PersonalInformation = DB.PersonalInformations.Where(x => x.Id > 2653).ToList();
+
+                var res = PersonalInformation.Exists(x => x.CellPhoneNumber == number && x.Id != personalInfo.Id && x.HUTopId.StartsWith("HUTOPS" + currentAdmissionSession, StringComparison.OrdinalIgnoreCase));
                 if (!res)
                 {
                     return Json(new { status = true });
@@ -37,9 +41,11 @@ namespace HUTOPS.Controllers
         {
             try
             {
+                var currentAdmissionSession = ConfigurationManager.AppSettings["CurrentAdmissionSession"].ToString();
+
                 var personalInfo = Utility.GetUserFromSession();
-                var PersonalInformation = DB.PersonalInformations.ToList();
-                var res = PersonalInformation.Exists(x => x.EmailAddress == email && x.Id != personalInfo.Id);
+                var PersonalInformation = DB.PersonalInformations.Where(x => x.Id > 2653).ToList();
+                var res = PersonalInformation.Exists(x => x.EmailAddress == email && x.Id != personalInfo.Id && x.HUTopId.StartsWith("HUTOPS" + currentAdmissionSession, StringComparison.OrdinalIgnoreCase));
                 if (!res)
                 {
                     return Json(new { status = true });
@@ -58,9 +64,11 @@ namespace HUTOPS.Controllers
         {
             try
             {
+                var currentAdmissionSession = ConfigurationManager.AppSettings["CurrentAdmissionSession"].ToString();
+
                 var personalInfo = Utility.GetUserFromSession();
-                var PersonalInformation = DB.PersonalInformations.ToList();
-                var res = PersonalInformation.Exists(x => x.CNIC == cnic && x.Id != personalInfo.Id);
+                var PersonalInformation = DB.PersonalInformations.Where(x => x.Id > 2653).ToList();
+                var res = PersonalInformation.Exists(x => x.CNIC == cnic && x.Id != personalInfo.Id && x.HUTopId.StartsWith("HUTOPS" + currentAdmissionSession, StringComparison.OrdinalIgnoreCase));
                 if (!res)
                 {
                     return Json(new { status = true });

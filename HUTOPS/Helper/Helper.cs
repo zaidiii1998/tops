@@ -203,7 +203,7 @@ namespace HUTOPS.Helper
             EApplicationEntities EAppDB = new EApplicationEntities();
             List<string> errors = new List<string>();
             List<EAppDBModel.PersonalInformation> eappPInfo = new List<EAppDBModel.PersonalInformation>();
-            eappPInfo = EAppDB.PersonalInformations.Where(p => p.ID > 194587).ToList();
+            eappPInfo = EAppDB.PersonalInformations.Where(p => p.ID > 198547).ToList();
 ;
             if (eappPInfo.Exists(p => p.Email == personalInfo.EmailAddress && p.AppStatus != 6))//(EAppDB.PersonalInformations.ToList().Exists(x => x.Email == personalInfo.EmailAddress && personalInfo.Id > 194587))//x.SubmissionDate > Convert.ToDateTime("2023/10/20")))
             {
