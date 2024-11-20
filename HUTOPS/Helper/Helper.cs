@@ -199,6 +199,8 @@ namespace HUTOPS.Helper
         }
         public static List<string> ValidatePersonalInfo(PersonalInformation personalInfo)
         {
+            var currentAdmissionSession = ConfigurationManager.AppSettings["CurrentAdmissionSession"].ToString();
+
             HUTOPSEntities DB = new HUTOPSEntities();
             EApplicationEntities EAppDB = new EApplicationEntities();
             List<string> errors = new List<string>();
@@ -213,7 +215,7 @@ namespace HUTOPS.Helper
             {
                 errors.Add("You have already Register your Application in regular HU Program Using same Phone Number");
             }
-            if (DB.PersonalInformations.ToList().Exists(x => x.EmailAddress == personalInfo.EmailAddress && x.Id != personalInfo.Id))
+            if (DB.PersonalInformations.ToList().Exists(x => x.EmailAddress == personalInfo.EmailAddress && x.Id != personalInfo.Id && x.HUTopId.StartsWith("HUTOPS" + currentAdmissionSession, StringComparison.OrdinalIgnoreCase)))
             {
                 errors.Add("Email is already Exists");
             }
@@ -229,7 +231,7 @@ namespace HUTOPS.Helper
             //{
             //    errors.Add("CNIC is already Exists");
             //}
-            if (DB.PersonalInformations.ToList().Exists(x => x.CellPhoneNumber == personalInfo.CellPhoneNumber && x.Id != personalInfo.Id))
+            if (DB.PersonalInformations.ToList().Exists(x => x.CellPhoneNumber == personalInfo.CellPhoneNumber && x.Id != personalInfo.Id && x.HUTopId.StartsWith("HUTOPS" + currentAdmissionSession, StringComparison.OrdinalIgnoreCase)))
             {
                 errors.Add("Phone number is already Exists");
             }
